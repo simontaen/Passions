@@ -16,8 +16,7 @@
 		F4A7798A1793113E00C770B9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A779891793113E00C770B9 /* Default.png */; };
 		F4A7798C1793113E00C770B9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A7798B1793113E00C770B9 /* Default@2x.png */; };
 		F4A7798E1793113E00C770B9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A7798D1793113E00C770B9 /* Default-568h@2x.png */; };
-		F4A779911793113E00C770B9 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4A7798F1793113E00C770B9 /* MainStoryboard.storyboard */; };
-		F4A779941793113E00C770B9 /* PASViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A779931793113E00C770B9 /* PASViewController.m */; };
+		F4A779911793113E00C770B9 /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4A7798F1793113E00C770B9 /* iPhone.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,9 +33,7 @@
 		F4A779891793113E00C770B9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		F4A7798B1793113E00C770B9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		F4A7798D1793113E00C770B9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		F4A779901793113E00C770B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		F4A779921793113E00C770B9 /* PASViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PASViewController.h; sourceTree = "<group>"; };
-		F4A779931793113E00C770B9 /* PASViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PASViewController.m; sourceTree = "<group>"; };
+		F4A779901793113E00C770B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPhone.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,11 +80,7 @@
 		F4A7797D1793113E00C770B9 /* Passions */ = {
 			isa = PBXGroup;
 			children = (
-				F4A779861793113E00C770B9 /* PASAppDelegate.h */,
-				F4A779871793113E00C770B9 /* PASAppDelegate.m */,
-				F4A7798F1793113E00C770B9 /* MainStoryboard.storyboard */,
-				F4A779921793113E00C770B9 /* PASViewController.h */,
-				F4A779931793113E00C770B9 /* PASViewController.m */,
+				F4A7798F1793113E00C770B9 /* iPhone.storyboard */,
 				F4A7797E1793113E00C770B9 /* Supporting Files */,
 			);
 			path = Passions;
@@ -96,6 +89,8 @@
 		F4A7797E1793113E00C770B9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F4A779861793113E00C770B9 /* PASAppDelegate.h */,
+				F4A779871793113E00C770B9 /* PASAppDelegate.m */,
 				F4A7797F1793113E00C770B9 /* Passions-Info.plist */,
 				F4A779801793113E00C770B9 /* InfoPlist.strings */,
 				F4A779831793113E00C770B9 /* main.m */,
@@ -163,7 +158,7 @@
 				F4A7798A1793113E00C770B9 /* Default.png in Resources */,
 				F4A7798C1793113E00C770B9 /* Default@2x.png in Resources */,
 				F4A7798E1793113E00C770B9 /* Default-568h@2x.png in Resources */,
-				F4A779911793113E00C770B9 /* MainStoryboard.storyboard in Resources */,
+				F4A779911793113E00C770B9 /* iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,7 +171,6 @@
 			files = (
 				F4A779841793113E00C770B9 /* main.m in Sources */,
 				F4A779881793113E00C770B9 /* PASAppDelegate.m in Sources */,
-				F4A779941793113E00C770B9 /* PASViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,12 +185,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		F4A7798F1793113E00C770B9 /* MainStoryboard.storyboard */ = {
+		F4A7798F1793113E00C770B9 /* iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				F4A779901793113E00C770B9 /* en */,
 			);
-			name = MainStoryboard.storyboard;
+			name = iPhone.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
