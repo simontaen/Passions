@@ -17,7 +17,11 @@ profile
 DerivedData
 .idea/
 *.hmap
+
+# CocoaPods
 Pods
+Build
+Podfile.lock
 
 # Global OSX https://github.com/github/
 .DS_Store

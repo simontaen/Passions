@@ -1,0 +1,2 @@
+pod 'FCYAsserts'
+pod 'LastFm'
