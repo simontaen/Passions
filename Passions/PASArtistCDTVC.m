@@ -9,6 +9,7 @@
 #import "PASArtistCDTVC.h"
 #import "LastFmFetchr.h"
 #import "Artist+LastFmFetchr.h"
+#import "UIImageView+AFNetworking.h"
 
 @implementation PASArtistCDTVC
 
@@ -197,6 +198,8 @@
 	
 	cell.textLabel.text = [self titleForTag:artist];
 	cell.detailTextLabel.text = [self detailTextForTag:artist];
+	// This is cool but I wanted to cache the image data
+	[cell.imageView setImageWithURL:[NSURL URLWithString:artist.thumbnailURL]];
 	
 	return cell;
 }
