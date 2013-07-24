@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		65F86A33B682476FBAAC9AE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF473646EE4645ECB8A1B050 /* libPods.a */; };
+		F490BB0E17A0708D00B9BF06 /* Tag+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = F490BB0D17A0708D00B9BF06 /* Tag+Create.m */; };
+		F490BB1D17A0719200B9BF06 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = F490BB1C17A0719200B9BF06 /* Tag.m */; };
+		F490BB2017A0719200B9BF06 /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = F490BB1F17A0719200B9BF06 /* Artist.m */; };
 		F4A60FCC17A059D7008D8F6C /* Passions.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F4A60FCA17A059D7008D8F6C /* Passions.xcdatamodeld */; };
-		F4A60FD017A05AB8008D8F6C /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A60FCF17A05AB8008D8F6C /* Artist.m */; };
 		F4A60FD317A05AF7008D8F6C /* Artist+LastFmFetchr.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A60FD217A05AF7008D8F6C /* Artist+LastFmFetchr.m */; };
 		F4A60FD617A05E7D008D8F6C /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A60FD517A05E7D008D8F6C /* CoreDataTableViewController.m */; };
 		F4A60FDC17A05ED1008D8F6C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FDB17A05ED1008D8F6C /* CoreData.framework */; };
@@ -28,9 +30,13 @@
 /* Begin PBXFileReference section */
 		CF473646EE4645ECB8A1B050 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D420301400214166998C1AC5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		F490BB0C17A0708D00B9BF06 /* Tag+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tag+Create.h"; sourceTree = "<group>"; };
+		F490BB0D17A0708D00B9BF06 /* Tag+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tag+Create.m"; sourceTree = "<group>"; };
+		F490BB1B17A0719200B9BF06 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		F490BB1C17A0719200B9BF06 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
+		F490BB1E17A0719200B9BF06 /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Artist.h; sourceTree = "<group>"; };
+		F490BB1F17A0719200B9BF06 /* Artist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Artist.m; sourceTree = "<group>"; };
 		F4A60FCB17A059D7008D8F6C /* Passions.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Passions.xcdatamodel; sourceTree = "<group>"; };
-		F4A60FCE17A05AB8008D8F6C /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Artist.h; sourceTree = "<group>"; };
-		F4A60FCF17A05AB8008D8F6C /* Artist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Artist.m; sourceTree = "<group>"; };
 		F4A60FD117A05AF7008D8F6C /* Artist+LastFmFetchr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Artist+LastFmFetchr.h"; sourceTree = "<group>"; };
 		F4A60FD217A05AF7008D8F6C /* Artist+LastFmFetchr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Artist+LastFmFetchr.m"; sourceTree = "<group>"; };
 		F4A60FD417A05E7D008D8F6C /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
@@ -75,9 +81,13 @@
 			children = (
 				F4A60FD117A05AF7008D8F6C /* Artist+LastFmFetchr.h */,
 				F4A60FD217A05AF7008D8F6C /* Artist+LastFmFetchr.m */,
+				F490BB0C17A0708D00B9BF06 /* Tag+Create.h */,
+				F490BB0D17A0708D00B9BF06 /* Tag+Create.m */,
 				F4A60FCA17A059D7008D8F6C /* Passions.xcdatamodeld */,
-				F4A60FCE17A05AB8008D8F6C /* Artist.h */,
-				F4A60FCF17A05AB8008D8F6C /* Artist.m */,
+				F490BB1E17A0719200B9BF06 /* Artist.h */,
+				F490BB1F17A0719200B9BF06 /* Artist.m */,
+				F490BB1B17A0719200B9BF06 /* Tag.h */,
+				F490BB1C17A0719200B9BF06 /* Tag.m */,
 				F4A60FD417A05E7D008D8F6C /* CoreDataTableViewController.h */,
 				F4A60FD517A05E7D008D8F6C /* CoreDataTableViewController.m */,
 			);
@@ -247,9 +257,11 @@
 				F4A779841793113E00C770B9 /* main.m in Sources */,
 				F4A779881793113E00C770B9 /* PASAppDelegate.m in Sources */,
 				F4A60FCC17A059D7008D8F6C /* Passions.xcdatamodeld in Sources */,
-				F4A60FD017A05AB8008D8F6C /* Artist.m in Sources */,
 				F4A60FD317A05AF7008D8F6C /* Artist+LastFmFetchr.m in Sources */,
 				F4A60FD617A05E7D008D8F6C /* CoreDataTableViewController.m in Sources */,
+				F490BB0E17A0708D00B9BF06 /* Tag+Create.m in Sources */,
+				F490BB1D17A0719200B9BF06 /* Tag.m in Sources */,
+				F490BB2017A0719200B9BF06 /* Artist.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

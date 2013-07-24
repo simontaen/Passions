@@ -10,4 +10,6 @@
 
 @interface Artist (LastFmFetchr)
 
++ (Artist *)artistWithLastFmJSON:(NSDictionary *)JSON inManagedObjectContext:(NSManagedObjectContext *)context;
+
 @end
