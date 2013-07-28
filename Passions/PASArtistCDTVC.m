@@ -135,8 +135,8 @@
 					});
 				}];
 
-			} failure:^(id response, NSError *error) {
-				NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withResponse:response]);
+			} failure:^(NSOperation *operation, NSError *error) {
+				NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
 				dispatch_async(dispatch_get_main_queue(), ^{
 					[self.refreshControl endRefreshing];
 				});
@@ -179,6 +179,7 @@
 		// try to use it (there migth be other more problematic states which are ignored here
 		self.managedObjectContext = document.managedObjectContext;
 	}
+	NSLog(@"Using Document at %@", [url path]);
 }
 
 - (NSURL *)applicationDocumentsDirectory
@@ -199,7 +200,7 @@
 	cell.textLabel.text = [self titleForTag:artist];
 	cell.detailTextLabel.text = [self detailTextForTag:artist];
 	// This is cool but I wanted to cache the image data
-	[cell.imageView setImageWithURL:[NSURL URLWithString:artist.thumbnailURL]];
+	//[cell.imageView setImageWithURL:[NSURL URLWithString:artist.thumbnailURL]];
 	
 	return cell;
 }
