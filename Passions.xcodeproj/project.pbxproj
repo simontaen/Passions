@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		65F86A33B682476FBAAC9AE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF473646EE4645ECB8A1B050 /* libPods.a */; };
+		F438692A17A55CE6000B7817 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */; };
+		F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */; };
 		F490BB0E17A0708D00B9BF06 /* Tag+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = F490BB0D17A0708D00B9BF06 /* Tag+Create.m */; };
 		F490BB1D17A0719200B9BF06 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = F490BB1C17A0719200B9BF06 /* Tag.m */; };
 		F490BB2017A0719200B9BF06 /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = F490BB1F17A0719200B9BF06 /* Artist.m */; };
@@ -68,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */,
+				F438692A17A55CE6000B7817 /* SystemConfiguration.framework in Frameworks */,
 				F4A60FDC17A05ED1008D8F6C /* CoreData.framework in Frameworks */,
 				F4A779781793113E00C770B9 /* UIKit.framework in Frameworks */,
 				F4A7797A1793113E00C770B9 /* Foundation.framework in Frameworks */,
