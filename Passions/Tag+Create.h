@@ -10,6 +10,7 @@
 
 @interface Tag (Create)
 
-+ (Tag *)tagWithName:(NSString *)name andUnique:(NSString *)unique inManagedObjectContext:(NSManagedObjectContext *)context;
+/// By convention the unique is the lowercase name
++ (Tag *)tagWithName:(NSString *)name inManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

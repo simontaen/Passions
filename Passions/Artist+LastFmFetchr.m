@@ -54,7 +54,7 @@
 		NSMutableSet *tagObjects = [NSMutableSet setWithCapacity:[tags count]];
 		
 		for (NSString *tag in tags) {
-			Tag *tagObject = [Tag tagWithName:[tag lowercaseString] andUnique:[tag lowercaseString] inManagedObjectContext:context];
+			Tag *tagObject = [Tag tagWithName:tag inManagedObjectContext:context];
 			[tagObjects addObject:tagObject];
 		}
 		

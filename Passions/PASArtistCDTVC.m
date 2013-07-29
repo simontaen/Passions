@@ -125,7 +125,7 @@
 	for (NSString *artist in [self sampleArtists]) {
 		
 		dispatch_async(q, ^{
-			[[LastFmFetchr sharedManager] getInfoForArtist:artist success:^(NSDictionary *JSON) {
+			[[LastFmFetchr sharedManager] getInfoForArtist:artist mbid:nil success:^(NSDictionary *JSON) {
 				// put the photos in CoreData
 				[self.managedObjectContext performBlock:^{
 					// needs to happen on the contexts "native" queue!

@@ -10,12 +10,13 @@
 
 @implementation Tag (Create)
 
-+ (Tag *)tagWithName:(NSString *)name andUnique:(NSString *)unique inManagedObjectContext:(NSManagedObjectContext *)context
++ (Tag *)tagWithName:(NSString *)name inManagedObjectContext:(NSManagedObjectContext *)context
 {
 	Tag *tag = nil;
 	
 	// sanity check
-	if ([name length] && [unique length]) {
+	if ([name length]) {
+		NSString *unique = [name lowercaseString];
 		NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
 		request.sortDescriptors = nil; // only one expected
 		request.predicate = [NSPredicate predicateWithFormat:@"unique = %@", unique];
