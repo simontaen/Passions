@@ -1,21 +1,23 @@
 //
-//  Tag.m
+//  Track.m
 //  Passions
 //
 //  Created by Simon Tännler on 29/07/13.
 //  Copyright (c) 2013 edgeguard. All rights reserved.
 //
 
-#import "Tag.h"
+#import "Track.h"
 #import "Album.h"
 #import "Artist.h"
 
 
-@implementation Tag
+@implementation Track
 
-@dynamic name;
+@dynamic rank;
 @dynamic unique;
+@dynamic duration;
+@dynamic name;
+@dynamic album;
 @dynamic artists;
-@dynamic albums;
 
 @end
