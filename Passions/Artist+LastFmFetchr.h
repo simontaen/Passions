@@ -7,9 +7,10 @@
 //
 
 #import "Artist.h"
+#import "LastFmFetchr.h"
 
 @interface Artist (LastFmFetchr)
 
-+ (Artist *)artistWithLastFmJSON:(NSDictionary *)JSON inManagedObjectContext:(NSManagedObjectContext *)context;
++ (Artist *)artistWithLFMArtistsGetInfo:(LFMArtistsGetInfo *)data inManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

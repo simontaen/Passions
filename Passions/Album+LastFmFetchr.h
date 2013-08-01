@@ -7,9 +7,21 @@
 //
 
 #import "Album.h"
+#import "LastFmFetchr.h"
 
 @interface Album (LastFmFetchr)
 
-+ (Album *)albumWithLastFmJSON:(NSDictionary *)JSON inManagedObjectContext:(NSManagedObjectContext *)context;
++ (Album *)albumWithLFMAlbumGetInfo:(LFMAlbumGetInfo *)data inManagedObjectContext:(NSManagedObjectContext *)context;
 
++ (Album *)albumInContext:(NSManagedObjectContext *)context
+				  albumId:(NSNumber *)albumId
+				 imageURL:(NSString *)imageURL
+					 name:(NSString *)name
+			  releaseDate:(NSDate *)releaseDate
+				thumbnail:(NSData *)thumbnail
+			 thumbnailURL:(NSString *)thumbnailURL
+				   unique:(NSString *)unique
+				  artists:(NSSet *)artists
+				  topTags:(NSSet *)topTags
+				   tracks:(NSSet *)tracks;
 @end

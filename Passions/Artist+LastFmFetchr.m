@@ -7,18 +7,17 @@
 //
 
 #import "Artist+LastFmFetchr.h"
-#import "NSDictionary+LastFmFetchr.h"
 #import "Tag+Create.h"
 
 @implementation Artist (LastFmFetchr)
 
-+ (Artist *)artistWithLastFmJSON:(NSDictionary *)JSON inManagedObjectContext:(NSManagedObjectContext *)context;
++ (Artist *)artistWithLFMArtistsGetInfo:(LFMArtistsGetInfo *)data inManagedObjectContext:(NSManagedObjectContext *)context;
 {
 	Artist *artist = nil;
 	
 	NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Artist"];
 	request.sortDescriptors = nil; // only one expected
-	request.predicate = [NSPredicate predicateWithFormat:@"unique = %@", [JSON artistMusicBrianzId]];
+	request.predicate = [NSPredicate predicateWithFormat:@"unique = %@", [data musicBrianzId]];
 	
 	NSError *err = nil;
 	NSArray *matches = [context executeFetchRequest:request error:&err];
@@ -32,23 +31,23 @@
 		artist = [NSEntityDescription insertNewObjectForEntityForName:@"Artist" inManagedObjectContext:context];
         
         // set attributes
-		artist.unique = [JSON artistMusicBrianzId];
-		artist.name = [JSON artistName];
-		artist.thumbnailURL = [JSON artistImageSmall];
-		artist.isOnTour = [NSNumber numberWithBool:[JSON artistIsOnTourBool]];
+		artist.unique = [data musicBrianzId];
+		artist.name = [data name];
+		artist.thumbnailURL = [data imageSmall];
+		artist.isOnTour = [NSNumber numberWithBool:[data isOnTourBool]];
 		
 		switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
 			case UIUserInterfaceIdiomPad:
-				artist.imageURL = [JSON	artistImageExtraLarge];
+				artist.imageURL = [data	imageExtraLarge];
 				break;
 			default:
-				artist.imageURL = [JSON	artistImageLarge];
+				artist.imageURL = [data	imageLarge];
 				break;
 		}
         
         // create and set relations
 		// guaranteed to not have nil objects inside
-		NSMutableSet *tags = [NSMutableSet setWithArray:[JSON artistTagNames]];
+		NSMutableSet *tags = [NSMutableSet setWithArray:[data tagNames]];
 		[tags removeObject:@""]; // remove potential empty tag
 
 		NSMutableSet *tagObjects = [NSMutableSet setWithCapacity:[tags count]];
