@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		65F86A33B682476FBAAC9AE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF473646EE4645ECB8A1B050 /* libPods.a */; };
+		F436925B17AD31260042AF62 /* PASCDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F436925A17AD31260042AF62 /* PASCDStack.m */; };
 		F438692A17A55CE6000B7817 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */; };
 		F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */; };
 		F490BB0E17A0708D00B9BF06 /* Tag+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = F490BB0D17A0708D00B9BF06 /* Tag+Create.m */; };
@@ -37,6 +38,8 @@
 /* Begin PBXFileReference section */
 		CF473646EE4645ECB8A1B050 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D420301400214166998C1AC5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		F436925917AD31260042AF62 /* PASCDStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASCDStack.h; sourceTree = "<group>"; };
+		F436925A17AD31260042AF62 /* PASCDStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASCDStack.m; sourceTree = "<group>"; };
 		F490BB0C17A0708D00B9BF06 /* Tag+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tag+Create.h"; sourceTree = "<group>"; };
 		F490BB0D17A0708D00B9BF06 /* Tag+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tag+Create.m"; sourceTree = "<group>"; };
 		F490BB2117A0754200B9BF06 /* PASArtistCDTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASArtistCDTVC.h; sourceTree = "<group>"; };
@@ -117,6 +120,8 @@
 				F496645717A6D69900F6C005 /* Artist.m */,
 				F4A60FD417A05E7D008D8F6C /* CoreDataTableViewController.h */,
 				F4A60FD517A05E7D008D8F6C /* CoreDataTableViewController.m */,
+				F436925917AD31260042AF62 /* PASCDStack.h */,
+				F436925A17AD31260042AF62 /* PASCDStack.m */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -296,6 +301,7 @@
 				F496646417A6D71800F6C005 /* Album+LastFmFetchr.m in Sources */,
 				F496646717A6DD1D00F6C005 /* Artist+Accessors.m in Sources */,
 				F4E6AA0617AAAD3600BC0D9B /* Album.m in Sources */,
+				F436925B17AD31260042AF62 /* PASCDStack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 
 #import "PASArtistCDTVC.h"
 #import "LastFmFetchr.h"
+#import "PASCDStack.h"
 #import "Artist+LastFmFetchr.h"
 #import "Album+LastFmFetchr.h"
 #import "UIImageView+AFNetworking.h"
@@ -57,7 +58,13 @@
 	[super viewWillAppear:animated];
 	
 	if (!self.managedObjectContext) {
-		[self useDocument];
+		// Create the context
+		self.managedObjectContext = [[PASCDStack sharedInstance] mainThreadManagedObjectContext];
+		// If we CREATED the document, we should do an automatic refresh
+		// such that the user will see something
+		[self refresh];
+		// if we OPENED the document, we already have data
+		// and should jus display it
 	}
 }
 
@@ -139,48 +146,6 @@
 			
 		});
 	}
-}
-
-- (void)useDocument
-{
-	// This context is created by UIManagedDocument, MUST be on the main thread.
-	
-	NSURL *url = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Passions"];
-	UIManagedDocument *document = [[UIManagedDocument alloc] initWithFileURL:url];
-	
-	
-	if (![[NSFileManager defaultManager] fileExistsAtPath:[url path]]) {
-		// create it
-		[document saveToURL:url
-		   forSaveOperation:UIDocumentSaveForCreating
-		  completionHandler:^(BOOL success) {
-			  if (success) {
-				  self.managedObjectContext = document.managedObjectContext;
-				  [self refresh];
-				  // MOC created, inform all interested
-			  }
-		  }];
-		
-	} else if (document.documentState == UIDocumentStateClosed) {
-		// open it
-		[document openWithCompletionHandler:^(BOOL success) {
-			if (success) {
-				self.managedObjectContext = document.managedObjectContext;
-				// MOC created, inform all interested
-			};
-		}];
-		
-	} else {
-		NSLog(@"Document State %i", document.documentState);
-		// try to use it (there migth be other more problematic states which are ignored here
-		self.managedObjectContext = document.managedObjectContext;
-	}
-	NSLog(@"Using Document at %@", [url path]);
-}
-
-- (NSURL *)applicationDocumentsDirectory
-{
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
 #pragma mark - UITableViewControllerDataSource

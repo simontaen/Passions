@@ -8,14 +8,17 @@
 
 #import "PASAppDelegate.h"
 #import "LastFmFetchr.h"
+#import "PASCDStack.h"
 
 @implementation PASAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+	// Setup LastFmFetchr
 	[LastFmFetchr sharedManager].apiKey = @"aed3367b0133ab707cb4e5b6b04da3e7";
 	[LastFmFetchr sharedManager].apiSecret = @"d27f4af60d0c89152dedc7cf89ac1e89";
+	
     return YES;
 }
 							
