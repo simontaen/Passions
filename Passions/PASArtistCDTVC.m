@@ -40,12 +40,6 @@
 	}
 }
 
--(NSString *)segueName
-{
-	static NSString *name = @"setArtist:";
-	return name;
-}
-
 #pragma mark - View Lifecycle
 
 -(void)viewDidLoad
@@ -56,8 +50,6 @@
 	[self.refreshControl addTarget:self
 							action:@selector(refresh)
 				  forControlEvents:UIControlEventValueChanged];
-	[LastFmFetchr sharedManager].apiKey = @"aed3367b0133ab707cb4e5b6b04da3e7";
-	[LastFmFetchr sharedManager].apiSecret = @"d27f4af60d0c89152dedc7cf89ac1e89";
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -78,9 +70,9 @@
 	}
 	
 	if (indexPath) {
-		if ([segue.identifier isEqualToString:self.segueName]) {
+		if ([segue.identifier isEqualToString:kSegueName]) {
 			id obj = [self.fetchedResultsController objectAtIndexPath:indexPath];
-			SEL segueSel = NSSelectorFromString(self.segueName);
+			SEL segueSel = NSSelectorFromString(kSegueName);
 			
 			if ([segue.destinationViewController respondsToSelector:segueSel]) {
 #pragma clang diagnostic push
@@ -121,7 +113,7 @@
 {
 	[self.refreshControl beginRefreshing];
 	
-	dispatch_queue_t q = dispatch_queue_create("LastFm Artist load", 0);
+	dispatch_queue_t q = dispatch_queue_create("Last.fm artist load", 0);
 	
 	for (NSString *artist in [self sampleArtists]) {
 		
@@ -198,7 +190,7 @@
 	static NSString *cellIdentifier = @"Artist";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
 	
-	// use id to make abstract
+	// use id to make this method abstract
 	Artist *artist = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
 	cell.textLabel.text = [self titleForArtist:artist];
@@ -229,7 +221,7 @@
 		// no albums yet, need to fetch them
 		cell.detailTextLabel.text = @"Loading...";
 		
-		dispatch_queue_t q = dispatch_queue_create("Last.fm Album load", 0);
+		dispatch_queue_t q = dispatch_queue_create("Last.fm album load", 0);
 		dispatch_async(q, ^{
 			[[LastFmFetchr sharedManager] getAllAlbumsByArtist:artist.name mbid:nil success:^(LFMArtistGetTopAlbums *data) {
 				// put the artists in CoreData

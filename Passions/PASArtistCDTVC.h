@@ -8,7 +8,8 @@
 
 #import "CoreDataTableViewController.h"
 
+NSString *const kSegueName = @"setArtist:";
+
 @interface PASArtistCDTVC : CoreDataTableViewController
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, strong, nonatomic) NSString *segueName;
 @end
