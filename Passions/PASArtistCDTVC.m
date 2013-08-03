@@ -11,7 +11,7 @@
 #import "PASCDStack.h"
 #import "Artist+LastFmFetchr.h"
 #import "Album+LastFmFetchr.h"
-#import "UIImageView+AFNetworking.h"
+#import "UIApplication+Utilities.h"
 
 @implementation PASArtistCDTVC
 
@@ -62,7 +62,7 @@
 		self.managedObjectContext = [[PASCDStack sharedInstance] mainThreadManagedObjectContext];
 		// If we CREATED the document, we should do an automatic refresh
 		// such that the user will see something
-		[self refresh];
+		//[self refresh];
 		// if we OPENED the document, we already have data
 		// and should jus display it
 	}
@@ -99,18 +99,18 @@
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		/*
-		sampleArtists = @[
-					@"The Beatles", @"Air", @"Pink Floyd", @"Rammstein", @"Bloodhound Gang",
-	 @"Ancien Régime", @"Genius/GZA ", @"Belle & Sebastian", @"Björk",
-	 @"Ugress", @"ADELE", @"The Asteroids Galaxy Tour", @"Bar 9",
-	 @"Baskerville", @"Beastie Boys", @"Bee Gees", @"Bit Shifter",
-	 @"Bomfunk MC's", @"C-Mon & Kypski", @"The Cardigans", @"Carly Commando",
-	 @"Caro Emerald", @"Coldplay", @"Coolio", @"Cypress Hill",
-	 @"David Bowie", @"Deadmau5", @"Dukes of Stratosphear", @"[dunkelbunt]",
-	 @"Eminem", @"Enigma",
-	 ];
+		 sampleArtists = @[
+		 @"The Beatles", @"Air", @"Pink Floyd", @"Rammstein", @"Bloodhound Gang",
+		 @"Ancien Régime", @"Genius/GZA ", @"Belle & Sebastian", @"Björk",
+		 @"Ugress", @"ADELE", @"The Asteroids Galaxy Tour", @"Bar 9",
+		 @"Baskerville", @"Beastie Boys", @"Bee Gees", @"Bit Shifter",
+		 @"Bomfunk MC's", @"C-Mon & Kypski", @"The Cardigans", @"Carly Commando",
+		 @"Caro Emerald", @"Coldplay", @"Coolio", @"Cypress Hill",
+		 @"David Bowie", @"Deadmau5", @"Dukes of Stratosphear", @"[dunkelbunt]",
+		 @"Eminem", @"Enigma",
+		 ];
 		 */
-		sampleArtists = @[@"The Beatles", @"Air", @"Pink Floyd"];
+		sampleArtists = @[@"The Beatles", @"AC/DC", @"Pink Floyd"];
 		
 	});
 	return sampleArtists;
@@ -123,29 +123,27 @@
 	dispatch_queue_t q = dispatch_queue_create("Last.fm artist load", 0);
 	
 	for (NSString *artist in [self sampleArtists]) {
-		
 		dispatch_async(q, ^{
-			
-			[[LastFmFetchr sharedManager] getInfoForArtist:artist mbid:nil success:^(LFMArtistGetInfo *data) {
-				// put the artists in CoreData
-				[self.managedObjectContext performBlock:^{
-					// needs to happen on the contexts "native" queue!
-					[Artist artistWithLFMArtistGetInfo:data inManagedObjectContext:self.managedObjectContext];
-					dispatch_async(dispatch_get_main_queue(), ^{
-						[self.refreshControl endRefreshing];
-					});
-				}];
-				
-			} failure:^(NSOperation *operation, NSError *error) {
-				NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
-				dispatch_async(dispatch_get_main_queue(), ^{
-					[self.refreshControl endRefreshing];
-				});
-				
-			}];
-			
+			[[LastFmFetchr sharedManager] getInfoForArtist:artist
+													  mbid:nil
+												   success:^(LFMArtistGetInfo *data) {
+													   // put the artists in CoreData
+													   [self.managedObjectContext performBlock:^{
+														   // needs to happen on the contexts "native" queue!
+														   [Artist artistWithLFMArtistGetInfo:data inManagedObjectContext:self.managedObjectContext];
+														   dispatch_async(dispatch_get_main_queue(), ^{
+															   [self.refreshControl endRefreshing];
+														   });
+													   }];
+												   }
+												   failure:^(NSOperation *operation, NSError *error) {
+													   NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
+													   dispatch_async(dispatch_get_main_queue(), ^{
+														   [self.refreshControl endRefreshing];
+													   });
+												   }];
 		});
-	}
+	} // for artist in sampleArtists
 }
 
 #pragma mark - UITableViewControllerDataSource
@@ -159,9 +157,8 @@
 	Artist *artist = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
 	cell.textLabel.text = [self titleForArtist:artist];
-	[self detailTextForArtist:artist atCell:(UITableViewCell *)cell];
-	// This is cool but I wanted to cache the image data
-	//[cell.imageView setImageWithURL:[NSURL URLWithString:artist.thumbnailURL]];
+	[self detailTextForArtist:artist atCell:cell];
+	[self imageForArtist:artist atCell:cell];
 	
 	return cell;
 }
@@ -177,7 +174,6 @@
 {
 	// there are more efficient ways (countForFetchRequest:), but here it's good enough
 	NSUInteger noOfAlbums = [artist.albums count];
-
 	
 	if (noOfAlbums) {
 		cell.detailTextLabel.text = [self stringForNumberOfAlbums:noOfAlbums];
@@ -188,24 +184,26 @@
 		
 		dispatch_queue_t q = dispatch_queue_create("Last.fm album load", 0);
 		dispatch_async(q, ^{
-			[[LastFmFetchr sharedManager] getAllAlbumsByArtist:artist.name mbid:nil success:^(LFMArtistGetTopAlbums *data) {
-				// put the artists in CoreData
-				[self.managedObjectContext performBlock:^{
-					// needs to happen on the contexts "native" queue!
-					[Album albumsWithLFMArtistGetTopAlbums:data inManagedObjectContext:self.managedObjectContext];
-					dispatch_async(dispatch_get_main_queue(), ^{
-						cell.detailTextLabel.text = [self stringForNumberOfAlbums:noOfAlbums];
-						[self.refreshControl endRefreshing];
-					});
-				}];
-				
-			} failure:^(NSOperation *operation, NSError *error) {
-				NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
-				dispatch_async(dispatch_get_main_queue(), ^{
-					cell.detailTextLabel.text = @"Error while loading.";
-					[self.refreshControl endRefreshing];
-				});
-			}];
+			[[LastFmFetchr sharedManager] getAllAlbumsByArtist:artist.name
+														  mbid:nil
+													   success:^(LFMArtistGetTopAlbums *data) {
+														   // put the artists in CoreData
+														   [self.managedObjectContext performBlock:^{
+															   // needs to happen on the contexts "native" queue!
+															   NSArray *albums = [Album albumsWithLFMArtistGetTopAlbums:data inManagedObjectContext:self.managedObjectContext];
+															   dispatch_async(dispatch_get_main_queue(), ^{
+																   cell.detailTextLabel.text = [self stringForNumberOfAlbums:[albums count]];
+																   //[self.refreshControl endRefreshing];
+															   });
+														   }];
+													   }
+													   failure:^(NSOperation *operation, NSError *error) {
+														   NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
+														   dispatch_async(dispatch_get_main_queue(), ^{
+															   cell.detailTextLabel.text = @"Error while loading.";
+															   //[self.refreshControl endRefreshing];
+														   });
+													   }];
 		});
 	}
 }
@@ -218,6 +216,42 @@
 		return [NSString stringWithFormat:@"%d Albums", noOfAlbums];
 	}
 }
+
+- (void)imageForArtist:(Artist *)artist atCell:(UITableViewCell *)cell
+{
+	// This is cool but I need to cache the image data
+	// [cell.imageView setImageWithURL:[NSURL URLWithString:artist.thumbnailURL]];
+	
+    NSData __block *thumbnailData = artist.thumbnail;
+	
+	if (!thumbnailData) {
+		// set a default background image
+		// TODO
+		// need to fetch it first, do it on background
+		dispatch_queue_t q = dispatch_queue_create("Thumbnail Fetcher", 0);
+		dispatch_async(q, ^{
+			NSURL *thumbnailURL = [NSURL URLWithString:artist.thumbnailURL];
+			[[UIApplication sharedApplication] enableNetworkActivity];
+			thumbnailData = [NSData dataWithContentsOfURL:thumbnailURL];
+			[[UIApplication sharedApplication] disableNetworkActivity];
+			
+			//[artist.managedObjectContext performBlock:^{
+            // set on the DB
+            artist.thumbnail = thumbnailData;
+			//}];
+			
+			// set on the tableview
+			UIImage *image = [UIImage imageWithData:thumbnailData];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				cell.imageView.image = image;
+			});
+		});
+	} else {
+		// data exists, set the image
+		cell.imageView.image = [UIImage imageWithData:thumbnailData];
+	}
+}
+
 
 #pragma mark - Memory management
 
