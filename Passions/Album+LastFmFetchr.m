@@ -48,6 +48,7 @@
 						albumId:[data idNumber]
 					   imageURL:url
 						   name:[data name]
+				   rankInArtist:nil
 					releaseDate:[data releasedateDate]
 					  thumbnail:nil
 				   thumbnailURL:[data imageSmall]
@@ -56,13 +57,63 @@
 						topTags:topTagsSet
 						 tracks:nil];
 	
-        
+	
+}
+
++ (NSArray *)albumsWithLFMArtistGetTopAlbums:(LFMArtistGetTopAlbums *)data inManagedObjectContext:(NSManagedObjectContext *)context
+{
+	NSString *artistName = [data artistName];
+	NSArray *albumsData = [data artistsAlbumList];
+	NSMutableArray *albums = [NSMutableArray arrayWithCapacity:[albumsData count]];
+
+	for (LFMAlbumTopAlbum *albumData in albumsData) {
+		Album *aAlbum = [self albumWithLFMAlbumTopAlbum:albumData andArtistName:artistName inManagedObjectContext:context];
+		[albums addObject:aAlbum];
+	}
+	return albums;
+}
+
++ (Album *)albumWithLFMAlbumTopAlbum:(LFMAlbumTopAlbum *)data andArtistName:(NSString *)artistName inManagedObjectContext:(NSManagedObjectContext *)context
+{
+	
+	NSString *url = nil;
+	switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
+		case UIUserInterfaceIdiomPad:
+			url = [data imageExtraLarge];
+			break;
+		default:
+			url = [data imageLarge];
+			break;
+	}
+	
+	// create artists
+	Artist *albumArtist = [Artist artistWithName:artistName inManagedObjectContext:context];
+	NSSet *artists = nil;
+	if (albumArtist) {
+		artists = [NSSet setWithObject:albumArtist];
+	}
+	
+	return [self albumInContext:context
+						albumId:nil
+					   imageURL:url
+						   name:[data name]
+				   rankInArtist:[data rankInAllArtistAlbumsNumber]
+					releaseDate:nil
+					  thumbnail:nil
+				   thumbnailURL:[data imageSmall]
+						 unique:[data musicBrianzId]
+						artists:artists
+						topTags:nil
+						 tracks:nil];
+	
+	
 }
 
 + (Album *)albumInContext:(NSManagedObjectContext *)context
 				  albumId:(NSNumber *)albumId
 				 imageURL:(NSString *)imageURL
 					 name:(NSString *)name
+			 rankInArtist:(NSNumber *)rankInArtist
 			  releaseDate:(NSDate *)releaseDate
 				thumbnail:(NSData *)thumbnail
 			 thumbnailURL:(NSString *)thumbnailURL
@@ -98,6 +149,9 @@
 			}
 			if (name) {
 				album.name = name;
+			}
+			if (rankInArtist) {
+				album.rankInArtist = rankInArtist;
 			}
 			if (releaseDate) {
 				album.releaseDate = releaseDate;

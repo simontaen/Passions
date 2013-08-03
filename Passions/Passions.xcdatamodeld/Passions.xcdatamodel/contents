@@ -4,6 +4,7 @@
         <attribute name="albumId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rankInArtist" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="releaseDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
@@ -38,7 +39,7 @@
         <relationship name="artists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Artist" inverseName="tracks" inverseEntity="Artist" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Album" positionX="-153" positionY="-0" width="128" height="193"/>
+        <element name="Album" positionX="-153" positionY="-0" width="128" height="210"/>
         <element name="Artist" positionX="169" positionY="209" width="128" height="178"/>
         <element name="Tag" positionX="-191" positionY="243" width="128" height="103"/>
         <element name="Track" positionX="-407" positionY="254" width="128" height="133"/>

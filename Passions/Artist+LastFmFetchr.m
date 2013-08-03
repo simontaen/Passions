@@ -11,7 +11,7 @@
 
 @implementation Artist (LastFmFetchr)
 
-+ (Artist *)artistWithLFMArtistsGetInfo:(LFMArtistsGetInfo *)data inManagedObjectContext:(NSManagedObjectContext *)context;
++ (Artist *)artistWithLFMArtistGetInfo:(LFMArtistGetInfo *)data inManagedObjectContext:(NSManagedObjectContext *)context;
 {
 	Artist *artist = nil;
 	

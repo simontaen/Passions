@@ -9,6 +9,7 @@
 #import "PASArtistCDTVC.h"
 #import "LastFmFetchr.h"
 #import "Artist+LastFmFetchr.h"
+#import "Album+LastFmFetchr.h"
 #import "UIImageView+AFNetworking.h"
 
 @implementation PASArtistCDTVC
@@ -125,22 +126,25 @@
 	for (NSString *artist in [self sampleArtists]) {
 		
 		dispatch_async(q, ^{
-			[[LastFmFetchr sharedManager] getInfoForArtist:artist mbid:nil success:^(LFMArtistsGetInfo *data) {
-				// put the photos in CoreData
+			
+			[[LastFmFetchr sharedManager] getInfoForArtist:artist mbid:nil success:^(LFMArtistGetInfo *data) {
+				// put the artists in CoreData
 				[self.managedObjectContext performBlock:^{
 					// needs to happen on the contexts "native" queue!
-					[Artist artistWithLFMArtistsGetInfo:data inManagedObjectContext:self.managedObjectContext];
+					[Artist artistWithLFMArtistGetInfo:data inManagedObjectContext:self.managedObjectContext];
 					dispatch_async(dispatch_get_main_queue(), ^{
 						[self.refreshControl endRefreshing];
 					});
 				}];
-
+				
 			} failure:^(NSOperation *operation, NSError *error) {
 				NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
 				dispatch_async(dispatch_get_main_queue(), ^{
 					[self.refreshControl endRefreshing];
 				});
+				
 			}];
+			
 		});
 	}
 }
@@ -197,8 +201,8 @@
 	// use id to make abstract
 	Artist *artist = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
-	cell.textLabel.text = [self titleForTag:artist];
-	cell.detailTextLabel.text = [self detailTextForTag:artist];
+	cell.textLabel.text = [self titleForArtist:artist];
+	[self detailTextForArtist:artist atCell:(UITableViewCell *)cell];
 	// This is cool but I wanted to cache the image data
 	//[cell.imageView setImageWithURL:[NSURL URLWithString:artist.thumbnailURL]];
 	
@@ -207,24 +211,55 @@
 
 #pragma mark - UITableViewDataSource Helpers
 
-- (NSString *)titleForTag:(Artist *)artist
+- (NSString *)titleForArtist:(Artist *)artist
 {
 	return artist.name;
 }
 
-- (NSString *)detailTextForTag:(Artist *)artist
+- (void)detailTextForArtist:(Artist *)artist atCell:(UITableViewCell *)cell
 {
-	NSString *detailText = @"";
-	
 	// there are more efficient ways (countForFetchRequest:), but here it's good enough
-	NSUInteger noOfPhotos = [artist.tags count];
-	if (noOfPhotos == 1) {
-		detailText = [NSString stringWithFormat:@"%d tag", noOfPhotos];
-	} else {
-		detailText = [NSString stringWithFormat:@"%d Tags", noOfPhotos];
-	}
+	NSUInteger noOfAlbums = [artist.albums count];
+
 	
-	return detailText;
+	if (noOfAlbums) {
+		cell.detailTextLabel.text = [self stringForNumberOfAlbums:noOfAlbums];
+		
+	} else {
+		// no albums yet, need to fetch them
+		cell.detailTextLabel.text = @"Loading...";
+		
+		dispatch_queue_t q = dispatch_queue_create("Last.fm Album load", 0);
+		dispatch_async(q, ^{
+			[[LastFmFetchr sharedManager] getAllAlbumsByArtist:artist.name mbid:nil success:^(LFMArtistGetTopAlbums *data) {
+				// put the artists in CoreData
+				[self.managedObjectContext performBlock:^{
+					// needs to happen on the contexts "native" queue!
+					[Album albumsWithLFMArtistGetTopAlbums:data inManagedObjectContext:self.managedObjectContext];
+					dispatch_async(dispatch_get_main_queue(), ^{
+						cell.detailTextLabel.text = [self stringForNumberOfAlbums:noOfAlbums];
+						[self.refreshControl endRefreshing];
+					});
+				}];
+				
+			} failure:^(NSOperation *operation, NSError *error) {
+				NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
+				dispatch_async(dispatch_get_main_queue(), ^{
+					cell.detailTextLabel.text = @"Error while loading.";
+					[self.refreshControl endRefreshing];
+				});
+			}];
+		});
+	}
+}
+
+- (NSString *)stringForNumberOfAlbums:(NSUInteger)noOfAlbums
+{
+	if (noOfAlbums == 1) {
+		return [NSString stringWithFormat:@"%d Album", noOfAlbums];
+	} else {
+		return [NSString stringWithFormat:@"%d Albums", noOfAlbums];
+	}
 }
 
 #pragma mark - Memory management
