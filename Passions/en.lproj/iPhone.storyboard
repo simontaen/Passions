@@ -52,10 +52,10 @@
             </objects>
             <point key="canvasLocation" x="860" y="113"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Artists AlbumsCDTVC-->
         <scene sceneID="b8B-1v-Uhm">
             <objects>
-                <tableViewController id="RDo-pV-M4k" sceneMemberID="viewController">
+                <tableViewController id="RDo-pV-M4k" customClass="PASArtistsAlbumsCDTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="nvJ-Ig-JC4">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -119,6 +119,9 @@
         </class>
         <class className="PASArtistCDTVC" superclassName="CoreDataTableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PASArtistCDTVC.h"/>
+        </class>
+        <class className="PASArtistsAlbumsCDTVC" superclassName="CoreDataTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PASArtistsAlbumsCDTVC.h"/>
         </class>
         <class className="UIRefreshControl" superclassName="UIControl">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UIRefreshControl.h"/>

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		65F86A33B682476FBAAC9AE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF473646EE4645ECB8A1B050 /* libPods.a */; };
 		F436925B17AD31260042AF62 /* PASCDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F436925A17AD31260042AF62 /* PASCDStack.m */; };
+		F436926417AD43850042AF62 /* PASArtistsAlbumsCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F436926317AD43850042AF62 /* PASArtistsAlbumsCDTVC.m */; };
 		F438692A17A55CE6000B7817 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */; };
 		F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */; };
 		F490BB0E17A0708D00B9BF06 /* Tag+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = F490BB0D17A0708D00B9BF06 /* Tag+Create.m */; };
@@ -41,6 +42,8 @@
 		D420301400214166998C1AC5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		F436925917AD31260042AF62 /* PASCDStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASCDStack.h; sourceTree = "<group>"; };
 		F436925A17AD31260042AF62 /* PASCDStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASCDStack.m; sourceTree = "<group>"; };
+		F436926217AD43850042AF62 /* PASArtistsAlbumsCDTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASArtistsAlbumsCDTVC.h; sourceTree = "<group>"; };
+		F436926317AD43850042AF62 /* PASArtistsAlbumsCDTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASArtistsAlbumsCDTVC.m; sourceTree = "<group>"; };
 		F490BB0C17A0708D00B9BF06 /* Tag+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tag+Create.h"; sourceTree = "<group>"; };
 		F490BB0D17A0708D00B9BF06 /* Tag+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tag+Create.m"; sourceTree = "<group>"; };
 		F490BB2117A0754200B9BF06 /* PASArtistCDTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASArtistCDTVC.h; sourceTree = "<group>"; };
@@ -167,6 +170,8 @@
 				F4A7798F1793113E00C770B9 /* iPhone.storyboard */,
 				F490BB2117A0754200B9BF06 /* PASArtistCDTVC.h */,
 				F490BB2217A0754200B9BF06 /* PASArtistCDTVC.m */,
+				F436926217AD43850042AF62 /* PASArtistsAlbumsCDTVC.h */,
+				F436926317AD43850042AF62 /* PASArtistsAlbumsCDTVC.m */,
 				F4A7797E1793113E00C770B9 /* Supporting Files */,
 				F4A60FCD17A059DF008D8F6C /* CoreData */,
 			);
@@ -307,6 +312,7 @@
 				F496646717A6DD1D00F6C005 /* Artist+Accessors.m in Sources */,
 				F4E6AA0617AAAD3600BC0D9B /* Album.m in Sources */,
 				F436925B17AD31260042AF62 /* PASCDStack.m in Sources */,
+				F436926417AD43850042AF62 /* PASArtistsAlbumsCDTVC.m in Sources */,
 				F49655C417AD6DD600566960 /* UIApplication+Utilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

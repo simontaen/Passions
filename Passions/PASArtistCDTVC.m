@@ -62,7 +62,7 @@
 		self.managedObjectContext = [[PASCDStack sharedInstance] mainThreadManagedObjectContext];
 		// If we CREATED the document, we should do an automatic refresh
 		// such that the user will see something
-		//[self refresh];
+		[self refresh];
 		// if we OPENED the document, we already have data
 		// and should jus display it
 	}
@@ -156,25 +156,21 @@
 	// use id to make this method abstract
 	Artist *artist = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
-	cell.textLabel.text = [self titleForArtist:artist];
+	cell.textLabel.text = artist.name;
 	[self detailTextForArtist:artist atCell:cell];
-	[self imageForArtist:artist atCell:cell];
+	[self thumbnailForArtist:artist atCell:cell];
 	
 	return cell;
 }
 
 #pragma mark - UITableViewDataSource Helpers
 
-- (NSString *)titleForArtist:(Artist *)artist
-{
-	return artist.name;
-}
-
 - (void)detailTextForArtist:(Artist *)artist atCell:(UITableViewCell *)cell
 {
 	// there are more efficient ways (countForFetchRequest:), but here it's good enough
 	NSUInteger noOfAlbums = [artist.albums count];
 	
+	// TODO: needs better check, 2 requests are sent b/c of background load
 	if (noOfAlbums) {
 		cell.detailTextLabel.text = [self stringForNumberOfAlbums:noOfAlbums];
 		
@@ -182,7 +178,7 @@
 		// no albums yet, need to fetch them
 		cell.detailTextLabel.text = @"Loading...";
 		
-		dispatch_queue_t q = dispatch_queue_create("Last.fm album load", 0);
+		dispatch_queue_t q = dispatch_queue_create("Last.fm all albums by artist load", 0);
 		dispatch_async(q, ^{
 			[[LastFmFetchr sharedManager] getAllAlbumsByArtist:artist.name
 														  mbid:nil
@@ -217,7 +213,7 @@
 	}
 }
 
-- (void)imageForArtist:(Artist *)artist atCell:(UITableViewCell *)cell
+- (void)thumbnailForArtist:(Artist *)artist atCell:(UITableViewCell *)cell
 {
 	// This is cool but I need to cache the image data
 	// [cell.imageView setImageWithURL:[NSURL URLWithString:artist.thumbnailURL]];
@@ -251,7 +247,6 @@
 		cell.imageView.image = [UIImage imageWithData:thumbnailData];
 	}
 }
-
 
 #pragma mark - Memory management
 

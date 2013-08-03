@@ -134,6 +134,7 @@
 		if (!matches || ([matches count] > 1)) {
 			// handle error
 			NSLog(@"Error in album creation");
+			return nil;
 			
 		} else if (![matches count]) {
 			// create the entity
@@ -174,6 +175,39 @@
 		} else {
 			// entity exist
 			album = [matches lastObject];
+			
+			// update the found entity
+			// set attributes
+			if (albumId && !album.albumId) {
+				album.albumId = albumId;
+			}
+			if (imageURL && !album.imageURL) {
+				album.imageURL = imageURL;
+			}
+			if (name && !album.name) {
+				album.name = name;
+			}
+			if (rankInArtist && !album.rankInArtist) {
+				album.rankInArtist = rankInArtist;
+			}
+			if (releaseDate && !album.releaseDate) {
+				album.releaseDate = releaseDate;
+			}
+			if (thumbnail && !album.thumbnail) {
+				album.thumbnail = thumbnail;
+			}
+			if (thumbnailURL && !album.thumbnailURL) {
+				album.thumbnailURL = thumbnailURL;
+			}
+			if (artists && !album.artists) {
+				album.artists = artists;
+			}
+			if (topTags && !album.topTags) {
+				album.topTags = topTags;
+			}
+			if (tracks && !album.tracks) {
+				album.tracks = tracks;
+			}
 		}
 	}
 	return album;
