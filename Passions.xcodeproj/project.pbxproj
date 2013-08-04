@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		65F86A33B682476FBAAC9AE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF473646EE4645ECB8A1B050 /* libPods.a */; };
+		F409BBDF17ADC73A00091B7A /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = F409BBDE17ADC73A00091B7A /* image.png */; };
+		F409BBE217ADC75600091B7A /* image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F409BBE117ADC75600091B7A /* image@2x.png */; };
 		F436925B17AD31260042AF62 /* PASCDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F436925A17AD31260042AF62 /* PASCDStack.m */; };
 		F436926417AD43850042AF62 /* PASArtistsAlbumsCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F436926317AD43850042AF62 /* PASArtistsAlbumsCDTVC.m */; };
 		F438692A17A55CE6000B7817 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */; };
@@ -40,6 +42,8 @@
 /* Begin PBXFileReference section */
 		CF473646EE4645ECB8A1B050 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D420301400214166998C1AC5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		F409BBDE17ADC73A00091B7A /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image.png; sourceTree = "<group>"; };
+		F409BBE117ADC75600091B7A /* image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "image@2x.png"; sourceTree = "<group>"; };
 		F436925917AD31260042AF62 /* PASCDStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASCDStack.h; sourceTree = "<group>"; };
 		F436925A17AD31260042AF62 /* PASCDStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASCDStack.m; sourceTree = "<group>"; };
 		F436926217AD43850042AF62 /* PASArtistsAlbumsCDTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASArtistsAlbumsCDTVC.h; sourceTree = "<group>"; };
@@ -104,6 +108,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F409BBE017ADC74000091B7A /* Visuals */ = {
+			isa = PBXGroup;
+			children = (
+				F409BBDE17ADC73A00091B7A /* image.png */,
+				F409BBE117ADC75600091B7A /* image@2x.png */,
+			);
+			name = Visuals;
+			sourceTree = "<group>";
+		};
 		F4A60FCD17A059DF008D8F6C /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +185,7 @@
 				F490BB2217A0754200B9BF06 /* PASArtistCDTVC.m */,
 				F436926217AD43850042AF62 /* PASArtistsAlbumsCDTVC.h */,
 				F436926317AD43850042AF62 /* PASArtistsAlbumsCDTVC.m */,
+				F409BBE017ADC74000091B7A /* Visuals */,
 				F4A7797E1793113E00C770B9 /* Supporting Files */,
 				F4A60FCD17A059DF008D8F6C /* CoreData */,
 			);
@@ -255,6 +269,8 @@
 				F4A7798C1793113E00C770B9 /* Default@2x.png in Resources */,
 				F4A7798E1793113E00C770B9 /* Default-568h@2x.png in Resources */,
 				F4A779911793113E00C770B9 /* iPhone.storyboard in Resources */,
+				F409BBDF17ADC73A00091B7A /* image.png in Resources */,
+				F409BBE217ADC75600091B7A /* image@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

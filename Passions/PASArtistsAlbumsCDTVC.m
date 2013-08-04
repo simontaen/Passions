@@ -10,7 +10,9 @@
 #import "LastFmFetchr.h"
 #import	"Album+LastFmFetchr.h"
 #import "NSDate+Helper.h"
-#import "UIApplication+Utilities.h"
+#import "UIImageView+AFNetworking.h"
+//#import "AFImageRequestOperation.h"
+//#import "UIApplication+Utilities.h"
 
 @implementation PASArtistsAlbumsCDTVC
 
@@ -101,32 +103,27 @@
 		// no albums yet, need to fetch them
 		cell.detailTextLabel.text = @"Loading...";
 		
-		dispatch_queue_t q = dispatch_queue_create("Last.fm album info load", 0);
-		dispatch_async(q, ^{
-			[[LastFmFetchr sharedManager] getInfoForAlbum:album.name
-												 byArtist:self.artist.name
-													 mbid:nil
-												  success:^(LFMAlbumGetInfo *data) {
-													  // put the artists in CoreData
-													  [album.managedObjectContext performBlock:^{
-														  // needs to happen on the contexts "native" queue!
-														  Album *updatedAlbum = [Album albumWithLFMAlbumGetInfo:data inManagedObjectContext:album.managedObjectContext];
-														  dispatch_async(dispatch_get_main_queue(), ^{
-															  NSString *date = [self formattedDateStringForAlbum:updatedAlbum];
-															  //NSLog(@"%@ was released at %@", updatedAlbum.name, date);
-															  cell.detailTextLabel.text = date;
-															  //[self.refreshControl endRefreshing];
-														  });
-													  }];
-												  }
-												  failure:^(NSOperation *operation, NSError *error) {
-													  NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
+		[[LastFmFetchr sharedManager] getInfoForAlbum:album.name
+											 byArtist:self.artist.name
+												 mbid:nil
+											  success:^(LFMAlbumGetInfo *data) {
+												  // put the artists in CoreData
+												  [album.managedObjectContext performBlock:^{
+													  // needs to happen on the contexts "native" queue!
+													  Album *updatedAlbum = [Album albumWithLFMAlbumGetInfo:data inManagedObjectContext:album.managedObjectContext];
 													  dispatch_async(dispatch_get_main_queue(), ^{
-														  cell.detailTextLabel.text = @"Error while loading.";
+														  cell.detailTextLabel.text = [self formattedDateStringForAlbum:updatedAlbum];;
 														  //[self.refreshControl endRefreshing];
 													  });
 												  }];
-		});
+											  }
+											  failure:^(NSOperation *operation, NSError *error) {
+												  NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
+												  dispatch_async(dispatch_get_main_queue(), ^{
+													  cell.detailTextLabel.text = @"Error while loading.";
+													  //[self.refreshControl endRefreshing];
+												  });
+											  }];
 	}
 }
 
@@ -141,37 +138,11 @@
 
 - (void)thumbnailForAlbum:(Album *)album atCell:(UITableViewCell *)cell
 {
-	// This is cool but I need to cache the image data
-	// [cell.imageView setImageWithURL:[NSURL URLWithString:artist.thumbnailURL]];
+	// This is cool but I wanted to cache the image in CoreData
+	// Apparently this uses a custom NSCache subclass to cache the image..
+	[cell.imageView setImageWithURL:[NSURL URLWithString:album.thumbnailURL]
+				   placeholderImage:[UIImage imageNamed:@"image.png"]];
 	
-    NSData __block *thumbnailData = album.thumbnail;
-	
-	if (!thumbnailData) {
-		// set a default background image
-		// TODO
-		// need to fetch it first, do it on background
-		dispatch_queue_t q = dispatch_queue_create("Thumbnail Fetcher", 0);
-		dispatch_async(q, ^{
-			NSURL *thumbnailURL = [NSURL URLWithString:album.thumbnailURL];
-			[[UIApplication sharedApplication] enableNetworkActivity];
-			thumbnailData = [NSData dataWithContentsOfURL:thumbnailURL];
-			[[UIApplication sharedApplication] disableNetworkActivity];
-			
-			//[artist.managedObjectContext performBlock:^{
-            // set on the DB
-            album.thumbnail = thumbnailData;
-			//}];
-			
-			// set on the tableview
-			UIImage *image = [UIImage imageWithData:thumbnailData];
-			dispatch_async(dispatch_get_main_queue(), ^{
-				cell.imageView.image = image;
-			});
-		});
-	} else {
-		// data exists, set the image
-		cell.imageView.image = [UIImage imageWithData:thumbnailData];
-	}
 }
 
 #pragma mark - Memory management

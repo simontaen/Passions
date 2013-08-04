@@ -63,6 +63,8 @@
 	} else {
 		// entity exist
 		artist = [matches lastObject];
+		
+		// updating?
 	}
 	
 	return artist;
