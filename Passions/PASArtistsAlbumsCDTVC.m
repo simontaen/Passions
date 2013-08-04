@@ -49,6 +49,16 @@
 {
 	[super viewDidLoad];
 	self.clearsSelectionOnViewWillAppear = NO;
+	[self.refreshControl addTarget:self
+							action:@selector(refresh)
+				  forControlEvents:UIControlEventValueChanged];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	// TODO: This is overkill
+	//[self refresh];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -71,18 +81,19 @@
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 				[segue.destinationViewController performSelector:segueSel withObject:url];
 #pragma clang diagnostic pop
-				[segue.destinationViewController setTitle:album.name];
-				//album.lastAccessed = [NSDate date];
 			}
 		}
 	}
 }
+
+#pragma mark - UITableViewControllerDataSource
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	static NSString *cellIdentifier = @"Album";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
 	
+	// this might be out of sync because of background loading!
 	Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
 	cell.textLabel.text = album.name;
@@ -96,13 +107,12 @@
 
 - (void)detailTextForAlbum:(Album *)album atCell:(UITableViewCell *)cell
 {
-	if (album.releaseDate) {
-		cell.detailTextLabel.text = [self formattedDateStringForAlbum:album];
-		
-	} else {
-		// no albums yet, need to fetch them
-		cell.detailTextLabel.text = @"Loading...";
-		
+	if (!album.releaseDate && [album.isLoading isEqual:@NO]) {
+		// album has no releaseDate, try to fetch it
+		//cell.detailTextLabel.text = @"Loading...";
+		[self incrementRefreshing];
+		album.isLoading = @YES;
+		//NSLog(@"loading %@", album.name);
 		[[LastFmFetchr sharedManager] getInfoForAlbum:album.name
 											 byArtist:self.artist.name
 												 mbid:nil
@@ -112,27 +122,36 @@
 													  // needs to happen on the contexts "native" queue!
 													  Album *updatedAlbum = [Album albumWithLFMAlbumGetInfo:data inManagedObjectContext:album.managedObjectContext];
 													  dispatch_async(dispatch_get_main_queue(), ^{
+														  updatedAlbum.isLoading = @NO;
+														  //NSLog(@"ended %@", updatedAlbum.name);
 														  cell.detailTextLabel.text = [self formattedDateStringForAlbum:updatedAlbum];;
-														  //[self.refreshControl endRefreshing];
+														  [self decrementRefreshing];
 													  });
 												  }];
 											  }
 											  failure:^(NSOperation *operation, NSError *error) {
 												  NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
 												  dispatch_async(dispatch_get_main_queue(), ^{
+													  album.isLoading = @NO;
 													  cell.detailTextLabel.text = @"Error while loading.";
-													  //[self.refreshControl endRefreshing];
+													  [self decrementRefreshing];
 												  });
 											  }];
 	}
+	cell.detailTextLabel.text = [self formattedDateStringForAlbum:album];
 }
 
 - (NSString *)formattedDateStringForAlbum:(Album *)album
 {
+	if ([album.isLoading isEqual:@YES]) {
+		return @"Loading...";
+	}
 	NSString *date = [album.releaseDate stringWithFormat:[NSDate dateFormatString]];
 	if (date) {
 		return date;
 	}
+	// did already load + no releaseDate
+	// must be unknown
 	return @"unknown";
 }
 
@@ -140,9 +159,39 @@
 {
 	// This is cool but I wanted to cache the image in CoreData
 	// Apparently this uses a custom NSCache subclass to cache the image..
-	[cell.imageView setImageWithURL:[NSURL URLWithString:album.thumbnailURL]
-				   placeholderImage:[UIImage imageNamed:@"image.png"]];
+	//[cell.imageView setImageWithURL:[NSURL URLWithString:album.thumbnailURL] placeholderImage:[UIImage imageNamed:@"image.png"]];
 	
+}
+
+#pragma mark - Document and data management
+
+- (IBAction)refresh
+{
+	for (Album *album in self.artist.albums) {
+		[self incrementRefreshing];
+		album.isLoading = @YES;
+		[[LastFmFetchr sharedManager] getInfoForAlbum:album.name
+											 byArtist:self.artist.name
+												 mbid:nil
+											  success:^(LFMAlbumGetInfo *data) {
+												  // put the artists in CoreData
+												  [album.managedObjectContext performBlock:^{
+													  // needs to happen on the contexts "native" queue!
+													  [Album albumWithLFMAlbumGetInfo:data inManagedObjectContext:album.managedObjectContext];
+													  dispatch_async(dispatch_get_main_queue(), ^{
+														  album.isLoading = @NO;
+														  [self decrementRefreshing];
+													  });
+												  }];
+											  }
+											  failure:^(NSOperation *operation, NSError *error) {
+												  NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
+												  dispatch_async(dispatch_get_main_queue(), ^{
+													  album.isLoading = @NO;
+													  [self decrementRefreshing];
+												  });
+											  }];
+	}
 }
 
 #pragma mark - Memory management

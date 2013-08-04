@@ -2,7 +2,7 @@
 //  Album.m
 //  Passions
 //
-//  Created by Simon Tännler on 01/08/13.
+//  Created by Simon Tännler on 04/08/13.
 //  Copyright (c) 2013 edgeguard. All rights reserved.
 //
 
@@ -17,11 +17,12 @@
 @dynamic albumId;
 @dynamic imageURL;
 @dynamic name;
+@dynamic rankInArtist;
 @dynamic releaseDate;
 @dynamic thumbnail;
 @dynamic thumbnailURL;
 @dynamic unique;
-@dynamic rankInArtist;
+@dynamic isLoading;
 @dynamic artists;
 @dynamic topTags;
 @dynamic tracks;

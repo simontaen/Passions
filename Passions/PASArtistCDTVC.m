@@ -69,11 +69,12 @@
 	if (!self.managedObjectContext) {
 		// Create the context
 		self.managedObjectContext = [[PASCDStack sharedInstance] mainThreadManagedObjectContext];
+		// TODO
 		// If we CREATED the document, we should do an automatic refresh
 		// such that the user will see something
 		[self refresh];
 		// if we OPENED the document, we already have data
-		// and should jus display it
+		// and should just display it
 	}
 }
 
@@ -127,9 +128,8 @@
 
 - (IBAction)refresh
 {
-	[self.refreshControl beginRefreshing];
-	
 	for (NSString *artist in [self sampleArtists]) {
+		[self incrementRefreshing];
 		[[LastFmFetchr sharedManager] getInfoForArtist:artist
 												  mbid:nil
 											   success:^(LFMArtistGetInfo *data) {
@@ -138,14 +138,14 @@
 													   // needs to happen on the contexts "native" queue!
 													   [Artist artistWithLFMArtistGetInfo:data inManagedObjectContext:self.managedObjectContext];
 													   dispatch_async(dispatch_get_main_queue(), ^{
-														   [self.refreshControl endRefreshing];
+														   [self decrementRefreshing];
 													   });
 												   }];
 											   }
 											   failure:^(NSOperation *operation, NSError *error) {
 												   NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
 												   dispatch_async(dispatch_get_main_queue(), ^{
-													   [self.refreshControl endRefreshing];
+													   [self decrementRefreshing];
 												   });
 											   }];
 	} // for artist in sampleArtists
@@ -182,6 +182,7 @@
 	} else if (!self.runningOperations[artist.unique]) {
 		// no albums yet, need to fetch them
 		cell.detailTextLabel.text = @"Loading Albums...";
+		[self incrementRefreshing];
 		self.runningOperations[artist.unique] = [[LastFmFetchr sharedManager] getAllAlbumsByArtist:artist.name
 																							  mbid:nil
 																						   success:^(LFMArtistGetTopAlbums *data) {
@@ -193,7 +194,7 @@
 																								   NSLog(@"Finished albums for %@", artist.name);
 																								   dispatch_async(dispatch_get_main_queue(), ^{
 																									   cell.detailTextLabel.text = [self stringForNumberOfAlbums:[albums count]];
-																									   //[self.refreshControl endRefreshing];
+																									   [self decrementRefreshing];
 																								   });
 																							   }];
 																						   }
@@ -202,7 +203,7 @@
 																							   [self.runningOperations removeObjectForKey:artist.unique];
 																							   dispatch_async(dispatch_get_main_queue(), ^{
 																								   cell.detailTextLabel.text = @"Error while loading.";
-																								   //[self.refreshControl endRefreshing];
+																								   [self decrementRefreshing];
 																							   });
 																						   }];
 	}

@@ -44,12 +44,16 @@
 	// create tracks
 	//NSArray *tracks = [JSON albumTracksArray];
 	
+	//
+	NSDate *date = [data releasedateDate];
+	
 	return [self albumInContext:context
 						albumId:[data idNumber]
 					   imageURL:url
+					  isLoading:nil
 						   name:[data name]
 				   rankInArtist:nil
-					releaseDate:[data releasedateDate]
+					releaseDate:(date ? date : [NSDate dateWithTimeIntervalSince1970:-47304000000])
 					  thumbnail:nil
 				   thumbnailURL:[data imageSmall]
 						 unique:[data musicBrianzId]
@@ -96,6 +100,7 @@
 	return [self albumInContext:context
 						albumId:nil
 					   imageURL:url
+					  isLoading:nil
 						   name:[data name]
 				   rankInArtist:[data rankInAllArtistAlbumsNumber]
 					releaseDate:nil
@@ -112,6 +117,7 @@
 + (Album *)albumInContext:(NSManagedObjectContext *)context
 				  albumId:(NSNumber *)albumId
 				 imageURL:(NSString *)imageURL
+				isLoading:(NSNumber *)isLoading
 					 name:(NSString *)name
 			 rankInArtist:(NSNumber *)rankInArtist
 			  releaseDate:(NSDate *)releaseDate
@@ -148,6 +154,11 @@
 			if (imageURL) {
 				album.imageURL = imageURL;
 			}
+			if (isLoading) {
+				album.isLoading = isLoading;
+			} else {
+				album.isLoading = @NO;
+			}
 			if (name) {
 				album.name = name;
 			}
@@ -183,6 +194,9 @@
 			}
 			if (imageURL && !album.imageURL) {
 				album.imageURL = imageURL;
+			}
+			if (isLoading && !album.isLoading) {
+				album.isLoading = isLoading;
 			}
 			if (name && !album.name) {
 				album.name = name;

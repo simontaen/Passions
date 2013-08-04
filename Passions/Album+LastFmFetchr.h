@@ -18,6 +18,7 @@
 + (Album *)albumInContext:(NSManagedObjectContext *)context
 				  albumId:(NSNumber *)albumId
 				 imageURL:(NSString *)imageURL
+				isLoading:(NSNumber *)isLoading
 					 name:(NSString *)name
 			 rankInArtist:(NSNumber *)rankInArtist
 			  releaseDate:(NSDate *)releaseDate

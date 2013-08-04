@@ -53,4 +53,8 @@
 // Set to YES to get some debugging output in the console.
 @property BOOL debug;
 
+// In- and decrements the refreshControl counter
+- (void)incrementRefreshing;
+- (void)decrementRefreshing;
+- (NSInteger)refreshingCount;
 @end

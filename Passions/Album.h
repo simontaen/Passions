@@ -2,7 +2,7 @@
 //  Album.h
 //  Passions
 //
-//  Created by Simon Tännler on 01/08/13.
+//  Created by Simon Tännler on 04/08/13.
 //  Copyright (c) 2013 edgeguard. All rights reserved.
 //
 
@@ -16,11 +16,12 @@
 @property (nonatomic, retain) NSNumber * albumId;
 @property (nonatomic, retain) NSString * imageURL;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSNumber * rankInArtist;
 @property (nonatomic, retain) NSDate * releaseDate;
 @property (nonatomic, retain) NSData * thumbnail;
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSString * unique;
-@property (nonatomic, retain) NSNumber * rankInArtist;
+@property (nonatomic, retain) NSNumber * isLoading;
 @property (nonatomic, retain) NSSet *artists;
 @property (nonatomic, retain) NSSet *topTags;
 @property (nonatomic, retain) NSSet *tracks;

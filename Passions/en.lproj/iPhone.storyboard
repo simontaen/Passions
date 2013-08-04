@@ -89,6 +89,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="yVi-J3-JBN"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="aF8-Q1-LpV">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ELf-On-vgQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
