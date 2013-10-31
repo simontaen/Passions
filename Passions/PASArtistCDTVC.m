@@ -17,7 +17,7 @@
 
 @interface PASArtistCDTVC ()
 
-@property (nonatomic, strong) NSMutableDictionary *runningTasks; // of NSURLSessionDataTask
+@property (atomic, strong) NSMutableDictionary *runningTasks; // of NSURLSessionDataTask
 
 @end
 
@@ -170,7 +170,6 @@
 	// there are more efficient ways (countForFetchRequest:), but here it's good enough
 	NSUInteger noOfAlbums = [artist.albums count];
 	
-	// TODO: needs better check, 2 requests are sent b/c of background load
 	if (noOfAlbums) {
 		// albums already fetched
 		cell.detailTextLabel.text = [self stringForNumberOfAlbums:noOfAlbums];
@@ -187,7 +186,6 @@
 													 // needs to happen on the contexts "native" queue!
 													 NSArray *albums = [Album albumsWithLFMArtistsTopAlbums:data inManagedObjectContext:self.managedObjectContext];
 													 [self.runningTasks removeObjectForKey:artist.unique];
-													 NSLog(@"Finished albums for %@", artist.name);
 													 dispatch_async(dispatch_get_main_queue(), ^{
 														 cell.detailTextLabel.text = [self stringForNumberOfAlbums:[albums count]];
 													 });

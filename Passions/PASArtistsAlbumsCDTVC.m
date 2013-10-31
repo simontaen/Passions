@@ -93,7 +93,7 @@
 	static NSString *cellIdentifier = @"Album";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
 	
-	// this might be out of sync because of background loading!
+	// TODO this might be out of sync because of background loading, and therefor constant reordering of the TableView!
 	Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
 	cell.textLabel.text = album.name;
