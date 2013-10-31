@@ -11,8 +11,8 @@
 
 @interface Album (LastFmFetchr)
 
-+ (Album *)albumWithLFMAlbumGetInfo:(LFMAlbumGetInfo *)data inManagedObjectContext:(NSManagedObjectContext *)context;
-+ (NSArray *)albumsWithLFMArtistGetTopAlbums:(LFMArtistGetTopAlbums *)data inManagedObjectContext:(NSManagedObjectContext *)context;
++ (Album *)albumWithLFMAlbumInfo:(LFMAlbumInfo *)data inManagedObjectContext:(NSManagedObjectContext *)context;
++ (NSArray *)albumsWithLFMArtistsTopAlbums:(LFMArtistsTopAlbums *)data inManagedObjectContext:(NSManagedObjectContext *)context;
 + (Album *)albumWithLFMAlbumTopAlbum:(LFMAlbumTopAlbum *)data andArtistName:(NSString *)artistName inManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (Album *)albumInContext:(NSManagedObjectContext *)context

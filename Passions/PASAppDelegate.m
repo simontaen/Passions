@@ -16,8 +16,8 @@
 {
     // Override point for customization after application launch.
 	// Setup LastFmFetchr
-	[LastFmFetchr sharedManager].apiKey = @"aed3367b0133ab707cb4e5b6b04da3e7";
-	[LastFmFetchr sharedManager].apiSecret = @"d27f4af60d0c89152dedc7cf89ac1e89";
+	[LastFmFetchr setApiKey:@"aed3367b0133ab707cb4e5b6b04da3e7"];
+	//[LastFmFetchr sharedManager].apiSecret = @"d27f4af60d0c89152dedc7cf89ac1e89";
 	
     return YES;
 }

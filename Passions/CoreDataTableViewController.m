@@ -20,7 +20,6 @@
 @synthesize suspendAutomaticTrackingOfChangesInManagedObjectContext = _suspendAutomaticTrackingOfChangesInManagedObjectContext;
 @synthesize debug = _debug;
 @synthesize beganUpdates = _beganUpdates;
-static volatile int32_t _refreshingCounter = 0;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -170,33 +169,6 @@ static volatile int32_t _refreshingCounter = 0;
     } else {
         [self performSelector:@selector(endSuspensionOfUpdatesDueToContextChanges) withObject:0 afterDelay:0];
     }
-}
-
-#pragma mark - Refresh control
-
-- (void)incrementRefreshing
-{
-	if (OSAtomicIncrement32(&_refreshingCounter) == 1) {
-		[self.refreshControl beginRefreshing];
-		//NSLog(@"ON");
-		//} else {
-		//NSLog(@"Increased");
-	}
-}
-
-- (void)decrementRefreshing
-{
-	if (OSAtomicDecrement32(&_refreshingCounter) <= 0) {
-		[self.refreshControl endRefreshing];
-		//NSLog(@"OFF");
-		//} else {
-		//NSLog(@"Decreased");
-	}
-}
-
-- (NSInteger)refreshingCount
-{
-	return _refreshingCounter;
 }
 
 @end

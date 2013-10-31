@@ -17,7 +17,7 @@
 
 @interface PASArtistCDTVC ()
 
-@property (nonatomic, strong) NSMutableDictionary *runningOperations; // of NSOperation
+@property (nonatomic, strong) NSMutableDictionary *runningTasks; // of NSURLSessionDataTask
 
 @end
 
@@ -56,7 +56,7 @@
     [super viewDidLoad];
 	self.title = @"Artists";
 	self.clearsSelectionOnViewWillAppear = NO;
-	self.runningOperations = [NSMutableDictionary dictionary];
+	self.runningTasks = [NSMutableDictionary dictionary];
 	[self.refreshControl addTarget:self
 							action:@selector(refresh)
 				  forControlEvents:UIControlEventValueChanged];
@@ -129,26 +129,21 @@
 - (IBAction)refresh
 {
 	for (NSString *artist in [self sampleArtists]) {
-		[self incrementRefreshing];
-		[[LastFmFetchr sharedManager] getInfoForArtist:artist
-												  mbid:nil
-											   success:^(LFMArtistGetInfo *data) {
-												   // put the artists in CoreData
-												   [self.managedObjectContext performBlock:^{
-													   // needs to happen on the contexts "native" queue!
-													   [Artist artistWithLFMArtistGetInfo:data inManagedObjectContext:self.managedObjectContext];
-													   dispatch_async(dispatch_get_main_queue(), ^{
-														   [self decrementRefreshing];
-													   });
-												   }];
-											   }
-											   failure:^(NSOperation *operation, NSError *error) {
-												   NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
-												   dispatch_async(dispatch_get_main_queue(), ^{
-													   [self decrementRefreshing];
-												   });
-											   }];
+		[[LastFmFetchr fetchr] getInfoForArtist:artist
+										   mbid:nil
+									 completion:^(LFMArtistInfo *data, NSError *error) {
+										 if (!error) {
+											 [self.managedObjectContext performBlock:^{
+												 // needs to happen on the contexts "native" queue!
+												 [Artist artistWithLFMArtistInfo:data inManagedObjectContext:self.managedObjectContext];
+											 }];
+											 
+										 } else {
+											 NSLog(@"Error: %@", [error localizedDescription]);
+										 }
+									 }];
 	} // for artist in sampleArtists
+	  // You might want to preload all basic albums for the artist here
 }
 
 #pragma mark - UITableViewControllerDataSource
@@ -177,35 +172,35 @@
 	
 	// TODO: needs better check, 2 requests are sent b/c of background load
 	if (noOfAlbums) {
+		// albums already fetched
 		cell.detailTextLabel.text = [self stringForNumberOfAlbums:noOfAlbums];
 		
-	} else if (!self.runningOperations[artist.unique]) {
+	} else if (!self.runningTasks[artist.unique]) {
 		// no albums yet, need to fetch them
 		cell.detailTextLabel.text = @"Loading Albums...";
-		[self incrementRefreshing];
-		self.runningOperations[artist.unique] = [[LastFmFetchr sharedManager] getAllAlbumsByArtist:artist.name
-																							  mbid:nil
-																						   success:^(LFMArtistGetTopAlbums *data) {
-																							   // put the artists in CoreData
-																							   [self.managedObjectContext performBlock:^{
-																								   // needs to happen on the contexts "native" queue!
-																								   NSArray *albums = [Album albumsWithLFMArtistGetTopAlbums:data inManagedObjectContext:self.managedObjectContext];
-																								   [self.runningOperations removeObjectForKey:artist.unique];
-																								   NSLog(@"Finished albums for %@", artist.name);
-																								   dispatch_async(dispatch_get_main_queue(), ^{
-																									   cell.detailTextLabel.text = [self stringForNumberOfAlbums:[albums count]];
-																									   [self decrementRefreshing];
-																								   });
-																							   }];
-																						   }
-																						   failure:^(NSOperation *operation, NSError *error) {
-																							   NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
-																							   [self.runningOperations removeObjectForKey:artist.unique];
-																							   dispatch_async(dispatch_get_main_queue(), ^{
-																								   cell.detailTextLabel.text = @"Error while loading.";
-																								   [self decrementRefreshing];
-																							   });
-																						   }];
+		self.runningTasks[artist.unique] =
+		[[LastFmFetchr fetchr] getAllAlbumsByArtist:artist.name
+											   mbid:nil
+										 completion:^(LFMArtistsTopAlbums *data, NSError *error) {
+											 if (!error) {
+												 [self.managedObjectContext performBlock:^{
+													 // needs to happen on the contexts "native" queue!
+													 NSArray *albums = [Album albumsWithLFMArtistsTopAlbums:data inManagedObjectContext:self.managedObjectContext];
+													 [self.runningTasks removeObjectForKey:artist.unique];
+													 NSLog(@"Finished albums for %@", artist.name);
+													 dispatch_async(dispatch_get_main_queue(), ^{
+														 cell.detailTextLabel.text = [self stringForNumberOfAlbums:[albums count]];
+													 });
+												 }];
+												 
+											 } else {
+												 NSLog(@"Error: %@", [error localizedDescription]);
+												 [self.runningTasks removeObjectForKey:artist.unique];
+												 dispatch_async(dispatch_get_main_queue(), ^{
+													 cell.detailTextLabel.text = [error localizedDescription];
+												 });
+											 }
+										 }];
 	}
 }
 

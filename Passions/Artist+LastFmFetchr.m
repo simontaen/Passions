@@ -11,7 +11,7 @@
 
 @implementation Artist (LastFmFetchr)
 
-+ (Artist *)artistWithLFMArtistGetInfo:(LFMArtistGetInfo *)data inManagedObjectContext:(NSManagedObjectContext *)context;
++ (Artist *)artistWithLFMArtistInfo:(LFMArtistInfo *)data inManagedObjectContext:(NSManagedObjectContext *)context;
 {
 	Artist *artist = nil;
 	
@@ -31,17 +31,17 @@
 		artist = [NSEntityDescription insertNewObjectForEntityForName:@"Artist" inManagedObjectContext:context];
         
         // set attributes
-		artist.unique = [data musicBrianzId];
-		artist.name = [data name];
-		artist.thumbnailURL = [data imageSmall];
-		artist.isOnTour = [NSNumber numberWithBool:[data isOnTourBool]];
+		artist.unique = data.musicBrianzId;
+		artist.name = data.name;
+		artist.thumbnailURL = [[data.imageSmall absoluteString] description];
+		artist.isOnTour = [NSNumber numberWithBool:data.isOnTour];
 		
 		switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
 			case UIUserInterfaceIdiomPad:
-				artist.imageURL = [data	imageExtraLarge];
+				artist.imageURL = [[data.imageExtraLarge absoluteString] description];
 				break;
 			default:
-				artist.imageURL = [data	imageLarge];
+				artist.imageURL = [[data.imageLarge absoluteString] description];
 				break;
 		}
         

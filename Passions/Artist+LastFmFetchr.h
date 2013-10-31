@@ -11,6 +11,6 @@
 
 @interface Artist (LastFmFetchr)
 
-+ (Artist *)artistWithLFMArtistGetInfo:(LFMArtistGetInfo *)data inManagedObjectContext:(NSManagedObjectContext *)context;
++ (Artist *)artistWithLFMArtistInfo:(LFMArtistInfo *)data inManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

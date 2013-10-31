@@ -108,35 +108,34 @@
 - (void)detailTextForAlbum:(Album *)album atCell:(UITableViewCell *)cell
 {
 	if (!album.releaseDate && [album.isLoading isEqual:@NO]) {
-		// album has no releaseDate, try to fetch it
+		// album has no releaseDate, try to fetch full info about album
 		//cell.detailTextLabel.text = @"Loading...";
-		[self incrementRefreshing];
 		album.isLoading = @YES;
 		//NSLog(@"loading %@", album.name);
-		[[LastFmFetchr sharedManager] getInfoForAlbum:album.name
-											 byArtist:self.artist.name
-												 mbid:nil
-											  success:^(LFMAlbumGetInfo *data) {
-												  // put the artists in CoreData
-												  [album.managedObjectContext performBlock:^{
-													  // needs to happen on the contexts "native" queue!
-													  Album *updatedAlbum = [Album albumWithLFMAlbumGetInfo:data inManagedObjectContext:album.managedObjectContext];
-													  dispatch_async(dispatch_get_main_queue(), ^{
-														  updatedAlbum.isLoading = @NO;
-														  //NSLog(@"ended %@", updatedAlbum.name);
-														  cell.detailTextLabel.text = [self formattedDateStringForAlbum:updatedAlbum];;
-														  [self decrementRefreshing];
-													  });
-												  }];
-											  }
-											  failure:^(NSOperation *operation, NSError *error) {
-												  NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
-												  dispatch_async(dispatch_get_main_queue(), ^{
-													  album.isLoading = @NO;
-													  cell.detailTextLabel.text = @"Error while loading.";
-													  [self decrementRefreshing];
-												  });
-											  }];
+		[[LastFmFetchr fetchr] getInfoForAlbum:album.name
+									  byArtist:self.artist.name
+										  mbid:nil
+									completion:^(LFMAlbumInfo *data, NSError *error) {
+										if (!error) {
+											[album.managedObjectContext performBlock:^{
+												// needs to happen on the contexts "native" queue!
+												Album *updatedAlbum = [Album albumWithLFMAlbumInfo:data inManagedObjectContext:album.managedObjectContext];
+												dispatch_async(dispatch_get_main_queue(), ^{
+													updatedAlbum.isLoading = @NO;
+													//NSLog(@"ended %@", updatedAlbum.name);
+													cell.detailTextLabel.text = [self formattedDateStringForAlbum:updatedAlbum];;
+												});
+											}];
+											
+											
+										} else {
+											NSLog(@"Error: %@", [error localizedDescription]);
+											dispatch_async(dispatch_get_main_queue(), ^{
+												album.isLoading = @NO;
+												cell.detailTextLabel.text = [error localizedDescription];
+											});
+										}
+									}];
 	}
 	cell.detailTextLabel.text = [self formattedDateStringForAlbum:album];
 }
@@ -168,29 +167,28 @@
 - (IBAction)refresh
 {
 	for (Album *album in self.artist.albums) {
-		[self incrementRefreshing];
 		album.isLoading = @YES;
-		[[LastFmFetchr sharedManager] getInfoForAlbum:album.name
-											 byArtist:self.artist.name
-												 mbid:nil
-											  success:^(LFMAlbumGetInfo *data) {
-												  // put the artists in CoreData
-												  [album.managedObjectContext performBlock:^{
-													  // needs to happen on the contexts "native" queue!
-													  [Album albumWithLFMAlbumGetInfo:data inManagedObjectContext:album.managedObjectContext];
-													  dispatch_async(dispatch_get_main_queue(), ^{
-														  album.isLoading = @NO;
-														  [self decrementRefreshing];
-													  });
-												  }];
-											  }
-											  failure:^(NSOperation *operation, NSError *error) {
-												  NSLog(@"Error: %@", [[LastFmFetchr sharedManager] messageForError:error withOperation:operation]);
-												  dispatch_async(dispatch_get_main_queue(), ^{
-													  album.isLoading = @NO;
-													  [self decrementRefreshing];
-												  });
-											  }];
+		[[LastFmFetchr fetchr] getInfoForAlbum:album.name
+									  byArtist:self.artist.name
+										  mbid:nil
+									completion:^(LFMAlbumInfo *data, NSError *error) {
+										if (!error) {
+											[album.managedObjectContext performBlock:^{
+												// needs to happen on the contexts "native" queue!
+												Album *updatedAlbum = [Album albumWithLFMAlbumInfo:data inManagedObjectContext:album.managedObjectContext];
+												dispatch_async(dispatch_get_main_queue(), ^{
+													updatedAlbum.isLoading = @NO;
+												});
+											}];
+											
+											
+										} else {
+											NSLog(@"Error: %@", [error localizedDescription]);
+											dispatch_async(dispatch_get_main_queue(), ^{
+												album.isLoading = @NO;
+											});
+										}
+									}];
 	}
 }
 

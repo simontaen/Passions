@@ -17,7 +17,6 @@
 		F455BE0717AE8E6300F6054B /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = F455BE0617AE8E6300F6054B /* Album.m */; };
 		F490BB0E17A0708D00B9BF06 /* Tag+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = F490BB0D17A0708D00B9BF06 /* Tag+Create.m */; };
 		F490BB2317A0754200B9BF06 /* PASArtistCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F490BB2217A0754200B9BF06 /* PASArtistCDTVC.m */; };
-		F49655C417AD6DD600566960 /* UIApplication+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F49655C317AD6DD600566960 /* UIApplication+Utilities.m */; };
 		F496645817A6D69900F6C005 /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = F496645717A6D69900F6C005 /* Artist.m */; };
 		F496645B17A6D69900F6C005 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = F496645A17A6D69900F6C005 /* Tag.m */; };
 		F496646117A6D69900F6C005 /* Track.m in Sources */ = {isa = PBXBuildFile; fileRef = F496646017A6D69900F6C005 /* Track.m */; };
@@ -54,8 +53,6 @@
 		F490BB0D17A0708D00B9BF06 /* Tag+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tag+Create.m"; sourceTree = "<group>"; };
 		F490BB2117A0754200B9BF06 /* PASArtistCDTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASArtistCDTVC.h; sourceTree = "<group>"; };
 		F490BB2217A0754200B9BF06 /* PASArtistCDTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASArtistCDTVC.m; sourceTree = "<group>"; };
-		F49655C217AD6DD600566960 /* UIApplication+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+Utilities.h"; sourceTree = "<group>"; };
-		F49655C317AD6DD600566960 /* UIApplication+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+Utilities.m"; sourceTree = "<group>"; };
 		F496645617A6D69900F6C005 /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Artist.h; sourceTree = "<group>"; };
 		F496645717A6D69900F6C005 /* Artist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Artist.m; sourceTree = "<group>"; };
 		F496645917A6D69900F6C005 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
@@ -195,8 +192,6 @@
 		F4A7797E1793113E00C770B9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F49655C217AD6DD600566960 /* UIApplication+Utilities.h */,
-				F49655C317AD6DD600566960 /* UIApplication+Utilities.m */,
 				F4A779861793113E00C770B9 /* PASAppDelegate.h */,
 				F4A779871793113E00C770B9 /* PASAppDelegate.m */,
 				F4A7797F1793113E00C770B9 /* Passions-Info.plist */,
@@ -328,7 +323,6 @@
 				F496646717A6DD1D00F6C005 /* Artist+Accessors.m in Sources */,
 				F436925B17AD31260042AF62 /* PASCDStack.m in Sources */,
 				F436926417AD43850042AF62 /* PASArtistsAlbumsCDTVC.m in Sources */,
-				F49655C417AD6DD600566960 /* UIApplication+Utilities.m in Sources */,
 				F455BE0717AE8E6300F6054B /* Album.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -380,7 +374,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -404,7 +398,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

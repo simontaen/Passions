@@ -12,15 +12,15 @@
 
 @implementation Album (LastFmFetchr)
 
-+ (Album *)albumWithLFMAlbumGetInfo:(LFMAlbumGetInfo *)data inManagedObjectContext:(NSManagedObjectContext *)context
++ (Album *)albumWithLFMAlbumInfo:(LFMAlbumInfo *)data inManagedObjectContext:(NSManagedObjectContext *)context
 {
 	NSString *url = nil;
 	switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
 		case UIUserInterfaceIdiomPad:
-			url = [data imageExtraLarge];
+			url = data.imageExtraLargeString;
 			break;
 		default:
-			url = [data imageLarge];
+			url = data.imageLargeString;
 			break;
 	}
 	
@@ -45,18 +45,18 @@
 	//NSArray *tracks = [JSON albumTracksArray];
 	
 	//
-	NSDate *date = [data releasedateDate];
+	NSDate *date = data.releaseDate;
 	
 	return [self albumInContext:context
-						albumId:[data idNumber]
+						albumId:data.lfmId
 					   imageURL:url
 					  isLoading:nil
-						   name:[data name]
+						   name:data.name
 				   rankInArtist:nil
 					releaseDate:(date ? date : [NSDate dateWithTimeIntervalSince1970:-47304000000])
 					  thumbnail:nil
-				   thumbnailURL:[data imageSmall]
-						 unique:[data musicBrianzId]
+				   thumbnailURL:data.imageSmallString
+						 unique:data.musicBrianzId
 						artists:artists
 						topTags:topTagsSet
 						 tracks:nil];
@@ -64,10 +64,10 @@
 	
 }
 
-+ (NSArray *)albumsWithLFMArtistGetTopAlbums:(LFMArtistGetTopAlbums *)data inManagedObjectContext:(NSManagedObjectContext *)context
++ (NSArray *)albumsWithLFMArtistsTopAlbums:(LFMArtistsTopAlbums *)data inManagedObjectContext:(NSManagedObjectContext *)context
 {
-	NSString *artistName = [data artistName];
-	NSArray *albumsData = [data artistsAlbumList];
+	NSString *artistName = data.artist;
+	NSArray *albumsData = data.albums;
 	NSMutableArray *albums = [NSMutableArray arrayWithCapacity:[albumsData count]];
 
 	for (LFMAlbumTopAlbum *albumData in albumsData) {
@@ -83,10 +83,10 @@
 	NSString *url = nil;
 	switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
 		case UIUserInterfaceIdiomPad:
-			url = [data imageExtraLarge];
+			url = data.imageExtraLargeString;
 			break;
 		default:
-			url = [data imageLarge];
+			url = data.imageLargeString;
 			break;
 	}
 	
@@ -101,12 +101,12 @@
 						albumId:nil
 					   imageURL:url
 					  isLoading:nil
-						   name:[data name]
-				   rankInArtist:[data rankInAllArtistAlbumsNumber]
+						   name:data.name
+				   rankInArtist:data.rankInAllArtistAlbums
 					releaseDate:nil
 					  thumbnail:nil
-				   thumbnailURL:[data imageSmall]
-						 unique:[data musicBrianzId]
+				   thumbnailURL:data.imageSmallString
+						 unique:data.musicBrianzId
 						artists:artists
 						topTags:nil
 						 tracks:nil];
