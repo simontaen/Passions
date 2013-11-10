@@ -46,15 +46,13 @@
 		}
         
         // create and set relations
-		// guaranteed to not have nil objects inside
-		NSMutableSet *tags = [NSMutableSet setWithArray:[data tagNames]];
-		[tags removeObject:@""]; // remove potential empty tag
-
-		NSMutableSet *tagObjects = [NSMutableSet setWithCapacity:[tags count]];
 		
-		for (NSString *tag in tags) {
-			Tag *tagObject = [Tag tagWithName:tag inManagedObjectContext:context];
-			[tagObjects addObject:tagObject];
+		NSMutableSet *tagObjects = [NSMutableSet setWithCapacity:[data.tags count]];
+		for (LFMTag *tag in data.tags) {
+			if (![tag.name isEqualToString:@""]) {
+				Tag *tagObject = [Tag tagWithName:tag.name inManagedObjectContext:context];
+				[tagObjects addObject:tagObject];
+			}
 		}
 		
 		// the inverted relationship is automatically added

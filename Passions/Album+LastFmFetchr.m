@@ -32,15 +32,14 @@
 	}
 	
 	// create tags
-	NSArray *topTags = [data toptagNames];
-	NSMutableSet *topTagsSet = nil;
-	if (topTags) {
-		topTagsSet = [NSMutableSet setWithCapacity:[topTags count]];
-		for (NSString *topTag in topTags) {
-			[topTagsSet addObject:[Tag tagWithName:topTag inManagedObjectContext:context]];
+	NSMutableSet *tagObjects = [NSMutableSet setWithCapacity:[data.topTags count]];
+	for (LFMTag *tag in data.topTags) {
+		if (![tag.name isEqualToString:@""]) {
+			Tag *tagObject = [Tag tagWithName:tag.name inManagedObjectContext:context];
+			[tagObjects addObject:tagObject];
 		}
 	}
-	
+		
 	// create tracks
 	//NSArray *tracks = [JSON albumTracksArray];
 	
@@ -58,7 +57,7 @@
 				   thumbnailURL:data.imageSmallString
 						 unique:data.musicBrianzId
 						artists:artists
-						topTags:topTagsSet
+						topTags:tagObjects
 						 tracks:nil];
 	
 	
