@@ -121,25 +121,25 @@
 {
 	[self.refreshControl beginRefreshing];
 	
-	for (NSString *artist in [self sampleArtists]) {
-		[[LastFmFetchr fetchr] getInfoForArtist:artist
-										   mbid:nil
-									 completion:^(LFMArtistInfo *data, NSError *error) {
-										 if (!error) {
-											 [self.managedObjectContext performBlock:^{
-												 // needs to happen on the contexts "native" queue!
-												 [Artist artistWithLFMArtistInfo:data inManagedObjectContext:self.managedObjectContext];
-											 }];
+	for (NSString *artistName in [self sampleArtists]) {
+		
+		[[LastFmFetchr fetchr] getAllAlbumsByArtist:artistName
+											   mbid:nil
+										 completion:^(LFMArtistsTopAlbums *data, NSError *error) {
+											 if (!error) {
+												 [self.managedObjectContext performBlock:^{
+													 [Album albumsWithLFMArtistsTopAlbums:data inManagedObjectContext:self.managedObjectContext];
+												 }];
+												 
+											 } else {
+												 NSLog(@"Error: %@", [error localizedDescription]);
+											 }
 											 dispatch_async(dispatch_get_main_queue(), ^{
+												 // TODO: stops with first returning call, not gut
 												 [self.refreshControl endRefreshing];
 											 });
-											 
-										 } else {
-											 NSLog(@"Error: %@", [error localizedDescription]);
-										 }
-									 }];
+										 }];
 	} // for artist in sampleArtists
-	  // You might want to preload all basic albums for the artist here
 }
 
 #pragma mark - UITableViewControllerDataSource
@@ -154,7 +154,7 @@
 	
 	cell.textLabel.text = artist.name;
 	[self detailTextForArtist:artist atCell:cell];
-	[self thumbnailForArtist:artist atCell:cell];
+	//[self thumbnailForArtist:artist atCell:cell];
 	
 	return cell;
 }
@@ -164,38 +164,7 @@
 - (void)detailTextForArtist:(Artist *)artist atCell:(UITableViewCell *)cell
 {
 	// there are more efficient ways (countForFetchRequest:), but here it's good enough
-	NSUInteger noOfAlbums = [artist.albums count];
-	
-	if (noOfAlbums) {
-		// albums already fetched
-		cell.detailTextLabel.text = [self stringForNumberOfAlbums:noOfAlbums];
-		
-	} else if (!self.runningTasks[artist.unique]) {
-		// no albums yet, need to fetch them
-		cell.detailTextLabel.text = @"Loading Albums...";
-		self.runningTasks[artist.unique] =
-		[[LastFmFetchr fetchr] getAllAlbumsByArtist:artist.name
-											   mbid:nil
-										 completion:^(LFMArtistsTopAlbums *data, NSError *error) {
-											 if (!error) {
-												 [self.managedObjectContext performBlock:^{
-													 // needs to happen on the contexts "native" queue!
-													 NSArray *albums = [Album albumsWithLFMArtistsTopAlbums:data inManagedObjectContext:self.managedObjectContext];
-													 [self.runningTasks removeObjectForKey:artist.unique];
-													 dispatch_async(dispatch_get_main_queue(), ^{
-														 cell.detailTextLabel.text = [self stringForNumberOfAlbums:[albums count]];
-													 });
-												 }];
-												 
-											 } else {
-												 NSLog(@"Error: %@", [error localizedDescription]);
-												 [self.runningTasks removeObjectForKey:artist.unique];
-												 dispatch_async(dispatch_get_main_queue(), ^{
-													 cell.detailTextLabel.text = [error localizedDescription];
-												 });
-											 }
-										 }];
-	}
+	cell.detailTextLabel.text = [self stringForNumberOfAlbums:[artist.albums count]];
 }
 
 - (NSString *)stringForNumberOfAlbums:(NSUInteger)noOfAlbums

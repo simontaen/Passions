@@ -13,4 +13,16 @@
 
 + (Artist *)artistWithLFMArtistInfo:(LFMArtistInfo *)data inManagedObjectContext:(NSManagedObjectContext *)context;
 
++ (Artist *)artistWithLFMArtist:(LFMArtist *)data inManagedObjectContext:(NSManagedObjectContext *)context;
+
++ (Artist *)artistInContext:(NSManagedObjectContext *)context
+				   imageURL:(NSString *)imageURL
+				   isOnTour:(NSNumber *)isOnTour
+					   name:(NSString *)name
+				  thumbnail:(NSData *)thumbnail
+			   thumbnailURL:(NSString *)thumbnailURL
+					 unique:(NSString *)unique
+					 albums:(NSSet *)albums
+					   tags:(NSSet *)tags
+					 tracks:(NSSet *)tracks;
 @end

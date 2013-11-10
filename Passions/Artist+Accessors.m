@@ -23,6 +23,7 @@
 		return nil;
 	} else if (![matches count]) {
 		// non found
+		NSLog(@"WARNING: No artist found with name %@", name);
 		return nil;
 	} else {
 		// entity exist

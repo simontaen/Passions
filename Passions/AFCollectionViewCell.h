@@ -9,10 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface AFCollectionViewCell : UICollectionViewCell
-{
-    IBOutlet UIImageView *imageView;
-}
 
--(void)setImage:(UIImage *)image;
+@property (nonatomic, strong) IBOutlet UIImageView *imageView;
 
 @end

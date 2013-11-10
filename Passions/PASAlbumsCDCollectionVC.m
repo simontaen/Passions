@@ -20,6 +20,7 @@
 {
 	_artist = artist;
 	self.title = artist.name;
+	self.debug = YES;
 	[self setupFetchedResultsController];
 }
 
@@ -39,7 +40,6 @@
 	} else {
 		self.fetchedResultsController = nil;
 	}
-	self.debug = YES;
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -50,32 +50,28 @@
 
     AFCollectionViewCell *cell = (AFCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
-	// TODO this might be out of sync because of background loading, and therefor constant reordering of the TableView!
+	// TODO this might be out of sync because of background loading, and therefor constant reordering of the CollectionView!
 	Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
-	if (!album.thumbnail) {
+	if (!album.thumbnailURL) {
 		[[LastFmFetchr fetchr] getInfoForAlbum:album.name
 									  byArtist:self.artist.name
 										  mbid:nil
 									completion:^(LFMAlbumInfo *data, NSError *error) {
 										if (!error) {
 											[album.managedObjectContext performBlock:^{
-												// needs to happen on the contexts "native" queue!
-												Album *updatedAlbum = [Album albumWithLFMAlbumInfo:data inManagedObjectContext:album.managedObjectContext];
-												UIImage *image = [UIImage imageWithData:updatedAlbum.thumbnail];
+												[Album albumWithLFMAlbumInfo:data inManagedObjectContext:album.managedObjectContext];
 												dispatch_async(dispatch_get_main_queue(), ^{
-													[cell setImage:image];
+													[cell.imageView setImageWithURL:[NSURL URLWithString:album.thumbnailURL] placeholderImage:[UIImage imageNamed:@"image.png"]];
 												});
-												
 											}];
-											
 											
 										} else {
 											NSLog(@"Error: %@", [error localizedDescription]);
 										}
 									}];
 	} else {
-		[cell setImage:[UIImage imageWithData:album.thumbnail]];
+		[cell.imageView setImageWithURL:[NSURL URLWithString:album.thumbnailURL] placeholderImage:[UIImage imageNamed:@"image.png"]];
 	}
 	
     

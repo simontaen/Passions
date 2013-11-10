@@ -126,10 +126,10 @@
 		F4A60FCD17A059DF008D8F6C /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				F4A60FD117A05AF7008D8F6C /* Artist+LastFmFetchr.h */,
-				F4A60FD217A05AF7008D8F6C /* Artist+LastFmFetchr.m */,
 				F496646517A6DD1D00F6C005 /* Artist+Accessors.h */,
 				F496646617A6DD1D00F6C005 /* Artist+Accessors.m */,
+				F4A60FD117A05AF7008D8F6C /* Artist+LastFmFetchr.h */,
+				F4A60FD217A05AF7008D8F6C /* Artist+LastFmFetchr.m */,
 				F496646217A6D71800F6C005 /* Album+LastFmFetchr.h */,
 				F496646317A6D71800F6C005 /* Album+LastFmFetchr.m */,
 				F490BB0C17A0708D00B9BF06 /* Tag+Create.h */,

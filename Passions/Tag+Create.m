@@ -12,34 +12,33 @@
 
 + (Tag *)tagWithName:(NSString *)name inManagedObjectContext:(NSManagedObjectContext *)context
 {
+	NSParameterAssert([name length]);
+	
 	Tag *tag = nil;
 	
-	// sanity check
-	if ([name length]) {
-		NSString *unique = [name lowercaseString];
-		NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
-		request.sortDescriptors = nil; // only one expected
-		request.predicate = [NSPredicate predicateWithFormat:@"unique = %@", unique];
+	NSString *unique = [name lowercaseString];
+	NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
+	request.sortDescriptors = nil; // only one expected
+	request.predicate = [NSPredicate predicateWithFormat:@"unique = %@", unique];
+	
+	NSError *err = nil;
+	NSArray *matches = [context executeFetchRequest:request error:&err];
+	
+	if (!matches || ([matches count] > 1)) {
+		// handle error
+		NSLog(@"Error in Tag creation");
 		
-		NSError *err = nil;
-		NSArray *matches = [context executeFetchRequest:request error:&err];
+	} else if (![matches count]) {
+		// create the entity
+		tag = [NSEntityDescription insertNewObjectForEntityForName:@"Tag" inManagedObjectContext:context];
 		
-		if (!matches || ([matches count] > 1)) {
-			// handle error
-			NSLog(@"Error in Tag creation");
-			
-		} else if (![matches count]) {
-			// create the entity
-			tag = [NSEntityDescription insertNewObjectForEntityForName:@"Tag" inManagedObjectContext:context];
-			
-			// set attributes
-			tag.name = name;
-			tag.unique = unique;
-			
-		} else {
-			// entity exist
-			tag = [matches lastObject];
-		}
+		// set attributes
+		tag.name = name;
+		tag.unique = unique;
+		
+	} else {
+		// entity exist
+		tag = [matches lastObject];
 	}
 	
 	return tag;

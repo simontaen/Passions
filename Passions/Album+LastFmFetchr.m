@@ -8,6 +8,7 @@
 
 #import "Album+LastFmFetchr.h"
 #import "Artist+Accessors.h"
+#import "Artist+LastFmFetchr.h"
 #import "Tag+Create.h"
 
 @implementation Album (LastFmFetchr)
@@ -24,7 +25,7 @@
 			break;
 	}
 	
-	// create artists
+	// get artist
 	Artist *albumArtist = [Artist artistWithName:[data artistName] inManagedObjectContext:context];
 	NSSet *artists = nil;
 	if (albumArtist) {
@@ -65,18 +66,17 @@
 
 + (NSArray *)albumsWithLFMArtistsTopAlbums:(LFMArtistsTopAlbums *)data inManagedObjectContext:(NSManagedObjectContext *)context
 {
-	NSString *artistName = data.artist;
-	NSArray *albumsData = data.albums;
-	NSMutableArray *albums = [NSMutableArray arrayWithCapacity:[albumsData count]];
+	NSArray *albumsData = data.albums; // of LFMAlbumTopAlbum
+	NSMutableArray *managedObjectAlbums = [NSMutableArray arrayWithCapacity:[albumsData count]];
 
 	for (LFMAlbumTopAlbum *albumData in albumsData) {
-		Album *aAlbum = [self albumWithLFMAlbumTopAlbum:albumData andArtistName:artistName inManagedObjectContext:context];
-		[albums addObject:aAlbum];
+		Album *aAlbum = [self albumWithLFMAlbumTopAlbum:albumData inManagedObjectContext:context];
+		[managedObjectAlbums addObject:aAlbum];
 	}
-	return albums;
+	return managedObjectAlbums;
 }
 
-+ (Album *)albumWithLFMAlbumTopAlbum:(LFMAlbumTopAlbum *)data andArtistName:(NSString *)artistName inManagedObjectContext:(NSManagedObjectContext *)context
++ (Album *)albumWithLFMAlbumTopAlbum:(LFMAlbumTopAlbum *)data inManagedObjectContext:(NSManagedObjectContext *)context
 {
 	
 	NSString *url = nil;
@@ -90,11 +90,13 @@
 	}
 	
 	// create artists
-	Artist *albumArtist = [Artist artistWithName:artistName inManagedObjectContext:context];
+	Artist *albumArtist = [Artist artistWithLFMArtist:data.artist inManagedObjectContext:context];
 	NSSet *artists = nil;
 	if (albumArtist) {
 		artists = [NSSet setWithObject:albumArtist];
 	}
+	
+	//NSLog(@"albumWithLFMAlbumTopAlbum %@ %@", data.name, data.imageSmallString);
 	
 	return [self albumInContext:context
 						albumId:nil
@@ -127,100 +129,102 @@
 				  topTags:(NSSet *)topTags
 				   tracks:(NSSet *)tracks
 {
+	NSParameterAssert(unique);
+	
 	Album *album = nil;
-	if (unique) {
-		NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Album"];
-		request.sortDescriptors = nil; // only one expected
-		request.predicate = [NSPredicate predicateWithFormat:@"unique = %@", unique];
+	
+	NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Album"];
+	request.sortDescriptors = nil; // only one expected
+	request.predicate = [NSPredicate predicateWithFormat:@"unique = %@", unique];
+	
+	NSError *err = nil;
+	NSArray *matches = [context executeFetchRequest:request error:&err];
+	
+	if (!matches || ([matches count] > 1)) {
+		// handle error
+		NSLog(@"ERROR in album creation");
+		return nil;
 		
-		NSError *err = nil;
-		NSArray *matches = [context executeFetchRequest:request error:&err];
+	} else if (![matches count]) {
+		// create the entity
+		album = [NSEntityDescription insertNewObjectForEntityForName:@"Album" inManagedObjectContext:context];
+		album.unique = unique;
+		NSLog(@"Creating album with unique='%@' and name='%@'", unique, name);
 		
-		if (!matches || ([matches count] > 1)) {
-			// handle error
-			NSLog(@"Error in album creation");
-			return nil;
-			
-		} else if (![matches count]) {
-			// create the entity
-			album = [NSEntityDescription insertNewObjectForEntityForName:@"Album" inManagedObjectContext:context];
-			album.unique = unique;
-			
-			// set attributes
-			if (albumId) {
-				album.albumId = albumId;
-			}
-			if (imageURL) {
-				album.imageURL = imageURL;
-			}
-			if (isLoading) {
-				album.isLoading = isLoading;
-			} else {
-				album.isLoading = @NO;
-			}
-			if (name) {
-				album.name = name;
-			}
-			if (rankInArtist) {
-				album.rankInArtist = rankInArtist;
-			}
-			if (releaseDate) {
-				album.releaseDate = releaseDate;
-			}
-			if (thumbnail) {
-				album.thumbnail = thumbnail;
-			}
-			if (thumbnailURL) {
-				album.thumbnailURL = thumbnailURL;
-			}
-			if (artists) {
-				album.artists = artists;
-			}
-			if (topTags) {
-				album.topTags = topTags;
-			}
-			if (tracks) {
-				album.tracks = tracks;
-			}
+		// set attributes
+		if (albumId) {
+			album.albumId = albumId;
+		}
+		if (imageURL) {
+			album.imageURL = imageURL;
+		}
+		if (isLoading) {
+			album.isLoading = isLoading;
 		} else {
-			// entity exist
-			album = [matches lastObject];
-			
-			// update the found entity
-			// set attributes
-			if (albumId && !album.albumId) {
-				album.albumId = albumId;
-			}
-			if (imageURL && !album.imageURL) {
-				album.imageURL = imageURL;
-			}
-			if (isLoading && !album.isLoading) {
-				album.isLoading = isLoading;
-			}
-			if (name && !album.name) {
-				album.name = name;
-			}
-			if (rankInArtist && !album.rankInArtist) {
-				album.rankInArtist = rankInArtist;
-			}
-			if (releaseDate && !album.releaseDate) {
-				album.releaseDate = releaseDate;
-			}
-			if (thumbnail && !album.thumbnail) {
-				album.thumbnail = thumbnail;
-			}
-			if (thumbnailURL && !album.thumbnailURL) {
-				album.thumbnailURL = thumbnailURL;
-			}
-			if (artists && !album.artists) {
-				album.artists = artists;
-			}
-			if (topTags && !album.topTags) {
-				album.topTags = topTags;
-			}
-			if (tracks && !album.tracks) {
-				album.tracks = tracks;
-			}
+			album.isLoading = @NO;
+		}
+		if (name) {
+			album.name = name;
+		}
+		if (rankInArtist) {
+			album.rankInArtist = rankInArtist;
+		}
+		if (releaseDate) {
+			album.releaseDate = releaseDate;
+		}
+		if (thumbnail) {
+			album.thumbnail = thumbnail;
+		}
+		if (thumbnailURL) {
+			album.thumbnailURL = thumbnailURL;
+		}
+		if (artists) {
+			album.artists = artists;
+		}
+		if (topTags) {
+			album.topTags = topTags;
+		}
+		if (tracks) {
+			album.tracks = tracks;
+		}
+	} else {
+		// entity exist
+		album = [matches lastObject];
+		
+		// update the found entity
+		// set attributes
+		if (albumId && !album.albumId) {
+			album.albumId = albumId;
+		}
+		if (imageURL && !album.imageURL) {
+			album.imageURL = imageURL;
+		}
+		if (isLoading && !album.isLoading) {
+			album.isLoading = isLoading;
+		}
+		if (name && !album.name) {
+			album.name = name;
+		}
+		if (rankInArtist && !album.rankInArtist) {
+			album.rankInArtist = rankInArtist;
+		}
+		if (releaseDate && !album.releaseDate) {
+			album.releaseDate = releaseDate;
+		}
+		if (thumbnail && !album.thumbnail) {
+			album.thumbnail = thumbnail;
+		}
+		if (thumbnailURL && !album.thumbnailURL) {
+			album.thumbnailURL = thumbnailURL;
+		}
+		if (artists && !album.artists) {
+			album.artists = artists;
+		}
+		if (topTags && !album.topTags) {
+			album.topTags = topTags;
+		}
+		if (tracks && !album.tracks) {
+			album.tracks = tracks;
 		}
 	}
 	return album;

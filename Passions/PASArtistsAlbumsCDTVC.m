@@ -118,7 +118,6 @@
 									completion:^(LFMAlbumInfo *data, NSError *error) {
 										if (!error) {
 											[album.managedObjectContext performBlock:^{
-												// needs to happen on the contexts "native" queue!
 												Album *updatedAlbum = [Album albumWithLFMAlbumInfo:data inManagedObjectContext:album.managedObjectContext];
 												dispatch_async(dispatch_get_main_queue(), ^{
 													updatedAlbum.isLoading = @NO;
@@ -174,20 +173,15 @@
 									completion:^(LFMAlbumInfo *data, NSError *error) {
 										if (!error) {
 											[album.managedObjectContext performBlock:^{
-												// needs to happen on the contexts "native" queue!
-												Album *updatedAlbum = [Album albumWithLFMAlbumInfo:data inManagedObjectContext:album.managedObjectContext];
-												dispatch_async(dispatch_get_main_queue(), ^{
-													updatedAlbum.isLoading = @NO;
-												});
+												[Album albumWithLFMAlbumInfo:data inManagedObjectContext:album.managedObjectContext];
 											}];
-											
 											
 										} else {
 											NSLog(@"Error: %@", [error localizedDescription]);
-											dispatch_async(dispatch_get_main_queue(), ^{
-												album.isLoading = @NO;
-											});
 										}
+										dispatch_async(dispatch_get_main_queue(), ^{
+											album.isLoading = @NO;
+										});
 									}];
 	}
 }
