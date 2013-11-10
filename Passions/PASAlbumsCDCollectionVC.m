@@ -29,7 +29,7 @@
 		NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Album"];
 		request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name"
 																  ascending:YES
-																   selector:@selector(compare:)]];
+																   selector:@selector(localizedCaseInsensitiveCompare:)]];
 		request.predicate = [NSPredicate predicateWithFormat:@"artists contains %@", self.artist];
 		
 		self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
@@ -39,13 +39,6 @@
 	} else {
 		self.fetchedResultsController = nil;
 	}
-}
-
-#pragma mark - View Lifecycle
-
--(void)viewDidLoad
-{
-    [super viewDidLoad];
 	self.debug = YES;
 }
 
@@ -69,8 +62,9 @@
 											[album.managedObjectContext performBlock:^{
 												// needs to happen on the contexts "native" queue!
 												Album *updatedAlbum = [Album albumWithLFMAlbumInfo:data inManagedObjectContext:album.managedObjectContext];
+												UIImage *image = [UIImage imageWithData:updatedAlbum.thumbnail];
 												dispatch_async(dispatch_get_main_queue(), ^{
-													[cell setImage:[UIImage imageWithData:updatedAlbum.thumbnail]];
+													[cell setImage:image];
 												});
 												
 											}];

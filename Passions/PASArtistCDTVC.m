@@ -12,13 +12,9 @@
 #import "Artist+LastFmFetchr.h"
 #import "Album+LastFmFetchr.h"
 #import "UIImageView+AFNetworking.h"
-//#import "AFImageRequestOperation.h"
-//#import "UIApplication+Utilities.h"
 
 @interface PASArtistCDTVC ()
-
 @property (atomic, strong) NSMutableDictionary *runningTasks; // of NSURLSessionDataTask
-
 @end
 
 @implementation PASArtistCDTVC
@@ -55,7 +51,6 @@
 {
     [super viewDidLoad];
 	self.title = @"Artists";
-	self.clearsSelectionOnViewWillAppear = NO;
 	self.runningTasks = [NSMutableDictionary dictionary];
 	[self.refreshControl addTarget:self
 							action:@selector(refresh)
@@ -72,7 +67,7 @@
 		// TODO
 		// If we CREATED the document, we should do an automatic refresh
 		// such that the user will see something
-		[self refresh];
+		//[self refresh];
 		// if we OPENED the document, we already have data
 		// and should just display it
 	}
@@ -87,15 +82,11 @@
 	}
 	
 	if (indexPath) {
-		if ([segue.identifier isEqualToString:kSegueName]) {
-			id obj = [self.fetchedResultsController objectAtIndexPath:indexPath];
-			SEL segueSel = NSSelectorFromString(kSegueName);
+		if ([segue.identifier isEqualToString:@"setArtist:"]) {
+			Artist *artist = [self.fetchedResultsController objectAtIndexPath:indexPath];
 			
-			if ([segue.destinationViewController respondsToSelector:segueSel]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-				[segue.destinationViewController performSelector:segueSel withObject:obj];
-#pragma clang diagnostic pop
+			if ([segue.destinationViewController respondsToSelector:@selector(setArtist:)]) {
+				[segue.destinationViewController performSelector:@selector(setArtist:) withObject:artist];
 			}
 		}
 	}
@@ -128,6 +119,8 @@
 
 - (IBAction)refresh
 {
+	[self.refreshControl beginRefreshing];
+	
 	for (NSString *artist in [self sampleArtists]) {
 		[[LastFmFetchr fetchr] getInfoForArtist:artist
 										   mbid:nil
@@ -137,6 +130,9 @@
 												 // needs to happen on the contexts "native" queue!
 												 [Artist artistWithLFMArtistInfo:data inManagedObjectContext:self.managedObjectContext];
 											 }];
+											 dispatch_async(dispatch_get_main_queue(), ^{
+												 [self.refreshControl endRefreshing];
+											 });
 											 
 										 } else {
 											 NSLog(@"Error: %@", [error localizedDescription]);
@@ -245,14 +241,6 @@
 	 });
 	 });
 	 */
-}
-
-#pragma mark - Memory management
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end
