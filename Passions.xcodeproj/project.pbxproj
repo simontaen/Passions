@@ -15,6 +15,7 @@
 		F438692A17A55CE6000B7817 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */; };
 		F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */; };
 		F455BE0717AE8E6300F6054B /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = F455BE0617AE8E6300F6054B /* Album.m */; };
+		F45F1552182EF8CC00447D0A /* CoreDataCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F45F1551182EF8CC00447D0A /* CoreDataCollectionViewController.m */; };
 		F490BB0E17A0708D00B9BF06 /* Tag+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = F490BB0D17A0708D00B9BF06 /* Tag+Create.m */; };
 		F490BB2317A0754200B9BF06 /* PASArtistCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F490BB2217A0754200B9BF06 /* PASArtistCDTVC.m */; };
 		F496645817A6D69900F6C005 /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = F496645717A6D69900F6C005 /* Artist.m */; };
@@ -49,6 +50,8 @@
 		F436926317AD43850042AF62 /* PASArtistsAlbumsCDTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASArtistsAlbumsCDTVC.m; sourceTree = "<group>"; };
 		F455BE0517AE8E6200F6054B /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
 		F455BE0617AE8E6300F6054B /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
+		F45F1550182EF8CC00447D0A /* CoreDataCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataCollectionViewController.h; sourceTree = "<group>"; };
+		F45F1551182EF8CC00447D0A /* CoreDataCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataCollectionViewController.m; sourceTree = "<group>"; };
 		F490BB0C17A0708D00B9BF06 /* Tag+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tag+Create.h"; sourceTree = "<group>"; };
 		F490BB0D17A0708D00B9BF06 /* Tag+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tag+Create.m"; sourceTree = "<group>"; };
 		F490BB2117A0754200B9BF06 /* PASArtistCDTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASArtistCDTVC.h; sourceTree = "<group>"; };
@@ -134,6 +137,8 @@
 				F496645A17A6D69900F6C005 /* Tag.m */,
 				F496645617A6D69900F6C005 /* Artist.h */,
 				F496645717A6D69900F6C005 /* Artist.m */,
+				F45F1550182EF8CC00447D0A /* CoreDataCollectionViewController.h */,
+				F45F1551182EF8CC00447D0A /* CoreDataCollectionViewController.m */,
 				F4A60FD417A05E7D008D8F6C /* CoreDataTableViewController.h */,
 				F4A60FD517A05E7D008D8F6C /* CoreDataTableViewController.m */,
 				F436925917AD31260042AF62 /* PASCDStack.h */,
@@ -316,6 +321,7 @@
 				F4A60FD617A05E7D008D8F6C /* CoreDataTableViewController.m in Sources */,
 				F490BB0E17A0708D00B9BF06 /* Tag+Create.m in Sources */,
 				F490BB2317A0754200B9BF06 /* PASArtistCDTVC.m in Sources */,
+				F45F1552182EF8CC00447D0A /* CoreDataCollectionViewController.m in Sources */,
 				F496645817A6D69900F6C005 /* Artist.m in Sources */,
 				F496645B17A6D69900F6C005 /* Tag.m in Sources */,
 				F496646117A6D69900F6C005 /* Track.m in Sources */,
