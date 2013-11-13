@@ -12,6 +12,7 @@
 #import "Artist+LastFmFetchr.h"
 #import "Album+LastFmFetchr.h"
 #import "UIImageView+AFNetworking.h"
+#import "UIRefreshControl+RefreshingUtility.h"
 
 @interface PASArtistCDTVC ()
 @property (atomic, strong) NSMutableDictionary *runningTasks; // of NSURLSessionDataTask
@@ -119,9 +120,9 @@
 
 - (IBAction)refresh
 {
-	[self.refreshControl beginRefreshing];
-	
 	for (NSString *artistName in [self sampleArtists]) {
+		
+		[self.refreshControl RUTincrementRefreshing];
 		
 		[[LastFmFetchr fetchr] getAllAlbumsByArtist:artistName
 											   mbid:nil
@@ -134,10 +135,7 @@
 											 } else {
 												 NSLog(@"Error: %@", [error localizedDescription]);
 											 }
-											 dispatch_async(dispatch_get_main_queue(), ^{
-												 // TODO: stops with first returning call, not gut
-												 [self.refreshControl endRefreshing];
-											 });
+											 [self.refreshControl RUTdecrementRefreshing];
 										 }];
 	} // for artist in sampleArtists
 }
