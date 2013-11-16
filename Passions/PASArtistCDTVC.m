@@ -12,11 +12,7 @@
 #import "Artist+LastFmFetchr.h"
 #import "Album+LastFmFetchr.h"
 #import "UIImageView+AFNetworking.h"
-#import "UIRefreshControl+RefreshingUtility.h"
-
-@interface PASArtistCDTVC ()
-@property (atomic, strong) NSMutableDictionary *runningTasks; // of NSURLSessionDataTask
-@end
+#import "UIRefreshControl+RefreshUtil.h"
 
 @implementation PASArtistCDTVC
 
@@ -52,7 +48,6 @@
 {
     [super viewDidLoad];
 	self.title = @"Artists";
-	self.runningTasks = [NSMutableDictionary dictionary];
 	[self.refreshControl addTarget:self
 							action:@selector(refresh)
 				  forControlEvents:UIControlEventValueChanged];
@@ -151,15 +146,15 @@
 	Artist *artist = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
 	cell.textLabel.text = artist.name;
-	[self detailTextForArtist:artist atCell:cell];
-	//[self thumbnailForArtist:artist atCell:cell];
+	[self setDetailTextForArtist:artist atCell:cell];
+	//[self setThumbnailForArtist:artist atCell:cell];
 	
 	return cell;
 }
 
 #pragma mark - UITableViewDataSource Helpers
 
-- (void)detailTextForArtist:(Artist *)artist atCell:(UITableViewCell *)cell
+- (void)setDetailTextForArtist:(Artist *)artist atCell:(UITableViewCell *)cell
 {
 	// there are more efficient ways (countForFetchRequest:), but here it's good enough
 	cell.detailTextLabel.text = [self stringForNumberOfAlbums:[artist.albums count]];
@@ -174,40 +169,15 @@
 	}
 }
 
-- (void)thumbnailForArtist:(Artist *)artist atCell:(UITableViewCell *)cell
+- (void)setThumbnailForArtist:(Artist *)artist atCell:(UITableViewCell *)cell
 {
 	// This is cool but I wanted to cache the image in CoreData
 	// Apparently this uses a custome NSCache subclass to cache the image..
 	[cell.imageView setImageWithURL:[NSURL URLWithString:artist.thumbnailURL]
 				   placeholderImage:[UIImage imageNamed:@"image.png"]];
 	
-	/*
-	 NSData __block *thumbnailData = artist.thumbnail;
-	 
-	 // TODO: set a "empty" image
-	 dispatch_queue_t q = dispatch_queue_create("Thumbnail Fetcher", 0);
-	 dispatch_async(q, ^{
-	 if (!thumbnailData) {
-	 // need to fetch it first
-	 NSURL *thumbnailURL = [NSURL URLWithString:artist.thumbnailURL];
-	 [[UIApplication sharedApplication] enableNetworkActivity];
-	 thumbnailData = [NSData dataWithContentsOfURL:thumbnailURL];
-	 [[UIApplication sharedApplication] disableNetworkActivity];
-	 
-	 //[artist.managedObjectContext performBlock:^{
-	 // set on the DB
-	 artist.thumbnail = thumbnailData;
-	 //}];
-	 }
-	 
-	 // data exists, set the image
-	 UIImage *image = [UIImage imageWithData:thumbnailData];
-	 artist.thumbnail = image;
-	 dispatch_async(dispatch_get_main_queue(), ^{
-	 cell.imageView.image = image;
-	 });
-	 });
-	 */
+	// TODO: the image has wired sizing behaviour, needs fix!
+	
 }
 
 @end

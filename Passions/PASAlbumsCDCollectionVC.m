@@ -20,7 +20,9 @@
 {
 	_artist = artist;
 	self.title = artist.name;
-	self.debug = YES;
+	#ifdef DEBUG
+		self.debug = YES;
+	#endif
 	[self setupFetchedResultsController];
 }
 
@@ -42,6 +44,28 @@
 	}
 }
 
+#pragma mark - View Lifecycle
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+	NSIndexPath *indexPath = nil;
+	
+	if ([sender isKindOfClass:[UITableViewCell class]]) {
+		indexPath = [self.collectionView indexPathForCell:sender];
+	}
+	
+	if (indexPath) {
+		if ([segue.identifier isEqualToString:@"setImageUrl:"]) {
+			Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
+			NSURL *url = [NSURL URLWithString:album.imageURL];
+			
+			if ([segue.destinationViewController respondsToSelector:@selector(setImageUrl:)]) {
+				[segue.destinationViewController performSelector:@selector(setImageUrl:) withObject:url];
+			}
+		}
+	}
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -53,6 +77,15 @@
 	// TODO this might be out of sync because of background loading, and therefor constant reordering of the CollectionView!
 	Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
+	[self setThumbnailForAlbum:album atCell:cell];
+    
+    return cell;
+}
+
+#pragma mark - UICollectionViewDataSource Helpers
+
+- (void)setThumbnailForAlbum:(Album *)album atCell:(AFCollectionViewCell *)cell
+{
 	if (!album.thumbnailURL) {
 		[[LastFmFetchr fetchr] getInfoForAlbum:album.name
 									  byArtist:self.artist.name
@@ -73,9 +106,6 @@
 	} else {
 		[cell.imageView setImageWithURL:[NSURL URLWithString:album.thumbnailURL] placeholderImage:[UIImage imageNamed:@"image.png"]];
 	}
-	
-    
-    return cell;
 }
 
 @end
