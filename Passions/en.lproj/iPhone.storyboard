@@ -52,7 +52,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mbv-np-6ZL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1406" y="119"/>
+            <point key="canvasLocation" x="1396" y="113"/>
         </scene>
         <!--AlbumsCD CollectionVC - Item-->
         <scene sceneID="8S2-8o-D7j">
@@ -104,7 +104,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zD7-mr-HQX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1888" y="119"/>
+            <point key="canvasLocation" x="1888" y="113"/>
         </scene>
         <!--Navigation Controller - LFM Artists-->
         <scene sceneID="dAi-4a-bQk">
@@ -142,7 +142,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mqb-Aj-RYr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="240" y="-351"/>
+            <point key="canvasLocation" x="314" y="-211"/>
         </scene>
         <!--ArtistTVC - Item-->
         <scene sceneID="n1J-Zq-Acx">
