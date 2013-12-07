@@ -10,6 +10,8 @@
 		65F86A33B682476FBAAC9AE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF473646EE4645ECB8A1B050 /* libPods.a */; };
 		F409BBDF17ADC73A00091B7A /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = F409BBDE17ADC73A00091B7A /* image.png */; };
 		F409BBE217ADC75600091B7A /* image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F409BBE117ADC75600091B7A /* image@2x.png */; };
+		F40BBA6B18538DAD00877D60 /* PASArtistTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F40BBA6A18538DAD00877D60 /* PASArtistTVC.m */; };
+		F40BBA6E1853908700877D60 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F40BBA6D1853908700877D60 /* MediaPlayer.framework */; };
 		F436925B17AD31260042AF62 /* PASCDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F436925A17AD31260042AF62 /* PASCDStack.m */; };
 		F438692A17A55CE6000B7817 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */; };
 		F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */; };
@@ -45,6 +47,9 @@
 		D420301400214166998C1AC5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		F409BBDE17ADC73A00091B7A /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image.png; sourceTree = "<group>"; };
 		F409BBE117ADC75600091B7A /* image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "image@2x.png"; sourceTree = "<group>"; };
+		F40BBA6918538DAD00877D60 /* PASArtistTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASArtistTVC.h; sourceTree = "<group>"; };
+		F40BBA6A18538DAD00877D60 /* PASArtistTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASArtistTVC.m; sourceTree = "<group>"; };
+		F40BBA6D1853908700877D60 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		F436925917AD31260042AF62 /* PASCDStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASCDStack.h; sourceTree = "<group>"; };
 		F436925A17AD31260042AF62 /* PASCDStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASCDStack.m; sourceTree = "<group>"; };
 		F455BE0517AE8E6200F6054B /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
@@ -98,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F40BBA6E1853908700877D60 /* MediaPlayer.framework in Frameworks */,
 				F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */,
 				F438692A17A55CE6000B7817 /* SystemConfiguration.framework in Frameworks */,
 				F4A60FDC17A05ED1008D8F6C /* CoreData.framework in Frameworks */,
@@ -118,6 +124,26 @@
 				F409BBE117ADC75600091B7A /* image@2x.png */,
 			);
 			name = Visuals;
+			sourceTree = "<group>";
+		};
+		F40BBA6818538D8200877D60 /* LFM */ = {
+			isa = PBXGroup;
+			children = (
+				F490BB2117A0754200B9BF06 /* PASArtistCDTVC.h */,
+				F490BB2217A0754200B9BF06 /* PASArtistCDTVC.m */,
+				F45F1556182F29C800447D0A /* PASAlbumsCDCollectionVC.h */,
+				F45F1557182F29C800447D0A /* PASAlbumsCDCollectionVC.m */,
+			);
+			name = LFM;
+			sourceTree = "<group>";
+		};
+		F40BBA6C18538E1D00877D60 /* iPod */ = {
+			isa = PBXGroup;
+			children = (
+				F40BBA6918538DAD00877D60 /* PASArtistTVC.h */,
+				F40BBA6A18538DAD00877D60 /* PASArtistTVC.m */,
+			);
+			name = iPod;
 			sourceTree = "<group>";
 		};
 		F44D56BF18379BA5007A2CCF /* CollectionView */ = {
@@ -219,6 +245,7 @@
 		F4A779761793113E00C770B9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F40BBA6D1853908700877D60 /* MediaPlayer.framework */,
 				F4A60FDB17A05ED1008D8F6C /* CoreData.framework */,
 				F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */,
 				F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */,
@@ -234,10 +261,8 @@
 			isa = PBXGroup;
 			children = (
 				F4A7798F1793113E00C770B9 /* iPhone.storyboard */,
-				F490BB2117A0754200B9BF06 /* PASArtistCDTVC.h */,
-				F490BB2217A0754200B9BF06 /* PASArtistCDTVC.m */,
-				F45F1556182F29C800447D0A /* PASAlbumsCDCollectionVC.h */,
-				F45F1557182F29C800447D0A /* PASAlbumsCDCollectionVC.m */,
+				F40BBA6C18538E1D00877D60 /* iPod */,
+				F40BBA6818538D8200877D60 /* LFM */,
 				F44D56BF18379BA5007A2CCF /* CollectionView */,
 				F44D56C018379BBD007A2CCF /* TableView */,
 				F409BBE017ADC74000091B7A /* Visuals */,
@@ -378,6 +403,7 @@
 				F45F1552182EF8CC00447D0A /* CoreDataCollectionViewController.m in Sources */,
 				F45F155E182F316500447D0A /* AFCollectionViewCell.m in Sources */,
 				F496645817A6D69900F6C005 /* Artist.m in Sources */,
+				F40BBA6B18538DAD00877D60 /* PASArtistTVC.m in Sources */,
 				F496645B17A6D69900F6C005 /* Tag.m in Sources */,
 				F496646117A6D69900F6C005 /* Track.m in Sources */,
 				F496646417A6D71800F6C005 /* Album+LastFmFetchr.m in Sources */,
