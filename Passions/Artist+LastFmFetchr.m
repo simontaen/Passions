@@ -34,7 +34,7 @@
 	
 	return [self artistInContext:context
 						imageURL:url
-						isOnTour:[NSNumber numberWithBool:data.isOnTour]
+						isOnTour:data.isOnTour
 							name:data.name
 					   thumbnail:nil
 					thumbnailURL:data.imageSmallString

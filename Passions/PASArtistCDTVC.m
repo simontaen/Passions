@@ -163,9 +163,9 @@
 - (NSString *)stringForNumberOfAlbums:(NSUInteger)noOfAlbums
 {
 	if (noOfAlbums == 1) {
-		return [NSString stringWithFormat:@"%d Album", noOfAlbums];
+		return [NSString stringWithFormat:@"%lu Album", (unsigned long)noOfAlbums];
 	} else {
-		return [NSString stringWithFormat:@"%d Albums", noOfAlbums];
+		return [NSString stringWithFormat:@"%lu Albums", (unsigned long)noOfAlbums];
 	}
 }
 
