@@ -47,7 +47,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-	self.title = @"Artists";
+	self.title = @"LFM Artists";
 	[self.refreshControl addTarget:self
 							action:@selector(refresh)
 				  forControlEvents:UIControlEventValueChanged];
@@ -95,7 +95,6 @@
 	static NSArray *sampleArtists;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		/*
 		 sampleArtists = @[
 		 @"The Beatles", @"Air", @"Pink Floyd", @"Rammstein", @"Bloodhound Gang",
 		 @"Ancien Régime", @"Genius/GZA ", @"Belle & Sebastian", @"Björk",
@@ -106,8 +105,7 @@
 		 @"David Bowie", @"Deadmau5", @"Dukes of Stratosphear", @"[dunkelbunt]",
 		 @"Eminem", @"Enigma",
 		 ];
-		 */
-		sampleArtists = @[@"The Beatles", @"AC/DC", @"Pink Floyd"];
+		//sampleArtists = @[@"The Beatles", @"AC/DC", @"Pink Floyd"];
 		
 	});
 	return sampleArtists;
