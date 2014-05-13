@@ -1,3 +1,7 @@
+# App definition statement
+
+Passions shows you which Albums of your all time favorite Music Artists you are missing and can notify you when a new album gets released. 
+
 # Code.todo
 
 * Draw the UI for the App FIRST!
@@ -9,6 +13,17 @@
 	* You'll get a feel for what you need (generally and which data needs to persist).
 	* The music library is the staring point for defining what you like and showing what you have. You need LFM and other services mainly for upcoming albums, only (very much) later for defining taste (if at all). My point is you'll NOT just persist complete API data. You'll only use SOME of the data from APIs (upcoming albums, more artist infos, buy options), which means you'll very likely have your own data model.
 
+
+# Implementation detail
+
+* Initial set of favourite artists can be pulled from iPod Libray
+* Manually remove/add/edit favourite artists
+* You can work in a mode where you JUST work on the favourite artists from your library.
+* Background fetch to query albums info sources for new album releases
+
+# CoreData
+
+I'm getting too detail focused again... Performance DOES NOT MATTER in this early stage of development. For my dataset it MAY NEVER MATTER. It's probably the best way to use `UIManagedDocument` the way they teach it in CS193P. It's the fast track to iCloud and requires very little insight.
 
 # This is far off
 
