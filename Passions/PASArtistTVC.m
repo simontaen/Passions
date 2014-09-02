@@ -10,11 +10,10 @@
 
 @interface PASArtistTVC ()
 // of MPMediaItem
-@property (nonatomic, strong) NSArray* songs;
+@property (nonatomic, strong) NSArray* artists;
 @end
 
 @implementation PASArtistTVC
-
 
 #pragma mark - View Lifecycle
 
@@ -24,7 +23,12 @@
 	[self setTitle:@"iPod Artists"];
 
 	self.query = [MPMediaQuery artistsQuery];
-	self.songs = [self.query items];
+	self.artists = [self.query collections];
+	
+	// order by a combination of
+	// MPMediaItemPropertyPlayCount
+	// MPMediaItemPropertyRating
+	// see MPMediaItem Class Reference
 }
 
 #pragma mark - UITableViewDataSource
@@ -32,23 +36,40 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.songs count];
+    return [self.artists count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    MPMediaItem *song = self.songs[indexPath.row];
+	MPMediaItemCollection *artist = self.artists[indexPath.row];
+    MPMediaItem *item = [artist representativeItem];
 	
-	cell.textLabel.text = [song valueForProperty: MPMediaItemPropertyTitle];
-	cell.detailTextLabel.text = [song valueForProperty: MPMediaItemPropertyArtist];
+	cell.textLabel.text = [item valueForProperty: MPMediaItemPropertyArtist];
+	cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu Tracks", (unsigned long)[[artist items] count]];
+	
+	
+    MPMediaItemArtwork *artwork = [item valueForProperty: MPMediaItemPropertyArtwork];
+	UIImage *artworkImage = [artwork imageWithSize:cell.imageView.bounds.size];
+	
+	if (artworkImage) {
+		CGSize itemSize = cell.imageView.image.size;
+		UIGraphicsBeginImageContext(itemSize);
+		CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
+		[artworkImage drawInRect:imageRect];
+		cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+		UIGraphicsEndImageContext();
+	} else {
+		cell.imageView.image = [UIImage imageNamed: @"image.png"];
+	}
+	
 	
     return cell;
 }
