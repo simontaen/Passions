@@ -40,9 +40,9 @@
         <relationship name="artists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Artist" inverseName="tracks" inverseEntity="Artist" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Album" positionX="-54" positionY="-153" width="128" height="223"/>
-        <element name="Artist" positionX="-38" positionY="117" width="128" height="178"/>
-        <element name="Tag" positionX="180" positionY="30" width="128" height="103"/>
-        <element name="Track" positionX="-281" positionY="-9" width="128" height="133"/>
+        <element name="Album" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Artist" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Tag" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Track" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

@@ -8,6 +8,8 @@
 
 #import "PASArtistTVC.h"
 
+static NSString *const CellIdentifier = @"LibraryArtist";
+
 @interface PASArtistTVC ()
 // of MPMediaItem
 @property (nonatomic, strong) NSArray* artists;

@@ -14,6 +14,8 @@
 #import "UIImageView+AFNetworking.h"
 #import "UIRefreshControl+RefreshUtil.h"
 
+static NSString *const CellIdentifier = @"LfmArtist";
+
 @implementation PASArtistCDTVC
 
 #pragma mark - Accessors
@@ -137,8 +139,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	static NSString *cellIdentifier = @"Artist";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 	
 	// use id to make this method abstract
 	Artist *artist = [self.fetchedResultsController objectAtIndexPath:indexPath];

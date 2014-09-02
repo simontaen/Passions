@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
 
-static NSString *const CellIdentifier = @"LibraryArtist";
-
 @interface PASArtistTVC : UITableViewController
 @property (nonatomic, strong) MPMediaQuery* query;
 @end
