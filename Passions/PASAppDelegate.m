@@ -7,6 +7,7 @@
 //
 
 #import "PASAppDelegate.h"
+#import <Parse/Parse.h>
 #import "LastFmFetchr.h"
 #import "PASCDStack.h"
 
@@ -14,14 +15,38 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
 	// Setup LastFmFetchr
 	[LastFmFetchr fetchrWithApiKey:@"aed3367b0133ab707cb4e5b6b04da3e7"];
-	//[LastFmFetchr sharedManager].apiSecret = @"d27f4af60d0c89152dedc7cf89ac1e89";
+	
+	// Setup Parse
+	[Parse setApplicationId:@"ymoWy7LcvcSg1tEGehR46hgLAEGP2mR3wyePOsQd"
+				  clientKey:@"Lp7MQjIGpM5O9Zp3CFyI8FU6NNmUBfa9xySu1Mgx"];
+	
+	// Track app opens
+	[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+	
+	// Register for remote notifications
+	[application registerForRemoteNotificationTypes:
+	 UIRemoteNotificationTypeBadge|
+	 UIRemoteNotificationTypeAlert|
+	 UIRemoteNotificationTypeSound];
 	
     return YES;
 }
-							
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+	// Store the deviceToken in the current installation and save it to Parse.
+	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+	[currentInstallation setDeviceTokenFromData:deviceToken];
+	[currentInstallation saveInBackground];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+	[PFPush handlePush:userInfo];
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 	// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -30,7 +55,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-	// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+	// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
 	// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
