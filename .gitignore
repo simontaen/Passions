@@ -17,6 +17,7 @@ profile
 DerivedData
 .idea/
 *.hmap
+Keys
 
 # CocoaPods
 Pods
