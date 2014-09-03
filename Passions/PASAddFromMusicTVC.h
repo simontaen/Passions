@@ -1,5 +1,5 @@
 //
-//  PASArtistTVC.h
+//  PASAddFromMusicTVC.h
 //  Passions
 //
 //  Created by Simon Tännler on 07/12/13.
@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
 
-@interface PASArtistTVC : UITableViewController
+@interface PASAddFromMusicTVC : UITableViewController
 @property (nonatomic, strong) MPMediaQuery* query;
 @end

@@ -10,35 +10,20 @@
 		65F86A33B682476FBAAC9AE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF473646EE4645ECB8A1B050 /* libPods.a */; };
 		F409BBDF17ADC73A00091B7A /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = F409BBDE17ADC73A00091B7A /* image.png */; };
 		F409BBE217ADC75600091B7A /* image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F409BBE117ADC75600091B7A /* image@2x.png */; };
-		F40BBA6B18538DAD00877D60 /* PASArtistTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F40BBA6A18538DAD00877D60 /* PASArtistTVC.m */; };
+		F40BBA6B18538DAD00877D60 /* PASAddFromMusicTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F40BBA6A18538DAD00877D60 /* PASAddFromMusicTVC.m */; };
 		F40BBA6E1853908700877D60 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F40BBA6D1853908700877D60 /* MediaPlayer.framework */; };
 		F424EE2E19B656D40010B3E1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F424EE2D19B656D40010B3E1 /* AudioToolbox.framework */; };
 		F424EE3019B656DD0010B3E1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F424EE2F19B656DD0010B3E1 /* CFNetwork.framework */; };
 		F424EE3419B656FA0010B3E1 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F424EE3319B656FA0010B3E1 /* libz.dylib */; };
 		F424EE3819B657120010B3E1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F424EE3719B657120010B3E1 /* Security.framework */; };
-		F436925B17AD31260042AF62 /* PASCDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F436925A17AD31260042AF62 /* PASCDStack.m */; };
 		F438692A17A55CE6000B7817 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */; };
 		F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */; };
-		F455BE0717AE8E6300F6054B /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = F455BE0617AE8E6300F6054B /* Album.m */; };
-		F45F1552182EF8CC00447D0A /* CoreDataCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F45F1551182EF8CC00447D0A /* CoreDataCollectionViewController.m */; };
-		F45F1558182F29C800447D0A /* PASAlbumsCDCollectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F45F1557182F29C800447D0A /* PASAlbumsCDCollectionVC.m */; };
-		F45F155E182F316500447D0A /* AFCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F45F155D182F316500447D0A /* AFCollectionViewCell.m */; };
-		F490BB0E17A0708D00B9BF06 /* Tag+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = F490BB0D17A0708D00B9BF06 /* Tag+Create.m */; };
-		F490BB2317A0754200B9BF06 /* PASArtistCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F490BB2217A0754200B9BF06 /* PASArtistCDTVC.m */; };
+		F4694D6419B74ABB00D12576 /* PASFavArtistsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */; };
 		F49137F119B7137900E4FC0D /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F019B7137900E4FC0D /* Accounts.framework */; };
 		F49137F319B7142300E4FC0D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F219B7142300E4FC0D /* Social.framework */; };
 		F49137F519B714A200E4FC0D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F419B714A200E4FC0D /* QuartzCore.framework */; };
 		F49137F819B716A500E4FC0D /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F619B716A500E4FC0D /* Bolts.framework */; };
 		F49137F919B716A500E4FC0D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F719B716A500E4FC0D /* Parse.framework */; };
-		F496645817A6D69900F6C005 /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = F496645717A6D69900F6C005 /* Artist.m */; };
-		F496645B17A6D69900F6C005 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = F496645A17A6D69900F6C005 /* Tag.m */; };
-		F496646117A6D69900F6C005 /* Track.m in Sources */ = {isa = PBXBuildFile; fileRef = F496646017A6D69900F6C005 /* Track.m */; };
-		F496646417A6D71800F6C005 /* Album+LastFmFetchr.m in Sources */ = {isa = PBXBuildFile; fileRef = F496646317A6D71800F6C005 /* Album+LastFmFetchr.m */; };
-		F496646717A6DD1D00F6C005 /* Artist+Accessors.m in Sources */ = {isa = PBXBuildFile; fileRef = F496646617A6DD1D00F6C005 /* Artist+Accessors.m */; };
-		F4A60FCC17A059D7008D8F6C /* Passions.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F4A60FCA17A059D7008D8F6C /* Passions.xcdatamodeld */; };
-		F4A60FD317A05AF7008D8F6C /* Artist+LastFmFetchr.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A60FD217A05AF7008D8F6C /* Artist+LastFmFetchr.m */; };
-		F4A60FD617A05E7D008D8F6C /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A60FD517A05E7D008D8F6C /* CoreDataTableViewController.m */; };
-		F4A60FDC17A05ED1008D8F6C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FDB17A05ED1008D8F6C /* CoreData.framework */; };
 		F4A779781793113E00C770B9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A779771793113E00C770B9 /* UIKit.framework */; };
 		F4A7797A1793113E00C770B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A779791793113E00C770B9 /* Foundation.framework */; };
 		F4A7797C1793113E00C770B9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A7797B1793113E00C770B9 /* CoreGraphics.framework */; };
@@ -56,50 +41,22 @@
 		D420301400214166998C1AC5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		F409BBDE17ADC73A00091B7A /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image.png; sourceTree = "<group>"; };
 		F409BBE117ADC75600091B7A /* image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "image@2x.png"; sourceTree = "<group>"; };
-		F40BBA6918538DAD00877D60 /* PASArtistTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASArtistTVC.h; sourceTree = "<group>"; };
-		F40BBA6A18538DAD00877D60 /* PASArtistTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASArtistTVC.m; sourceTree = "<group>"; };
+		F40BBA6918538DAD00877D60 /* PASAddFromMusicTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddFromMusicTVC.h; sourceTree = "<group>"; };
+		F40BBA6A18538DAD00877D60 /* PASAddFromMusicTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAddFromMusicTVC.m; sourceTree = "<group>"; };
 		F40BBA6D1853908700877D60 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		F424EE2D19B656D40010B3E1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		F424EE2F19B656DD0010B3E1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		F424EE3319B656FA0010B3E1 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		F424EE3719B657120010B3E1 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		F436925917AD31260042AF62 /* PASCDStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASCDStack.h; sourceTree = "<group>"; };
-		F436925A17AD31260042AF62 /* PASCDStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASCDStack.m; sourceTree = "<group>"; };
-		F455BE0517AE8E6200F6054B /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
-		F455BE0617AE8E6300F6054B /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
-		F45F1550182EF8CC00447D0A /* CoreDataCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataCollectionViewController.h; sourceTree = "<group>"; };
-		F45F1551182EF8CC00447D0A /* CoreDataCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataCollectionViewController.m; sourceTree = "<group>"; };
-		F45F1556182F29C800447D0A /* PASAlbumsCDCollectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAlbumsCDCollectionVC.h; sourceTree = "<group>"; };
-		F45F1557182F29C800447D0A /* PASAlbumsCDCollectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAlbumsCDCollectionVC.m; sourceTree = "<group>"; };
-		F45F155C182F316500447D0A /* AFCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFCollectionViewCell.h; sourceTree = "<group>"; };
-		F45F155D182F316500447D0A /* AFCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFCollectionViewCell.m; sourceTree = "<group>"; };
-		F490BB0C17A0708D00B9BF06 /* Tag+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tag+Create.h"; sourceTree = "<group>"; };
-		F490BB0D17A0708D00B9BF06 /* Tag+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tag+Create.m"; sourceTree = "<group>"; };
-		F490BB2117A0754200B9BF06 /* PASArtistCDTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASArtistCDTVC.h; sourceTree = "<group>"; };
-		F490BB2217A0754200B9BF06 /* PASArtistCDTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASArtistCDTVC.m; sourceTree = "<group>"; };
+		F4694D6219B74ABB00D12576 /* PASFavArtistsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASFavArtistsTVC.h; sourceTree = "<group>"; };
+		F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASFavArtistsTVC.m; sourceTree = "<group>"; };
 		F49137F019B7137900E4FC0D /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		F49137F219B7142300E4FC0D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		F49137F419B714A200E4FC0D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F49137F619B716A500E4FC0D /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Passions/Bolts.framework; sourceTree = "<group>"; };
 		F49137F719B716A500E4FC0D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Passions/Parse.framework; sourceTree = "<group>"; };
-		F496645617A6D69900F6C005 /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Artist.h; sourceTree = "<group>"; };
-		F496645717A6D69900F6C005 /* Artist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Artist.m; sourceTree = "<group>"; };
-		F496645917A6D69900F6C005 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
-		F496645A17A6D69900F6C005 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
-		F496645F17A6D69900F6C005 /* Track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Track.h; sourceTree = "<group>"; };
-		F496646017A6D69900F6C005 /* Track.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Track.m; sourceTree = "<group>"; };
-		F496646217A6D71800F6C005 /* Album+LastFmFetchr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Album+LastFmFetchr.h"; sourceTree = "<group>"; };
-		F496646317A6D71800F6C005 /* Album+LastFmFetchr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Album+LastFmFetchr.m"; sourceTree = "<group>"; };
-		F496646517A6DD1D00F6C005 /* Artist+Accessors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Artist+Accessors.h"; sourceTree = "<group>"; };
-		F496646617A6DD1D00F6C005 /* Artist+Accessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Artist+Accessors.m"; sourceTree = "<group>"; };
-		F4A60FCB17A059D7008D8F6C /* Passions.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Passions.xcdatamodel; sourceTree = "<group>"; };
-		F4A60FD117A05AF7008D8F6C /* Artist+LastFmFetchr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Artist+LastFmFetchr.h"; sourceTree = "<group>"; };
-		F4A60FD217A05AF7008D8F6C /* Artist+LastFmFetchr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Artist+LastFmFetchr.m"; sourceTree = "<group>"; };
-		F4A60FD417A05E7D008D8F6C /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
-		F4A60FD517A05E7D008D8F6C /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
 		F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		F4A60FDB17A05ED1008D8F6C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F4A779741793113E00C770B9 /* Passions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Passions.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4A779771793113E00C770B9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F4A779791793113E00C770B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -133,7 +90,6 @@
 				F424EE3019B656DD0010B3E1 /* CFNetwork.framework in Frameworks */,
 				F424EE2E19B656D40010B3E1 /* AudioToolbox.framework in Frameworks */,
 				F40BBA6E1853908700877D60 /* MediaPlayer.framework in Frameworks */,
-				F4A60FDC17A05ED1008D8F6C /* CoreData.framework in Frameworks */,
 				F4A779781793113E00C770B9 /* UIKit.framework in Frameworks */,
 				F4A7797A1793113E00C770B9 /* Foundation.framework in Frameworks */,
 				65F86A33B682476FBAAC9AE6 /* libPods.a in Frameworks */,
@@ -153,102 +109,13 @@
 			name = Visuals;
 			sourceTree = "<group>";
 		};
-		F40BBA6818538D8200877D60 /* LFM */ = {
-			isa = PBXGroup;
-			children = (
-				F490BB2117A0754200B9BF06 /* PASArtistCDTVC.h */,
-				F490BB2217A0754200B9BF06 /* PASArtistCDTVC.m */,
-				F45F1556182F29C800447D0A /* PASAlbumsCDCollectionVC.h */,
-				F45F1557182F29C800447D0A /* PASAlbumsCDCollectionVC.m */,
-			);
-			name = LFM;
-			sourceTree = "<group>";
-		};
 		F40BBA6C18538E1D00877D60 /* iPod */ = {
 			isa = PBXGroup;
 			children = (
-				F40BBA6918538DAD00877D60 /* PASArtistTVC.h */,
-				F40BBA6A18538DAD00877D60 /* PASArtistTVC.m */,
+				F40BBA6918538DAD00877D60 /* PASAddFromMusicTVC.h */,
+				F40BBA6A18538DAD00877D60 /* PASAddFromMusicTVC.m */,
 			);
 			name = iPod;
-			sourceTree = "<group>";
-		};
-		F44D56BF18379BA5007A2CCF /* CollectionView */ = {
-			isa = PBXGroup;
-			children = (
-				F45F1550182EF8CC00447D0A /* CoreDataCollectionViewController.h */,
-				F45F1551182EF8CC00447D0A /* CoreDataCollectionViewController.m */,
-				F45F155C182F316500447D0A /* AFCollectionViewCell.h */,
-				F45F155D182F316500447D0A /* AFCollectionViewCell.m */,
-			);
-			name = CollectionView;
-			sourceTree = "<group>";
-		};
-		F44D56C018379BBD007A2CCF /* TableView */ = {
-			isa = PBXGroup;
-			children = (
-				F4A60FD417A05E7D008D8F6C /* CoreDataTableViewController.h */,
-				F4A60FD517A05E7D008D8F6C /* CoreDataTableViewController.m */,
-			);
-			name = TableView;
-			sourceTree = "<group>";
-		};
-		F44D56C118379BCE007A2CCF /* Artist */ = {
-			isa = PBXGroup;
-			children = (
-				F496646517A6DD1D00F6C005 /* Artist+Accessors.h */,
-				F496646617A6DD1D00F6C005 /* Artist+Accessors.m */,
-				F4A60FD117A05AF7008D8F6C /* Artist+LastFmFetchr.h */,
-				F4A60FD217A05AF7008D8F6C /* Artist+LastFmFetchr.m */,
-				F496645617A6D69900F6C005 /* Artist.h */,
-				F496645717A6D69900F6C005 /* Artist.m */,
-			);
-			name = Artist;
-			sourceTree = "<group>";
-		};
-		F44D56C218379BD6007A2CCF /* Album */ = {
-			isa = PBXGroup;
-			children = (
-				F496646217A6D71800F6C005 /* Album+LastFmFetchr.h */,
-				F496646317A6D71800F6C005 /* Album+LastFmFetchr.m */,
-				F455BE0517AE8E6200F6054B /* Album.h */,
-				F455BE0617AE8E6300F6054B /* Album.m */,
-			);
-			name = Album;
-			sourceTree = "<group>";
-		};
-		F44D56C318379BDF007A2CCF /* Tag */ = {
-			isa = PBXGroup;
-			children = (
-				F490BB0C17A0708D00B9BF06 /* Tag+Create.h */,
-				F490BB0D17A0708D00B9BF06 /* Tag+Create.m */,
-				F496645917A6D69900F6C005 /* Tag.h */,
-				F496645A17A6D69900F6C005 /* Tag.m */,
-			);
-			name = Tag;
-			sourceTree = "<group>";
-		};
-		F44D56C418379BE3007A2CCF /* Track */ = {
-			isa = PBXGroup;
-			children = (
-				F496645F17A6D69900F6C005 /* Track.h */,
-				F496646017A6D69900F6C005 /* Track.m */,
-			);
-			name = Track;
-			sourceTree = "<group>";
-		};
-		F4A60FCD17A059DF008D8F6C /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				F44D56C118379BCE007A2CCF /* Artist */,
-				F44D56C218379BD6007A2CCF /* Album */,
-				F44D56C318379BDF007A2CCF /* Tag */,
-				F44D56C418379BE3007A2CCF /* Track */,
-				F4A60FCA17A059D7008D8F6C /* Passions.xcdatamodeld */,
-				F436925917AD31260042AF62 /* PASCDStack.h */,
-				F436925A17AD31260042AF62 /* PASCDStack.m */,
-			);
-			name = CoreData;
 			sourceTree = "<group>";
 		};
 		F4A7796B1793113E00C770B9 = {
@@ -276,7 +143,6 @@
 				F424EE2D19B656D40010B3E1 /* AudioToolbox.framework */,
 				F49137F619B716A500E4FC0D /* Bolts.framework */,
 				F424EE2F19B656DD0010B3E1 /* CFNetwork.framework */,
-				F4A60FDB17A05ED1008D8F6C /* CoreData.framework */,
 				F4A7797B1793113E00C770B9 /* CoreGraphics.framework */,
 				F4A779791793113E00C770B9 /* Foundation.framework */,
 				CF473646EE4645ECB8A1B050 /* libPods.a */,
@@ -297,13 +163,11 @@
 			isa = PBXGroup;
 			children = (
 				F4A7798F1793113E00C770B9 /* iPhone.storyboard */,
+				F4694D6219B74ABB00D12576 /* PASFavArtistsTVC.h */,
+				F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */,
 				F40BBA6C18538E1D00877D60 /* iPod */,
-				F40BBA6818538D8200877D60 /* LFM */,
-				F44D56BF18379BA5007A2CCF /* CollectionView */,
-				F44D56C018379BBD007A2CCF /* TableView */,
 				F409BBE017ADC74000091B7A /* Visuals */,
 				F4A7797E1793113E00C770B9 /* Supporting Files */,
-				F4A60FCD17A059DF008D8F6C /* CoreData */,
 			);
 			path = Passions;
 			sourceTree = "<group>";
@@ -439,22 +303,8 @@
 			files = (
 				F4A779841793113E00C770B9 /* main.m in Sources */,
 				F4A779881793113E00C770B9 /* PASAppDelegate.m in Sources */,
-				F4A60FCC17A059D7008D8F6C /* Passions.xcdatamodeld in Sources */,
-				F45F1558182F29C800447D0A /* PASAlbumsCDCollectionVC.m in Sources */,
-				F4A60FD317A05AF7008D8F6C /* Artist+LastFmFetchr.m in Sources */,
-				F4A60FD617A05E7D008D8F6C /* CoreDataTableViewController.m in Sources */,
-				F490BB0E17A0708D00B9BF06 /* Tag+Create.m in Sources */,
-				F490BB2317A0754200B9BF06 /* PASArtistCDTVC.m in Sources */,
-				F45F1552182EF8CC00447D0A /* CoreDataCollectionViewController.m in Sources */,
-				F45F155E182F316500447D0A /* AFCollectionViewCell.m in Sources */,
-				F496645817A6D69900F6C005 /* Artist.m in Sources */,
-				F40BBA6B18538DAD00877D60 /* PASArtistTVC.m in Sources */,
-				F496645B17A6D69900F6C005 /* Tag.m in Sources */,
-				F496646117A6D69900F6C005 /* Track.m in Sources */,
-				F496646417A6D71800F6C005 /* Album+LastFmFetchr.m in Sources */,
-				F496646717A6DD1D00F6C005 /* Artist+Accessors.m in Sources */,
-				F436925B17AD31260042AF62 /* PASCDStack.m in Sources */,
-				F455BE0717AE8E6300F6054B /* Album.m in Sources */,
+				F40BBA6B18538DAD00877D60 /* PASAddFromMusicTVC.m in Sources */,
+				F4694D6419B74ABB00D12576 /* PASFavArtistsTVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,19 +450,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		F4A60FCA17A059D7008D8F6C /* Passions.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				F4A60FCB17A059D7008D8F6C /* Passions.xcdatamodel */,
-			);
-			currentVersion = F4A60FCB17A059D7008D8F6C /* Passions.xcdatamodel */;
-			path = Passions.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = F4A7796C1793113E00C770B9 /* Project object */;
 }

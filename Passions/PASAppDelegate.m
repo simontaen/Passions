@@ -9,7 +9,6 @@
 #import "PASAppDelegate.h"
 #import <Parse/Parse.h>
 #import "LastFmFetchr.h"
-#import "PASCDStack.h"
 
 @implementation PASAppDelegate
 
