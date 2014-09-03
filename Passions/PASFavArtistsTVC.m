@@ -43,8 +43,6 @@
 {
     [super viewDidLoad];
 
-	[self getArtists:[self sampleArtists]];
-	
     //[PFPush sendPushMessageToChannelInBackground:@"global" withMessage:@"Hello After viewDidLoad"];
 }
 
@@ -69,6 +67,13 @@
 // Override to customize what kind of query to perform on the class. The default is to query for
 // all objects ordered by createdAt descending.
 - (PFQuery *)queryForTable {
+	if ([[PFUser currentUser] isDirty]) {
+		// this must be a new user
+		[[PFUser currentUser] save];
+		[self getArtists:[self sampleArtists]];
+	}
+	
+	
     PFQuery *query = [PFQuery queryWithClassName:self.parseClassName];
 	[query whereKey:@"favByUsers" containsAllObjectsInArray:@[[PFUser currentUser]]];
 	
