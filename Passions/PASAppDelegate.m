@@ -21,8 +21,12 @@
 	[Parse setApplicationId:@"nCQQ7cw92dCJJoH1cwbEv5ZBFmsEyFgSlVfmljp9"
 				  clientKey:@"Zpg8dAMm0f7IKpun9GTIRArCbgdY7e7Gj27vWPFc"];
 	
-    [PFUser enableAutomaticUser];
-    
+	[PFUser enableAutomaticUser];
+	// this will crash the app if currentUser is a new user!
+	// queryForTable required a saved users for the parse object ID
+	[[PFUser currentUser] incrementKey:@"RunCount"];
+	[[PFUser currentUser] saveInBackground];
+	
     PFACL *defaultACL = [PFACL ACL];
 	
     // If you would like all objects to be private by default, remove this line.

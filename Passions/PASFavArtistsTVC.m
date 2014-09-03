@@ -9,7 +9,7 @@
 #import "PASFavArtistsTVC.h"
 
 @interface PASFavArtistsTVC()
-@property (strong, nonatomic) NSArray *artists; // PFObjects
+
 @end
 
 @implementation PASFavArtistsTVC
@@ -36,28 +36,16 @@
 	self.paginationEnabled = YES;
 	
 	// The number of objects to show per page
-	self.objectsPerPage = 5;
+	self.objectsPerPage = 20;
 }
 
 -(void)viewDidLoad
 {
     [super viewDidLoad];
 
-	//[self getArtists:[self sampleArtists]];
+	[self getArtists:[self sampleArtists]];
 	
     //[PFPush sendPushMessageToChannelInBackground:@"global" withMessage:@"Hello After viewDidLoad"];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - UITableViewControllerDataSource
@@ -80,19 +68,20 @@
 
 // Override to customize what kind of query to perform on the class. The default is to query for
 // all objects ordered by createdAt descending.
-//- (PFQuery *)queryForTable {
-//    PFQuery *query = [PFQuery queryWithClassName:self.parseClassName];
-//	
-//    // If no objects are loaded in memory, we look to the cache first to fill the table
-//    // and then subsequently do a query against the network.
-//    if ([self.objects count] == 0) {
-//        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-//    }
-//	
-//    [query orderByAscending:@"priority"];
-//	
-//    return query;
-//}
+- (PFQuery *)queryForTable {
+    PFQuery *query = [PFQuery queryWithClassName:self.parseClassName];
+	[query whereKey:@"favByUsers" containsAllObjectsInArray:@[[PFUser currentUser]]];
+	
+    // If no objects are loaded in memory, we look to the cache first to fill the table
+    // and then subsequently do a query against the network.
+    if ([self.objects count] == 0) {
+        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    }
+	
+    [query orderByAscending:self.textKey];
+	
+    return query;
+}
 
 
 
@@ -154,18 +143,21 @@
 	
 	PFQuery *orQuery = [PFQuery orQueryWithSubqueries:queries];
 	
-	[orQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+	[orQuery findObjectsInBackgroundWithBlock:^(NSArray *artists, NSError *error) {
 		if (!error) {
-			if (objects.count > 0) {
-				// read artist from objects
-				// this actually never creates additional artists if you match a subset
-				self.artists = objects;
-				for (PFObject *obj in objects) {
-					NSLog(@"Found %@", [obj objectForKey:@"name"]);
+			if (artists.count > 0) {
+				// the current implementation never creates additional artists if you match a subset
+				// also we only get exact matched on the artist name -> need to call corrections
+				for (PFObject *artist in artists) {
+					NSLog(@"Found %@", [artist objectForKey:@"name"]);
+					// add yourself to favByUsers
+					[artist addObject:[PFUser currentUser] forKey:@"favByUsers"];
+					[artist saveInBackground];
 				}
+				// some callback if all is completed to reload tableView would be good
 				
 			} else {
-				self.artists = [self createArtists:artists];
+				[self createArtists:artists];
 			}
 			//[self deleteArtists:self.artists];
 			//[self getArtists:[self sampleArtists]];
@@ -203,7 +195,7 @@
 		[newArtists addObject:newArtist];
 		
 		// Save new Artist object in Parse
-		[newArtist save];
+		[newArtist saveInBackground];
 		
 		// DEBUG
 		// change number of total Albums and save again
@@ -221,18 +213,6 @@
 	static NSArray *sampleArtists;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		/*
-		 sampleArtists = @[
-		 @"The Beatles", @"Air", @"Pink Floid", @"Rammstein", @"Bloodhound Gang",
-		 @"Ancien Régime", @"Genius/GZA ", @"Belle & Sebastian", @"Björk",
-		 @"Ugress", @"ADELE", @"The Asteroids Galaxy Tour", @"Bar 9",
-		 @"Baskerville", @"Beastie Boys", @"Bee Gees", @"Bit Shifter",
-		 @"Bomfunk MC's", @"C-Mon & Kypski", @"The Cardigans", @"Carly Commando",
-		 @"Caro Emerald", @"Coldplay", @"Coolio", @"Cypress Hill",
-		 @"David Bowie", @"Dukes of Stratosphear", @"[dunkelbunt]",
-		 @"Eminem", @"Enigma", @"Deadmouse"
-		 ];
-		 */
 		//sampleArtists = @[@"Beatles", @"AC/DC", @"Pink Floid", @"Guns 'n roses"];
 		//sampleArtists = @[@"Deadmouse"];
 		sampleArtists = @[
@@ -250,17 +230,5 @@
 	});
 	return sampleArtists;
 }
-
-
-#pragma mark - Navigation
-
-/*
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
