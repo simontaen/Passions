@@ -164,7 +164,11 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             <items>
-                                <barButtonItem title="Done" id="aom-TP-Cn8"/>
+                                <barButtonItem title="Done" id="aom-TP-Cn8">
+                                    <connections>
+                                        <action selector="doneButtonHandler:" destination="XlN-3A-Osb" id="TUb-Ag-aMO"/>
+                                    </connections>
+                                </barButtonItem>
                             </items>
                         </toolbar>
                         <prototypes>
@@ -200,6 +204,9 @@
                             <outlet property="delegate" destination="XlN-3A-Osb" id="2gV-52-3Ic"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="doneButton" destination="aom-TP-Cn8" id="aNu-gt-vKp"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3WZ-A6-Avc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

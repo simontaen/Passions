@@ -9,8 +9,8 @@
 #import "PASAddFromMusicTVC.h"
 
 @interface PASAddFromMusicTVC ()
-// of MPMediaItem
-@property (nonatomic, strong) NSArray* artists;
+@property (nonatomic, strong) NSArray* artists; // of MPMediaItem
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
 @end
 
 @implementation PASAddFromMusicTVC
@@ -29,6 +29,12 @@
 	// MPMediaItemPropertyPlayCount
 	// MPMediaItemPropertyRating
 	// see MPMediaItem Class Reference
+}
+
+- (IBAction)doneButtonHandler:(UIBarButtonItem *)sender
+{
+	// Go back to the previous view
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
