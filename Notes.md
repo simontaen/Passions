@@ -59,6 +59,24 @@ I'm getting too detail focused again... Performance DOES NOT MATTER in this earl
 * Fetch more infos for parse id for Artist
 
 
+# Helpful parse calls
+
+curl -X POST \
+-H "X-Parse-Application-Id: nCQQ7cw92dCJJoH1cwbEv5ZBFmsEyFgSlVfmljp9" \
+-H "X-Parse-REST-API-Key: BAamVLwiBS0XY64WhlYfxADSq0FjRSP97fIkWu4d" \
+-H "Content-Type: application/json" \
+-d '{ "where": { "deviceType": "ios" }, "data": { "alert": "Hello World!" }}' \
+https://api.parse.com/1/push
+
+curl -X POST \
+-H "X-Parse-Application-Id: nCQQ7cw92dCJJoH1cwbEv5ZBFmsEyFgSlVfmljp9" \
+-H "X-Parse-Master-Key: 5iM8ff4mv3rHgq7iXQQEFgVXldqDHZOegM36qcyx" \
+-H "Content-Type: application/json" \
+-d '{"plan":"paid"}' \
+https://api.parse.com/1/jobs/findNewAlbums
+
+
+
 # This is far off
 
 Peter Steinberger recommends using `objc_msgSend` instead of performSelector in his [UIKonf 2013 talk](https://www.youtube.com/watch?v=psPNxC3G_hc) (last minute) after a call to `respondsToSelector`. It's faster and you don't get the nasty ARC warnings. This means I could do a ViewController generalization like I tried in the Stanford "6 - CoreDataSPot" project without `#pragma clang diagnostic push` in `prepareForSegue`.
