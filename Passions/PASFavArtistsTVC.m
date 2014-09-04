@@ -7,6 +7,7 @@
 //
 
 #import "PASFavArtistsTVC.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface PASFavArtistsTVC()
 
@@ -120,6 +121,17 @@
     // Configure the cell
     cell.textLabel.text = [object objectForKey:self.textKey];
     cell.detailTextLabel.text = [self stringForNumberOfAlbums:(NSNumber *)[object objectForKey:@"totalAlbums"]];
+	
+	// get images, ordered big to small
+	NSArray *images = [object objectForKey:@"images"];
+	
+	if (images.count != 0) {
+		// round down, this is only a thumbnail
+		int middle = (int)(images.count / 2 - ((images.count % 2) / 2));
+		
+		[cell.imageView setImageWithURL:[NSURL URLWithString:images[middle]]
+					   placeholderImage:[UIImage imageNamed:@"image.png"]];
+	}
 	
     return cell;
 }
