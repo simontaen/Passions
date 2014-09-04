@@ -21,6 +21,7 @@
 		F4694D6419B74ABB00D12576 /* PASFavArtistsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */; };
 		F476F0EB19B8D8EA00185544 /* PFArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0EA19B8D8EA00185544 /* PFArtist.m */; };
 		F476F0EE19B8D9A100185544 /* PASResources.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0ED19B8D9A100185544 /* PASResources.m */; };
+		F476F0F119B8FFA700185544 /* PASAddFromSamplesTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0F019B8FFA700185544 /* PASAddFromSamplesTVC.m */; };
 		F49137F119B7137900E4FC0D /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F019B7137900E4FC0D /* Accounts.framework */; };
 		F49137F319B7142300E4FC0D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F219B7142300E4FC0D /* Social.framework */; };
 		F49137F519B714A200E4FC0D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F419B714A200E4FC0D /* QuartzCore.framework */; };
@@ -57,6 +58,8 @@
 		F476F0EA19B8D8EA00185544 /* PFArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFArtist.m; sourceTree = "<group>"; };
 		F476F0EC19B8D9A100185544 /* PASResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASResources.h; sourceTree = "<group>"; };
 		F476F0ED19B8D9A100185544 /* PASResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASResources.m; sourceTree = "<group>"; };
+		F476F0EF19B8FFA700185544 /* PASAddFromSamplesTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddFromSamplesTVC.h; sourceTree = "<group>"; };
+		F476F0F019B8FFA700185544 /* PASAddFromSamplesTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAddFromSamplesTVC.m; sourceTree = "<group>"; };
 		F49137F019B7137900E4FC0D /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		F49137F219B7142300E4FC0D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		F49137F419B714A200E4FC0D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -136,6 +139,15 @@
 			name = "Parse Objects";
 			sourceTree = "<group>";
 		};
+		F476F0F219B8FFAD00185544 /* Samples */ = {
+			isa = PBXGroup;
+			children = (
+				F476F0EF19B8FFA700185544 /* PASAddFromSamplesTVC.h */,
+				F476F0F019B8FFA700185544 /* PASAddFromSamplesTVC.m */,
+			);
+			name = Samples;
+			sourceTree = "<group>";
+		};
 		F4A7796B1793113E00C770B9 = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +196,7 @@
 				F4694D6219B74ABB00D12576 /* PASFavArtistsTVC.h */,
 				F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */,
 				F40BBA6C18538E1D00877D60 /* iPod */,
+				F476F0F219B8FFAD00185544 /* Samples */,
 				F409BBE017ADC74000091B7A /* Visuals */,
 				F4FA316519B8B7F2000337A0 /* Utils */,
 				F476F0E819B8D8C500185544 /* Parse Objects */,
@@ -336,6 +349,7 @@
 				F4A779841793113E00C770B9 /* main.m in Sources */,
 				F4FA316819B8B867000337A0 /* UIImage+Scale.m in Sources */,
 				F4A779881793113E00C770B9 /* PASAppDelegate.m in Sources */,
+				F476F0F119B8FFA700185544 /* PASAddFromSamplesTVC.m in Sources */,
 				F476F0EE19B8D9A100185544 /* PASResources.m in Sources */,
 				F40BBA6B18538DAD00877D60 /* PASAddFromMusicTVC.m in Sources */,
 				F4694D6419B74ABB00D12576 /* PASFavArtistsTVC.m in Sources */,
@@ -433,7 +447,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Parse",
 					"$(PROJECT_DIR)/Passions",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -451,7 +464,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Parse",
 					"$(PROJECT_DIR)/Passions",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

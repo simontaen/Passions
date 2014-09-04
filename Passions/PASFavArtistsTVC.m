@@ -98,27 +98,22 @@
 	
 	if ([[PFUser currentUser] isDirty]) {
 		// this must be a new user
+		// save it or else the query will crash
 		[[PFUser currentUser] save];
-		[self getArtists:[self sampleArtists]];
-		return nil;
-		
-	} else {
-		PFQuery *query = [PFQuery queryWithClassName:self.parseClassName];
-		[query whereKey:@"favByUsers" containsAllObjectsInArray:@[[PFUser currentUser]]];
-		
-		// If no objects are loaded in memory, we look to the cache first to fill the table
-		// and then subsequently do a query against the network.
-		if (self.objects.count == 0) {
-			query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-		}
-		
-		[query orderByAscending:self.textKey];
-		
-		return query;
-
 	}
 	
+	PFQuery *query = [PFQuery queryWithClassName:self.parseClassName];
+	[query whereKey:@"favByUsers" containsAllObjectsInArray:@[[PFUser currentUser]]];
 	
+	// If no objects are loaded in memory, we look to the cache first to fill the table
+	// and then subsequently do a query against the network.
+	if (self.objects.count == 0) {
+		query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+	}
+	
+	[query orderByAscending:self.textKey];
+	
+	return query;
 }
 
 
@@ -177,7 +172,7 @@
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForNextPageAtIndexPath:(NSIndexPath *)indexPath {
  static NSString *CellIdentifier = @"NextPage";
  
- // The cell should show a spinner and load more data automatically
+ // TODO: The cell should show a spinner and load more data automatically
  
  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
  
@@ -188,107 +183,5 @@
  }
  */
 
-#pragma mark - Serach and create Artists
-
-- (void)getArtists:(NSArray *)artists
-{
-	
-	NSMutableArray *queries = [NSMutableArray array];
-	for (NSString *artist in artists) {
-		PFQuery *query = [PFQuery queryWithClassName:@"Artist"];
-		[query whereKey:@"name" equalTo:artist];
-		[queries addObject:query];
-	}
-	
-	PFQuery *orQuery = [PFQuery orQueryWithSubqueries:queries];
-	
-	[orQuery findObjectsInBackgroundWithBlock:^(NSArray *artists, NSError *error) {
-		if (!error) {
-			if (artists.count > 0) {
-				// the current implementation never creates additional artists if you match a subset
-				// also we only get exact matched on the artist name -> need to call corrections
-				for (PFObject *artist in artists) {
-					NSLog(@"Found %@", [artist objectForKey:@"name"]);
-					// add yourself to favByUsers
-					[artist addObject:[PFUser currentUser] forKey:@"favByUsers"];
-					[artist save];
-				}
-				// some callback if all is completed to reload tableView would be good
-				
-			} else {
-				[self createArtists:artists];
-			}
-			[self loadObjects];
-			//[self deleteArtists:self.artists];
-			//[self getArtists:[self sampleArtists]];
-			
-		} else {
-			NSLog(@"%@", error);
-		}
-	}];
-}
-
-- (void)deleteArtists:(NSArray *)artists
-{
-	for (PFObject *artist in artists) {
-		[artist delete];
-	}
-}
-
-- (NSArray *)createArtists:(NSArray *)artists
-{
-	NSMutableArray *newArtists = [NSMutableArray array];
-	
-	for (NSString *artist in artists) {
-		// Create a new Artist object and create relationship with PFUser
-		PFObject *newArtist = [PFObject objectWithClassName:@"Artist"];
-		[newArtist setObject:artist	forKey:@"name"];
-		[newArtist setObject:@[[PFUser currentUser]] forKey:@"favByUsers"]; // One-to-Many relationship created here!
-		
-		// Allow public write access (other users need to modify the Artist when they favorite it)
-		PFACL *artistACL = [PFACL ACL];
-		[artistACL setPublicReadAccess:YES];
-		[artistACL setPublicWriteAccess:YES];
-		[newArtist setACL:artistACL];
-		
-		// Cache it
-		[newArtists addObject:newArtist];
-		
-		// Save new Artist object in Parse
-		[newArtist saveInBackground];
-		
-		// DEBUG
-		// change number of total Albums and save again
-		//[newArtist setObject:@2 forKey:@"totalAlbums"];
-		//[newArtist save];
-	}
-	return newArtists;
-}
-
-
-#pragma mark - Testing
-
-- (NSArray *)sampleArtists
-{
-	static NSArray *sampleArtists;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		//sampleArtists = @[@"Beatles", @"AC/DC", @"Pink Floid", @"Guns 'n roses"];
-		//sampleArtists = @[@"Deadmouse"];
-		sampleArtists = @[
-						  @"The Beatles", @"Air", @"Pink Floid", @"Rammstein", @"Bloodhound Gang",
-						  @"Ancien Régime", @"Genius/GZA ", @"Belle & Sebastian", @"Björk",
-						  @"Ugress", @"ADELE", @"The Asteroids Galaxy Tour", @"Bar 9",
-						  @"Baskerville", @"Beastie Boys", @"Bee Gees", @"Bit Shifter",
-						  @"Bomfunk MC's", @"C-Mon & Kypski", @"The Cardigans", @"Carly Commando",
-						  @"Caro Emerald", @"Coldplay", @"Coolio", @"Cypress Hill",
-						  @"David Bowie", @"Dukes of Stratosphear", @"[dunkelbunt]",
-						  @"Eminem", @"Enigma", @"Deadmouse"
-						  ];
-		
-		
-	});
-	return sampleArtists;
-}
 
 @end

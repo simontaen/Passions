@@ -68,7 +68,7 @@
                     <navigationItem key="navigationItem" id="NqS-QQ-YOg">
                         <barButtonItem key="rightBarButtonItem" title="Add" id="fWj-Ne-Gcv">
                             <connections>
-                                <segue destination="XlN-3A-Osb" kind="modal" modalTransitionStyle="coverVertical" id="fwe-Ng-d8Q"/>
+                                <segue destination="cHI-4w-yo3" kind="modal" id="AI5-qB-Xdc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -172,11 +172,11 @@
                             </items>
                         </toolbar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LibraryArtist" textLabel="st5-X4-hiq" detailTextLabel="lTT-nq-G9i" imageView="7la-kC-qT1" style="IBUITableViewCellStyleSubtitle" id="3gt-3I-1yJ">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LibraryArtist" textLabel="st5-X4-hiq" detailTextLabel="lTT-nq-G9i" imageView="7la-kC-qT1" style="IBUITableViewCellStyleSubtitle" id="3gt-3I-1yJ">
                                 <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3gt-3I-1yJ" id="zeD-qG-Qc3">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="st5-X4-hiq">
@@ -211,6 +211,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3WZ-A6-Avc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1085" y="-856"/>
+        </scene>
+        <!--Add From SamplesTVC-->
+        <scene sceneID="Uxa-q0-fNK">
+            <objects>
+                <tableViewController modalTransitionStyle="flipHorizontal" id="cHI-4w-yo3" customClass="PASAddFromSamplesTVC" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Whs-sO-ue4">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <toolbar key="tableHeaderView" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="5fY-Dr-6gD">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <items>
+                                <barButtonItem title="Done" id="AJD-hq-MK9">
+                                    <connections>
+                                        <action selector="doneButtonHandler:" destination="cHI-4w-yo3" id="5Ty-JI-AGq"/>
+                                    </connections>
+                                </barButtonItem>
+                            </items>
+                        </toolbar>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SampleArtist" textLabel="GOg-O1-oKC" style="IBUITableViewCellStyleDefault" id="tEy-Lu-Q2e">
+                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tEy-Lu-Q2e" id="Wep-iV-Ebw">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GOg-O1-oKC">
+                                            <rect key="frame" x="15" y="0.0" width="290" height="43"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="cHI-4w-yo3" id="rIt-Hh-M6N"/>
+                            <outlet property="delegate" destination="cHI-4w-yo3" id="JG0-SS-jLA"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="doneButton" destination="AJD-hq-MK9" id="prG-Qm-SAe"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IXo-dy-qsG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1085" y="-172"/>
         </scene>
     </scenes>
     <resources>
