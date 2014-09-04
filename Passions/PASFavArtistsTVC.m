@@ -117,20 +117,27 @@
 
 // Override to customize the look of a cell representing an object. The default is to display
 // a UITableViewCellStyleDefault style cell with the label being the first key in the object.
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
-//	static NSString *CellIdentifier = @"FavArtist";
-//	
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-//    }
-//	
-//    // Configure the cell
-//    cell.textLabel.text = [object objectForKey:@"text"];
-//    cell.detailTextLabel.text = [NSString stringWithFormat:@"Priority: %@", [object objectForKey:@"priority"]];
-//	
-//    return cell;
-//}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
+	static NSString *CellIdentifier = @"FavArtist";
+	
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+	
+    // Configure the cell
+    cell.textLabel.text = [object objectForKey:self.textKey];
+    cell.detailTextLabel.text = [self stringForNumberOfAlbums:(NSNumber *)[object objectForKey:@"totalAlbums"]];
+	
+    return cell;
+}
+
+- (NSString *)stringForNumberOfAlbums:(NSNumber *)noOfAlbums
+{
+	if (noOfAlbums.longValue == 1) {
+		return [NSString stringWithFormat:@"%lu Album", noOfAlbums.longValue];
+	} else {
+		return [NSString stringWithFormat:@"%lu Albums", noOfAlbums.longValue];
+	}
+}
+
 
 
 /*
