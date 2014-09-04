@@ -7,14 +7,53 @@
 //
 
 #import "PFArtist.h"
+#import <Parse/PFObject+Subclass.h>
 
 @implementation PFArtist
 
-// setters and getters for properties (columns) with proper return type
+@dynamic objectId;
+@dynamic albums;
+@dynamic name;
+@dynamic spotifyId;
+@dynamic totalAlbums;
+@dynamic createdAt;
+@dynamic updatedAt;
+@dynamic favByUsers;
+@dynamic images;
+
+// maybe a UIImage getter (small, medium, large), see https://parse.com/docs/ios_guide#subclasses-properties/iOS
 
 // utility functions for delete/create
 
 // query creators
+
+
+#pragma mark - Parse
+
++ (void)load {
+	[self registerSubclass];
+}
+
++ (NSString *)parseClassName {
+	return @"Artist";
+}
+
+#pragma mark - Queries
+
++ (PFQuery *)favArtistsForCurrentUser
+{
+	PFQuery *query = [PFArtist query];
+	[query whereKey:@"favByUsers" containsAllObjectsInArray:@[[PFUser currentUser]]];
+	[query orderByAscending:@"name"];
+	return query;
+}
+
+#pragma mark - Actions
+
++ (void)favoriteArtist:(NSString *)artist byUser:(PFUser *)user
+{
+	return;
+}
 
 
 #pragma mark - Serach and create Artists

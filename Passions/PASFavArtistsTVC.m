@@ -10,6 +10,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "UIImage+Scale.h"
 #import "PASResources.h"
+#import "PFArtist.h"
 
 @interface PASFavArtistsTVC()
 
@@ -24,10 +25,7 @@
     [super loadView];
 	
 	// The className to query on
-	self.parseClassName = @"Artist";
-	
-	// The key of the PFObject to display in the label of the default cell style
-	self.textKey = @"name";
+	self.parseClassName = [PFArtist parseClassName];
 	
 	// The title for this table in the Navigation Controller.
 	self.title = @"Favorite Artists";
@@ -53,6 +51,7 @@
 
 //- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 //{
+//  // TODO: I can't remove the Artist from self.objects manually, need to reload, but seems to slow for the animation.
 //	if (editingStyle == UITableViewCellEditingStyleDelete) {
 //		// Delete the row from the data source
 //		PFObject *artist = [self objectAtIndexPath:indexPath];
@@ -102,16 +101,13 @@
 		[[PFUser currentUser] save];
 	}
 	
-	PFQuery *query = [PFQuery queryWithClassName:self.parseClassName];
-	[query whereKey:@"favByUsers" containsAllObjectsInArray:@[[PFUser currentUser]]];
+	PFQuery *query = [PFArtist favArtistsForCurrentUser];
 	
 	// If no objects are loaded in memory, we look to the cache first to fill the table
 	// and then subsequently do a query against the network.
 	if (self.objects.count == 0) {
 		query.cachePolicy = kPFCachePolicyCacheThenNetwork;
 	}
-	
-	[query orderByAscending:self.textKey];
 	
 	return query;
 }
@@ -121,15 +117,16 @@
 // a UITableViewCellStyleDefault style cell with the label being the first key in the object.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
 	static NSString *CellIdentifier = @"FavArtist";
+	PFArtist *artist = (PFArtist *)object;
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 	
     // Configure the cell
-    cell.textLabel.text = [object objectForKey:self.textKey];
-    cell.detailTextLabel.text = [self stringForNumberOfAlbums:(NSNumber *)[object objectForKey:@"totalAlbums"]];
+    cell.textLabel.text = artist.name;
+    cell.detailTextLabel.text = [self stringForNumberOfAlbums:artist.totalAlbums];
 	
 	// get images, ordered big to small
-	NSArray *images = [object objectForKey:@"images"];
+	NSArray *images = artist.images;
 	
 	if (images.count != 0) {
 		// round down, this is only a thumbnail
