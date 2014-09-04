@@ -41,15 +41,8 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return [self.artists count];
 }
 
@@ -89,8 +82,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+	
 	// grey out the row and put a spinner on it
 	// disable user interaction
+	
+	MPMediaItem *artistItem = self.artists[indexPath.row];
+	
+	NSString *artist = [artistItem valueForProperty:MPMediaItemPropertyArtist];
+	NSString *albumArtist = [artistItem valueForProperty:MPMediaItemPropertyAlbumArtist];
+	NSLog(@"%@", artist);
+	NSLog(@"%@", albumArtist);
+	
 	// call PFArtist favoriteArtist:(NSString *)artist byUser:(PFUser *)user];
 	// grey out artist
 
