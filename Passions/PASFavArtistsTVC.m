@@ -133,14 +133,18 @@
 		[request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
 		
 		__weak typeof(cell) weakCell = cell;
-		[cell.imageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"image.png"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+		[cell.imageView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
 			
-			UIImage *newImage = [image PASscaleToAspectFillSize:weakCell.imageView.image.size];
+			UIImage *newImage;
 			
+			if (image) {
+				newImage = [image PASscaleToAspectFillSize:weakCell.imageView.image.size];
+			} else {
+				newImage = [UIImage imageNamed: @"image.png"];
+			}
 			dispatch_async(dispatch_get_main_queue(), ^{
 				weakCell.imageView.image = newImage;
 			});
-			
 		} failure:nil];
 	}
 	
