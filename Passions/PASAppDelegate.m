@@ -24,9 +24,6 @@
 	[PFUser enableAutomaticUser];
 	// the app will crash if currentUser is a new user!
 	// queryForTable required a saved users for the parse object ID
-	//[[PFUser currentUser] incrementKey:@"RunCount"];
-	//[[PFUser currentUser] saveInBackground];
-
 	
     PFACL *defaultACL = [PFACL ACL];
 	

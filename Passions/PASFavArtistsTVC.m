@@ -89,25 +89,35 @@
 // Override to customize what kind of query to perform on the class. The default is to query for
 // all objects ordered by createdAt descending.
 - (PFQuery *)queryForTable {
+	PFUser *user = [PFUser currentUser];
+	NSLog(@"isDataAvailable = %@", ([user isDataAvailable] ? @"YES" : @"NO"));
+	NSLog(@"isDirty = %@", ([user isDirty] ? @"YES" : @"NO"));
+	NSLog(@"isNew = %@", ([user isNew] ? @"YES" : @"NO"));
+	NSLog(@"isDirtyForKey = %@", ([user isDirtyForKey:@"objectId"] ? @"YES" : @"NO"));
+	
 	if ([[PFUser currentUser] isDirty]) {
 		// this must be a new user
 		[[PFUser currentUser] save];
 		[self getArtists:[self sampleArtists]];
+		return nil;
+		
+	} else {
+		PFQuery *query = [PFQuery queryWithClassName:self.parseClassName];
+		[query whereKey:@"favByUsers" containsAllObjectsInArray:@[[PFUser currentUser]]];
+		
+		// If no objects are loaded in memory, we look to the cache first to fill the table
+		// and then subsequently do a query against the network.
+		if (self.objects.count == 0) {
+			query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+		}
+		
+		[query orderByAscending:self.textKey];
+		
+		return query;
+
 	}
 	
 	
-    PFQuery *query = [PFQuery queryWithClassName:self.parseClassName];
-	[query whereKey:@"favByUsers" containsAllObjectsInArray:@[[PFUser currentUser]]];
-	
-    // If no objects are loaded in memory, we look to the cache first to fill the table
-    // and then subsequently do a query against the network.
-    if (self.objects.count == 0) {
-        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    }
-	
-    [query orderByAscending:self.textKey];
-	
-    return query;
 }
 
 
@@ -200,13 +210,14 @@
 					NSLog(@"Found %@", [artist objectForKey:@"name"]);
 					// add yourself to favByUsers
 					[artist addObject:[PFUser currentUser] forKey:@"favByUsers"];
-					[artist saveInBackground];
+					[artist save];
 				}
 				// some callback if all is completed to reload tableView would be good
 				
 			} else {
 				[self createArtists:artists];
 			}
+			[self loadObjects];
 			//[self deleteArtists:self.artists];
 			//[self getArtists:[self sampleArtists]];
 			
