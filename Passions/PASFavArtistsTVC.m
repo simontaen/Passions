@@ -8,6 +8,7 @@
 
 #import "PASFavArtistsTVC.h"
 #import "UIImageView+AFNetworking.h"
+#import "UIImage+Scale.h"
 
 @interface PASFavArtistsTVC()
 
@@ -43,7 +44,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-
+	
     //[PFPush sendPushMessageToChannelInBackground:@"global" withMessage:@"Hello After viewDidLoad"];
 }
 
@@ -64,7 +65,7 @@
 //				});
 //			}
 //		}];
-//		
+//
 //	} else if (editingStyle == UITableViewCellEditingStyleInsert) {
 //		// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
 //	}
@@ -110,7 +111,6 @@
 }
 
 
-
 // Override to customize the look of a cell representing an object. The default is to display
 // a UITableViewCellStyleDefault style cell with the label being the first key in the object.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
@@ -129,58 +129,23 @@
 		// round down, this is only a thumbnail
 		int middle = (int)(images.count / 2 - ((images.count % 2) / 2));
 		
-//		[cell.imageView setImageWithURL:[NSURL URLWithString:images[middle]]
-//					   placeholderImage:[UIImage imageNamed:@"image.png"]];
-//		
-//		cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
-//		//cell.imageView.contentMode = UIViewContentModeScaleToFill;
-//		
-//		cell.imageView.clipsToBounds=YES;
-		
-		
 		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:images[middle]]];
 		[request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
 		
 		__weak typeof(cell) weakCell = cell;
 		[cell.imageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"image.png"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
 			
-			// resize the image - http://stackoverflow.com/questions/17675930/loading-image-with-afnetworking-resizing
-			UIImage *newImage = [self resizeImage:image withWidth:weakCell.imageView.bounds.size.width withHeight:weakCell.imageView.bounds.size.height];
+			UIImage *newImage = [image PASscaleToAspectFillSize:weakCell.imageView.image.size];
 			
 			dispatch_async(dispatch_get_main_queue(), ^{
 				weakCell.imageView.image = newImage;
 			});
-
+			
 		} failure:nil];
 	}
 	
     return cell;
 }
-
-- (UIImage*)resizeImage:(UIImage*)image withWidth:(int)width withHeight:(int)height
-{
-    CGSize newSize = CGSizeMake(width, height);
-    float widthRatio = newSize.width/image.size.width;
-    float heightRatio = newSize.height/image.size.height;
-	
-    if(widthRatio > heightRatio)
-    {
-        newSize=CGSizeMake(image.size.width*heightRatio,image.size.height*heightRatio);
-    }
-    else
-    {
-        newSize=CGSizeMake(image.size.width*widthRatio,image.size.height*widthRatio);
-    }
-	
-	
-    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
-    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-	
-    return newImage;
-}
-
 
 - (NSString *)stringForNumberOfAlbums:(NSNumber *)noOfAlbums
 {
@@ -190,7 +155,6 @@
 		return [NSString stringWithFormat:@"%lu Albums", noOfAlbums.longValue];
 	}
 }
-
 
 /*
  // Override to customize the look of the cell that allows the user to load the next page of objects.
