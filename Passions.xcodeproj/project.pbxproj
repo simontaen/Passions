@@ -19,6 +19,8 @@
 		F438692A17A55CE6000B7817 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */; };
 		F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */; };
 		F4694D6419B74ABB00D12576 /* PASFavArtistsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */; };
+		F476F0EB19B8D8EA00185544 /* PFArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0EA19B8D8EA00185544 /* PFArtist.m */; };
+		F476F0EE19B8D9A100185544 /* PASResources.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0ED19B8D9A100185544 /* PASResources.m */; };
 		F49137F119B7137900E4FC0D /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F019B7137900E4FC0D /* Accounts.framework */; };
 		F49137F319B7142300E4FC0D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F219B7142300E4FC0D /* Social.framework */; };
 		F49137F519B714A200E4FC0D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F419B714A200E4FC0D /* QuartzCore.framework */; };
@@ -51,6 +53,10 @@
 		F424EE3719B657120010B3E1 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		F4694D6219B74ABB00D12576 /* PASFavArtistsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASFavArtistsTVC.h; sourceTree = "<group>"; };
 		F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASFavArtistsTVC.m; sourceTree = "<group>"; };
+		F476F0E919B8D8EA00185544 /* PFArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFArtist.h; sourceTree = "<group>"; };
+		F476F0EA19B8D8EA00185544 /* PFArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFArtist.m; sourceTree = "<group>"; };
+		F476F0EC19B8D9A100185544 /* PASResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASResources.h; sourceTree = "<group>"; };
+		F476F0ED19B8D9A100185544 /* PASResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASResources.m; sourceTree = "<group>"; };
 		F49137F019B7137900E4FC0D /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		F49137F219B7142300E4FC0D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		F49137F419B714A200E4FC0D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -121,6 +127,15 @@
 			name = iPod;
 			sourceTree = "<group>";
 		};
+		F476F0E819B8D8C500185544 /* Parse Objects */ = {
+			isa = PBXGroup;
+			children = (
+				F476F0E919B8D8EA00185544 /* PFArtist.h */,
+				F476F0EA19B8D8EA00185544 /* PFArtist.m */,
+			);
+			name = "Parse Objects";
+			sourceTree = "<group>";
+		};
 		F4A7796B1793113E00C770B9 = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +186,7 @@
 				F40BBA6C18538E1D00877D60 /* iPod */,
 				F409BBE017ADC74000091B7A /* Visuals */,
 				F4FA316519B8B7F2000337A0 /* Utils */,
+				F476F0E819B8D8C500185544 /* Parse Objects */,
 				F4A7797E1793113E00C770B9 /* Supporting Files */,
 			);
 			path = Passions;
@@ -197,6 +213,8 @@
 			children = (
 				F4FA316619B8B867000337A0 /* UIImage+Scale.h */,
 				F4FA316719B8B867000337A0 /* UIImage+Scale.m */,
+				F476F0EC19B8D9A100185544 /* PASResources.h */,
+				F476F0ED19B8D9A100185544 /* PASResources.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -314,9 +332,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F476F0EB19B8D8EA00185544 /* PFArtist.m in Sources */,
 				F4A779841793113E00C770B9 /* main.m in Sources */,
 				F4FA316819B8B867000337A0 /* UIImage+Scale.m in Sources */,
 				F4A779881793113E00C770B9 /* PASAppDelegate.m in Sources */,
+				F476F0EE19B8D9A100185544 /* PASResources.m in Sources */,
 				F40BBA6B18538DAD00877D60 /* PASAddFromMusicTVC.m in Sources */,
 				F4694D6419B74ABB00D12576 /* PASFavArtistsTVC.m in Sources */,
 			);

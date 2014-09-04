@@ -9,6 +9,7 @@
 #import "PASFavArtistsTVC.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIImage+Scale.h"
+#import "PASResources.h"
 
 @interface PASFavArtistsTVC()
 
@@ -150,7 +151,7 @@
 			if (image) {
 				newImage = [image PASscaleToAspectFillSize:weakCell.imageView.image.size];
 			} else {
-				newImage = [UIImage imageNamed: @"image.png"];
+				newImage = [PASResources artistThumbnailPlaceholder];
 			}
 			dispatch_async(dispatch_get_main_queue(), ^{
 				weakCell.imageView.image = newImage;

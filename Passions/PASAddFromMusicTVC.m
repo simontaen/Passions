@@ -8,6 +8,7 @@
 
 #import "PASAddFromMusicTVC.h"
 #import "UIImage+Scale.h"
+#import "PASResources.h"
 
 @interface PASAddFromMusicTVC ()
 @property (nonatomic, strong) NSArray* artists; // of MPMediaItem
@@ -73,7 +74,7 @@
 		if (artworkImage) {
 			newImage = [artworkImage PASscaleToAspectFillSize:weakCell.imageView.image.size];
 		} else {
-			newImage = [UIImage imageNamed: @"image.png"];
+			newImage = [PASResources artistThumbnailPlaceholder];
 		}
 		dispatch_async(dispatch_get_main_queue(), ^{
 			weakCell.imageView.image = newImage;
@@ -81,6 +82,18 @@
 	});
 	
     return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+	// grey out the row and put a spinner on it
+	// disable user interaction
+	// call PFArtist favoriteArtist:(NSString *)artist byUser:(PFUser *)user];
+	// grey out artist
+
 }
 
 @end
