@@ -28,7 +28,12 @@
 
 + (PFQuery *)favArtistsForCurrentUser;
 
-#pragma mark - Actions
+#pragma mark - adding / creating
 
-+ (void)favoriteArtist:(NSString *)artist byUser:(PFUser *)user;
++ (void)favoriteArtistByCurrentUser:(NSString *)artistName withBlock:(void (^)(PFArtist *artist, NSError *error))block;
+
+#pragma mark - removing / deleting
+
++ (void)removeCurrentUserFromArtist:(PFArtist *)artist;
+
 @end

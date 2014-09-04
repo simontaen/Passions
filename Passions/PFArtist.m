@@ -23,11 +23,6 @@
 
 // maybe a UIImage getter (small, medium, large), see https://parse.com/docs/ios_guide#subclasses-properties/iOS
 
-// utility functions for delete/create
-
-// query creators
-
-
 #pragma mark - Parse
 
 + (void)load {
@@ -48,88 +43,109 @@
 	return query;
 }
 
-#pragma mark - Actions
-
-+ (void)favoriteArtist:(NSString *)artist byUser:(PFUser *)user
++ (PFQuery *)artistWithName:(NSString *)name
 {
-	return;
+	PFQuery *query = [PFArtist query];
+	[query whereKey:@"name" equalTo:name];
+	return query;
 }
 
+#pragma mark - adding / creating
 
-#pragma mark - Serach and create Artists
-
-- (void)getArtists:(NSArray *)artists
++ (void)favoriteArtistByCurrentUser:(NSString *)artistName withBlock:(void (^)(PFArtist *artist, NSError *error))block
 {
+	// Query for the Artist in Question
+	PFQuery *query = [PFArtist artistWithName:artistName];
 	
-	NSMutableArray *queries = [NSMutableArray array];
-	for (NSString *artist in artists) {
-		PFQuery *query = [PFQuery queryWithClassName:@"Artist"];
-		[query whereKey:@"name" equalTo:artist];
-		[queries addObject:query];
-	}
-	
-	PFQuery *orQuery = [PFQuery orQueryWithSubqueries:queries];
-	
-	[orQuery findObjectsInBackgroundWithBlock:^(NSArray *artists, NSError *error) {
-		if (!error) {
-			if (artists.count > 0) {
-				// the current implementation never creates additional artists if you match a subset
-				// also we only get exact matched on the artist name -> need to call corrections
-				for (PFObject *artist in artists) {
-					NSLog(@"Found %@", [artist objectForKey:@"name"]);
-					// add yourself to favByUsers
-					[artist addObject:[PFUser currentUser] forKey:@"favByUsers"];
-					[artist save];
-				}
-				// some callback if all is completed to reload tableView would be good
+	[query findObjectsInBackgroundWithBlock:^(NSArray *artists, NSError *error) {
+		if (artists && !error) {
+			if (artists.count == 1) {
+				// exactly one is expected, no duplicates allowed
+				// TODO: we only get exact matches on the artist name -> need to call corrections
+				
+				// add user to artist
+				PFArtist *artist = artists.lastObject;
+				[artist addCurrentUserAsFavorite];
+				[artist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+					// The artist exists and the user has favorited him
+					// ready to pass it back to the caller
+					if (succeeded) {
+						block(artist, nil);
+					} else {
+						block(nil, error);
+					}
+				}];
+				
+				
+			} else if (artists.count == 0) {
+				// the artist does not exists yet, create it
+				[PFArtist createArtistFavoritedByCurrentUser:artistName withBlock:^(PFArtist *artist, NSError *error) {
+					// The artist exists and the user has favorited him
+					// ready to pass it back to the caller
+					if (artist && !error) {
+						block(artist, nil);
+					} else {
+						block(nil, error);
+					}
+				}];
+				
 				
 			} else {
-				[self createArtists:artists];
+				NSLog(@"Too many artists found (%lu)", artists.count);
 			}
-			
 		} else {
 			NSLog(@"%@", error);
 		}
 	}];
 }
 
-- (void)deleteArtists:(NSArray *)artists
+- (void)addCurrentUserAsFavorite
 {
-	for (PFObject *artist in artists) {
-		[artist delete];
-	}
+	// One-to-Many relationship created here!
+	[self addObject:[PFUser currentUser] forKey:@"favByUsers"];
 }
 
-- (NSArray *)createArtists:(NSArray *)artists
++ (void)createArtistFavoritedByCurrentUser:(NSString *)artistName withBlock:(void (^)(PFArtist *artist, NSError *error))block
 {
-	NSMutableArray *newArtists = [NSMutableArray array];
+	// Create a new Artist object
+	PFArtist *newArtist = [PFArtist object];
+	newArtist.name	= artistName;
 	
-	for (NSString *artist in artists) {
-		// Create a new Artist object and create relationship with PFUser
-		PFObject *newArtist = [PFObject objectWithClassName:@"Artist"];
-		[newArtist setObject:artist	forKey:@"name"];
-		[newArtist setObject:@[[PFUser currentUser]] forKey:@"favByUsers"]; // One-to-Many relationship created here!
-		
-		// Allow public write access (other users need to modify the Artist when they favorite it)
-		PFACL *artistACL = [PFACL ACL];
-		[artistACL setPublicReadAccess:YES];
-		[artistACL setPublicWriteAccess:YES];
-		[newArtist setACL:artistACL];
-		
-		// Cache it
-		[newArtists addObject:newArtist];
-		
-		// Save new Artist object in Parse
-		[newArtist saveInBackground];
-		
-		// DEBUG
-		// change number of total Albums and save again
-		//[newArtist setObject:@2 forKey:@"totalAlbums"];
-		//[newArtist save];
-	}
-	return newArtists;
+	// create the relationsship with the user
+	[newArtist addCurrentUserAsFavorite];
+	
+	// Allow public write access (other users need to modify the Artist when they favorite it)
+	PFACL *artistACL = [PFACL ACL];
+	[artistACL setPublicReadAccess:YES];
+	[artistACL setPublicWriteAccess:YES];
+	[newArtist setACL:artistACL];
+	
+	[newArtist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+		if (succeeded && !error) {
+			block(newArtist, nil);
+		} else {
+			block(nil, error);
+		}
+	}];
 }
 
+
+#pragma mark - removing / deleting
+
++ (void)removeCurrentUserFromArtist:(PFArtist *)artist withBlock:(void (^)(BOOL succeeded, NSError *error))block
+{
+	[artist removeCurrentUserAsFavorite];
+	
+	[artist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+		block(succeeded, error);
+	}];
+}
+
+- (void)removeCurrentUserAsFavorite
+{
+	// One-to-Many relationship created here!
+	[self removeObject:[PFUser currentUser] forKey:@"favByUsers"];
+}
 
 
 @end
