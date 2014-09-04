@@ -129,12 +129,58 @@
 		// round down, this is only a thumbnail
 		int middle = (int)(images.count / 2 - ((images.count % 2) / 2));
 		
-		[cell.imageView setImageWithURL:[NSURL URLWithString:images[middle]]
-					   placeholderImage:[UIImage imageNamed:@"image.png"]];
+//		[cell.imageView setImageWithURL:[NSURL URLWithString:images[middle]]
+//					   placeholderImage:[UIImage imageNamed:@"image.png"]];
+//		
+//		cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
+//		//cell.imageView.contentMode = UIViewContentModeScaleToFill;
+//		
+//		cell.imageView.clipsToBounds=YES;
+		
+		
+		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:images[middle]]];
+		[request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+		
+		__weak typeof(cell) weakCell = cell;
+		[cell.imageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"image.png"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+			
+			// resize the image - http://stackoverflow.com/questions/17675930/loading-image-with-afnetworking-resizing
+			UIImage *newImage = [self resizeImage:image withWidth:weakCell.imageView.bounds.size.width withHeight:weakCell.imageView.bounds.size.height];
+			
+			dispatch_async(dispatch_get_main_queue(), ^{
+				weakCell.imageView.image = newImage;
+			});
+
+		} failure:nil];
 	}
 	
     return cell;
 }
+
+- (UIImage*)resizeImage:(UIImage*)image withWidth:(int)width withHeight:(int)height
+{
+    CGSize newSize = CGSizeMake(width, height);
+    float widthRatio = newSize.width/image.size.width;
+    float heightRatio = newSize.height/image.size.height;
+	
+    if(widthRatio > heightRatio)
+    {
+        newSize=CGSizeMake(image.size.width*heightRatio,image.size.height*heightRatio);
+    }
+    else
+    {
+        newSize=CGSizeMake(image.size.width*widthRatio,image.size.height*widthRatio);
+    }
+	
+	
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+	
+    return newImage;
+}
+
 
 - (NSString *)stringForNumberOfAlbums:(NSNumber *)noOfAlbums
 {
