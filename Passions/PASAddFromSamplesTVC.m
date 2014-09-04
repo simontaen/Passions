@@ -24,18 +24,16 @@
 	dispatch_once(&onceToken, ^{
 		//sampleArtists = @[@"Beatles", @"AC/DC", @"Pink Floid", @"Guns 'n roses"];
 		//sampleArtists = @[@"Deadmouse"];
-		sampleArtists = @[
-						  @"The Beatles", @"Air", @"Pink Floid", @"Rammstein", @"Bloodhound Gang",
-						  @"Ancien Régime", @"Genius/GZA ", @"Belle & Sebastian", @"Björk",
-						  @"Ugress", @"ADELE", @"The Asteroids Galaxy Tour", @"Bar 9",
-						  @"Baskerville", @"Beastie Boys", @"Bee Gees", @"Bit Shifter",
-						  @"Bomfunk MC's", @"C-Mon & Kypski", @"The Cardigans", @"Carly Commando",
-						  @"Caro Emerald", @"Coldplay", @"Coolio", @"Cypress Hill",
-						  @"David Bowie", @"Dukes of Stratosphear", @"[dunkelbunt]",
-						  @"Eminem", @"Enigma", @"Deadmouse"
-						  ];
-		
-		
+		sampleArtists = [@[
+						   @"The Beatles", @"Air", @"Pink Floid", @"Rammstein", @"Bloodhound Gang",
+						   @"Ancien Régime", @"Genius/GZA ", @"Belle & Sebastian", @"Björk",
+						   @"Ugress", @"ADELE", @"The Asteroids Galaxy Tour", @"Bar 9",
+						   @"Baskerville", @"Beastie Boys", @"Bee Gees", @"Bit Shifter",
+						   @"Bomfunk MC's", @"C-Mon & Kypski", @"The Cardigans", @"Carly Commando",
+						   @"Caro Emerald", @"Coldplay", @"Coolio", @"Cypress Hill",
+						   @"David Bowie", @"Dukes of Stratosphear", @"[dunkelbunt]",
+						   @"Eminem", @"Enigma", @"Deadmouse"
+						   ] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 	});
 	return sampleArtists;
 }
