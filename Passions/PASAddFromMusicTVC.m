@@ -7,6 +7,7 @@
 //
 
 #import "PASAddFromMusicTVC.h"
+#import "UIImage+Scale.h"
 
 @interface PASAddFromMusicTVC ()
 @property (nonatomic, strong) NSArray* artists; // of MPMediaItem
@@ -61,21 +62,23 @@
 	cell.textLabel.text = [item valueForProperty: MPMediaItemPropertyArtist];
 	cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu Tracks", (unsigned long)[[artist items] count]];
 	
-	
-    MPMediaItemArtwork *artwork = [item valueForProperty: MPMediaItemPropertyArtwork];
-	UIImage *artworkImage = [artwork imageWithSize:cell.imageView.bounds.size];
-	
-	if (artworkImage) {
-		CGSize itemSize = cell.imageView.image.size;
-		UIGraphicsBeginImageContext(itemSize);
-		CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
-		[artworkImage drawInRect:imageRect];
-		cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
-		UIGraphicsEndImageContext();
-	} else {
-		cell.imageView.image = [UIImage imageNamed: @"image.png"];
-	}
-	
+	__weak typeof(cell) weakCell = cell;
+	dispatch_queue_t q = dispatch_queue_create("MusicArtwork", 0);
+	dispatch_async(q, ^{
+		
+		MPMediaItemArtwork *artwork = [item valueForProperty: MPMediaItemPropertyArtwork];
+		UIImage *artworkImage = [artwork imageWithSize:cell.imageView.image.size];
+		UIImage *newImage;
+		
+		if (artworkImage) {
+			newImage = [artworkImage PASscaleToAspectFillSize:weakCell.imageView.image.size];
+		} else {
+			newImage = [UIImage imageNamed: @"image.png"];
+		}
+		dispatch_async(dispatch_get_main_queue(), ^{
+			weakCell.imageView.image = newImage;
+		});
+	});
 	
     return cell;
 }
