@@ -34,6 +34,6 @@
 
 #pragma mark - removing / deleting
 
-+ (void)removeCurrentUserFromArtist:(PFArtist *)artist;
++ (void)removeCurrentUserFromArtist:(PFArtist *)artist withBlock:(void (^)(BOOL succeeded, NSError *error))block;
 
 @end
