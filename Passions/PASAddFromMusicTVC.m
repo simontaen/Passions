@@ -13,6 +13,8 @@
 @interface PASAddFromMusicTVC ()
 @property (nonatomic, strong) NSArray* artists; // of MPMediaItem
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+// http://stackoverflow.com/a/5511403 / http://stackoverflow.com/a/13705529
+@property (nonatomic, strong) dispatch_queue_t musicArtworkQueue;
 @end
 
 @implementation PASAddFromMusicTVC
@@ -31,6 +33,12 @@
 	// MPMediaItemPropertyPlayCount
 	// MPMediaItemPropertyRating
 	// see MPMediaItem Class Reference
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	self.musicArtworkQueue = dispatch_queue_create("MusicArtwork", DISPATCH_QUEUE_CONCURRENT);
 }
 
 - (IBAction)doneButtonHandler:(UIBarButtonItem *)sender
@@ -57,8 +65,7 @@
 	cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu Tracks", (unsigned long)[[artist items] count]];
 	
 	__weak typeof(cell) weakCell = cell;
-	dispatch_queue_t q = dispatch_queue_create("MusicArtwork", 0);
-	dispatch_async(q, ^{
+	dispatch_async(self.musicArtworkQueue, ^{
 		
 		MPMediaItemArtwork *artwork = [item valueForProperty: MPMediaItemPropertyArtwork];
 		UIImage *artworkImage = [artwork imageWithSize:cell.imageView.image.size];
