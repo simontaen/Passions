@@ -7,10 +7,15 @@
 //
 
 #import "PASAddFromSamplesTVC.h"
+#import "PFArtist.h"
+
+#define FAV_ARTISTS @"FAV_ARTISTS_FROM_SAMPLES"
 
 @interface PASAddFromSamplesTVC ()
 @property (nonatomic, strong) NSArray* artists; // of NSString
+@property (nonatomic, strong) NSMutableArray* favorites; // of NSString
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+@property (nonatomic, strong) dispatch_queue_t favoritesMutatorQueue;
 @end
 
 @implementation PASAddFromSamplesTVC
@@ -32,7 +37,7 @@
 						   @"Bomfunk MC's", @"C-Mon & Kypski", @"The Cardigans", @"Carly Commando",
 						   @"Caro Emerald", @"Coldplay", @"Coolio", @"Cypress Hill",
 						   @"David Bowie", @"Dukes of Stratosphear", @"[dunkelbunt]",
-						   @"Eminem", @"Enigma", @"Deadmouse"
+						   @"Eminem", @"Enigma", @"Deadmouse", @"AC/DC"
 						   ] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 	});
 	return sampleArtists;
@@ -44,6 +49,34 @@
 {
     [super viewDidLoad];
 	[self setTitle:@"Samples"];
+	
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	self.favoritesMutatorQueue = dispatch_queue_create("FavoritedMutator", DISPATCH_QUEUE_CONCURRENT);
+	
+	// no need for barrier, we are just appearing
+	dispatch_async(self.favoritesMutatorQueue, ^{
+		self.favorites = [[[NSUserDefaults standardUserDefaults] arrayForKey:FAV_ARTISTS] mutableCopy];
+		if (!self.favorites) {
+			self.favorites = [[NSMutableArray alloc] initWithCapacity:self.artists.count / 4];
+		}
+	});
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+	[super viewDidDisappear:animated];
+	
+	// use barrier, let adding tasks finish
+	dispatch_barrier_async(self.favoritesMutatorQueue, ^{
+		if (self.favorites) {
+			[[NSUserDefaults standardUserDefaults] setObject:self.favorites forKey:FAV_ARTISTS];
+			[[NSUserDefaults standardUserDefaults] synchronize];
+		}
+	});
 }
 
 - (IBAction)doneButtonHandler:(UIBarButtonItem *)sender
@@ -65,9 +98,31 @@
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 	
-	cell.textLabel.text = self.artists[indexPath.row];
+	NSString *artistName = self.artists[indexPath.row];
+	cell.textLabel.text = artistName;
+	if ([self.favorites containsObject:artistName]) {
+		cell.detailTextLabel.text = @"Favorite!";
+	} else {
+		cell.detailTextLabel.text = nil;
+	}
 	
 	return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *artistName = self.artists[indexPath.row];
+	NSLog(@"Selected %@", artistName);
+	[PFArtist favoriteArtistByCurrentUser:artistName withBlock:^(PFArtist *artist, NSError *error) {
+		dispatch_barrier_async(self.favoritesMutatorQueue, ^{
+			[self.favorites addObject:artistName];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+			});
+		});
+	}];
 }
 
 
