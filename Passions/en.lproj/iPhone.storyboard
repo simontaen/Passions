@@ -68,7 +68,7 @@
                     <navigationItem key="navigationItem" id="NqS-QQ-YOg">
                         <barButtonItem key="rightBarButtonItem" title="Add" id="fWj-Ne-Gcv">
                             <connections>
-                                <segue destination="cHI-4w-yo3" kind="modal" modalTransitionStyle="coverVertical" id="AI5-qB-Xdc"/>
+                                <segue destination="cHI-4w-yo3" kind="modal" identifier="setFavoriteArtists:" modalTransitionStyle="coverVertical" id="AI5-qB-Xdc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
