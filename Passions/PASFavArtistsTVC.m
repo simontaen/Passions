@@ -50,28 +50,32 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  // TODO: I can't remove the Artist from self.objects manually, need to reload, but seems to slow for the animation.
+	// I can't remove the Artist from self.objects manually, need to reload, but seems to slow for the animation.
+	[tableView beginUpdates];
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
-		// Delete the row from the data source
-		PFObject *artist = [self objectAtIndexPath:indexPath];
-		[artist removeObject:[PFUser currentUser] forKey:@"favByUsers"];
-
-		[artist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+		PFArtist *artist = [self artistAtIndexPath:indexPath];
+		
+		// De-favorite the user from the artist and reload the table view
+		[PFArtist removeCurrentUserFromArtist:artist withBlock:^(BOOL succeeded, NSError *error) {
 			if (succeeded) {
 				dispatch_async(dispatch_get_main_queue(), ^{
 					[self loadObjects];
-					[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 				});
 			}
 		}];
-
+		
 	} else if (editingStyle == UITableViewCellEditingStyleInsert) {
-		// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+		// Create a new instance of the appropriate class, and save it to Parse
 	}
+	[tableView endUpdates];
 }
 
-
 #pragma mark - Parse
+
+- (PFArtist *)artistAtIndexPath:(NSIndexPath *)indexPath
+{
+	return (PFArtist *)[self objectAtIndexPath:indexPath];
+}
 
 - (void)objectsDidLoad:(NSError *)error {
     [super objectsDidLoad:error];
