@@ -89,11 +89,11 @@
 // Override to customize what kind of query to perform on the class. The default is to query for
 // all objects ordered by createdAt descending.
 - (PFQuery *)queryForTable {
-	PFUser *user = [PFUser currentUser];
-	NSLog(@"isDataAvailable = %@", ([user isDataAvailable] ? @"YES" : @"NO"));
-	NSLog(@"isDirty = %@", ([user isDirty] ? @"YES" : @"NO"));
-	NSLog(@"isNew = %@", ([user isNew] ? @"YES" : @"NO"));
-	NSLog(@"isDirtyForKey = %@", ([user isDirtyForKey:@"objectId"] ? @"YES" : @"NO"));
+//	PFUser *user = [PFUser currentUser];
+//	NSLog(@"isDataAvailable = %@", ([user isDataAvailable] ? @"YES" : @"NO"));
+//	NSLog(@"isDirty = %@", ([user isDirty] ? @"YES" : @"NO"));
+//	NSLog(@"isNew = %@", ([user isNew] ? @"YES" : @"NO"));
+//	NSLog(@"isDirtyForKey = %@", ([user isDirtyForKey:@"objectId"] ? @"YES" : @"NO"));
 	
 	if ([[PFUser currentUser] isDirty]) {
 		// this must be a new user

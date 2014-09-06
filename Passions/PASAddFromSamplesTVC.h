@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+// intented to be defined by the subclass
+extern NSString *const kArtistNameCorrectionsCacheKey;
+
 @interface PASAddFromSamplesTVC : UITableViewController
+
+@property (nonatomic, strong) NSArray* favArtistNames; // of NSString, LFM Corrected!
 
 - (IBAction)doneButtonHandler:(UIBarButtonItem *)sender;
 
