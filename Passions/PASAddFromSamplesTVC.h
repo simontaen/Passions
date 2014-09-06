@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PASFavArtistsTVC.h"
 
 // intented to be defined by the subclass
 extern NSString *const kArtistNameCorrectionsCacheKey;
@@ -14,6 +15,7 @@ extern NSString *const kArtistNameCorrectionsCacheKey;
 @interface PASAddFromSamplesTVC : UITableViewController
 
 @property (nonatomic, strong) NSArray* favArtistNames; // of NSString, LFM Corrected!
+@property (nonatomic, strong) PASFavArtistsTVC* previousController;
 
 - (IBAction)doneButtonHandler:(UIBarButtonItem *)sender;
 

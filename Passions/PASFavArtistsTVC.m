@@ -32,8 +32,19 @@
     return self;
 }
 
+#pragma mark - Accessors
+
+// goes to add artists, needs to know about current favorites
+- (NSArray *)artistNames
 {
+	NSMutableArray *artistNames = [[NSMutableArray alloc] initWithCapacity:self.objects.count];
+	for (PFArtist *artist in self.objects) {
+		[artistNames addObject:artist.name];
+	}
+	return artistNames;
 }
+
+#pragma mark - View Lifecycle
 
 #pragma mark - UITableViewDataSource Editing
 
@@ -170,21 +181,19 @@
 
 #pragma mark - Navigation
 
+- (void)refreshUI
+{
+	[self loadObjects];
+}
+
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-	// Get the new view controller using [segue destinationViewController].
-	// Pass the selected object to the new view controller.
-	
 	if ([segue.identifier isEqualToString:@"setFavoriteArtists:"]) {
-		// goes to add artists, needs to know about current favorites
-		NSMutableArray *artistNames = [[NSMutableArray alloc] initWithCapacity:self.objects.count];
-		for (PFArtist *artist in self.objects) {
-			[artistNames addObject:artist.name];
-		}
 		
 		if ([segue.destinationViewController respondsToSelector:@selector(setFavArtistNames:)]) {
-			[segue.destinationViewController performSelector:@selector(setFavArtistNames:) withObject:artistNames];
+			[segue.destinationViewController performSelector:@selector(setFavArtistNames:) withObject:[self artistNames]];
+			[segue.destinationViewController performSelector:@selector(setPreviousController:) withObject:self];
 		}
 	}
 }

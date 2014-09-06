@@ -128,12 +128,6 @@ NSString *const kArtistNameCorrectionsCacheKey = @"correctionsFromSamples";
 	});
 }
 
-- (IBAction)doneButtonHandler:(UIBarButtonItem *)sender
-{
-	// Go back to the previous view
-	[self dismissViewControllerAnimated:YES completion:nil];
-}
-
 #pragma mark - UITableViewDataSource required
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -213,6 +207,15 @@ NSString *const kArtistNameCorrectionsCacheKey = @"correctionsFromSamples";
 	}];
 }
 
+#pragma mark - Navigation
 
+- (IBAction)doneButtonHandler:(UIBarButtonItem *)sender
+{
+	if (self.favArtistNames.count != 0) {
+		[self.previousController refreshUI];
+	}
+	// Go back to the previous view
+	[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end
