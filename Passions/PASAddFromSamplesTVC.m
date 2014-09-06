@@ -89,7 +89,11 @@ NSString *const kArtistNameCorrectionsCacheKey = @"correctionsFromSamples";
 	// load name corrections
 	self.correctionsQ = dispatch_queue_create("correctionsQ", DISPATCH_QUEUE_CONCURRENT);
 	dispatch_async(self.correctionsQ, ^{
-		self.artistNameCorrections = [[[NSUserDefaults standardUserDefaults] arrayForKey:kArtistNameCorrectionsCacheKey] mutableCopy];
+		NSURL *cacheFile = [[[[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory
+																	inDomains:NSUserDomainMask] firstObject]
+							URLByAppendingPathComponent:kArtistNameCorrectionsCacheKey];
+		self.artistNameCorrections = [NSMutableDictionary dictionaryWithContentsOfURL:cacheFile];
+		
 		if (!self.artistNameCorrections) {
 			self.artistNameCorrections = [[NSMutableDictionary alloc] initWithCapacity:self.artists.count];
 		}
@@ -102,8 +106,25 @@ NSString *const kArtistNameCorrectionsCacheKey = @"correctionsFromSamples";
 	
 	// save name corrections
 	dispatch_barrier_async(self.correctionsQ, ^{
-		[[NSUserDefaults standardUserDefaults] setObject:self.artistNameCorrections forKey:kArtistNameCorrectionsCacheKey];
-		[[NSUserDefaults standardUserDefaults] synchronize];
+		NSFileManager *mng = [NSFileManager defaultManager];
+		NSURL *cacheDir = [[mng URLsForDirectory:NSApplicationSupportDirectory
+									   inDomains:NSUserDomainMask] firstObject];
+		NSURL *cacheFile = [cacheDir URLByAppendingPathComponent:kArtistNameCorrectionsCacheKey];
+		
+		// make sure the cacheDir exists
+		if (![mng fileExistsAtPath:[cacheDir path]
+					   isDirectory:nil]) {
+			NSError *err = nil;
+			BOOL success = [mng createDirectoryAtURL:cacheDir
+						 withIntermediateDirectories:YES
+										  attributes:nil
+											   error:&err];
+			if (!success) {
+				NSLog(@"Cannot create cache dir (%@)", [err localizedDescription]);
+			}
+		}
+		
+		[self.artistNameCorrections writeToURL:cacheFile atomically:@NO];
 	});
 }
 
@@ -167,7 +188,7 @@ NSString *const kArtistNameCorrectionsCacheKey = @"correctionsFromSamples";
 				// now get the corrected name and cache it!
 				NSString *resolvedName = data ? data.name : artistName;
 				dispatch_barrier_async(self.correctionsQ, ^{
-					[self.artistNameCorrections addEntriesFromDictionary:@{artistName: resolvedName}];
+					[self.artistNameCorrections setObject:resolvedName forKey:artistName];
 				});
 				
 				// favorite the artist with the corrected name
