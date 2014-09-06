@@ -18,33 +18,21 @@
 
 @implementation PASFavArtistsTVC
 
-#pragma mark - View Lifecycle
+#pragma mark - Init
 
-- (void)loadView
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    [super loadView];
-	
-	// The className to query on
+    self = [super initWithCoder:aDecoder];
+    if (!self) return nil;
 	self.parseClassName = [PFArtist parseClassName];
-	
-	// The title for this table in the Navigation Controller.
 	self.title = @"Favorite Artists";
-	
-	// Whether the built-in pull-to-refresh is enabled
 	self.pullToRefreshEnabled = YES;
-	
-	// Whether the built-in pagination is enabled
 	self.paginationEnabled = YES;
-	
-	// The number of objects to show per page
 	self.objectsPerPage = 20;
+    return self;
 }
 
--(void)viewDidLoad
 {
-    [super viewDidLoad];
-	
-    //[PFPush sendPushMessageToChannelInBackground:@"global" withMessage:@"Hello After viewDidLoad"];
 }
 
 #pragma mark - UITableViewDataSource Editing
