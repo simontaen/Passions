@@ -48,7 +48,7 @@
                     <navigationItem key="navigationItem" id="vNY-MB-Kos">
                         <barButtonItem key="rightBarButtonItem" title="Add" id="twI-2l-I0I">
                             <connections>
-                                <segue destination="QKd-18-I3B" kind="modal" identifier="setFavoriteArtists:" modalTransitionStyle="coverVertical" id="6YY-FO-zCL"/>
+                                <segue destination="QKd-18-I3B" kind="modal" identifier="setFavArtistNames:" modalTransitionStyle="coverVertical" id="6YY-FO-zCL"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

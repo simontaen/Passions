@@ -65,6 +65,11 @@ NSString *const kArtistNameCorrectionsCacheKey = @"correctionsFromSamples";
 	return _artistNames;
 }
 
+- (BOOL)didAddArtists
+{
+	return self.justFavArtistNames.count != 0;
+}
+
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad

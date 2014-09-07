@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PASFavArtistsTVC.h"
 
 @interface PASAddArtistsNavController : UINavigationController
 @property (nonatomic, strong) NSArray* favArtistNames; // of NSString, LFM Corrected!
+@property (nonatomic, strong) PASFavArtistsTVC *favArtistsTVC ;
 @end

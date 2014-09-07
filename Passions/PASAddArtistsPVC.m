@@ -48,7 +48,9 @@ static int const kNumberOfPages = 2;
 			addArtistsTVC = nil;
 	}
 	addArtistsTVC.pageIndex = index;
-	addArtistsTVC.favArtistNames = self.favArtistNames;
+	if ([self.parentViewController respondsToSelector:@selector(favArtistNames)]) {
+		addArtistsTVC.favArtistNames = [self.parentViewController performSelector:@selector(favArtistNames) withObject:nil];
+	}
 	
 	return addArtistsTVC;
 }
@@ -96,9 +98,14 @@ static int const kNumberOfPages = 2;
 
 - (IBAction)doneButtonHandler:(UIBarButtonItem *)sender
 {
-//	if (self.favArtistNames.count != 0) {
-//		[self.previousController refreshUI];
-//	}
+	PASAddFromSamplesTVC *dissapearingTVC = ((PASAddFromSamplesTVC*) self.viewControllers[0]);
+	if ([dissapearingTVC didAddArtists]) {
+		if ([self.parentViewController respondsToSelector:@selector(favArtistsTVC)]) {
+			PASFavArtistsTVC *favArtistsTVC = [self.parentViewController performSelector:@selector(favArtistsTVC) withObject:nil];
+			[favArtistsTVC refreshUI];
+		}
+	}
+	
 	// Go back to the previous view
 	[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }

@@ -9,9 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface PASAddArtistsPVC : UIPageViewController <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
-
-@property (nonatomic, strong) NSArray* favArtistNames; // of NSString, LFM Corrected!
-
 - (IBAction)doneButtonHandler:(UIBarButtonItem *)sender;
-
 @end

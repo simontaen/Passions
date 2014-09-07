@@ -193,13 +193,12 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-	if ([segue.identifier isEqualToString:@"setFavoriteArtists:"]) {
-		
+	if ([segue.identifier isEqualToString:@"setFavArtistNames:"]) {
 		if ([segue.destinationViewController respondsToSelector:@selector(setFavArtistNames:)]) {
 			[segue.destinationViewController performSelector:@selector(setFavArtistNames:) withObject:[self artistNames]];
 		}
-		if ([segue.destinationViewController respondsToSelector:@selector(setPreviousController:)]) {
-			[segue.destinationViewController performSelector:@selector(setPreviousController:) withObject:self];
+		if ([segue.destinationViewController respondsToSelector:@selector(setFavArtistsTVC:)]) {
+			[segue.destinationViewController performSelector:@selector(setFavArtistsTVC:) withObject:self];
 		}
 	}
 }

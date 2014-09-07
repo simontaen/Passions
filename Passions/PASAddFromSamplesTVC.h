@@ -15,7 +15,8 @@ extern NSString *const kArtistNameCorrectionsCacheKey;
 @interface PASAddFromSamplesTVC : UITableViewController
 
 @property (nonatomic, strong) NSArray* favArtistNames; // of NSString, LFM Corrected!
-@property (nonatomic, strong) PASFavArtistsTVC* previousController;
 @property NSUInteger pageIndex;
+
+- (BOOL)didAddArtists;
 
 @end
