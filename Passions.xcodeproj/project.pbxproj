@@ -29,6 +29,8 @@
 		F49137F919B716A500E4FC0D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F719B716A500E4FC0D /* Parse.framework */; };
 		F49618B019BC49E400B4F3FE /* PASRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49618AF19BC49E400B4F3FE /* PASRootViewController.m */; };
 		F49618B319BC4CAC00B4F3FE /* PASTimelineCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F49618B219BC4CAC00B4F3FE /* PASTimelineCVC.m */; };
+		F49618BE19BCB6E400B4F3FE /* PASAddArtistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49618BD19BCB6E400B4F3FE /* PASAddArtistsViewController.m */; };
+		F49618C119BCBF9D00B4F3FE /* PASAddArtistsNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49618C019BCBF9D00B4F3FE /* PASAddArtistsNavController.m */; };
 		F4A779781793113E00C770B9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A779771793113E00C770B9 /* UIKit.framework */; };
 		F4A7797A1793113E00C770B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A779791793113E00C770B9 /* Foundation.framework */; };
 		F4A7797C1793113E00C770B9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A7797B1793113E00C770B9 /* CoreGraphics.framework */; };
@@ -71,6 +73,10 @@
 		F49618AF19BC49E400B4F3FE /* PASRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASRootViewController.m; sourceTree = "<group>"; };
 		F49618B119BC4CAC00B4F3FE /* PASTimelineCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASTimelineCVC.h; sourceTree = "<group>"; };
 		F49618B219BC4CAC00B4F3FE /* PASTimelineCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASTimelineCVC.m; sourceTree = "<group>"; };
+		F49618B619BC68FF00B4F3FE /* PASAddArtistsNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddArtistsNavController.h; sourceTree = "<group>"; };
+		F49618BC19BCB6E400B4F3FE /* PASAddArtistsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddArtistsViewController.h; sourceTree = "<group>"; };
+		F49618BD19BCB6E400B4F3FE /* PASAddArtistsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAddArtistsViewController.m; sourceTree = "<group>"; };
+		F49618C019BCBF9D00B4F3FE /* PASAddArtistsNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAddArtistsNavController.m; sourceTree = "<group>"; };
 		F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F4A779741793113E00C770B9 /* Passions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Passions.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,6 +158,10 @@
 		F49618B519BC4CCB00B4F3FE /* Add */ = {
 			isa = PBXGroup;
 			children = (
+				F49618BC19BCB6E400B4F3FE /* PASAddArtistsViewController.h */,
+				F49618BD19BCB6E400B4F3FE /* PASAddArtistsViewController.m */,
+				F49618B619BC68FF00B4F3FE /* PASAddArtistsNavController.h */,
+				F49618C019BCBF9D00B4F3FE /* PASAddArtistsNavController.m */,
 				F476F0EF19B8FFA700185544 /* PASAddFromSamplesTVC.h */,
 				F476F0F019B8FFA700185544 /* PASAddFromSamplesTVC.m */,
 				F40BBA6918538DAD00877D60 /* PASAddFromMusicTVC.h */,
@@ -360,8 +370,10 @@
 				F49618B319BC4CAC00B4F3FE /* PASTimelineCVC.m in Sources */,
 				F4FA316819B8B867000337A0 /* UIImage+Scale.m in Sources */,
 				F49618B019BC49E400B4F3FE /* PASRootViewController.m in Sources */,
+				F49618C119BCBF9D00B4F3FE /* PASAddArtistsNavController.m in Sources */,
 				F4A779881793113E00C770B9 /* PASAppDelegate.m in Sources */,
 				F476F0F119B8FFA700185544 /* PASAddFromSamplesTVC.m in Sources */,
+				F49618BE19BCB6E400B4F3FE /* PASAddArtistsViewController.m in Sources */,
 				F476F0EE19B8D9A100185544 /* PASResources.m in Sources */,
 				F40BBA6B18538DAD00877D60 /* PASAddFromMusicTVC.m in Sources */,
 				F4694D6419B74ABB00D12576 /* PASFavArtistsTVC.m in Sources */,

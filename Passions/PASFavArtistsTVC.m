@@ -197,6 +197,8 @@
 		
 		if ([segue.destinationViewController respondsToSelector:@selector(setFavArtistNames:)]) {
 			[segue.destinationViewController performSelector:@selector(setFavArtistNames:) withObject:[self artistNames]];
+		}
+		if ([segue.destinationViewController respondsToSelector:@selector(setPreviousController:)]) {
 			[segue.destinationViewController performSelector:@selector(setPreviousController:) withObject:self];
 		}
 	}

@@ -1,20 +1,23 @@
 //
-//  PASRootViewController.m
+//  PASAddArtistsViewController.m
 //  Passions
 //
 //  Created by Simon Tännler on 07/09/14.
 //  Copyright (c) 2014 edgeguard. All rights reserved.
 //
 
-#import "PASRootViewController.h"
-#import "PASFavArtistsTVC.h"
-#import "PASTimelineCVC.h"
+#import "PASAddArtistsViewController.h"
+#import "PASAddArtistsNavController.h"
+#import "PASAddFromSamplesTVC.h"
 
-@interface PASRootViewController ()
+// Number of Pages the page view controller displays
+static int const kNumberOfPages = 2;
+
+@interface PASAddArtistsViewController ()
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @end
 
-@implementation PASRootViewController
+@implementation PASAddArtistsViewController
 
 #pragma mark - View Lifecycle
 
@@ -27,7 +30,7 @@
 															  navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
 																			options:@{UIPageViewControllerOptionSpineLocationKey : @(UIPageViewControllerSpineLocationNone)}];
     self.pageViewController.dataSource = self;
-    [self.pageViewController setViewControllers:@[[self favArtistsNavController]]
+    [self.pageViewController setViewControllers:@[[self viewControllerAtIndex:0]]
 									  direction:UIPageViewControllerNavigationDirectionForward
 									   animated:NO
 									 completion:nil];
@@ -37,43 +40,64 @@
 	[self.pageViewController didMoveToParentViewController:self];
 }
 
-- (UINavigationController *)favArtistsNavController
+- (PASAddArtistsNavController *)viewControllerAtIndex:(NSUInteger)index
 {
-	// Create a nav controller to hack around the status bar problem (also creates containing view controller)
-	return [self.storyboard instantiateViewControllerWithIdentifier:@"FavArtistsNav"];
-}
-
-- (PASTimelineCVC *)timelineCVC
-{
-	return [self.storyboard instantiateViewControllerWithIdentifier:@"PASTimelineCVC"];
+	PASAddArtistsNavController *addArtistsNavC;
+	switch (index) {
+		case 0:
+			addArtistsNavC = [self.storyboard instantiateViewControllerWithIdentifier:@"PASAddArtistsNavController"];
+			break;
+			
+		case 1:
+			addArtistsNavC = [self.storyboard instantiateViewControllerWithIdentifier:@"PASAddArtistsNavController"];
+			break;
+			
+		default:
+			addArtistsNavC = nil;
+	}
+	addArtistsNavC.pageIndex = index;
+	addArtistsNavC.favArtistNames = self.favArtistNames;
+	
+	return addArtistsNavC;
 }
 
 #pragma mark - UIPageViewControllerDataSource
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-	if ([viewController isKindOfClass:[PASTimelineCVC class]]) {
-		return [self favArtistsNavController];
-	}
-	return nil;
+    NSUInteger index = ((PASAddArtistsNavController*) viewController).pageIndex;
+    
+    if ((index == 0) || (index == NSNotFound)) {
+        return nil;
+    }
+    
+    index--;
+    return [self viewControllerAtIndex:index];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-	if ([viewController isKindOfClass:[UINavigationController class]]) {
-		return [self timelineCVC];
-	}
-	return nil;
+    NSUInteger index = ((PASAddArtistsNavController*) viewController).pageIndex;
+    
+    if (index == NSNotFound) {
+        return nil;
+    }
+    
+    index++;
+    if (index == kNumberOfPages) {
+        return nil;
+    }
+    return [self viewControllerAtIndex:index];
 }
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
 {
-    return 2;
+    return kNumberOfPages;
 }
 
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
 {
-	return 0;
+    return 0;
 }
 
 @end

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PASFavArtistsTVC.h"
 
-// intented to be defined by the subclass
+// intended to be defined by the subclass
 extern NSString *const kArtistNameCorrectionsCacheKey;
 
 @interface PASAddFromSamplesTVC : UITableViewController

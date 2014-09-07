@@ -137,7 +137,7 @@ NSString *const kArtistNameCorrectionsCacheKey = @"correctionsFromSamples";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	static NSString *CellIdentifier = @"SampleArtist";
+	static NSString *CellIdentifier = @"ArtistCell";
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 	
