@@ -8,11 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "PASAddFromSamplesTVC.h"
 
-@interface PASAddFromMusicTVC : UITableViewController
-
-@property (nonatomic, strong) MPMediaQuery* query;
-
-- (IBAction)doneButtonHandler:(UIBarButtonItem *)sender;
+@interface PASAddFromMusicTVC : PASAddFromSamplesTVC
 
 @end

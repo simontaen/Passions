@@ -12,12 +12,46 @@
 
 @interface PASAddFromMusicTVC ()
 @property (nonatomic, strong) NSArray* artists; // of MPMediaItem
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
-// http://stackoverflow.com/a/5511403 / http://stackoverflow.com/a/13705529
-@property (nonatomic, strong) dispatch_queue_t musicArtworkQueue;
+@property (nonatomic, strong) NSArray* artistNames; // of NSString
+@property (nonatomic, strong) dispatch_queue_t artworkQ;
 @end
 
 @implementation PASAddFromMusicTVC
+
+#pragma mark - Accessors
+
+// returns the proper objects
+- (NSArray *)artists
+{
+	if (!_artists) {
+		// order by a combination of
+		// MPMediaItemPropertyPlayCount
+		// MPMediaItemPropertyRating
+		// see MPMediaItem Class Reference
+		NSArray *collections = [[MPMediaQuery artistsQuery] collections];
+		NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:collections.count];
+		for (MPMediaItemCollection *itemCollection in collections) {
+			[items addObject:[itemCollection representativeItem]];
+		}
+		
+		NSSortDescriptor *artistNameSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:MPMediaItemPropertyArtist ascending:@YES selector:@selector(localizedCaseInsensitiveCompare:)];
+		
+		_artists = [items sortedArrayUsingDescriptors:@[artistNameSortDescriptor]];
+	};
+	return _artists;
+}
+
+- (NSArray *)artistNames
+{
+	if (!_artistNames) {
+		NSMutableArray *names = [[NSMutableArray alloc] initWithCapacity:self.artists.count];
+		for (MPMediaItem *item in self.artists) {
+			[names addObject:[item valueForProperty: MPMediaItemPropertyArtist]];
+		}
+		_artistNames = names;
+	}
+	return _artistNames;
+}
 
 #pragma mark - View Lifecycle
 
@@ -25,47 +59,21 @@
 {
     [super viewDidLoad];
 	[self setTitle:@"iPod Artists"];
-
-	self.query = [MPMediaQuery artistsQuery];
-	self.artists = [self.query collections];
-	
-	// order by a combination of
-	// MPMediaItemPropertyPlayCount
-	// MPMediaItemPropertyRating
-	// see MPMediaItem Class Reference
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	self.musicArtworkQueue = dispatch_queue_create("MusicArtwork", DISPATCH_QUEUE_CONCURRENT);
+	self.artworkQ = dispatch_queue_create("artworkQ", DISPATCH_QUEUE_CONCURRENT);
 }
 
-- (IBAction)doneButtonHandler:(UIBarButtonItem *)sender
-{
-	// Go back to the previous view
-	[self dismissViewControllerAnimated:YES completion:nil];
-}
+#pragma mark - UITableViewDataSource required
 
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (void)setThumbnailImageForCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.artists count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LibraryArtist" forIndexPath:indexPath];
-    
-	MPMediaItemCollection *artist = self.artists[indexPath.row];
-    MPMediaItem *item = [artist representativeItem];
-	
-	cell.textLabel.text = [item valueForProperty: MPMediaItemPropertyArtist];
-	cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu Tracks", (unsigned long)[[artist items] count]];
-	
+	MPMediaItem *item = self.artists[indexPath.row];
 	__weak typeof(cell) weakCell = cell;
-	dispatch_async(self.musicArtworkQueue, ^{
+	dispatch_async(self.artworkQ, ^{
 		
 		MPMediaItemArtwork *artwork = [item valueForProperty: MPMediaItemPropertyArtwork];
 		UIImage *artworkImage = [artwork imageWithSize:cell.imageView.image.size];
@@ -80,29 +88,6 @@
 			weakCell.imageView.image = newImage;
 		});
 	});
-	
-    return cell;
-}
-
-#pragma mark - UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
-	
-	// grey out the row and put a spinner on it
-	// disable user interaction
-	
-	MPMediaItem *artistItem = self.artists[indexPath.row];
-	
-	NSString *artist = [artistItem valueForProperty:MPMediaItemPropertyArtist];
-	NSString *albumArtist = [artistItem valueForProperty:MPMediaItemPropertyAlbumArtist];
-	NSLog(@"%@", artist);
-	NSLog(@"%@", albumArtist);
-	
-	// call PFArtist favoriteArtist:(NSString *)artist byUser:(PFUser *)user];
-	// grey out artist
-
 }
 
 @end

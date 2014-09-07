@@ -10,23 +10,13 @@
 #import "PFArtist.h"
 #import "LastFmFetchr.h"
 
-NSString *const kArtistNameCorrectionsCacheKey = @"correctionsFromSamples";
-
-// there are 4 things to think about
-// 1. the already favorited artists, these are passed by the seque @done
-// 2. the artists to display, produced by this TVC @done
-// 3. the name corrections of the artists to display, cache this information
-// 4. the artists just favorited by the user in this "session"
-
 @interface PASAddFromSamplesTVC ()
-// public
-//@property (nonatomic, strong) NSArray* favArtistNames; // of NSString, LFM corrected!
+@property (nonatomic, strong) NSArray* artists; // of NSString
+@property (nonatomic, strong) NSArray* artistNames; // of NSString
 
+// http://stackoverflow.com/a/5511403 / http://stackoverflow.com/a/13705529
 @property (nonatomic, strong) NSMutableArray* justFavArtistNames; // of NSString, LFM corrected!
 @property (nonatomic, strong) dispatch_queue_t favoritesQ;
-
-@property (nonatomic, strong) NSArray* artists; // of NSString (or appropriate objects)
-@property (nonatomic, strong) NSArray* artistNames; // of NSString
 
 @property (nonatomic, strong) NSMutableDictionary* artistNameCorrections; // of NSString (display) -> NSString (internal on Favorite Artists TVC)
 @property (nonatomic, strong) dispatch_queue_t correctionsQ;
@@ -95,7 +85,7 @@ NSString *const kArtistNameCorrectionsCacheKey = @"correctionsFromSamples";
 	dispatch_async(self.correctionsQ, ^{
 		NSURL *cacheFile = [[[[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory
 																	inDomains:NSUserDomainMask] firstObject]
-							URLByAppendingPathComponent:kArtistNameCorrectionsCacheKey];
+							URLByAppendingPathComponent:NSStringFromClass([self class])];
 		self.artistNameCorrections = [NSMutableDictionary dictionaryWithContentsOfURL:cacheFile];
 		
 		if (!self.artistNameCorrections) {
@@ -113,7 +103,7 @@ NSString *const kArtistNameCorrectionsCacheKey = @"correctionsFromSamples";
 		NSFileManager *mng = [NSFileManager defaultManager];
 		NSURL *cacheDir = [[mng URLsForDirectory:NSApplicationSupportDirectory
 									   inDomains:NSUserDomainMask] firstObject];
-		NSURL *cacheFile = [cacheDir URLByAppendingPathComponent:kArtistNameCorrectionsCacheKey];
+		NSURL *cacheFile = [cacheDir URLByAppendingPathComponent:NSStringFromClass([self class])];
 		
 		// make sure the cacheDir exists
 		if (![mng fileExistsAtPath:[cacheDir path]
@@ -145,7 +135,7 @@ NSString *const kArtistNameCorrectionsCacheKey = @"correctionsFromSamples";
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 	
-	NSString *artistName = self.artists[indexPath.row];
+	NSString *artistName = self.artistNames[indexPath.row];
 	cell.textLabel.text = artistName;
 	
 	if ([self isFavoriteArtist:artistName]) {
@@ -154,7 +144,15 @@ NSString *const kArtistNameCorrectionsCacheKey = @"correctionsFromSamples";
 		cell.detailTextLabel.text = nil;
 	}
 	
+	[self setThumbnailImageForCell:cell atIndexPath:indexPath];
+	
 	return cell;
+}
+
+- (void)setThumbnailImageForCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+	cell.imageView.image = nil;
+	return;
 }
 
 - (BOOL)isFavoriteArtist:(NSString *)artistName
@@ -175,6 +173,9 @@ NSString *const kArtistNameCorrectionsCacheKey = @"correctionsFromSamples";
 {
 	NSString *artistName = self.artistNames[indexPath.row];
 	NSString *correctedName = [self.artistNameCorrections objectForKey:artistName];
+	
+	// TODO: grey out the row and put a spinner on it
+	// disable user interaction
 	
 	if (correctedName) {
 		[self favoriteArtist:correctedName atIndexPath:indexPath];

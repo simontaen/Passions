@@ -41,7 +41,7 @@ static int const kNumberOfPages = 2;
 			break;
 			
 		case 1:
-			addArtistsTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"PASAddFromSamplesTVC"];
+			addArtistsTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"PASAddFromMusicTVC"];
 			break;
 			
 		default:

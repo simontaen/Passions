@@ -9,14 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "PASFavArtistsTVC.h"
 
-// intended to be defined by the subclass
-extern NSString *const kArtistNameCorrectionsCacheKey;
-
 @interface PASAddFromSamplesTVC : UITableViewController
 
-@property (nonatomic, strong) NSArray* favArtistNames; // of NSString, LFM Corrected!
+@property (nonatomic, strong) NSArray* favArtistNames; // passed by the segue, LFM Corrected!
 @property NSUInteger pageIndex;
 
 - (BOOL)didAddArtists;
+
+// for subclassing
+- (NSArray *)artists; // of the appropriate object
+- (NSArray *)artistNames; // of NSString
+- (void)setThumbnailImageForCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 @end
