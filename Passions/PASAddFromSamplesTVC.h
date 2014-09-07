@@ -16,7 +16,6 @@ extern NSString *const kArtistNameCorrectionsCacheKey;
 
 @property (nonatomic, strong) NSArray* favArtistNames; // of NSString, LFM Corrected!
 @property (nonatomic, strong) PASFavArtistsTVC* previousController;
-
-- (IBAction)doneButtonHandler:(UIBarButtonItem *)sender;
+@property NSUInteger pageIndex;
 
 @end

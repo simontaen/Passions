@@ -1,5 +1,5 @@
 //
-//  PASAddArtistsNavController.h
+//  PASAddArtistsPVC.h
 //  Passions
 //
 //  Created by Simon Tännler on 07/09/14.
@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PASAddArtistsNavController : UINavigationController
+@interface PASAddArtistsPVC : UIPageViewController <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
+
 @property (nonatomic, strong) NSArray* favArtistNames; // of NSString, LFM Corrected!
+
+- (IBAction)doneButtonHandler:(UIBarButtonItem *)sender;
+
 @end

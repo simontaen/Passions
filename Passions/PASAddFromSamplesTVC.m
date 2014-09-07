@@ -31,7 +31,6 @@ NSString *const kArtistNameCorrectionsCacheKey = @"correctionsFromSamples";
 @property (nonatomic, strong) NSMutableDictionary* artistNameCorrections; // of NSString (display) -> NSString (internal on Favorite Artists TVC)
 @property (nonatomic, strong) dispatch_queue_t correctionsQ;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
 @end
 
 @implementation PASAddFromSamplesTVC
@@ -205,17 +204,6 @@ NSString *const kArtistNameCorrectionsCacheKey = @"correctionsFromSamples";
 			});
 		}
 	}];
-}
-
-#pragma mark - Navigation
-
-- (IBAction)doneButtonHandler:(UIBarButtonItem *)sender
-{
-	if (self.favArtistNames.count != 0) {
-		[self.previousController refreshUI];
-	}
-	// Go back to the previous view
-	[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
