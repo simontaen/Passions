@@ -27,6 +27,8 @@
 		F49137F519B714A200E4FC0D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F419B714A200E4FC0D /* QuartzCore.framework */; };
 		F49137F819B716A500E4FC0D /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F619B716A500E4FC0D /* Bolts.framework */; };
 		F49137F919B716A500E4FC0D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F719B716A500E4FC0D /* Parse.framework */; };
+		F49618B019BC49E400B4F3FE /* PASRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49618AF19BC49E400B4F3FE /* PASRootViewController.m */; };
+		F49618B319BC4CAC00B4F3FE /* PASTimelineCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F49618B219BC4CAC00B4F3FE /* PASTimelineCVC.m */; };
 		F4A779781793113E00C770B9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A779771793113E00C770B9 /* UIKit.framework */; };
 		F4A7797A1793113E00C770B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A779791793113E00C770B9 /* Foundation.framework */; };
 		F4A7797C1793113E00C770B9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A7797B1793113E00C770B9 /* CoreGraphics.framework */; };
@@ -65,6 +67,10 @@
 		F49137F419B714A200E4FC0D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F49137F619B716A500E4FC0D /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Passions/Bolts.framework; sourceTree = "<group>"; };
 		F49137F719B716A500E4FC0D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Passions/Parse.framework; sourceTree = "<group>"; };
+		F49618AE19BC49E400B4F3FE /* PASRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASRootViewController.h; sourceTree = "<group>"; };
+		F49618AF19BC49E400B4F3FE /* PASRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASRootViewController.m; sourceTree = "<group>"; };
+		F49618B119BC4CAC00B4F3FE /* PASTimelineCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASTimelineCVC.h; sourceTree = "<group>"; };
+		F49618B219BC4CAC00B4F3FE /* PASTimelineCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASTimelineCVC.m; sourceTree = "<group>"; };
 		F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F4A779741793113E00C770B9 /* Passions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Passions.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,15 +127,6 @@
 			name = Visuals;
 			sourceTree = "<group>";
 		};
-		F40BBA6C18538E1D00877D60 /* iPod */ = {
-			isa = PBXGroup;
-			children = (
-				F40BBA6918538DAD00877D60 /* PASAddFromMusicTVC.h */,
-				F40BBA6A18538DAD00877D60 /* PASAddFromMusicTVC.m */,
-			);
-			name = iPod;
-			sourceTree = "<group>";
-		};
 		F476F0E819B8D8C500185544 /* Parse Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,13 +136,28 @@
 			name = "Parse Objects";
 			sourceTree = "<group>";
 		};
-		F476F0F219B8FFAD00185544 /* Samples */ = {
+		F49618B419BC4CC000B4F3FE /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				F49618AE19BC49E400B4F3FE /* PASRootViewController.h */,
+				F49618AF19BC49E400B4F3FE /* PASRootViewController.m */,
+				F49618B119BC4CAC00B4F3FE /* PASTimelineCVC.h */,
+				F49618B219BC4CAC00B4F3FE /* PASTimelineCVC.m */,
+				F4694D6219B74ABB00D12576 /* PASFavArtistsTVC.h */,
+				F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */,
+			);
+			name = Root;
+			sourceTree = "<group>";
+		};
+		F49618B519BC4CCB00B4F3FE /* Add */ = {
 			isa = PBXGroup;
 			children = (
 				F476F0EF19B8FFA700185544 /* PASAddFromSamplesTVC.h */,
 				F476F0F019B8FFA700185544 /* PASAddFromSamplesTVC.m */,
+				F40BBA6918538DAD00877D60 /* PASAddFromMusicTVC.h */,
+				F40BBA6A18538DAD00877D60 /* PASAddFromMusicTVC.m */,
 			);
-			name = Samples;
+			name = Add;
 			sourceTree = "<group>";
 		};
 		F4A7796B1793113E00C770B9 = {
@@ -193,10 +205,8 @@
 			isa = PBXGroup;
 			children = (
 				F4A7798F1793113E00C770B9 /* iPhone.storyboard */,
-				F4694D6219B74ABB00D12576 /* PASFavArtistsTVC.h */,
-				F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */,
-				F40BBA6C18538E1D00877D60 /* iPod */,
-				F476F0F219B8FFAD00185544 /* Samples */,
+				F49618B419BC4CC000B4F3FE /* Root */,
+				F49618B519BC4CCB00B4F3FE /* Add */,
 				F409BBE017ADC74000091B7A /* Visuals */,
 				F4FA316519B8B7F2000337A0 /* Utils */,
 				F476F0E819B8D8C500185544 /* Parse Objects */,
@@ -347,7 +357,9 @@
 			files = (
 				F476F0EB19B8D8EA00185544 /* PFArtist.m in Sources */,
 				F4A779841793113E00C770B9 /* main.m in Sources */,
+				F49618B319BC4CAC00B4F3FE /* PASTimelineCVC.m in Sources */,
 				F4FA316819B8B867000337A0 /* UIImage+Scale.m in Sources */,
+				F49618B019BC49E400B4F3FE /* PASRootViewController.m in Sources */,
 				F4A779881793113E00C770B9 /* PASAppDelegate.m in Sources */,
 				F476F0F119B8FFA700185544 /* PASAddFromSamplesTVC.m in Sources */,
 				F476F0EE19B8D9A100185544 /* PASResources.m in Sources */,

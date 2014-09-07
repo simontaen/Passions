@@ -49,8 +49,13 @@
 	[application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
 													 UIRemoteNotificationTypeAlert |
 													 UIRemoteNotificationTypeSound)];
+	// setup the page control
+	UIPageControl *pageControl = [UIPageControl appearance];
+    pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
+    pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
+    pageControl.backgroundColor = [UIColor whiteColor];
 	
-    return YES;
+	return YES;
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
