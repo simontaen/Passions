@@ -24,40 +24,33 @@ static int const kNumberOfPages = 2;
 {
     [super viewDidLoad];
     
-    // Create and init page view controller
-	//    self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
-	//															  navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
-	//																			options:@{UIPageViewControllerOptionSpineLocationKey : @(UIPageViewControllerSpineLocationNone)}];
+    // Init the page view controller
 	self.dataSource = self;
 	[self setViewControllers:@[[self viewControllerAtIndex:0]]
 				   direction:UIPageViewControllerNavigationDirectionForward
 					animated:NO
 				  completion:nil];
-	//	// add the page view controller to hierarchy
-	//	[self addChildViewController:self.pageViewController];
-	//	[self.view addSubview:self.pageViewController.view];
-	//	[self.pageViewController didMoveToParentViewController:self];
 }
 
 - (PASAddFromSamplesTVC *)viewControllerAtIndex:(NSUInteger)index
 {
-	PASAddFromSamplesTVC *addArtistsNavC;
+	PASAddFromSamplesTVC *addArtistsTVC;
 	switch (index) {
 		case 0:
-			addArtistsNavC = [self.storyboard instantiateViewControllerWithIdentifier:@"PASAddFromSamplesTVC"];
+			addArtistsTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"PASAddFromSamplesTVC"];
 			break;
 			
 		case 1:
-			addArtistsNavC = [self.storyboard instantiateViewControllerWithIdentifier:@"PASAddFromSamplesTVC"];
+			addArtistsTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"PASAddFromSamplesTVC"];
 			break;
 			
 		default:
-			addArtistsNavC = nil;
+			addArtistsTVC = nil;
 	}
-	addArtistsNavC.pageIndex = index;
-	addArtistsNavC.favArtistNames = self.favArtistNames;
+	addArtistsTVC.pageIndex = index;
+	addArtistsTVC.favArtistNames = self.favArtistNames;
 	
-	return addArtistsNavC;
+	return addArtistsTVC;
 }
 
 #pragma mark - UIPageViewControllerDataSource
