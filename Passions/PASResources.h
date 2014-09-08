@@ -13,4 +13,7 @@
 + (UIImage *) artistThumbnailPlaceholder;
 + (UIImage *) albumThumbnailPlaceholder;
 
++ (void)printViewControllerLayoutStack:(UIViewController *)viewController;
++ (void)printViewLayoutStack:(UIViewController *)vc;
+
 @end

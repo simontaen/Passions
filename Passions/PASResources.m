@@ -25,5 +25,22 @@
 	return [self artistThumbnailPlaceholder];
 }
 
++ (void)printViewControllerLayoutStack:(UIViewController *)viewController
+{
+	UIViewController *vc = viewController;
+	while (vc) {
+		NSLog(@"%@ %@ | %@", NSStringFromClass([vc class]), NSStringFromCGRect(vc.view.bounds), NSStringFromCGRect(vc.view.frame));
+		vc = vc.parentViewController;
+	}
+}
+
++ (void)printViewLayoutStack:(UIViewController *)vc
+{
+	NSLog(@"%@ %@ | %@", NSStringFromClass([vc.view class]), NSStringFromCGRect(vc.view.bounds), NSStringFromCGRect(vc.view.frame));
+	for (UIView *aView in vc.view.subviews) {
+		NSLog(@"%@ %@ | %@", NSStringFromClass([aView class]), NSStringFromCGRect(aView.bounds), NSStringFromCGRect(aView.frame));
+	}
+}
+
 
 @end

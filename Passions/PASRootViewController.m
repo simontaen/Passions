@@ -21,12 +21,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	//self.view.backgroundColor = [UIColor redColor];
+	self.pageViewController.view.backgroundColor = [UIColor blueColor];
     
     // Create and init page view controller
-    self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+	self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
 															  navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
 																			options:@{UIPageViewControllerOptionSpineLocationKey : @(UIPageViewControllerSpineLocationNone)}];
-    self.pageViewController.dataSource = self;
+	self.pageViewController.dataSource = self;
     [self.pageViewController setViewControllers:@[[self favArtistsNavController]]
 									  direction:UIPageViewControllerNavigationDirectionForward
 									   animated:NO

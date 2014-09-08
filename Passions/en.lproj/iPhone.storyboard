@@ -114,7 +114,7 @@
         <!--Add ArtistsPVC-->
         <scene sceneID="h5V-XF-cgy">
             <objects>
-                <pageViewController storyboardIdentifier="PASAddArtistsPVC" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Oxz-Ev-Vdc" customClass="PASAddArtistsPVC" sceneMemberID="viewController">
+                <pageViewController storyboardIdentifier="PASAddArtistsPVC" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Oxz-Ev-Vdc" customClass="PASAddArtistsPVC" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="D47-lM-6ZG">
                         <barButtonItem key="leftBarButtonItem" title="Done" id="lR3-ds-oag">
                             <connections>

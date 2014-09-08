@@ -46,6 +46,19 @@
 
 #pragma mark - View Lifecycle
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	self.view.backgroundColor = [UIColor greenColor];	
+}
+
+- (void)viewDidLayoutSubviews {
+	[super viewDidLayoutSubviews];
+	
+	[PASResources printViewControllerLayoutStack:self];
+	[PASResources printViewLayoutStack:self.navigationController.parentViewController];
+}
+
 #pragma mark - UITableViewDataSource Editing
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
