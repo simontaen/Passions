@@ -52,8 +52,8 @@
 	self.view.backgroundColor = [UIColor greenColor];	
 }
 
-- (void)viewDidLayoutSubviews {
-	[super viewDidLayoutSubviews];
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
 	
 	[PASResources printViewControllerLayoutStack:self];
 	[PASResources printViewLayoutStack:self.navigationController.parentViewController];
