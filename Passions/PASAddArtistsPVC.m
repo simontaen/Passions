@@ -8,6 +8,7 @@
 
 #import "PASAddArtistsPVC.h"
 #import "PASAddFromSamplesTVC.h"
+#import "PASResources.h"
 
 // Number of Pages the page view controller displays
 static int const kNumberOfPages = 2;
@@ -30,6 +31,13 @@ static int const kNumberOfPages = 2;
 				   direction:UIPageViewControllerNavigationDirectionForward
 					animated:NO
 				  completion:nil];
+	self.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	[PASResources printViewLayoutStack:self];
 }
 
 - (PASAddFromSamplesTVC *)viewControllerAtIndex:(NSUInteger)index

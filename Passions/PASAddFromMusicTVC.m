@@ -55,10 +55,9 @@
 
 #pragma mark - View Lifecycle
 
-- (void)viewDidLoad
+- (NSString *)getTitle
 {
-    [super viewDidLoad];
-	[self setTitle:@"iPod Artists"];
+	return @"iPod Artists";
 }
 
 - (void)viewWillAppear:(BOOL)animated

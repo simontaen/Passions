@@ -27,6 +27,7 @@
 
 + (void)printViewControllerLayoutStack:(UIViewController *)viewController
 {
+	NSLog(@"---- ViewController Stack ----");
 	UIViewController *vc = viewController;
 	while (vc) {
 		NSLog(@"%@ %@ | %@", NSStringFromClass([vc class]), NSStringFromCGRect(vc.view.bounds), NSStringFromCGRect(vc.view.frame));
@@ -36,6 +37,7 @@
 
 + (void)printViewLayoutStack:(UIViewController *)vc
 {
+	NSLog(@"---- %@ ----", NSStringFromClass([vc class]));
 	NSLog(@"%@ %@ | %@", NSStringFromClass([vc.view class]), NSStringFromCGRect(vc.view.bounds), NSStringFromCGRect(vc.view.frame));
 	for (UIView *aView in vc.view.subviews) {
 		NSLog(@"%@ %@ | %@", NSStringFromClass([aView class]), NSStringFromCGRect(aView.bounds), NSStringFromCGRect(aView.frame));

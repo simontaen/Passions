@@ -66,11 +66,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[self setTitle:@"Samples"];
+	[self.parentViewController setTitle:[self getTitle]];
 	
 	// setup artists to choose from, for example
 	// go to spotify, last.fm or prepare MediaQuery
 	// maybe read cache when network is involved? or let AFNetworking handle it?
+}
+
+- (NSString *)getTitle
+{
+	return @"Samples";
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -99,6 +104,7 @@
 {
 	[super viewDidAppear:animated];
 	[PASResources printViewControllerLayoutStack:self];
+	[PASResources printViewLayoutStack:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

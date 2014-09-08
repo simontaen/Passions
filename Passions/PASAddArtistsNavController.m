@@ -16,8 +16,8 @@
 
 - (void)viewDidLoad
 {
-	self.navigationBar.translucent = NO;
-	self.edgesForExtendedLayout = UIRectEdgeNone;
+	[super viewDidLoad];
+	self.view.backgroundColor = [UIColor whiteColor];
 }
 
 @end

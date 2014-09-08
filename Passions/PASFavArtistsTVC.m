@@ -49,14 +49,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	self.view.backgroundColor = [UIColor greenColor];	
+	self.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
+	//self.view.backgroundColor = [UIColor greenColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	
-	//[PASResources printViewControllerLayoutStack:self];
-	//[PASResources printViewLayoutStack:self.navigationController.parentViewController];
+	[PASResources printViewControllerLayoutStack:self];
 }
 
 #pragma mark - UITableViewDataSource Editing
