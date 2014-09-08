@@ -14,4 +14,10 @@
 
 @implementation PASAddArtistsNavController
 
+- (void)viewDidLoad
+{
+	self.navigationBar.translucent = NO;
+	self.edgesForExtendedLayout = UIRectEdgeNone;
+}
+
 @end

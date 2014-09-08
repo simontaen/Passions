@@ -55,8 +55,8 @@
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
-	[PASResources printViewControllerLayoutStack:self];
-	[PASResources printViewLayoutStack:self.navigationController.parentViewController];
+	//[PASResources printViewControllerLayoutStack:self];
+	//[PASResources printViewLayoutStack:self.navigationController.parentViewController];
 }
 
 #pragma mark - UITableViewDataSource Editing

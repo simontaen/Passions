@@ -9,6 +9,7 @@
 #import "PASAddFromSamplesTVC.h"
 #import "PFArtist.h"
 #import "LastFmFetchr.h"
+#import "PASResources.h"
 
 @interface PASAddFromSamplesTVC ()
 @property (nonatomic, strong) NSArray* artists; // of NSString
@@ -92,6 +93,12 @@
 			self.artistNameCorrections = [[NSMutableDictionary alloc] initWithCapacity:self.artists.count];
 		}
 	});
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	[PASResources printViewControllerLayoutStack:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
