@@ -37,7 +37,12 @@
 	// add the page view controller to hierarchy
 	[self addChildViewController:self.pageViewController];
 	[self.view addSubview:self.pageViewController.view];
+	// Set the page view controller's bounds using an inset rect so that self's view is visible around the edges of the pages.
+	CGRect pageViewRect = self.view.bounds;
+	self.pageViewController.view.frame = pageViewRect;
 	[self.pageViewController didMoveToParentViewController:self];
+	// Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
+	self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
 }
 
 - (UINavigationController *)favArtistsNavController

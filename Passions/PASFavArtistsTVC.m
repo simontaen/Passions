@@ -55,7 +55,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	[PASResources printViewControllerLayoutStack:self];
+	//[PASResources printViewControllerLayoutStack:self];
+	[PASResources printGestureRecognizerStack:self];
 }
 
 #pragma mark - UITableViewDataSource Editing

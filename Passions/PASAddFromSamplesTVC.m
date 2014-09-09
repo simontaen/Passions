@@ -66,8 +66,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[self.parentViewController setTitle:[self getTitle]];
-	
 	// setup artists to choose from, for example
 	// go to spotify, last.fm or prepare MediaQuery
 	// maybe read cache when network is involved? or let AFNetworking handle it?
@@ -81,6 +79,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
+	[self.parentViewController setTitle:[self getTitle]];
 	
 	// perpare for user favoriting artists
 	self.favoritesQ = dispatch_queue_create("favoritesQ", DISPATCH_QUEUE_CONCURRENT);
@@ -103,7 +102,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	[PASResources printViewControllerLayoutStack:self];
+	//[PASResources printViewControllerLayoutStack:self];
 	[PASResources printViewLayoutStack:self];
 }
 

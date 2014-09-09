@@ -15,5 +15,6 @@
 
 + (void)printViewControllerLayoutStack:(UIViewController *)viewController;
 + (void)printViewLayoutStack:(UIViewController *)vc;
++ (void)printGestureRecognizerStack:(UIViewController *)viewController;
 
 @end

@@ -44,5 +44,16 @@
 	}
 }
 
-
++ (void)printGestureRecognizerStack:(UIViewController *)viewController
+{
+	NSLog(@"---- Gesture Recognizer Stack ----");
+	UIViewController *vc = viewController;
+	while (vc) {
+		NSString *vcName = NSStringFromClass([vc class]);
+		for (UIGestureRecognizer *gr in vc.view.gestureRecognizers) {
+			NSLog(@"%@: %@", vcName, NSStringFromClass([gr class]));
+		}
+		vc = vc.parentViewController;
+	}
+}
 @end
