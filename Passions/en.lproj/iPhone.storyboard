@@ -171,9 +171,6 @@
                             <outlet property="delegate" destination="XlN-3A-Osb" id="2gV-52-3Ic"/>
                         </connections>
                     </tableView>
-                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="555-yi-nr0">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3WZ-A6-Avc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -274,9 +271,6 @@
                             <outlet property="delegate" destination="OTz-4D-iXc" id="zkU-6j-BaV"/>
                         </connections>
                     </tableView>
-                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="0J2-lN-45O">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="czj-di-ubk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

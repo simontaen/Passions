@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PASRootPVC.h"
 
-@interface PASAddArtistsPVC : UIPageViewController <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
+@interface PASAddArtistsPVC : PASRootPVC <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
 - (IBAction)doneButtonHandler:(UIBarButtonItem *)sender;
 @end

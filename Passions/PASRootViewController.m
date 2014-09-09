@@ -9,6 +9,7 @@
 #import "PASRootViewController.h"
 #import "PASFavArtistsTVC.h"
 #import "PASTimelineCVC.h"
+#import "PASRootPVC.h"
 
 @interface PASRootViewController ()
 @property (strong, nonatomic) UIPageViewController *pageViewController;
@@ -25,7 +26,7 @@
 	self.pageViewController.view.backgroundColor = [UIColor blueColor];
     
     // Create and init page view controller
-	self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+	self.pageViewController = [[PASRootPVC alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
 															  navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
 																			options:@{UIPageViewControllerOptionSpineLocationKey : @(UIPageViewControllerSpineLocationNone)}];
 	self.pageViewController.dataSource = self;
