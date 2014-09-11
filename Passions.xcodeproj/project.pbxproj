@@ -42,6 +42,8 @@
 		F4A7798C1793113E00C770B9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A7798B1793113E00C770B9 /* Default@2x.png */; };
 		F4A7798E1793113E00C770B9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A7798D1793113E00C770B9 /* Default-568h@2x.png */; };
 		F4A779911793113E00C770B9 /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4A7798F1793113E00C770B9 /* iPhone.storyboard */; };
+		F4D6C4B319BFAB8800465781 /* PASAddingArtistCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D6C4B119BFAB8800465781 /* PASAddingArtistCell.m */; };
+		F4D6C4B419BFAB8800465781 /* PASAddingArtistCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4D6C4B219BFAB8800465781 /* PASAddingArtistCell.xib */; };
 		F4FA316819B8B867000337A0 /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FA316719B8B867000337A0 /* UIImage+Scale.m */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +98,9 @@
 		F4A7798B1793113E00C770B9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		F4A7798D1793113E00C770B9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		F4A779901793113E00C770B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPhone.storyboard; sourceTree = "<group>"; };
+		F4D6C4B019BFAB8800465781 /* PASAddingArtistCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddingArtistCell.h; sourceTree = "<group>"; };
+		F4D6C4B119BFAB8800465781 /* PASAddingArtistCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAddingArtistCell.m; sourceTree = "<group>"; };
+		F4D6C4B219BFAB8800465781 /* PASAddingArtistCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PASAddingArtistCell.xib; sourceTree = "<group>"; };
 		F4FA316619B8B867000337A0 /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scale.h"; sourceTree = "<group>"; };
 		F4FA316719B8B867000337A0 /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scale.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,6 +176,9 @@
 				F476F0F019B8FFA700185544 /* PASAddFromSamplesTVC.m */,
 				F40BBA6918538DAD00877D60 /* PASAddFromMusicTVC.h */,
 				F40BBA6A18538DAD00877D60 /* PASAddFromMusicTVC.m */,
+				F4D6C4B019BFAB8800465781 /* PASAddingArtistCell.h */,
+				F4D6C4B119BFAB8800465781 /* PASAddingArtistCell.m */,
+				F4D6C4B219BFAB8800465781 /* PASAddingArtistCell.xib */,
 			);
 			name = Add;
 			sourceTree = "<group>";
@@ -322,6 +330,7 @@
 			files = (
 				F4A779821793113E00C770B9 /* InfoPlist.strings in Resources */,
 				F4A7798A1793113E00C770B9 /* Default.png in Resources */,
+				F4D6C4B419BFAB8800465781 /* PASAddingArtistCell.xib in Resources */,
 				F4A7798C1793113E00C770B9 /* Default@2x.png in Resources */,
 				F4A7798E1793113E00C770B9 /* Default-568h@2x.png in Resources */,
 				F4A779911793113E00C770B9 /* iPhone.storyboard in Resources */,
@@ -370,6 +379,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4D6C4B319BFAB8800465781 /* PASAddingArtistCell.m in Sources */,
 				F476F0EB19B8D8EA00185544 /* PFArtist.m in Sources */,
 				F4A779841793113E00C770B9 /* main.m in Sources */,
 				F49618B319BC4CAC00B4F3FE /* PASTimelineCVC.m in Sources */,

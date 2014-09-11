@@ -7,8 +7,9 @@
 //
 
 #import "PASAddArtistsPVC.h"
-#import "PASAddFromSamplesTVC.h"
 #import "PASResources.h"
+#import "PASAddFromSamplesTVC.h"
+#import "PASAddFromMusicTVC.h"
 
 // Number of Pages the page view controller displays
 static int const kNumberOfPages = 2;
@@ -42,22 +43,33 @@ static int const kNumberOfPages = 2;
 
 - (PASAddFromSamplesTVC *)viewControllerAtIndex:(NSUInteger)index
 {
+	static PASAddFromSamplesTVC *addFromSamplesTVC;
+	static PASAddFromMusicTVC *addFromMusicTVC;
+	
+	if (!addFromMusicTVC && !addFromMusicTVC) {
+		addFromSamplesTVC = [[PASAddFromSamplesTVC alloc] initWithStyle:UITableViewStylePlain];
+		addFromMusicTVC = [[PASAddFromMusicTVC alloc] initWithStyle:UITableViewStylePlain];
+	}
+	
 	PASAddFromSamplesTVC *addArtistsTVC;
 	switch (index) {
 		case 0:
-			addArtistsTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"PASAddFromSamplesTVC"];
+			addArtistsTVC = addFromSamplesTVC;
 			break;
 			
 		case 1:
-			addArtistsTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"PASAddFromMusicTVC"];
+			addArtistsTVC = addFromMusicTVC;
 			break;
 			
 		default:
 			addArtistsTVC = nil;
 	}
-	addArtistsTVC.pageIndex = index;
-	if ([self.parentViewController respondsToSelector:@selector(favArtistNames)]) {
-		addArtistsTVC.favArtistNames = [self.parentViewController performSelector:@selector(favArtistNames) withObject:nil];
+	
+	if (addArtistsTVC) {
+		addArtistsTVC.pageIndex = index;
+		if ([self.parentViewController respondsToSelector:@selector(favArtistNames)]) {
+			addArtistsTVC.favArtistNames = [self.parentViewController performSelector:@selector(favArtistNames) withObject:nil];
+		}
 	}
 	
 	return addArtistsTVC;

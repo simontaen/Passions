@@ -10,6 +10,9 @@
 #import "PFArtist.h"
 #import "LastFmFetchr.h"
 #import "PASResources.h"
+#import "PASAddingArtistCell.h"
+
+static NSString *kCellIdentifier = @"PASAddingArtistCell";
 
 @interface PASAddFromSamplesTVC ()
 @property (nonatomic, strong) NSArray* artists; // of NSString
@@ -66,6 +69,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	[self.tableView registerNib:[UINib nibWithNibName:kCellIdentifier bundle:nil] forCellReuseIdentifier:kCellIdentifier];
 	// setup artists to choose from, for example
 	// go to spotify, last.fm or prepare MediaQuery
 	// maybe read cache when network is involved? or let AFNetworking handle it?
@@ -103,7 +108,7 @@
 {
 	[super viewDidAppear:animated];
 	//[PASResources printViewControllerLayoutStack:self];
-	[PASResources printViewLayoutStack:self];
+	//[PASResources printViewLayoutStack:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -138,22 +143,23 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+	if (!self.artists.count) {
+		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+	}
     return [self.artists count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	static NSString *CellIdentifier = @"ArtistCell";
-	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+	PASAddingArtistCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
 	
 	NSString *artistName = self.artistNames[indexPath.row];
-	cell.textLabel.text = artistName;
+	cell.artistName.text = artistName;
 	
 	if ([self isFavoriteArtist:artistName]) {
-		cell.detailTextLabel.text = @"Favorite!";
+		cell.detailText.text = @"Favorite!";
 	} else {
-		cell.detailTextLabel.text = nil;
+		cell.detailText.text = @"";
 	}
 	
 	[self setThumbnailImageForCell:cell atIndexPath:indexPath];
@@ -161,9 +167,9 @@
 	return cell;
 }
 
-- (void)setThumbnailImageForCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)setThumbnailImageForCell:(PASAddingArtistCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-	cell.imageView.image = nil;
+	cell.artistImage.image = [PASResources artistThumbnailPlaceholder];
 	return;
 }
 
@@ -183,6 +189,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	PASAddingArtistCell *cell = (PASAddingArtistCell *)[tableView cellForRowAtIndexPath:indexPath];
+	[cell.activityIndicator startAnimating];
+	
 	NSString *artistName = self.artistNames[indexPath.row];
 	NSString *correctedName = [self.artistNameCorrections objectForKey:artistName];
 	
@@ -190,7 +199,7 @@
 	// disable user interaction
 	
 	if (correctedName) {
-		[self favoriteArtist:correctedName atIndexPath:indexPath];
+		[self favoriteArtist:correctedName atIndexPath:indexPath forCell:cell];
 		
 	} else {
 		// artistName is straight from what this TVC displays, needs correction
@@ -204,24 +213,30 @@
 				
 				// favorite the artist with the corrected name
 				// TODO: maybe this means I don't have to do the correction on the server!
-				[self favoriteArtist:resolvedName atIndexPath:indexPath];
+				[self favoriteArtist:resolvedName atIndexPath:indexPath forCell:cell];
 			}
 		}];
 	}
 }
 
-- (void)favoriteArtist:(NSString *)name atIndexPath:(NSIndexPath *)indexPath
+- (void)favoriteArtist:(NSString *)name atIndexPath:(NSIndexPath *)indexPath forCell:(PASAddingArtistCell *)cell
 {
 	[PFArtist favoriteArtistByCurrentUser:name withBlock:^(PFArtist *artist, NSError *error) {
 		if (artist && !error) {
 			dispatch_barrier_async(self.favoritesQ, ^{
 				[self.justFavArtistNames addObject:name];
 				dispatch_async(dispatch_get_main_queue(), ^{
+					[cell.activityIndicator stopAnimating];
 					[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 				});
 			});
 		}
 	}];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return 50;
 }
 
 @end
