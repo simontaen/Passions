@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="LzO-ho-hNy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="dVK-cM-Icv">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -48,7 +48,7 @@
                     <navigationItem key="navigationItem" id="vNY-MB-Kos">
                         <barButtonItem key="rightBarButtonItem" title="Add" id="twI-2l-I0I">
                             <connections>
-                                <segue destination="QKd-18-I3B" kind="modal" identifier="setFavArtistNames:" modalTransitionStyle="coverVertical" id="6YY-FO-zCL"/>
+                                <segue destination="iMX-aW-THQ" kind="modal" identifier="setFavArtistNames:" modalTransitionStyle="coverVertical" id="cou-Wj-9nI"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -60,56 +60,23 @@
             </objects>
             <point key="canvasLocation" x="-1283" y="-848"/>
         </scene>
-        <!--Root View Controller-->
-        <scene sceneID="L9B-Fk-eZL">
+        <!--RootVC-->
+        <scene sceneID="39e-Dv-tP6">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="1O2-uB-6Sw" customClass="PASRootViewController" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cMN-kW-6Xr" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2069" y="-848"/>
-        </scene>
-        <!--RootPVC-->
-        <scene sceneID="arq-x8-wyY">
-            <objects>
-                <viewController id="LzO-ho-hNy" customClass="PASRootPVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PASRootVC" id="dVK-cM-Icv" customClass="PASRootVC" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="N0z-Rg-jJP"/>
-                        <viewControllerLayoutGuide type="bottom" id="0yN-bC-G5v"/>
+                        <viewControllerLayoutGuide type="top" id="6UW-d1-pxo"/>
+                        <viewControllerLayoutGuide type="bottom" id="F0Z-Rn-fQT"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="oef-ta-xmk">
+                    <view key="view" contentMode="scaleToFill" id="m20-XY-aeK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="doN-Eo-tBf">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="VJA-Zc-fPi" appends="YES" id="nan-HL-dZz"/>
-                                    <outletCollection property="gestureRecognizers" destination="PiY-p8-IyA" appends="YES" id="wjv-9e-Url"/>
-                                </connections>
-                            </scrollView>
-                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="CDp-u8-Xo8" customClass="PASPageControlView">
-                                <rect key="frame" x="141" y="511" width="39" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="currentPageIndicatorTintColor" cocoaTouchSystemColor="darkTextColor"/>
-                            </pageControl>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <connections>
-                        <outlet property="leftEdgeSwipeGestureRecognizer" destination="VJA-Zc-fPi" id="pMW-sI-Oix"/>
-                        <outlet property="pageControlView" destination="CDp-u8-Xo8" id="kBH-ti-Q6t"/>
-                        <outlet property="rightEdgeSwipeGestureRecognizer" destination="PiY-p8-IyA" id="eP6-tO-Njz"/>
-                        <outlet property="transitionView" destination="doN-Eo-tBf" id="fcj-hR-sQ8"/>
-                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cRS-rX-3EB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="VJA-Zc-fPi" customClass="UIScreenEdgePanGestureRecognizer"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="PiY-p8-IyA" customClass="UIScreenEdgePanGestureRecognizer"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cra-VM-0CI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2075" y="-183"/>
+            <point key="canvasLocation" x="-2064" y="-457"/>
         </scene>
         <!--TimelineCVC-->
         <scene sceneID="3aq-dG-oIo">
@@ -162,25 +129,6 @@
             </objects>
             <point key="canvasLocation" x="-1703" y="-178"/>
         </scene>
-        <!--Add ArtistsPVC-->
-        <scene sceneID="h5V-XF-cgy">
-            <objects>
-                <pageViewController storyboardIdentifier="PASAddArtistsPVC" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Oxz-Ev-Vdc" customClass="PASAddArtistsPVC" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="D47-lM-6ZG">
-                        <barButtonItem key="leftBarButtonItem" title="Done" id="lR3-ds-oag">
-                            <connections>
-                                <action selector="doneButtonHandler:" destination="Oxz-Ev-Vdc" id="017-FW-K6l"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="doneButton" destination="lR3-ds-oag" id="i8Y-h2-QI9"/>
-                    </connections>
-                </pageViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lrB-zQ-sEz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-866" y="-183"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="1GU-ri-fzu">
             <objects>
@@ -200,22 +148,19 @@
             <point key="canvasLocation" x="-1703" y="-848"/>
         </scene>
         <!--Add ArtistsNC-->
-        <scene sceneID="nrb-Du-XeC">
+        <scene sceneID="aEi-XL-BQC">
             <objects>
-                <navigationController storyboardIdentifier="PASAddArtistsNC" automaticallyAdjustsScrollViewInsets="NO" id="QKd-18-I3B" customClass="PASAddArtistsNC" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PASAddArtistsNC" automaticallyAdjustsScrollViewInsets="NO" id="iMX-aW-THQ" customClass="PASAddArtistsNC" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="peg-hl-LyJ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yvZ-ur-fD6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Oxz-Ev-Vdc" kind="relationship" relationship="rootViewController" id="buq-3x-aPu"/>
-                    </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dKh-bp-VAN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lc3-nB-LcP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1283" y="-183"/>
+            <point key="canvasLocation" x="-1283" y="-178"/>
         </scene>
     </scenes>
     <resources>

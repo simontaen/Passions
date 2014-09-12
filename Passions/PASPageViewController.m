@@ -11,10 +11,11 @@
 
 @interface PASPageViewController () <PASPageControlViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *transitionView;
-@property (weak, nonatomic) UIViewController *selectedViewController;
+@property (weak, nonatomic, readwrite) UIViewController *selectedViewController;
 
 @property (strong, nonatomic) IBOutlet UIScreenEdgePanGestureRecognizer *leftEdgeSwipeGestureRecognizer;
 @property (strong, nonatomic) IBOutlet UIScreenEdgePanGestureRecognizer *rightEdgeSwipeGestureRecognizer;
+@property (strong, nonatomic, readwrite) NSArray *gestureRecognizers;
 
 @property (weak, nonatomic) IBOutlet PASPageControlView *pageControlView;
 @end
@@ -32,6 +33,8 @@
 	[self.rightEdgeSwipeGestureRecognizer addTarget:self action:@selector(rightEdgeSwipe:)];
 	self.rightEdgeSwipeGestureRecognizer.edges = UIRectEdgeRight;
 	
+	self.gestureRecognizers = @[self.leftEdgeSwipeGestureRecognizer, self.rightEdgeSwipeGestureRecognizer];
+	
     self.pageControlView.delegate = self;
 }
 
@@ -40,6 +43,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	// update the page controle
+	self.pageControlView.numberOfPages = self.viewControllers.count;
 	
 	// call the setter to make sure the view is swapped
     self.selectedViewController = self.selectedViewController;
@@ -60,9 +66,6 @@
     }
 	
     _viewControllers = viewControllers;
-	
-	// update the page controle
-	self.pageControlView.numberOfPages = viewControllers.count;
 	
     if(self.viewControllers.count > 0) {
 		// add passed viewControllers
@@ -95,8 +98,6 @@
 	
     self.selectedViewController = [self.viewControllers objectAtIndex:selectedViewControllerIndex];
 }
-
-#pragma mark - View Hierarchy
 
 - (void)setSelectedViewController:(UIViewController *)selectedViewController
 {

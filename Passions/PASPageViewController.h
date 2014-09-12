@@ -10,9 +10,12 @@
 #import "PASPageControlView.h"
 
 @interface PASPageViewController : UIViewController
-
 // setting this will move the page!
 @property (nonatomic) int selectedViewControllerIndex;
+//the currently displaying view controller
+@property (weak, nonatomic, readonly) UIViewController *selectedViewController;
+// all the view controllers this container displays
 @property (nonatomic, copy) NSArray *viewControllers;
-
+// all the gesture recognizers
+@property (strong, nonatomic, readonly) NSArray *gestureRecognizers;
 @end
