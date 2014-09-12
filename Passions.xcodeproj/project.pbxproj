@@ -45,6 +45,7 @@
 		F4A779911793113E00C770B9 /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4A7798F1793113E00C770B9 /* iPhone.storyboard */; };
 		F4D6C4B319BFAB8800465781 /* PASAddingArtistCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D6C4B119BFAB8800465781 /* PASAddingArtistCell.m */; };
 		F4D6C4B419BFAB8800465781 /* PASAddingArtistCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4D6C4B219BFAB8800465781 /* PASAddingArtistCell.xib */; };
+		F4D9E94A19C36B3A00B762A7 /* PASRootPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D9E94919C36B3A00B762A7 /* PASRootPVC.m */; };
 		F4FA316819B8B867000337A0 /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FA316719B8B867000337A0 /* UIImage+Scale.m */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +105,8 @@
 		F4D6C4B019BFAB8800465781 /* PASAddingArtistCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddingArtistCell.h; sourceTree = "<group>"; };
 		F4D6C4B119BFAB8800465781 /* PASAddingArtistCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAddingArtistCell.m; sourceTree = "<group>"; };
 		F4D6C4B219BFAB8800465781 /* PASAddingArtistCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PASAddingArtistCell.xib; sourceTree = "<group>"; };
+		F4D9E94819C36B3A00B762A7 /* PASRootPVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASRootPVC.h; sourceTree = "<group>"; };
+		F4D9E94919C36B3A00B762A7 /* PASRootPVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASRootPVC.m; sourceTree = "<group>"; };
 		F4FA316619B8B867000337A0 /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scale.h"; sourceTree = "<group>"; };
 		F4FA316719B8B867000337A0 /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scale.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -259,6 +262,8 @@
 		F4D9E94619C3612800B762A7 /* RootContainer */ = {
 			isa = PBXGroup;
 			children = (
+				F4D9E94819C36B3A00B762A7 /* PASRootPVC.h */,
+				F4D9E94919C36B3A00B762A7 /* PASRootPVC.m */,
 				F4589D3B19C240D500E17D49 /* PASPageViewController.h */,
 				F4589D3C19C240D500E17D49 /* PASPageViewController.m */,
 				F4589D3E19C2412D00E17D49 /* PASPageControlView.h */,
@@ -400,6 +405,7 @@
 				F49618C819BCDD1600B4F3FE /* PASAddArtistsNC.m in Sources */,
 				F4FA316819B8B867000337A0 /* UIImage+Scale.m in Sources */,
 				F49618B019BC49E400B4F3FE /* PASRootViewController.m in Sources */,
+				F4D9E94A19C36B3A00B762A7 /* PASRootPVC.m in Sources */,
 				F4A779881793113E00C770B9 /* PASAppDelegate.m in Sources */,
 				F476F0F119B8FFA700185544 /* PASAddFromSamplesTVC.m in Sources */,
 				F476F0EE19B8D9A100185544 /* PASResources.m in Sources */,

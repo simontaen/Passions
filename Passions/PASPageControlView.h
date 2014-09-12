@@ -12,30 +12,18 @@
 
 @protocol PASPageControlViewDelegate <NSObject>
 
-// not needed - would tell the control WHAT to display
-//- (NSArray *)itemsForMenuView:(STKMenuView *)menuView;
+// from UIPageViewControllerDelegate
+// Sent when a gesture-initiated transition begins.
+//- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers NS_AVAILABLE_IOS(6_0);
 
-// not needed - would tell the control WHICH exact item to start with
-//- (int)selectedIndexForMenuView:(PASPageControlView *)pageControlView;
+// Sent when a gesture-initiated transition ends. The 'finished' parameter indicates whether the animation finished, while the 'completed' parameter indicates whether the transition completed or bailed out (if the user let go early).
+//- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed;
 
-// this is the method telling me where I am
+// this is the method to tell the delegate to where I just moved
 - (void)pageControlView:(PASPageControlView *)pageControlView didMoveToIndex:(int)index;
 
 @end
 
-@protocol PASPageControlViewDataSource <NSObject>
-
-//- (UIViewController *)pageControlView:(PASPageControlView *)pageControlView viewControllerBeforeViewController:(UIViewController *)viewController;
-//- (UIViewController *)pageControlView:(PASPageControlView *)pageControlView viewControllerAfterViewController:(UIViewController *)viewController;
-
-// Tell the control how many pages there are
-- (NSInteger)presentationCountForPageControlView:(PASPageControlView *)pageControlView;
-
-// Tell the control at which index to indicate the current page
-- (NSInteger)presentationIndexForPageControlView:(PASPageControlView *)pageControlView;
-
-@end
-
 @interface PASPageControlView : UIPageControl
-@property (nonatomic, weak) id <PASPageControlViewDelegate, PASPageControlViewDataSource> delegate;
+@property (nonatomic, weak) id <PASPageControlViewDelegate> delegate;
 @end

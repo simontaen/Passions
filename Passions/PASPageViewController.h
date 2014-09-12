@@ -11,9 +11,8 @@
 
 @interface PASPageViewController : UIViewController
 
+// setting this will move the page!
 @property (nonatomic) int selectedViewControllerIndex;
 @property (nonatomic, copy) NSArray *viewControllers;
-
-@property (nonatomic, weak, readonly) PASPageControlView *pageControlView;
 
 @end

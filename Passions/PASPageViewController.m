@@ -9,52 +9,38 @@
 
 #import "PASPageViewController.h"
 
-@interface PASPageViewController () <PASPageControlViewDelegate, PASPageControlViewDataSource>
-@property (nonatomic, weak) UIView *transitionView;
-@property (nonatomic, weak) UIViewController *selectedViewController;
+@interface PASPageViewController () <PASPageControlViewDelegate>
+@property (weak, nonatomic) IBOutlet UIScrollView *transitionView;
+@property (weak, nonatomic) UIViewController *selectedViewController;
 
-@property (nonatomic, strong, readwrite) UIScreenEdgePanGestureRecognizer *leftEdgeSwipeGestureRecognizer;
-@property (nonatomic, strong, readwrite) UIScreenEdgePanGestureRecognizer *rightEdgeSwipeGestureRecognizer;
-@property (nonatomic, weak, readwrite) PASPageControlView *pageControlView;
+@property (strong, nonatomic) IBOutlet UIScreenEdgePanGestureRecognizer *leftEdgeSwipeGestureRecognizer;
+@property (strong, nonatomic) IBOutlet UIScreenEdgePanGestureRecognizer *rightEdgeSwipeGestureRecognizer;
+
+@property (weak, nonatomic) IBOutlet PASPageControlView *pageControlView;
 @end
 
 @implementation PASPageViewController
+@dynamic selectedViewControllerIndex;
+
+#pragma mark - Init
+
+- (void)awakeFromNib
+{
+	[self.leftEdgeSwipeGestureRecognizer addTarget:self action:@selector(leftEdgeSwipe:)];
+	self.leftEdgeSwipeGestureRecognizer.edges = UIRectEdgeLeft;
+	
+	[self.rightEdgeSwipeGestureRecognizer addTarget:self action:@selector(rightEdgeSwipe:)];
+	self.rightEdgeSwipeGestureRecognizer.edges = UIRectEdgeRight;
+	
+    self.pageControlView.delegate = self;
+}
 
 #pragma mark - View Lifecycle
-
-- (void)loadView
-{
-    UIView *layoutView = [[UIView alloc] init];
-	
-	self.leftEdgeSwipeGestureRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(leftEdgeSwipe:)];
-	self.leftEdgeSwipeGestureRecognizer.edges = UIRectEdgeLeft;
-	[layoutView addGestureRecognizer:self.leftEdgeSwipeGestureRecognizer];
-	
-	self.rightEdgeSwipeGestureRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(rightEdgeSwipe:)];
-	self.rightEdgeSwipeGestureRecognizer.edges = UIRectEdgeRight;
-	[layoutView addGestureRecognizer:self.rightEdgeSwipeGestureRecognizer];
-	
-	// TODO: this might better be a scroll view!
-    UIView *transitionView = [[UIView alloc] initWithFrame:layoutView.bounds];
-    [transitionView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-    [layoutView addSubview:transitionView];
-	
-	// TODO: position the pageControlView correctly
-    PASPageControlView *pageControlView = [[PASPageControlView alloc] initWithFrame:layoutView.bounds];
-    [pageControlView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    [pageControlView setDelegate:self];
-    [layoutView addSubview:pageControlView];
-	
-    self.view = layoutView;
-    self.transitionView = transitionView;
-    self.pageControlView = pageControlView;
-	
-	// TODO: the the page control view to visible
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
 	// call the setter to make sure the view is swapped
     self.selectedViewController = self.selectedViewController;
 }
@@ -75,19 +61,25 @@
 	
     _viewControllers = viewControllers;
 	
-    for(UIViewController *vc in self.viewControllers) {
-        [self addChildViewController:vc];
-        [vc didMoveToParentViewController:self];
-    }
+	// update the page controle
+	self.pageControlView.numberOfPages = viewControllers.count;
 	
-    if([self.viewControllers count] > 0) {
-        self.selectedViewController = [self.viewControllers objectAtIndex:0];
+    if(self.viewControllers.count > 0) {
+		// add passed viewControllers
+		for (int i = 0; i < self.viewControllers.count; i++) {
+			UIViewController *vc = self.viewControllers[i];
+			[self addChildViewController:vc];
+			if (i == 0) {
+				// set the first one as the currently selected view controller
+				self.selectedViewController = vc;
+			}
+			[vc didMoveToParentViewController:self];
+		}
+
     } else {
         self.selectedViewController = nil;
     }
 }
-
-@dynamic selectedViewControllerIndex;
 
 - (int)selectedViewControllerIndex
 {
@@ -109,7 +101,8 @@
 - (void)setSelectedViewController:(UIViewController *)selectedViewController
 {
     if(![self.viewControllers containsObject:selectedViewController]) {
-        return;
+		self.pageControlView.currentPage = 0;
+		return;
     }
 	
     UIViewController *previous = self.selectedViewController;
@@ -117,11 +110,14 @@
     _selectedViewController = selectedViewController;
 	
     if([self isViewLoaded]) {
+		self.pageControlView.currentPage = self.selectedViewControllerIndex;
+		
         [previous.view removeFromSuperview];
 		
         UIView *newView = self.selectedViewController.view;
         newView.frame = self.transitionView.bounds;
         [newView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+		// TODO: maybe the gesture recoginzers need to be attachted here
         [self.transitionView addSubview:newView];
     }
 }
@@ -135,31 +131,20 @@
 	}
 }
 
-
-#pragma mark - PASPageControlViewDataSource
-
-- (NSInteger)presentationCountForPageControlView:(PASPageControlView *)pageControlView
-{
-	return self.viewControllers.count;
-}
-
-- (NSInteger)presentationIndexForPageControlView:(PASPageControlView *)pageControlView
-{
-	return 0;
-}
-
 #pragma mark - UIScreenEdgePanGestureRecognizer
 
 - (void)leftEdgeSwipe:(UIScreenEdgePanGestureRecognizer *)gesture {
 	if (gesture.state == UIGestureRecognizerStateEnded) {
 		self.selectedViewControllerIndex = self.selectedViewControllerIndex++;
 	}
+	NSLog(@"left edge %ld", gesture.state);
 }
 
 - (void)rightEdgeSwipe:(UIScreenEdgePanGestureRecognizer *)gesture {
 	if (gesture.state == UIGestureRecognizerStateEnded) {
 		self.selectedViewControllerIndex = self.selectedViewControllerIndex--;
 	}
+	NSLog(@"right edge %ld", gesture.state);
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
@@ -167,4 +152,18 @@
     return YES;
 }
 
+@end
+
+@implementation UIViewController (PASPageViewControllerAdditions)
+- (PASPageViewController *)pageViewController
+{
+    UIViewController *parent = [self parentViewController];
+    while(parent) {
+        if([parent isKindOfClass:[PASPageViewController class]]) {
+            return (PASPageViewController *)parent;
+        }
+        parent = [parent parentViewController];
+    }
+    return nil;
+}
 @end

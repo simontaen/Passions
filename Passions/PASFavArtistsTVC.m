@@ -50,6 +50,7 @@
 {
     [super viewDidLoad];
 	self.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
+	// DEBUG
 	//self.view.backgroundColor = [UIColor greenColor];
 }
 

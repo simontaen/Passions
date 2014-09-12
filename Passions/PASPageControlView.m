@@ -10,21 +10,13 @@
 
 @implementation PASPageControlView
 
-- (id)initWithFrame:(CGRect)frame
+#pragma mark - Init
+
+- (void)awakeFromNib
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-		self.currentPage = [self.delegate presentationIndexForPageControlView:self];
-		self.numberOfPages = [self.delegate presentationCountForPageControlView:self];
-		
-		[self addTarget:self
-				 action:@selector(handleValueChanged:)
-	   forControlEvents:UIControlEventValueChanged];
-		
-		
-    }
-    return self;
+	[self addTarget:self
+			 action:@selector(handleValueChanged:)
+   forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)handleValueChanged:(id)bla
