@@ -166,10 +166,10 @@
             </objects>
             <point key="canvasLocation" x="-1703" y="-848"/>
         </scene>
-        <!--Add Artists Nav Controller-->
+        <!--Add ArtistsNC-->
         <scene sceneID="nrb-Du-XeC">
             <objects>
-                <navigationController storyboardIdentifier="PASAddArtistsNavController" automaticallyAdjustsScrollViewInsets="NO" id="QKd-18-I3B" customClass="PASAddArtistsNavController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PASAddArtistsNC" automaticallyAdjustsScrollViewInsets="NO" id="QKd-18-I3B" customClass="PASAddArtistsNC" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="peg-hl-LyJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

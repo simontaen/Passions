@@ -1,18 +1,18 @@
 //
-//  PASAddArtistsNavController.m
+//  PASAddArtistsNC.m
 //  Passions
 //
 //  Created by Simon Tännler on 07/09/14.
 //  Copyright (c) 2014 edgeguard. All rights reserved.
 //
 
-#import "PASAddArtistsNavController.h"
+#import "PASAddArtistsNC.h"
 
-@interface PASAddArtistsNavController ()
+@interface PASAddArtistsNC ()
 
 @end
 
-@implementation PASAddArtistsNavController
+@implementation PASAddArtistsNC
 
 - (void)viewDidLoad
 {
