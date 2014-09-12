@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PASRootViewController : UIViewController <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
+@interface PASRootViewController : UIPageViewController <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
 
 @end

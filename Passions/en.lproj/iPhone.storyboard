@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="3gN-9h-asx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="1O2-uB-6Sw">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -59,6 +59,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G6R-0w-a0i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1283" y="-848"/>
+        </scene>
+        <!--Root View Controller-->
+        <scene sceneID="L9B-Fk-eZL">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="1O2-uB-6Sw" customClass="PASRootViewController" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cMN-kW-6Xr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2077" y="-523"/>
         </scene>
         <!--TimelineCVC-->
         <scene sceneID="3aq-dG-oIo">
@@ -129,24 +137,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrB-zQ-sEz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-866" y="-183"/>
-        </scene>
-        <!--Root View Controller-->
-        <scene sceneID="zJG-7a-uzH">
-            <objects>
-                <viewController storyboardIdentifier="PASRootViewController" id="3gN-9h-asx" customClass="PASRootViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="gJW-ij-n2i"/>
-                        <viewControllerLayoutGuide type="bottom" id="faq-Cq-sy8"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="SsT-Ox-rJN">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="V3z-sg-k1u" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2089" y="-493"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1GU-ri-fzu">
