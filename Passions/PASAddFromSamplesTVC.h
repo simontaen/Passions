@@ -12,7 +12,6 @@
 @interface PASAddFromSamplesTVC : UITableViewController
 
 @property (nonatomic, strong) NSArray* favArtistNames; // passed by the segue, LFM Corrected!
-@property NSUInteger pageIndex;
 
 - (BOOL)didAddArtists;
 

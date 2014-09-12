@@ -46,7 +46,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="vNY-MB-Kos">
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="twI-2l-I0I">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="twI-2l-I0I">
                             <connections>
                                 <segue destination="iMX-aW-THQ" kind="modal" identifier="setFavArtistNames:" modalTransitionStyle="coverVertical" id="cou-Wj-9nI"/>
                             </connections>

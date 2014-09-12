@@ -17,17 +17,22 @@
 
 @implementation PASRootVC
 
+#pragma mark - Init
+
+- (void)awakeFromNib
+{
+    // Load the page view controller from the XIB
+	self.pageViewController = [[PASPageViewController alloc] initWithNibName:nil bundle:nil];
+	
+	// init and add the page view controllers view controllers
+	self.pageViewController.viewControllers = @[[self favArtistsNavController], [self timelineCVC]];
+}
+
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Load the page view controller from the XIB
-	self.pageViewController = [[PASPageViewController alloc] initWithNibName:nil bundle:nil];
-	
-	// set the view controllers
-	self.pageViewController.viewControllers = @[[self favArtistsNavController], [self timelineCVC]];
 				
 	// add the page view controller to the hierarchy
 	[self addChildViewController:self.pageViewController];
