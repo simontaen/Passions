@@ -8,8 +8,9 @@
 //  http://stablekernel.com/blog/view-controller-containers-part-ii/
 
 #import "PASPageViewController.h"
+#import "PASPVCAnimator.h"
 
-@interface PASPageViewController () <UIGestureRecognizerDelegate>
+@interface PASPageViewController () <UIGestureRecognizerDelegate, PASPageViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *transitionView;
 @property (weak, nonatomic, readwrite) UIViewController *selectedViewController;
 @property (weak, nonatomic) IBOutlet PASPageControlView *pageControlView;
@@ -17,6 +18,13 @@
 
 @implementation PASPageViewController
 @dynamic selectedViewControllerIndex;
+
+#pragma mark - Init
+
+- (void)awakeFromNib
+{
+	self.delegate = self;
+}
 
 #pragma mark - View Lifecycle
 
@@ -106,8 +114,10 @@
     _selectedViewController = selectedViewController;
 	
     if([self isViewLoaded]) {
+		// update the control
 		self.pageControlView.currentPage = self.selectedViewControllerIndex;
 		
+		// switch the views
         [previous.view removeFromSuperview];
 		
         UIView *newView = self.selectedViewController.view;
@@ -151,6 +161,30 @@
 	return YES;
 }
 
+#pragma mark - PASPageViewControllerDelegate
+
+- (id <UIViewControllerInteractiveTransitioning>)pageViewController:(PASPageViewController *)pageViewController
+						interactionControllerForAnimationController: (id <UIViewControllerAnimatedTransitioning>)animationController
+{
+	static id<UIViewControllerInteractiveTransitioning> interactionController;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		interactionController = [[PASPVCAnimator alloc] init];
+	});
+	return interactionController;
+}
+
+- (id <UIViewControllerAnimatedTransitioning>)pageViewController:(PASPageViewController *)pageViewController
+			  animationControllerForTransitionFromViewController:(UIViewController *)fromVC
+												toViewController:(UIViewController *)toVC
+{
+	static id<UIViewControllerAnimatedTransitioning> animationController;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		animationController = [[PASPVCAnimator alloc] init];
+	});
+	return animationController;
+}
 @end
 
 #pragma mark - PASPageViewControllerAdditions
