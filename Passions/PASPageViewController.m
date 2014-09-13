@@ -46,11 +46,6 @@
     self.selectedViewController = self.selectedViewController;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
-	[PASResources printViewLayoutStack:self];
-}
-
 #pragma mark - Accessors
 
 - (void)setViewControllers:(NSArray *)viewControllers

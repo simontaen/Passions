@@ -13,7 +13,6 @@
 
 @interface PASAddArtistsNC ()
 @property (strong, nonatomic) PASPageViewController *pageViewController;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
 @end
 
 @implementation PASAddArtistsNC

@@ -48,11 +48,6 @@
 	self.view.backgroundColor = [UIColor yellowColor];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
-	[PASResources printViewLayoutStack:self];
-}
-
 - (UINavigationController *)favArtistsNavController
 {
 	// Create a nav controller to hack around the status bar problem (also creates containing view controller)

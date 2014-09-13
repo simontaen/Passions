@@ -50,10 +50,6 @@
     [super viewDidLoad];
 	self.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
 	
-	for (UIGestureRecognizer *gr in self.navigationController.view.gestureRecognizers) {
-		[self.navigationController.view removeGestureRecognizer:gr];
-	}	
-	
 	// DEBUG
 	//self.view.backgroundColor = [UIColor greenColor];
 }
@@ -61,7 +57,6 @@
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	[PASResources printViewControllerLayoutStack:self];
-	[PASResources printGestureRecognizerStack:self];
 }
 
 #pragma mark - UITableViewDataSource Editing
