@@ -30,10 +30,7 @@
     [super viewDidLoad];
 	
 	// setup gesture recognizers
-	[self.leftEdgePanGestureRecognizer addTarget:self action:@selector(leftEdgePan:)];
 	self.leftEdgePanGestureRecognizer.edges = UIRectEdgeLeft;
-	
-	[self.rightEdgePanGestureRecognizer addTarget:self action:@selector(rightEdgePan:)];
 	self.rightEdgePanGestureRecognizer.edges = UIRectEdgeRight;
 	
 	self.gestureRecognizers = @[self.leftEdgePanGestureRecognizer, self.rightEdgePanGestureRecognizer];
@@ -117,7 +114,7 @@
         UIView *newView = self.selectedViewController.view;
         newView.frame = self.transitionView.bounds;
         [newView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-		// TODO: maybe the gesture recoginzers need to be attachted here
+
         [self.transitionView addSubview:newView];
     }
 }
@@ -133,18 +130,19 @@
 
 #pragma mark - UIScreenEdgePanGestureRecognizer
 
-- (void)leftEdgePan:(UIScreenEdgePanGestureRecognizer *)gesture {
+- (IBAction)leftEdgePan:(UIScreenEdgePanGestureRecognizer *)gesture {
 	if (gesture.state == UIGestureRecognizerStateEnded) {
 		self.selectedViewControllerIndex = self.selectedViewControllerIndex++;
 	}
-	NSLog(@"left edge %ld", gesture.state);
+	NSLog(@"left edge");
 }
 
-- (void)rightEdgePan:(UIScreenEdgePanGestureRecognizer *)gesture {
+- (IBAction)rightEdgePan:(UIScreenEdgePanGestureRecognizer *)gesture
+{
 	if (gesture.state == UIGestureRecognizerStateEnded) {
 		self.selectedViewControllerIndex = self.selectedViewControllerIndex--;
 	}
-	NSLog(@"right edge %ld", gesture.state);
+	NSLog(@"right edge");
 }
 
 #pragma mark - UIGestureRecognizerDelegate

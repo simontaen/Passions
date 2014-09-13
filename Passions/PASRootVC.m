@@ -44,9 +44,6 @@
 	// complete the process
 	[self.pageViewController didMoveToParentViewController:self];
 	
-	// Add the page view controller's gesture recognizers to the root view controller's view so that the gestures are started more easily.
-	self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
-	
 	// DEBUG
 	self.view.backgroundColor = [UIColor yellowColor];
 }
