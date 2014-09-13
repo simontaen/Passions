@@ -6,9 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PASPageViewController">
             <connections>
-                <outlet property="leftEdgePanGestureRecognizer" destination="Vzt-1G-9Bk" id="qT6-lS-zMr"/>
                 <outlet property="pageControlView" destination="pLt-1n-6KD" id="L2D-J2-tt1"/>
-                <outlet property="rightEdgePanGestureRecognizer" destination="PDa-eF-IRK" id="EUy-wA-bNS"/>
                 <outlet property="transitionView" destination="QqO-yS-0wb" id="gQ6-cS-oVX"/>
                 <outlet property="view" destination="DXh-iu-RBl" id="GZB-7G-nHz"/>
             </connections>
@@ -23,10 +21,6 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <gestureRecognizers/>
-                    <connections>
-                        <outletCollection property="gestureRecognizers" destination="Vzt-1G-9Bk" appends="YES" id="h9f-Mr-e0b"/>
-                        <outletCollection property="gestureRecognizers" destination="PDa-eF-IRK" appends="YES" id="2rh-c7-fXT"/>
-                    </connections>
                 </view>
                 <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="pLt-1n-6KD" customClass="PASPageControlView">
                     <rect key="frame" x="141" y="522" width="39" height="37"/>
@@ -40,17 +34,5 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
         </view>
-        <panGestureRecognizer minimumNumberOfTouches="1" id="Vzt-1G-9Bk" customClass="UIScreenEdgePanGestureRecognizer">
-            <connections>
-                <action selector="leftEdgePan:" destination="-1" id="cMr-N5-qQK"/>
-                <outlet property="delegate" destination="-1" id="Z8S-No-FBj"/>
-            </connections>
-        </panGestureRecognizer>
-        <panGestureRecognizer minimumNumberOfTouches="1" id="PDa-eF-IRK" customClass="UIScreenEdgePanGestureRecognizer">
-            <connections>
-                <action selector="rightEdgePan:" destination="-1" id="CGE-B3-9gy"/>
-                <outlet property="delegate" destination="-1" id="KIP-Qa-401"/>
-            </connections>
-        </panGestureRecognizer>
     </objects>
 </document>

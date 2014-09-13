@@ -12,11 +12,6 @@
 @interface PASPageViewController () <UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *transitionView;
 @property (weak, nonatomic, readwrite) UIViewController *selectedViewController;
-
-@property (strong, nonatomic) IBOutlet UIScreenEdgePanGestureRecognizer *leftEdgePanGestureRecognizer;
-@property (strong, nonatomic) IBOutlet UIScreenEdgePanGestureRecognizer *rightEdgePanGestureRecognizer;
-@property (strong, nonatomic, readwrite) NSArray *gestureRecognizers;
-
 @property (weak, nonatomic) IBOutlet PASPageControlView *pageControlView;
 @end
 
@@ -30,10 +25,19 @@
     [super viewDidLoad];
 	
 	// setup gesture recognizers
-	self.leftEdgePanGestureRecognizer.edges = UIRectEdgeLeft;
-	self.rightEdgePanGestureRecognizer.edges = UIRectEdgeRight;
-	
-	self.gestureRecognizers = @[self.leftEdgePanGestureRecognizer, self.rightEdgePanGestureRecognizer];
+	UIScreenEdgePanGestureRecognizer *leftEdge = [[UIScreenEdgePanGestureRecognizer alloc]
+												  initWithTarget:self
+												  action:@selector(leftEdgePan:)];
+	leftEdge.edges = UIRectEdgeLeft;
+	leftEdge.delegate = self;
+	[self.transitionView addGestureRecognizer:leftEdge];
+
+	UIScreenEdgePanGestureRecognizer *rightEdge = [[UIScreenEdgePanGestureRecognizer alloc]
+												   initWithTarget:self
+												   action:@selector(rightEdgePan:)];
+	rightEdge.edges = UIRectEdgeRight;
+	rightEdge.delegate = self;
+	[self.transitionView addGestureRecognizer:rightEdge];
 	
 	// update the page control
 	self.pageControlView.numberOfPages = self.viewControllers.count;
@@ -130,14 +134,14 @@
 
 #pragma mark - UIScreenEdgePanGestureRecognizer
 
-- (IBAction)leftEdgePan:(UIScreenEdgePanGestureRecognizer *)gesture {
+- (void)leftEdgePan:(UIScreenEdgePanGestureRecognizer *)gesture {
 	if (gesture.state == UIGestureRecognizerStateEnded) {
 		self.selectedViewControllerIndex = self.selectedViewControllerIndex++;
 	}
 	NSLog(@"left edge");
 }
 
-- (IBAction)rightEdgePan:(UIScreenEdgePanGestureRecognizer *)gesture
+- (void)rightEdgePan:(UIScreenEdgePanGestureRecognizer *)gesture
 {
 	if (gesture.state == UIGestureRecognizerStateEnded) {
 		self.selectedViewControllerIndex = self.selectedViewControllerIndex--;
