@@ -68,8 +68,10 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
 	[self.tableView registerNib:[UINib nibWithNibName:kCellIdentifier bundle:nil] forCellReuseIdentifier:kCellIdentifier];
+	
+	self.favArtistNames = [self.navigationController performSelector:@selector(favArtistNames) withObject:nil];
+
 	// setup artists to choose from, for example
 	// go to spotify, last.fm or prepare MediaQuery
 	// maybe read cache when network is involved? or let AFNetworking handle it?

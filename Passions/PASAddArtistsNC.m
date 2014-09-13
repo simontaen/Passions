@@ -75,12 +75,6 @@
 			addArtistsTVC = nil;
 	}
 	
-	if (addArtistsTVC) {
-		if ([self.parentViewController respondsToSelector:@selector(favArtistNames)]) {
-			addArtistsTVC.favArtistNames = [self.parentViewController performSelector:@selector(favArtistNames) withObject:nil];
-		}
-	}
-	
 	return addArtistsTVC;
 }
 
@@ -90,10 +84,7 @@
 {
 	PASAddFromSamplesTVC *dissapearingTVC = ((PASAddFromSamplesTVC*) self.pageViewController.selectedViewController);
 	if ([dissapearingTVC didAddArtists]) {
-		if ([self.parentViewController respondsToSelector:@selector(favArtistsTVC)]) {
-			PASFavArtistsTVC *favArtistsTVC = [self.parentViewController performSelector:@selector(favArtistsTVC) withObject:nil];
-			[favArtistsTVC refreshUI];
-		}
+		[self.favArtistsTVC refreshUI];
 	}
 	
 	// Go back to the previous view
