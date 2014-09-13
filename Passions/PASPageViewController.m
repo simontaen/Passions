@@ -25,7 +25,7 @@
 
 #pragma mark - Init
 
-- (void)awakeFromNib
+- (void)commonInit
 {
 	[self.leftEdgeSwipeGestureRecognizer addTarget:self action:@selector(leftEdgeSwipe:)];
 	self.leftEdgeSwipeGestureRecognizer.edges = UIRectEdgeLeft;
@@ -33,9 +33,22 @@
 	[self.rightEdgeSwipeGestureRecognizer addTarget:self action:@selector(rightEdgeSwipe:)];
 	self.rightEdgeSwipeGestureRecognizer.edges = UIRectEdgeRight;
 	
-	self.gestureRecognizers = @[self.leftEdgeSwipeGestureRecognizer, self.rightEdgeSwipeGestureRecognizer];
+	//self.gestureRecognizers = @[self.leftEdgeSwipeGestureRecognizer, self.rightEdgeSwipeGestureRecognizer];
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (!self) return nil;
 	
-    self.pageControlView.delegate = self;
+    [self commonInit];
+	
+    return self;
+}
+
+- (void)awakeFromNib
+{
+	[self commonInit];
 }
 
 #pragma mark - View Lifecycle
@@ -44,7 +57,7 @@
 {
     [super viewDidLoad];
 	
-	// update the page controle
+	// update the page control
 	self.pageControlView.numberOfPages = self.viewControllers.count;
 	
 	// call the setter to make sure the view is swapped
@@ -123,12 +136,12 @@
     }
 }
 
-#pragma mark - PASPageControlViewDelegate
+#pragma mark - PASPageControlView Target-Action
 
-- (void)pageControlView:(PASPageControlView *)pageControlView didMoveToIndex:(int)index
+- (IBAction)didChangeCurrentPage:(PASPageControlView *)sender
 {
-	if(index != self.selectedViewControllerIndex) {
-		self.selectedViewController = [self.viewControllers objectAtIndex:index];
+	if(sender.currentPage != self.selectedViewControllerIndex) {
+		self.selectedViewController = [self.viewControllers objectAtIndex:sender.currentPage];
 	}
 }
 
@@ -154,6 +167,8 @@
 }
 
 @end
+
+#pragma mark - PASPageViewControllerAdditions
 
 @implementation UIViewController (PASPageViewControllerAdditions)
 - (PASPageViewController *)pageViewController

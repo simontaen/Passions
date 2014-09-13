@@ -52,12 +52,6 @@
 	self.view.backgroundColor = [UIColor orangeColor];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-	[super viewDidAppear:animated];
-	[PASResources printViewLayoutStack:self];
-}
-
 - (PASAddFromSamplesTVC *)viewControllerAtIndex:(NSUInteger)index
 {
 	static PASAddFromSamplesTVC *addFromSamplesTVC;

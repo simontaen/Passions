@@ -14,14 +14,7 @@
 
 - (void)awakeFromNib
 {
-	[self addTarget:self
-			 action:@selector(handleValueChanged:)
-   forControlEvents:UIControlEventValueChanged];
-}
-
-- (void)handleValueChanged:(id)bla
-{
-	NSLog(@"handleValueChanged %@", bla);
+	
 }
 
 /*
