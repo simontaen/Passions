@@ -68,23 +68,23 @@
 
 #pragma mark - UITableViewDataSource required
 
-- (void)setThumbnailImageForCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)setThumbnailImageForCell:(PASAddingArtistCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
 	MPMediaItem *item = self.artists[indexPath.row];
 	__weak typeof(cell) weakCell = cell;
 	dispatch_async(self.artworkQ, ^{
 		
 		MPMediaItemArtwork *artwork = [item valueForProperty: MPMediaItemPropertyArtwork];
-		UIImage *artworkImage = [artwork imageWithSize:cell.imageView.image.size];
+		UIImage *artworkImage = [artwork imageWithSize:cell.artistImage.image.size];
 		UIImage *newImage;
 		
 		if (artworkImage) {
-			newImage = [artworkImage PASscaleToAspectFillSize:weakCell.imageView.image.size];
+			newImage = [artworkImage PASscaleToAspectFillSize:weakCell.artistImage.image.size];
 		} else {
 			newImage = [PASResources artistThumbnailPlaceholder];
 		}
 		dispatch_async(dispatch_get_main_queue(), ^{
-			weakCell.imageView.image = newImage;
+			weakCell.artistImage.image = newImage;
 		});
 	});
 }
