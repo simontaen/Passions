@@ -9,7 +9,6 @@
 #import "PASFavArtistsTVC.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIImage+Scale.h"
-#import "PASResources.h"
 #import "PFArtist.h"
 
 @interface PASFavArtistsTVC()

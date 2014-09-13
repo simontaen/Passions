@@ -9,7 +9,6 @@
 #import "PASAddFromSamplesTVC.h"
 #import "PFArtist.h"
 #import "LastFmFetchr.h"
-#import "PASResources.h"
 #import "PASAddingArtistCell.h"
 
 static NSString *kCellIdentifier = @"PASAddingArtistCell";

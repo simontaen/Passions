@@ -7,7 +7,6 @@
 //
 
 #import "PASAddArtistsNC.h"
-#import "PASResources.h"
 #import "PASPageViewController.h"
 #import "PASAddFromSamplesTVC.h"
 #import "PASAddFromMusicTVC.h"
