@@ -134,7 +134,7 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 			}
 		}
 		
-		[self.artistNameCorrections writeToURL:cacheFile atomically:@NO];
+		[self.artistNameCorrections writeToURL:cacheFile atomically:NO];
 	});
 }
 

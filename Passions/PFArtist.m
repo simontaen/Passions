@@ -91,7 +91,7 @@
 				
 				
 			} else {
-				NSLog(@"Too many artists found (%lu)", artists.count);
+				NSLog(@"Too many artists found (%u)", artists.count);
 			}
 		} else {
 			NSLog(@"%@", error);

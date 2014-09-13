@@ -33,7 +33,7 @@
 			[items addObject:[itemCollection representativeItem]];
 		}
 		
-		NSSortDescriptor *artistNameSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:MPMediaItemPropertyArtist ascending:@YES selector:@selector(localizedCaseInsensitiveCompare:)];
+		NSSortDescriptor *artistNameSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:MPMediaItemPropertyArtist ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
 		
 		_artists = [items sortedArrayUsingDescriptors:@[artistNameSortDescriptor]];
 	};
