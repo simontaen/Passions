@@ -9,8 +9,8 @@
 
 #import "PASPageViewController.h"
 
-@interface PASPageViewController () <PASPageControlViewDelegate>
-@property (weak, nonatomic) IBOutlet UIScrollView *transitionView;
+@interface PASPageViewController () <UIScrollViewDelegate>
+@property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
 @property (weak, nonatomic, readwrite) UIViewController *selectedViewController;
 
 @property (strong, nonatomic) IBOutlet UIScreenEdgePanGestureRecognizer *leftEdgeSwipeGestureRecognizer;
@@ -60,6 +60,9 @@
 	// update the page control
 	self.pageControlView.numberOfPages = self.viewControllers.count;
 	
+	// setup the delegate
+	self.contentScrollView.delegate = self;
+	
 	// call the setter to make sure the view is swapped
     self.selectedViewController = self.selectedViewController;
 }
@@ -72,7 +75,7 @@
     for(UIViewController *vc in self.viewControllers) {
         [vc willMoveToParentViewController:nil];
         if([vc isViewLoaded]
-		   && vc.view.superview == self.transitionView) {
+		   && vc.view.superview == self.contentScrollView) {
             [vc.view removeFromSuperview];
         }
         [vc removeFromParentViewController];
@@ -80,21 +83,44 @@
 	
     _viewControllers = viewControllers;
 	
+	// have the scrollview match self.view size
+	CGRect myBounds = self.view.bounds;
+	self.contentScrollView.frame = myBounds;
+
+	// calculate the scroll view content size
+	CGRect scrollViewSize = myBounds;
+	
     if(self.viewControllers.count > 0) {
+		// adjust to match the number to vc's
+		scrollViewSize.size.width -= myBounds.size.width;
+		myBounds.origin.x -= myBounds.size.width;
+		
 		// add passed viewControllers
 		for (int i = 0; i < self.viewControllers.count; i++) {
 			UIViewController *vc = self.viewControllers[i];
+			
+			// grow the size per vc and set its views frame
+			scrollViewSize.size.width += myBounds.size.width;
+			myBounds.origin.x += myBounds.size.width;
+			vc.view.frame = myBounds;
+			
 			[self addChildViewController:vc];
-			if (i == 0) {
-				// set the first one as the currently selected view controller
-				self.selectedViewController = vc;
-			}
+			
+			[self.contentScrollView addSubview:vc.view];
+			
+//			if (i == 0) {
+//				// set the first one as the currently selected view controller
+//				self.selectedViewController = vc;
+//			}
 			[vc didMoveToParentViewController:self];
 		}
-
+		
     } else {
         self.selectedViewController = nil;
     }
+	
+	// set the calculated content size
+	self.contentScrollView.contentSize = scrollViewSize.size;
 }
 
 - (int)selectedViewControllerIndex
@@ -129,10 +155,10 @@
         [previous.view removeFromSuperview];
 		
         UIView *newView = self.selectedViewController.view;
-        newView.frame = self.transitionView.bounds;
+        newView.frame = self.contentScrollView.bounds;
         [newView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
 		// TODO: maybe the gesture recoginzers need to be attachted here
-        [self.transitionView addSubview:newView];
+        [self.contentScrollView addSubview:newView];
     }
 }
 

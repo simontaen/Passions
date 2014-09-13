@@ -8,8 +8,6 @@
             <connections>
                 <outlet property="contentScrollView" destination="ewB-Pk-qJY" id="isR-M0-c30"/>
                 <outlet property="pageControlView" destination="pLt-1n-6KD" id="kas-vd-YcR"/>
-                <outlet property="rightEdgeSwipeGestureRecognizer" destination="bSv-Zf-wK5" id="thM-uF-vRv"/>
-                <outlet property="transitionView" destination="ewB-Pk-qJY" id="ktl-x5-2rd"/>
                 <outlet property="view" destination="DXh-iu-RBl" id="GZB-7G-nHz"/>
             </connections>
         </placeholder>
@@ -18,20 +16,16 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ewB-Pk-qJY">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" directionalLockEnabled="YES" bounces="NO" alwaysBounceVertical="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ewB-Pk-qJY">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <gestureRecognizers/>
-                    <connections>
-                        <outletCollection property="gestureRecognizers" destination="utg-Xy-m1d" appends="YES" id="9q8-nR-Pod"/>
-                        <outletCollection property="gestureRecognizers" destination="bSv-Zf-wK5" appends="YES" id="Wgj-E3-Fej"/>
-                    </connections>
                 </scrollView>
                 <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="pLt-1n-6KD" customClass="PASPageControlView">
                     <rect key="frame" x="141" y="511" width="39" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <color key="currentPageIndicatorTintColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="pageIndicatorTintColor" red="0.4221175506" green="0.74159307070000002" blue="0.2077420187" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="currentPageIndicatorTintColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="didChangeCurrentPage:" destination="-1" eventType="valueChanged" id="jWL-hY-JEr"/>
                     </connections>
@@ -39,7 +33,5 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
         </view>
-        <panGestureRecognizer minimumNumberOfTouches="1" id="utg-Xy-m1d" customClass="UIScreenEdgePanGestureRecognizer"/>
-        <panGestureRecognizer minimumNumberOfTouches="1" id="bSv-Zf-wK5" customClass="UIScreenEdgePanGestureRecognizer"/>
     </objects>
 </document>
