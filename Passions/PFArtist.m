@@ -61,7 +61,7 @@
 		if (artists && !error) {
 			if (artists.count == 1) {
 				// exactly one is expected, no duplicates allowed
-				// TODO: we only get exact matches on the artist name -> need to call corrections
+				// TODO: need to call corrections since we only get exact matches on the artist name
 				
 				// add user to artist
 				PFArtist *artist = artists.lastObject;
@@ -91,7 +91,7 @@
 				
 				
 			} else {
-				NSLog(@"Too many artists found (%u)", artists.count);
+				NSLog(@"Too many artists found (%lu)", artists.count);
 			}
 		} else {
 			NSLog(@"%@", error);
