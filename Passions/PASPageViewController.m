@@ -10,7 +10,7 @@
 #import "PASPageViewController.h"
 #import "PASPVCAnimator.h"
 
-@interface PASPageViewController () <UIGestureRecognizerDelegate, PASPageViewControllerDelegate>
+@interface PASPageViewController () <UIGestureRecognizerDelegate, UIViewControllerTransitioningDelegate>
 @property (weak, nonatomic) IBOutlet UIView *transitionView;
 @property (weak, nonatomic, readwrite) UIViewController *selectedViewController;
 @property (weak, nonatomic) IBOutlet PASPageControlView *pageControlView;
@@ -18,13 +18,6 @@
 
 @implementation PASPageViewController
 @dynamic selectedViewControllerIndex;
-
-#pragma mark - Init
-
-- (void)awakeFromNib
-{
-	self.delegate = self;
-}
 
 #pragma mark - View Lifecycle
 
@@ -39,7 +32,7 @@
 	leftEdge.edges = UIRectEdgeLeft;
 	leftEdge.delegate = self;
 	[self.transitionView addGestureRecognizer:leftEdge];
-
+	
 	UIScreenEdgePanGestureRecognizer *rightEdge = [[UIScreenEdgePanGestureRecognizer alloc]
 												   initWithTarget:self
 												   action:@selector(rightEdgePan:)];
@@ -58,15 +51,13 @@
 
 - (void)setViewControllers:(NSArray *)viewControllers
 {
-	// remove existing view controllers
-    for(UIViewController *vc in self.viewControllers) {
-        [vc willMoveToParentViewController:nil];
-        if([vc isViewLoaded]
-		   && vc.view.superview == self.transitionView) {
-            [vc.view removeFromSuperview];
-        }
-        [vc removeFromParentViewController];
-    }
+	// remove the currently selected view controller
+	[self.selectedViewController willMoveToParentViewController:nil];
+	if([self.selectedViewController isViewLoaded]
+	   && self.selectedViewController.view.superview == self.transitionView) {
+		[self.selectedViewController.view removeFromSuperview];
+	}
+	[self.selectedViewController removeFromParentViewController];
 	
     _viewControllers = viewControllers;
 	
@@ -74,12 +65,15 @@
 		// add passed viewControllers
 		for (int i = 0; i < self.viewControllers.count; i++) {
 			UIViewController *vc = self.viewControllers[i];
-			[self addChildViewController:vc];
+			
+			// configure transitioning for custom transitions
+			//vc.transitioningDelegate = self;
+			//vc.modalTransitionStyle = UIModalPresentationCustom;
+			
 			if (i == 0) {
 				// set the first one as the currently selected view controller
 				self.selectedViewController = vc;
 			}
-			[vc didMoveToParentViewController:self];
 		}
 		
     } else {
@@ -102,36 +96,79 @@
     self.selectedViewController = [self.viewControllers objectAtIndex:selectedViewControllerIndex];
 }
 
-- (void)setSelectedViewController:(UIViewController *)selectedViewController
+- (void)setSelectedViewController:(UIViewController *)newVc
 {
-    if(![self.viewControllers containsObject:selectedViewController]) {
+    if(![self.viewControllers containsObject:newVc]) {
 		self.pageControlView.currentPage = 0;
 		return;
     }
 	
-    UIViewController *previous = self.selectedViewController;
+    UIViewController *oldVc = self.selectedViewController;
 	
-    _selectedViewController = selectedViewController;
+    _selectedViewController = newVc;
 	
     if([self isViewLoaded]) {
-		// update the control
-		self.pageControlView.currentPage = self.selectedViewControllerIndex;
-		
-		// switch the views
-        [previous.view removeFromSuperview];
-		
-        UIView *newView = self.selectedViewController.view;
-        newView.frame = self.transitionView.bounds;
-        [newView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-
-        [self.transitionView addSubview:newView];
-    }
+		if (oldVc != newVc) {
+			// update the control
+			self.pageControlView.currentPage = self.selectedViewControllerIndex;
+			
+			// start the transitions
+			[oldVc willMoveToParentViewController:nil];
+			[self addChildViewController:newVc];
+			
+			// set the start location of the newView
+			CGRect targetBounds = self.transitionView.bounds;
+			CGRect startingBounds = targetBounds;
+			
+			if ([self.viewControllers indexOfObject:newVc] > [self.viewControllers indexOfObject:oldVc]) {
+				startingBounds.origin.x += startingBounds.size.width;
+			} else {
+				startingBounds.origin.x -= startingBounds.size.width;
+			}
+			
+			newVc.view.frame = startingBounds;
+			
+			// set the target location
+			//newVc.view.frame = self.transitionView.bounds;
+			[newVc.view setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+			//newVc.view.alpha = 0.0; // this is doing a manual cross dissolve
+			
+			// perform the swap
+			[self transitionFromViewController:oldVc
+							  toViewController:newVc
+									  duration:0.5
+									   options:UIViewAnimationOptionCurveEaseInOut
+									animations:^{
+										// perform the transition
+										// animates between the view properties set above
+										// and the ones specified here
+										//oldVc.view.alpha = 0.0;
+										//newVc.view.alpha = 1.0;
+										newVc.view.frame = targetBounds;
+									}
+									completion:^(BOOL finished) {
+										
+										// finish the transition
+										[oldVc removeFromParentViewController];
+										[newVc didMoveToParentViewController:self];
+									}];
+		} else if (!(newVc.view.superview == self.transitionView)) {
+			// add the first view
+			[self addChildViewController:newVc];
+			UIView *newView = newVc.view;
+			newView.frame = self.transitionView.bounds;
+			[self.transitionView addSubview:newView];
+			[newVc didMoveToParentViewController:self];
+			
+		}
+	}
 }
 
 #pragma mark - PASPageControlView Target-Action
 
 - (IBAction)didChangeCurrentPage:(PASPageControlView *)sender
 {
+	// TODO: prevent starting a new transition while one is still going on
 	if(sender.currentPage != self.selectedViewControllerIndex) {
 		self.selectedViewController = [self.viewControllers objectAtIndex:sender.currentPage];
 	}
@@ -139,9 +176,10 @@
 
 #pragma mark - UIScreenEdgePanGestureRecognizer
 
-- (void)leftEdgePan:(UIScreenEdgePanGestureRecognizer *)gesture {
+- (void)leftEdgePan:(UIScreenEdgePanGestureRecognizer *)gesture
+{
 	if (gesture.state == UIGestureRecognizerStateEnded) {
-		self.selectedViewControllerIndex = self.selectedViewControllerIndex++;
+		//self.selectedViewControllerIndex = self.selectedViewControllerIndex++;
 	}
 	NSLog(@"left edge");
 }
@@ -149,7 +187,7 @@
 - (void)rightEdgePan:(UIScreenEdgePanGestureRecognizer *)gesture
 {
 	if (gesture.state == UIGestureRecognizerStateEnded) {
-		self.selectedViewControllerIndex = self.selectedViewControllerIndex--;
+		//self.selectedViewControllerIndex = self.selectedViewControllerIndex--;
 	}
 	NSLog(@"right edge");
 }
@@ -161,27 +199,24 @@
 	return YES;
 }
 
-#pragma mark - PASPageViewControllerDelegate
+#pragma mark - UIViewControllerTransitioningDelegate
 
-- (id <UIViewControllerInteractiveTransitioning>)pageViewController:(PASPageViewController *)pageViewController
-						interactionControllerForAnimationController: (id <UIViewControllerAnimatedTransitioning>)animationController
+- (id<UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id<UIViewControllerAnimatedTransitioning>)animator
 {
 	static id<UIViewControllerInteractiveTransitioning> interactionController;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		interactionController = [[PASPVCAnimator alloc] init];
+		interactionController = [PASPVCAnimator new];
 	});
 	return interactionController;
 }
 
-- (id <UIViewControllerAnimatedTransitioning>)pageViewController:(PASPageViewController *)pageViewController
-			  animationControllerForTransitionFromViewController:(UIViewController *)fromVC
-												toViewController:(UIViewController *)toVC
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
 {
 	static id<UIViewControllerAnimatedTransitioning> animationController;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		animationController = [[PASPVCAnimator alloc] init];
+		animationController = [PASPVCAnimator new];
 	});
 	return animationController;
 }
