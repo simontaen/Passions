@@ -21,7 +21,7 @@
 
 - (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext
 {
-	return 0.5;
+	return 0.4;
 }
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext
@@ -30,39 +30,36 @@
     UIViewController* fromVc = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
 
 	// add the new view to the container
-	[toVc.view setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
     [[transitionContext containerView] addSubview:toVc.view];
 	
-	
-	// The final destination of the incoming view is where the controller wants it
-	//CGRect destinationFrame = fromVc.view.bounds;
-	CGRect destinationFrame = [transitionContext finalFrameForViewController:toVc];
+	// get final properties
+	CGRect finalToFrame = [transitionContext finalFrameForViewController:toVc];
+	CGRect finalFromFrame = [transitionContext finalFrameForViewController:fromVc];
 
 	// The initial location of the incoming view is to the left/right the screen
-	CGRect initialFrame = destinationFrame;
-	// TODO: pass direction as a property
-	//iinitialFrame.origin.x += initialFrame.size.width;
+	//initialFrame.origin.x += initialFrame.size.width;
 	//initialFrame.origin.x -= initialFrame.size.width;
-	initialFrame.origin.y -= destinationFrame.size.height;
-	
-	// The final destination of the outgoing view is underneath the screen
-    CGRect outgoingDestinationFrame = fromVc.view.frame;
-    outgoingDestinationFrame.origin.y += outgoingDestinationFrame.size.height;
 	
 	// set starting properties
-	toVc.view.frame = initialFrame;
+	toVc.view.frame = [transitionContext initialFrameForViewController:toVc];
+	fromVc.view.frame = [transitionContext initialFrameForViewController:fromVc];
 	
 	// perform the swap
 	[UIView animateWithDuration:[self transitionDuration:transitionContext]
 						  delay:0 options:UIViewAnimationOptionCurveEaseInOut
 					 animations:^{
 						 // set target properties
-						 fromVc.view.frame = outgoingDestinationFrame;
-						 toVc.view.frame = destinationFrame;
+						 toVc.view.frame = finalToFrame;
+						 fromVc.view.frame = finalFromFrame;
 					 }
 					 completion:^(BOOL finished) {
 						 [transitionContext completeTransition:finished];
 					 }];
+}
+
+- (void)animationEnded:(BOOL)transitionCompleted
+{
+	
 }
 
 @end

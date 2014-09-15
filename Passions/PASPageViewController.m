@@ -11,7 +11,28 @@
 #import "PASPageViewController.h"
 #import "PASPVCAnimator.h"
 
-@interface PASPageViewController () <UIGestureRecognizerDelegate, UIViewControllerTransitioningDelegate>
+#pragma mark - PASPrivateTransitionContext
+
+/** A private UIViewControllerContextTransitioning class to be provided transitioning delegates.
+ @discussion Because we are a custom UIVievController class, with our own containment implementation, we have to provide an object conforming to the UIViewControllerContextTransitioning protocol. The system view controllers use one provided by the framework, which we cannot configure, let alone create. This class will be used even if the developer provides their own transitioning objects.
+ @note The only methods that will be called on objects of this class are the ones defined in the UIViewControllerContextTransitioning protocol. The rest is our own private implementation.
+ */
+@interface PASPrivateTransitionContext : NSObject <UIViewControllerContextTransitioning>
+/// Designated initializer.
+- (instancetype)initWithFromViewController:(UIViewController *)fromVc
+						  toViewController:(UIViewController *)toVc
+								goingRight:(BOOL)goingRight;
+/// A block of code we can set to execute after having received the completeTransition: message.
+@property (nonatomic, copy) void (^completionBlock)(BOOL didComplete);
+/// Private setter for the animated property.
+@property (nonatomic, assign, getter=isAnimated) BOOL animated;
+/// Private setter for the interactive property.
+@property (nonatomic, assign, getter=isInteractive) BOOL interactive;
+@end
+
+#pragma mark - PASPageViewController
+
+@interface PASPageViewController () <UIGestureRecognizerDelegate> //, UIViewControllerTransitioningDelegate>
 // TODO: rename to containerView
 @property (weak, nonatomic) IBOutlet UIView *transitionView;
 @property (weak, nonatomic, readwrite) UIViewController *selectedViewController;
@@ -68,14 +89,6 @@
 	
     _viewControllers = viewControllers;
 	
-	// configure passed viewControllers
-	for (UIViewController *vc in viewControllers) {
-		// configure transitioning for custom transitions
-		// TODO: maybe this is done by the context
-		vc.transitioningDelegate = self;
-		vc.modalPresentationStyle = UIModalPresentationCustom;
-	}
-	
 	self.selectedViewController = [viewControllers firstObject];
 }
 
@@ -102,16 +115,12 @@
 	[self _transitionToChildViewController:newVc];
 	
     _selectedViewController = newVc;
-	
-	// TODO: can this be done in the _transitionToChildViewController
-	self.pageControlView.currentPage = self.selectedViewControllerIndex;
 }
 
 #pragma mark - PASPageControlView Target-Action
 
 - (IBAction)didChangeCurrentPage:(PASPageControlView *)sender
 {
-	// TODO: prevent starting a new transition while one is still going on
 	if(sender.currentPage != self.selectedViewControllerIndex) {
 		self.selectedViewController = [self.viewControllers objectAtIndex:sender.currentPage];
 	}
@@ -144,34 +153,33 @@
 
 #pragma mark - UIViewControllerTransitioningDelegate
 
-- (id<UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id<UIViewControllerAnimatedTransitioning>)animator
-{
-	static PASPVCAnimator *interactionController;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		interactionController = [PASPVCAnimator new];
-	});
-	//return interactionController;
-	return nil;
-}
+//- (id<UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id<UIViewControllerAnimatedTransitioning>)animator
+//{
+//	static PASPVCAnimator *interactionController;
+//	static dispatch_once_t onceToken;
+//	dispatch_once(&onceToken, ^{
+//		interactionController = [PASPVCAnimator new];
+//	});
+//	//return interactionController;
+//	return nil;
+//}
 
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
-																  presentingController:(UIViewController *)presenting
-																	  sourceController:(UIViewController *)source
-{
-	static PASPVCAnimator *animationController;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		animationController = [PASPVCAnimator new];
-	});
-	return animationController;
-}
+//- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
+//																  presentingController:(UIViewController *)presenting
+//																	  sourceController:(UIViewController *)source
+//{
+//	static PASPVCAnimator *animationController;
+//	static dispatch_once_t onceToken;
+//	dispatch_once(&onceToken, ^{
+//		animationController = [PASPVCAnimator new];
+//	});
+//	return animationController;
+//}
 
 #pragma mark - Private Methods
 
 - (void)_transitionToChildViewController:(UIViewController *)toVc
 {
-	// TODO: how did childViewControllers get filled?
 	UIViewController *fromVc = ([self.childViewControllers count] > 0 ? self.childViewControllers[0] : nil);
 	if (toVc == fromVc || ![self isViewLoaded]) {
 		return;
@@ -184,13 +192,43 @@
 	
 	[fromVc willMoveToParentViewController:nil];
 	[self addChildViewController:toVc];
-	[self.transitionView addSubview:toView];
-	[fromVc.view removeFromSuperview];
-	[fromVc removeFromParentViewController];
-	[toVc didMoveToParentViewController:self];
+	
+	// If this is the initial presentation, add the new child with no animation.
+	if (!fromVc) {
+		[self.transitionView addSubview:toVc.view];
+		[toVc didMoveToParentViewController:self];
+		return;
+	}
+	
+	// Animate the transition by calling the animator with our private transition context.
+	
+	PASPVCAnimator *animator = [[PASPVCAnimator alloc] init];
+	
+	// Because of the nature of our view controller, with horizontally arranged buttons, we instantiate our private transition context with information about whether this is a left-to-right or right-to-left transition. The animator can use this information if it wants.
+	NSUInteger fromIndex = [self.viewControllers indexOfObject:fromVc];
+	NSUInteger toIndex = [self.viewControllers indexOfObject:toVc];
+	PASPrivateTransitionContext *transitionContext = [[PASPrivateTransitionContext alloc] initWithFromViewController:fromVc toViewController:toVc goingRight:toIndex > fromIndex];
+	
+	transitionContext.animated = YES;
+	transitionContext.interactive = NO;
+	transitionContext.completionBlock = ^(BOOL didComplete) {
+		[fromVc.view removeFromSuperview];
+		[fromVc removeFromParentViewController];
+		[toVc didMoveToParentViewController:self];
+		
+		if ([animator respondsToSelector:@selector (animationEnded:)]) {
+			[animator animationEnded:didComplete];
+		}
+		self.pageControlView.currentPage = self.selectedViewControllerIndex + (toIndex - fromIndex);
+		self.pageControlView.userInteractionEnabled = YES;
+	};
+	
+	self.pageControlView.userInteractionEnabled = NO; // Prevent user tapping buttons mid-transition, messing up state
+	[animator animateTransition:transitionContext];
 }
 
 @end
+
 
 #pragma mark - PASPageViewControllerAdditions
 
@@ -206,4 +244,79 @@
     }
     return nil;
 }
+@end
+
+
+#pragma mark - PASPrivateTransitionContext
+
+@interface PASPrivateTransitionContext ()
+@property (nonatomic, strong) NSDictionary *privateViewControllers;
+@property (nonatomic, assign) CGRect privateDisappearingFromRect;
+@property (nonatomic, assign) CGRect privateAppearingFromRect;
+@property (nonatomic, assign) CGRect privateDisappearingToRect;
+@property (nonatomic, assign) CGRect privateAppearingToRect;
+@property (nonatomic, weak) UIView *containerView;
+@property (nonatomic, assign) UIModalPresentationStyle presentationStyle;
+@end
+
+@implementation PASPrivateTransitionContext
+
+- (instancetype)initWithFromViewController:(UIViewController *)fromVc
+						  toViewController:(UIViewController *)toVc
+								goingRight:(BOOL)goingRight
+{
+	NSAssert ([fromVc isViewLoaded] && fromVc.view.superview, @"The fromVc view must reside in the container view upon initializing the transition context.");
+	
+	if ((self = [super init])) {
+		self.presentationStyle = UIModalPresentationCustom;
+		self.containerView = fromVc.view.superview;
+		self.privateViewControllers = @{
+										UITransitionContextFromViewControllerKey:fromVc,
+										UITransitionContextToViewControllerKey:toVc,
+										};
+		
+		// Set the view frame properties which make sense in our specialized ContainerViewController context. Views appear from and disappear to the sides, corresponding to where the icon buttons are positioned. So tapping a button to the right of the currently selected, makes the view disappear to the left and the new view appear from the right. The animator object can choose to use this to determine whether the transition should be going left to right, or right to left, for example.
+		CGFloat travelDistance = (goingRight ? -self.containerView.bounds.size.width : self.containerView.bounds.size.width);
+		self.privateDisappearingFromRect = self.privateAppearingToRect = self.containerView.bounds;
+		self.privateDisappearingToRect = CGRectOffset (self.containerView.bounds, travelDistance, 0);
+		self.privateAppearingFromRect = CGRectOffset (self.containerView.bounds, -travelDistance, 0);
+	}
+	
+	return self;
+}
+
+- (CGRect)initialFrameForViewController:(UIViewController *)viewController {
+	if (viewController == [self viewControllerForKey:UITransitionContextFromViewControllerKey]) {
+		return self.privateDisappearingFromRect;
+	} else {
+		return self.privateAppearingFromRect;
+	}
+}
+
+- (CGRect)finalFrameForViewController:(UIViewController *)viewController {
+	if (viewController == [self viewControllerForKey:UITransitionContextFromViewControllerKey]) {
+		return self.privateDisappearingToRect;
+	} else {
+		return self.privateAppearingToRect;
+	}
+}
+
+- (UIViewController *)viewControllerForKey:(NSString *)key {
+	return self.privateViewControllers[key];
+}
+
+- (void)completeTransition:(BOOL)didComplete {
+	if (self.completionBlock) {
+		self.completionBlock (didComplete);
+	}
+}
+
+- (BOOL)transitionWasCancelled { return NO; } // Our non-interactive transition can't be cancelled (it could be interrupted, though)
+
+// Supress warnings by implementing empty interaction methods for the remainder of the protocol:
+
+- (void)updateInteractiveTransition:(CGFloat)percentComplete {}
+- (void)finishInteractiveTransition {}
+- (void)cancelInteractiveTransition {}
+
 @end
