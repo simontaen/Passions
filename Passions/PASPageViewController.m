@@ -147,7 +147,7 @@
 			
 		} else if (leftToRight && currentVCIndex > 0) {
 			self.selectedViewControllerIndex = --currentVCIndex;
-
+			
 		}
 	}
 	NSLog(@"%lu", recognizer.state);
@@ -158,6 +158,15 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
 	return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    BOOL result = NO;
+    if (([gestureRecognizer isKindOfClass:[UIScreenEdgePanGestureRecognizer class]]) && [otherGestureRecognizer.view isDescendantOfView:gestureRecognizer.view]) {
+        result = YES;
+    }
+    return result;
 }
 
 #pragma mark - Private Methods
