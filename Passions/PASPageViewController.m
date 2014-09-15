@@ -9,7 +9,6 @@
 //  http://www.objc.io/issue-12/custom-container-view-controller-transitions.html
 
 #import "PASPageViewController.h"
-#import "PASPVCAnimator.h"
 
 #pragma mark - PASPrivateTransitionContext
 
@@ -30,6 +29,14 @@
 @property (nonatomic, assign, getter=isInteractive) BOOL interactive;
 @end
 
+#pragma mark - PASPrivateAnimationController
+
+/** Instances of this private class perform the default transition animation which is to slide child views horizontally.
+ @note The class only supports UIViewControllerAnimatedTransitioning at this point. Not UIViewControllerInteractiveTransitioning.
+ */
+@interface PASPrivateAnimationController : NSObject <UIViewControllerInteractiveTransitioning, UIViewControllerAnimatedTransitioning>
+@end
+
 #pragma mark - PASPageViewController
 
 @interface PASPageViewController () <UIGestureRecognizerDelegate>
@@ -47,9 +54,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-	// DEBUG
-	self.transitionView.backgroundColor = [UIColor orangeColor];
 	
 	// setup gesture recognizers
 	UIScreenEdgePanGestureRecognizer *leftEdge = [[UIScreenEdgePanGestureRecognizer alloc]
@@ -186,7 +190,7 @@
 	if ([self.delegate respondsToSelector:@selector (pageViewController:animationControllerForTransitionFromViewController:toViewController:)]) {
 		animator = [self.delegate pageViewController:self animationControllerForTransitionFromViewController:fromVc toViewController:toVc];
 	}
-	animator = (animator ?: [[PASPVCAnimator alloc] init]);
+	animator = (animator ?: [[PASPrivateAnimationController alloc] init]);
 	
 	// Because of the nature of our view controller, with horizontally arranged buttons, we instantiate our private transition context with information about whether this is a left-to-right or right-to-left transition. The animator can use this information if it wants.
 	NSUInteger fromIndex = [self.viewControllers indexOfObject:fromVc];
@@ -269,7 +273,8 @@
 	return self;
 }
 
-- (CGRect)initialFrameForViewController:(UIViewController *)viewController {
+- (CGRect)initialFrameForViewController:(UIViewController *)viewController
+{
 	if (viewController == [self viewControllerForKey:UITransitionContextFromViewControllerKey]) {
 		return self.privateDisappearingFromRect;
 	} else {
@@ -277,7 +282,8 @@
 	}
 }
 
-- (CGRect)finalFrameForViewController:(UIViewController *)viewController {
+- (CGRect)finalFrameForViewController:(UIViewController *)viewController
+{
 	if (viewController == [self viewControllerForKey:UITransitionContextFromViewControllerKey]) {
 		return self.privateDisappearingToRect;
 	} else {
@@ -285,11 +291,13 @@
 	}
 }
 
-- (UIViewController *)viewControllerForKey:(NSString *)key {
+- (UIViewController *)viewControllerForKey:(NSString *)key
+{
 	return self.privateViewControllers[key];
 }
 
-- (void)completeTransition:(BOOL)didComplete {
+- (void)completeTransition:(BOOL)didComplete
+{
 	if (self.completionBlock) {
 		self.completionBlock (didComplete);
 	}
@@ -302,5 +310,58 @@
 - (void)updateInteractiveTransition:(CGFloat)percentComplete {}
 - (void)finishInteractiveTransition {}
 - (void)cancelInteractiveTransition {}
+
+@end
+
+#pragma mark - PASPrivateAnimationController
+
+@implementation PASPrivateAnimationController
+
+#pragma mark - UIViewControllerAnimatedTransitioning
+
+- (void)startInteractiveTransition:(id <UIViewControllerContextTransitioning>)transitionContext
+{
+	NSLog(@"startInteractiveTransition");
+}
+
+#pragma mark - UIViewControllerAnimatedTransitioning
+
+static CGFloat const kChildViewPadding = 16;
+static CGFloat const kDamping = 0.75;
+static CGFloat const kInitialSpringVelocity = 0.5;
+
+- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
+{
+	return 0.7;
+}
+
+/// Slide views horizontally, with a bit of space between, while fading out and in.
+- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
+{
+	UIViewController* toVc = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+	UIViewController* fromVc = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+	
+	// When sliding the views horizontally in and out, figure out whether we are going left or right.
+	BOOL goingRight = ([transitionContext initialFrameForViewController:toVc].origin.x < [transitionContext finalFrameForViewController:toVc].origin.x);
+	CGFloat travelDistance = [transitionContext containerView].bounds.size.width + kChildViewPadding;
+	CGAffineTransform travel = CGAffineTransformMakeTranslation(goingRight ? travelDistance : -travelDistance, 0);
+	
+	[[transitionContext containerView] addSubview:toVc.view];
+	toVc.view.alpha = 0;
+	toVc.view.transform = CGAffineTransformInvert(travel);
+	
+	[UIView animateWithDuration:[self transitionDuration:transitionContext]
+						  delay:0 usingSpringWithDamping:kDamping
+		  initialSpringVelocity:kInitialSpringVelocity options:0x00
+					 animations:^{
+						 fromVc.view.transform = travel;
+						 fromVc.view.alpha = 0;
+						 toVc.view.transform = CGAffineTransformIdentity;
+						 toVc.view.alpha = 1;
+					 } completion:^(BOOL finished) {
+						 fromVc.view.transform = CGAffineTransformIdentity;
+						 [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+					 }];
+}
 
 @end
