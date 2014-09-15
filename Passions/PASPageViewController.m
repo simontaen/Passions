@@ -31,9 +31,7 @@
 
 #pragma mark - PASPrivateAnimationController
 
-/** Instances of this private class perform the default transition animation which is to slide child views horizontally.
- @note The class only supports UIViewControllerAnimatedTransitioning at this point. Not UIViewControllerInteractiveTransitioning.
- */
+/// Instances of this private class perform the default transition animation which is to slide child views horizontally.
 @interface PASPrivateAnimationController : NSObject <UIViewControllerInteractiveTransitioning, UIViewControllerAnimatedTransitioning>
 @end
 
@@ -319,7 +317,7 @@
 
 @implementation PASPrivateAnimationController
 
-#pragma mark - UIViewControllerAnimatedTransitioning
+#pragma mark - UIViewControllerInteractiveTransitioning
 
 - (void)startInteractiveTransition:(id <UIViewControllerContextTransitioning>)transitionContext
 {
