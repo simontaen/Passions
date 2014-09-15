@@ -32,7 +32,7 @@
 
 #pragma mark - PASPageViewController
 
-@interface PASPageViewController () <UIGestureRecognizerDelegate, PASPageViewControllerDelegate>
+@interface PASPageViewController () <UIGestureRecognizerDelegate>
 // TODO: rename to containerView
 @property (weak, nonatomic) IBOutlet UIView *transitionView;
 @property (weak, nonatomic, readwrite) UIViewController *selectedViewController;
@@ -47,8 +47,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-	self.delegate = self;
 	
 	// DEBUG
 	self.transitionView.backgroundColor = [UIColor orangeColor];
@@ -156,31 +154,6 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
 	return YES;
-}
-
-#pragma mark - PASPageViewControllerDelegate
-
-//- (id<UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id<UIViewControllerAnimatedTransitioning>)animator
-//{
-//	static PASPVCAnimator *interactionController;
-//	static dispatch_once_t onceToken;
-//	dispatch_once(&onceToken, ^{
-//		interactionController = [PASPVCAnimator new];
-//	});
-//	//return interactionController;
-//	return nil;
-//}
-
-- (id <UIViewControllerAnimatedTransitioning>)pageViewController:(PASPageViewController *)pageViewController
-			  animationControllerForTransitionFromViewController:(UIViewController *)fromViewController
-												toViewController:(UIViewController *)toViewController;
-{
-	static PASPVCAnimator *animationController;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		animationController = [PASPVCAnimator new];
-	});
-	return animationController;
 }
 
 #pragma mark - Private Methods
