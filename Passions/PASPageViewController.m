@@ -25,6 +25,9 @@
 {
     [super viewDidLoad];
 	
+	// DEBUG
+	self.transitionView.backgroundColor = [UIColor orangeColor];
+	
 	// setup gesture recognizers
 	UIScreenEdgePanGestureRecognizer *leftEdge = [[UIScreenEdgePanGestureRecognizer alloc]
 												  initWithTarget:self
@@ -61,24 +64,14 @@
 	
     _viewControllers = viewControllers;
 	
-    if(self.viewControllers.count > 0) {
-		// add passed viewControllers
-		for (int i = 0; i < self.viewControllers.count; i++) {
-			UIViewController *vc = self.viewControllers[i];
-			
-			// configure transitioning for custom transitions
-			//vc.transitioningDelegate = self;
-			//vc.modalTransitionStyle = UIModalPresentationCustom;
-			
-			if (i == 0) {
-				// set the first one as the currently selected view controller
-				self.selectedViewController = vc;
-			}
-		}
-		
-    } else {
-        self.selectedViewController = nil;
-    }
+	// configure passed viewControllers
+	for (UIViewController *vc in viewControllers) {
+		// configure transitioning for custom transitions
+		vc.transitioningDelegate = self;
+		vc.modalPresentationStyle = UIModalPresentationCustom;
+	}
+	
+	self.selectedViewController = [viewControllers firstObject];
 }
 
 - (int)selectedViewControllerIndex
@@ -112,52 +105,54 @@
 			// update the control
 			self.pageControlView.currentPage = self.selectedViewControllerIndex;
 			
-			// start the transitions
-			[oldVc willMoveToParentViewController:nil];
-			[self addChildViewController:newVc];
+			[self presentViewController:newVc animated:YES completion:nil];
 			
-			// set the start location of the newView
-			CGRect targetBounds = self.transitionView.bounds;
-			CGRect startingBounds = targetBounds;
+//			// start the transitions
+//			[oldVc willMoveToParentViewController:nil];
+//			[self addChildViewController:newVc];
+//			
+//			// set the start location of the newView
+//			CGRect targetBounds = self.transitionView.bounds;
+//			CGRect startingBounds = targetBounds;
+//			
+//			if ([self.viewControllers indexOfObject:newVc] > [self.viewControllers indexOfObject:oldVc]) {
+//				startingBounds.origin.x += startingBounds.size.width;
+//			} else {
+//				startingBounds.origin.x -= startingBounds.size.width;
+//			}
+//			
+//			newVc.view.frame = startingBounds;
+//			
+//			// set the target location
+//			[newVc.view setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+//			//newVc.view.alpha = 0.0; // this is doing a manual cross dissolve
+//			
+//			// perform the swap
+//			[self transitionFromViewController:oldVc
+//							  toViewController:newVc
+//									  duration:0.5
+//									   options:UIViewAnimationOptionCurveEaseInOut
+//									animations:^{
+//										// perform the transition
+//										// animates between the view properties set above
+//										// and the ones specified here
+//										//oldVc.view.alpha = 0.0;
+//										//newVc.view.alpha = 1.0;
+//										newVc.view.frame = targetBounds;
+//									}
+//									completion:^(BOOL finished) {
+//										
+//										// finish the transition
+//										[oldVc removeFromParentViewController];
+//										[newVc didMoveToParentViewController:self];
+//									}];
 			
-			if ([self.viewControllers indexOfObject:newVc] > [self.viewControllers indexOfObject:oldVc]) {
-				startingBounds.origin.x += startingBounds.size.width;
-			} else {
-				startingBounds.origin.x -= startingBounds.size.width;
-			}
-			
-			newVc.view.frame = startingBounds;
-			
-			// set the target location
-			//newVc.view.frame = self.transitionView.bounds;
-			[newVc.view setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-			//newVc.view.alpha = 0.0; // this is doing a manual cross dissolve
-			
-			// perform the swap
-			[self transitionFromViewController:oldVc
-							  toViewController:newVc
-									  duration:0.5
-									   options:UIViewAnimationOptionCurveEaseInOut
-									animations:^{
-										// perform the transition
-										// animates between the view properties set above
-										// and the ones specified here
-										//oldVc.view.alpha = 0.0;
-										//newVc.view.alpha = 1.0;
-										newVc.view.frame = targetBounds;
-									}
-									completion:^(BOOL finished) {
-										
-										// finish the transition
-										[oldVc removeFromParentViewController];
-										[newVc didMoveToParentViewController:self];
-									}];
 		} else if (!(newVc.view.superview == self.transitionView)) {
 			// add the first view
 			[self addChildViewController:newVc];
-			UIView *newView = newVc.view;
-			newView.frame = self.transitionView.bounds;
-			[self.transitionView addSubview:newView];
+			newVc.view.frame = self.transitionView.bounds;
+			[newVc.view setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+			[self.transitionView addSubview:newVc.view];
 			[newVc didMoveToParentViewController:self];
 			
 		}
@@ -203,17 +198,20 @@
 
 - (id<UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id<UIViewControllerAnimatedTransitioning>)animator
 {
-	static id<UIViewControllerInteractiveTransitioning> interactionController;
+	static PASPVCAnimator *interactionController;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		interactionController = [PASPVCAnimator new];
 	});
-	return interactionController;
+	//return interactionController;
+	return nil;
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
+																  presentingController:(UIViewController *)presenting
+																	  sourceController:(UIViewController *)source
 {
-	static id<UIViewControllerAnimatedTransitioning> animationController;
+	static PASPVCAnimator *animationController;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		animationController = [PASPVCAnimator new];

@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class PASPageControlView;
-
 @interface PASPageControlView : UIPageControl
 
 @end
