@@ -91,10 +91,8 @@
 
 - (void)setSelectedViewController:(UIViewController *)newVc
 {
-    if(![self.viewControllers containsObject:newVc]) {
-		self.pageControlView.currentPage = 0;
-		return;
-    }
+	NSParameterAssert (newVc);
+	NSAssert([self.viewControllers containsObject:newVc], @"Only known View Controllers are allowed to be selected");
 	
     UIViewController *oldVc = self.selectedViewController;
 	
