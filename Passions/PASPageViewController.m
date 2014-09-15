@@ -54,6 +54,8 @@
 
 - (void)setViewControllers:(NSArray *)viewControllers
 {
+	NSParameterAssert ([viewControllers count] > 0);
+	
 	// remove the currently selected view controller
 	[self.selectedViewController willMoveToParentViewController:nil];
 	if([self.selectedViewController isViewLoaded]
