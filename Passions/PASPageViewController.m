@@ -58,14 +58,14 @@
 	// setup gesture recognizers
 	UIScreenEdgePanGestureRecognizer *leftEdge = [[UIScreenEdgePanGestureRecognizer alloc]
 												  initWithTarget:self
-												  action:@selector(leftEdgePan:)];
+												  action:@selector(edgePan:)];
 	leftEdge.edges = UIRectEdgeLeft;
 	leftEdge.delegate = self;
 	[self.transitionView addGestureRecognizer:leftEdge];
 	
 	UIScreenEdgePanGestureRecognizer *rightEdge = [[UIScreenEdgePanGestureRecognizer alloc]
 												   initWithTarget:self
-												   action:@selector(rightEdgePan:)];
+												   action:@selector(edgePan:)];
 	rightEdge.edges = UIRectEdgeRight;
 	rightEdge.delegate = self;
 	[self.transitionView addGestureRecognizer:rightEdge];
@@ -137,20 +137,22 @@
 
 #pragma mark - UIScreenEdgePanGestureRecognizer
 
-- (void)leftEdgePan:(UIScreenEdgePanGestureRecognizer *)gesture
+- (void)edgePan:(UIScreenEdgePanGestureRecognizer *)recognizer
 {
-	if (gesture.state == UIGestureRecognizerStateEnded) {
-		//self.selectedViewControllerIndex = self.selectedViewControllerIndex++;
-	}
-	NSLog(@"left edge");
-}
+	if (recognizer.state == UIGestureRecognizerStateEnded) {
+		
+		BOOL leftToRight = [recognizer velocityInView:recognizer.view].x > 0;
+		
+		int currentVCIndex = self.selectedViewControllerIndex;
+		if (!leftToRight && currentVCIndex != self.viewControllers.count-1) {
+			self.selectedViewControllerIndex = ++currentVCIndex;
+			
+		} else if (leftToRight && currentVCIndex > 0) {
+			self.selectedViewControllerIndex = --currentVCIndex;
 
-- (void)rightEdgePan:(UIScreenEdgePanGestureRecognizer *)gesture
-{
-	if (gesture.state == UIGestureRecognizerStateEnded) {
-		//self.selectedViewControllerIndex = self.selectedViewControllerIndex--;
+		}
 	}
-	NSLog(@"right edge");
+	NSLog(@"%lu", recognizer.state);
 }
 
 #pragma mark - UIGestureRecognizerDelegate
