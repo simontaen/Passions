@@ -6,11 +6,13 @@
 //  Copyright (c) 2014 edgeguard. All rights reserved.
 //
 //  http://stablekernel.com/blog/view-controller-containers-part-ii/
+//  http://www.objc.io/issue-12/custom-container-view-controller-transitions.html
 
 #import "PASPageViewController.h"
 #import "PASPVCAnimator.h"
 
 @interface PASPageViewController () <UIGestureRecognizerDelegate, UIViewControllerTransitioningDelegate>
+// TODO: rename to containerView
 @property (weak, nonatomic) IBOutlet UIView *transitionView;
 @property (weak, nonatomic, readwrite) UIViewController *selectedViewController;
 @property (weak, nonatomic) IBOutlet PASPageControlView *pageControlView;
@@ -47,7 +49,7 @@
 	self.pageControlView.numberOfPages = self.viewControllers.count;
 	
 	// call the setter to make sure the view is swapped
-    self.selectedViewController = self.selectedViewController;
+    self.selectedViewController = (self.selectedViewController ?: [self.viewControllers firstObject]);
 }
 
 #pragma mark - Accessors
@@ -69,6 +71,7 @@
 	// configure passed viewControllers
 	for (UIViewController *vc in viewControllers) {
 		// configure transitioning for custom transitions
+		// TODO: maybe this is done by the context
 		vc.transitioningDelegate = self;
 		vc.modalPresentationStyle = UIModalPresentationCustom;
 	}
@@ -96,67 +99,12 @@
 	NSParameterAssert (newVc);
 	NSAssert([self.viewControllers containsObject:newVc], @"Only known View Controllers are allowed to be selected");
 	
-    UIViewController *oldVc = self.selectedViewController;
+	[self _transitionToChildViewController:newVc];
 	
     _selectedViewController = newVc;
 	
-    if([self isViewLoaded]) {
-		if (oldVc != newVc) {
-			// update the control
-			self.pageControlView.currentPage = self.selectedViewControllerIndex;
-			
-			[self presentViewController:newVc animated:YES completion:nil];
-			
-//			// start the transitions
-//			[oldVc willMoveToParentViewController:nil];
-//			[self addChildViewController:newVc];
-//			
-//			// set the start location of the newView
-//			CGRect targetBounds = self.transitionView.bounds;
-//			CGRect startingBounds = targetBounds;
-//			
-//			if ([self.viewControllers indexOfObject:newVc] > [self.viewControllers indexOfObject:oldVc]) {
-//				startingBounds.origin.x += startingBounds.size.width;
-//			} else {
-//				startingBounds.origin.x -= startingBounds.size.width;
-//			}
-//			
-//			newVc.view.frame = startingBounds;
-//			
-//			// set the target location
-//			[newVc.view setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-//			//newVc.view.alpha = 0.0; // this is doing a manual cross dissolve
-//			
-//			// perform the swap
-//			[self transitionFromViewController:oldVc
-//							  toViewController:newVc
-//									  duration:0.5
-//									   options:UIViewAnimationOptionCurveEaseInOut
-//									animations:^{
-//										// perform the transition
-//										// animates between the view properties set above
-//										// and the ones specified here
-//										//oldVc.view.alpha = 0.0;
-//										//newVc.view.alpha = 1.0;
-//										newVc.view.frame = targetBounds;
-//									}
-//									completion:^(BOOL finished) {
-//										
-//										// finish the transition
-//										[oldVc removeFromParentViewController];
-//										[newVc didMoveToParentViewController:self];
-//									}];
-			
-		} else if (!(newVc.view.superview == self.transitionView)) {
-			// add the first view
-			[self addChildViewController:newVc];
-			newVc.view.frame = self.transitionView.bounds;
-			[newVc.view setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-			[self.transitionView addSubview:newVc.view];
-			[newVc didMoveToParentViewController:self];
-			
-		}
-	}
+	// TODO: can this be done in the _transitionToChildViewController
+	self.pageControlView.currentPage = self.selectedViewControllerIndex;
 }
 
 #pragma mark - PASPageControlView Target-Action
@@ -218,6 +166,30 @@
 	});
 	return animationController;
 }
+
+#pragma mark - Private Methods
+
+- (void)_transitionToChildViewController:(UIViewController *)toVc
+{
+	// TODO: how did childViewControllers get filled?
+	UIViewController *fromVc = ([self.childViewControllers count] > 0 ? self.childViewControllers[0] : nil);
+	if (toVc == fromVc || ![self isViewLoaded]) {
+		return;
+	}
+	
+	UIView *toView = toVc.view;
+	[toView setTranslatesAutoresizingMaskIntoConstraints:YES];
+	toView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	toView.frame = self.transitionView.bounds;
+	
+	[fromVc willMoveToParentViewController:nil];
+	[self addChildViewController:toVc];
+	[self.transitionView addSubview:toView];
+	[fromVc.view removeFromSuperview];
+	[fromVc removeFromParentViewController];
+	[toVc didMoveToParentViewController:self];
+}
+
 @end
 
 #pragma mark - PASPageViewControllerAdditions
