@@ -32,7 +32,7 @@
 
 #pragma mark - PASPageViewController
 
-@interface PASPageViewController () <UIGestureRecognizerDelegate> //, UIViewControllerTransitioningDelegate>
+@interface PASPageViewController () <UIGestureRecognizerDelegate, PASPageViewControllerDelegate>
 // TODO: rename to containerView
 @property (weak, nonatomic) IBOutlet UIView *transitionView;
 @property (weak, nonatomic, readwrite) UIViewController *selectedViewController;
@@ -47,6 +47,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	self.delegate = self;
 	
 	// DEBUG
 	self.transitionView.backgroundColor = [UIColor orangeColor];
@@ -99,12 +101,17 @@
 
 - (void)setSelectedViewControllerIndex:(int)selectedViewControllerIndex
 {
+	// this is the main method for user initiated view controller switching
     if(selectedViewControllerIndex < 0
 	   || selectedViewControllerIndex >= self.viewControllers.count
 	   || selectedViewControllerIndex == self.selectedViewControllerIndex)
         return;
 	
     self.selectedViewController = [self.viewControllers objectAtIndex:selectedViewControllerIndex];
+	
+	if ([self.delegate respondsToSelector:@selector (pageViewController:didSelectViewController:)]) {
+		[self.delegate pageViewController:self didSelectViewController:self.selectedViewController];
+	}
 }
 
 - (void)setSelectedViewController:(UIViewController *)newVc
@@ -122,7 +129,7 @@
 - (IBAction)didChangeCurrentPage:(PASPageControlView *)sender
 {
 	if(sender.currentPage != self.selectedViewControllerIndex) {
-		self.selectedViewController = [self.viewControllers objectAtIndex:sender.currentPage];
+		self.selectedViewControllerIndex = (int)sender.currentPage;
 	}
 }
 
@@ -151,7 +158,7 @@
 	return YES;
 }
 
-#pragma mark - UIViewControllerTransitioningDelegate
+#pragma mark - PASPageViewControllerDelegate
 
 //- (id<UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id<UIViewControllerAnimatedTransitioning>)animator
 //{
@@ -164,17 +171,17 @@
 //	return nil;
 //}
 
-//- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
-//																  presentingController:(UIViewController *)presenting
-//																	  sourceController:(UIViewController *)source
-//{
-//	static PASPVCAnimator *animationController;
-//	static dispatch_once_t onceToken;
-//	dispatch_once(&onceToken, ^{
-//		animationController = [PASPVCAnimator new];
-//	});
-//	return animationController;
-//}
+- (id <UIViewControllerAnimatedTransitioning>)pageViewController:(PASPageViewController *)pageViewController
+			  animationControllerForTransitionFromViewController:(UIViewController *)fromViewController
+												toViewController:(UIViewController *)toViewController;
+{
+	static PASPVCAnimator *animationController;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		animationController = [PASPVCAnimator new];
+	});
+	return animationController;
+}
 
 #pragma mark - Private Methods
 
@@ -200,9 +207,13 @@
 		return;
 	}
 	
-	// Animate the transition by calling the animator with our private transition context.
+	// Animate the transition by calling the animator with our private transition context. If we don't have a delegate, or if it doesn't return an animated transitioning object, we will use our own, private animator.
 	
-	PASPVCAnimator *animator = [[PASPVCAnimator alloc] init];
+	id<UIViewControllerAnimatedTransitioning> animator = nil;
+	if ([self.delegate respondsToSelector:@selector (pageViewController:animationControllerForTransitionFromViewController:toViewController:)]) {
+		animator = [self.delegate pageViewController:self animationControllerForTransitionFromViewController:fromVc toViewController:toVc];
+	}
+	animator = (animator ?: [[PASPVCAnimator alloc] init]);
 	
 	// Because of the nature of our view controller, with horizontally arranged buttons, we instantiate our private transition context with information about whether this is a left-to-right or right-to-left transition. The animator can use this information if it wants.
 	NSUInteger fromIndex = [self.viewControllers indexOfObject:fromVc];
