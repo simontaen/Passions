@@ -41,7 +41,7 @@
 // TODO: rename to containerView
 @property (weak, nonatomic) IBOutlet UIView *transitionView;
 @property (weak, nonatomic, readwrite) UIViewController *selectedViewController;
-@property (weak, nonatomic) IBOutlet PASPageControlView *pageControlView;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControlView;
 @end
 
 @implementation PASPageViewController
@@ -70,9 +70,14 @@
 	
 	// update the page control
 	self.pageControlView.numberOfPages = self.viewControllers.count;
-	self.pageControlView.rectColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.7f];
-	self.pageControlView.strokeWidth = 0.0;
-	self.pageControlView.cornerRadius = 50.0;
+	
+	// add rounded edgeds
+	// TODO: maybe add blur using UIVisualEffectView (iOS 8 only)?
+	self.pageControlView.backgroundColor = [UIColor lightGrayColor];
+	self.pageControlView.opaque = NO;
+	self.pageControlView.alpha = 0.8f;
+	self.pageControlView.layer.cornerRadius = 7.5;
+	self.pageControlView.layer.masksToBounds = YES;
 	
 	// call the setter to make sure the view is swapped
     self.selectedViewController = (self.selectedViewController ?: [self.viewControllers firstObject]);
@@ -87,8 +92,8 @@
 - (void)doSomeCustomLayoutStuff
 {
 	CGRect newFrame = self.pageControlView.frame;
-	CGFloat heightAdj = newFrame.size.height * 0.4;
-	CGFloat widthAdj = newFrame.size.width * 0.1;
+	CGFloat heightAdj = (int)(newFrame.size.height * 0.541);
+	CGFloat widthAdj = (int)(newFrame.size.width * 0.348);
 	
 	newFrame.size.width += widthAdj;
 	newFrame.size.height -= heightAdj;
@@ -149,7 +154,7 @@
 
 #pragma mark - PASPageControlView Target-Action
 
-- (IBAction)didChangeCurrentPage:(PASPageControlView *)sender
+- (IBAction)didChangeCurrentPage:(UIPageControl *)sender
 {
 	if(sender.currentPage != self.selectedViewControllerIndex) {
 		self.selectedViewControllerIndex = (int)sender.currentPage;
