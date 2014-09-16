@@ -23,10 +23,10 @@
                     <gestureRecognizers/>
                 </view>
                 <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="pLt-1n-6KD" customClass="PASPageControlView">
-                    <rect key="frame" x="141" y="522" width="39" height="37"/>
+                    <rect key="frame" x="141" y="511" width="39" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="pageIndicatorTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <color key="currentPageIndicatorTintColor" red="0.40000000600000002" green="0.69411766529999996" blue="0.19607843459999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="currentPageIndicatorTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <action selector="didChangeCurrentPage:" destination="-1" eventType="valueChanged" id="jWL-hY-JEr"/>
                     </connections>

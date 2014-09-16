@@ -70,9 +70,32 @@
 	
 	// update the page control
 	self.pageControlView.numberOfPages = self.viewControllers.count;
+	self.pageControlView.rectColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.7f];
+	self.pageControlView.strokeWidth = 0.0;
+	self.pageControlView.cornerRadius = 50.0;
 	
 	// call the setter to make sure the view is swapped
     self.selectedViewController = (self.selectedViewController ?: [self.viewControllers firstObject]);
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    [self doSomeCustomLayoutStuff];
+}
+
+- (void)doSomeCustomLayoutStuff
+{
+	CGRect newFrame = self.pageControlView.frame;
+	CGFloat heightAdj = newFrame.size.height * 0.4;
+	CGFloat widthAdj = newFrame.size.width * 0.1;
+	
+	newFrame.size.width += widthAdj;
+	newFrame.size.height -= heightAdj;
+	
+	newFrame.origin.x -= (widthAdj/2);
+	newFrame.origin.y += (heightAdj/2);
+	self.pageControlView.frame = newFrame;
 }
 
 #pragma mark - Accessors
