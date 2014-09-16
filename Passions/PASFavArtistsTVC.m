@@ -201,6 +201,7 @@
 
 - (void)refreshUI
 {
+	// TODO: make it more clear to the user that he added objects
 	[self loadObjects];
 }
 

@@ -65,7 +65,14 @@ curl -X POST \
 -H "X-Parse-Application-Id: nCQQ7cw92dCJJoH1cwbEv5ZBFmsEyFgSlVfmljp9" \
 -H "X-Parse-REST-API-Key: BAamVLwiBS0XY64WhlYfxADSq0FjRSP97fIkWu4d" \
 -H "Content-Type: application/json" \
--d '{ "where": { "deviceType": "ios" }, "data": { "alert": "Hello World!" }}' \
+-d '{ "where": { "channels": "global" }, "data": { "alert": "Hello World on global!" }}' \
+https://api.parse.com/1/push
+
+curl -X POST \
+-H "X-Parse-Application-Id: nCQQ7cw92dCJJoH1cwbEv5ZBFmsEyFgSlVfmljp9" \
+-H "X-Parse-REST-API-Key: BAamVLwiBS0XY64WhlYfxADSq0FjRSP97fIkWu4d" \
+-H "Content-Type: application/json" \
+-d '{ "where": { "channels": "allFavArtists" }, "data": { "alert": "Hello for all favorite Artists!" }}' \
 https://api.parse.com/1/push
 
 curl -X POST \
