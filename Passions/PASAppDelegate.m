@@ -45,6 +45,10 @@
         }
     }
 	
+	// TODO: handle this later in the app
+	// this gives you a chance to load all data from the current users favorite artists
+	// freeze the background view while presenting a modal to explain why notifications are needed
+	// after dismissing the modal reload the table
 	// Register for remote notifications
 	[application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
 													 UIRemoteNotificationTypeAlert |
@@ -54,16 +58,12 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+	// TODO: can we check if we are subscribed already?
 	// Store the deviceToken in the current installation and save it to Parse.
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
-    currentInstallation.channels = @[@"global"];
+    currentInstallation.channels = @[@"global", @"allFavArtists"];
     [currentInstallation saveInBackground];
-
-	// From the starter project
-	[PFPush storeDeviceToken:deviceToken];
-    [PFPush subscribeToChannelInBackground:@"" target:self selector:@selector(subscribeFinished:error:)];
-
 }
 
 - (void)subscribeFinished:(NSNumber *)result error:(NSError *)error

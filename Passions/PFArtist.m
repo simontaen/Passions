@@ -38,7 +38,7 @@
 + (PFQuery *)favArtistsForCurrentUser
 {
 	PFQuery *query = [PFArtist query];
-	[query whereKey:@"favByUsers" containsAllObjectsInArray:@[[PFUser currentUser]]];
+	[query whereKey:@"favByUsers" containsAllObjectsInArray:@[[PFUser currentUser].objectId]];
 	[query orderByAscending:@"name"];
 	return query;
 }
@@ -65,7 +65,7 @@
 				
 				// add user to artist
 				PFArtist *artist = artists.lastObject;
-				[artist addCurrentUserAsFavorite];
+				[artist addCurrentUserAsFavoriteAndRegisterForNotifications];
 				[artist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 					// The artist exists and the user has favorited him
 					// ready to pass it back to the caller
@@ -91,7 +91,7 @@
 				
 				
 			} else {
-				NSLog(@"Too many artists found (%lu)", artists.count);
+				NSLog(@"Too many artists found (%u)", artists.count);
 			}
 		} else {
 			NSLog(@"%@", error);
@@ -99,10 +99,15 @@
 	}];
 }
 
-- (void)addCurrentUserAsFavorite
+- (void)addCurrentUserAsFavoriteAndRegisterForNotifications
 {
-	// One-to-Many relationship created here!
-	[self addObject:[PFUser currentUser] forKey:@"favByUsers"];
+	// register notifications
+	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+	[currentInstallation addObject:self.objectId forKey:@"favArtists"];
+	[currentInstallation saveInBackground];
+	
+	// add user as "fan" to the artist, currently I don't use this relation
+	[self addObject:[PFUser currentUser].objectId forKey:@"favByUsers"];
 }
 
 + (void)createArtistFavoritedByCurrentUser:(NSString *)artistName withBlock:(void (^)(PFArtist *artist, NSError *error))block
@@ -112,7 +117,7 @@
 	newArtist.name	= artistName;
 	
 	// create the relationsship with the user
-	[newArtist addCurrentUserAsFavorite];
+	[newArtist addCurrentUserAsFavoriteAndRegisterForNotifications];
 	
 	// Allow public write access (other users need to modify the Artist when they favorite it)
 	PFACL *artistACL = [PFACL ACL];
@@ -129,7 +134,6 @@
 	}];
 }
 
-
 #pragma mark - removing / deleting
 
 + (void)removeCurrentUserFromArtist:(PFArtist *)artist withBlock:(void (^)(BOOL succeeded, NSError *error))block
@@ -144,7 +148,7 @@
 - (void)removeCurrentUserAsFavorite
 {
 	// One-to-Many relationship created here!
-	[self removeObject:[PFUser currentUser] forKey:@"favByUsers"];
+	[self removeObject:[PFUser currentUser].objectId forKey:@"favByUsers"];
 }
 
 
