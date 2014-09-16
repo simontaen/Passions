@@ -138,16 +138,21 @@
 
 + (void)removeCurrentUserFromArtist:(PFArtist *)artist withBlock:(void (^)(BOOL succeeded, NSError *error))block
 {
-	[artist removeCurrentUserAsFavorite];
+	[artist removeCurrentUserAsFavoriteAndDeregisterNotifications];
 	
 	[artist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 		block(succeeded, error);
 	}];
 }
 
-- (void)removeCurrentUserAsFavorite
+- (void)removeCurrentUserAsFavoriteAndDeregisterNotifications
 {
-	// One-to-Many relationship created here!
+	// deregister notifications
+	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+	[currentInstallation removeObject:self.objectId forKey:@"favArtists"];
+	[currentInstallation saveInBackground];
+	
+	// remove the relation
 	[self removeObject:[PFUser currentUser].objectId forKey:@"favByUsers"];
 }
 
