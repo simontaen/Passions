@@ -59,6 +59,7 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
 	// TODO: can we check if we are subscribed already?
+	// TODO: this is where we create the installation, make sure you set an ACL
 	// Store the deviceToken in the current installation and save it to Parse.
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];

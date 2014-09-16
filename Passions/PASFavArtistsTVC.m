@@ -112,6 +112,7 @@
 //	NSLog(@"isDirtyForKey = %@", ([user isDirtyForKey:@"objectId"] ? @"YES" : @"NO"));
 	
 	if ([[PFUser currentUser] isDirty]) {
+		// TODO: this is where we create the user, make sure you set an ACL
 		// this must be a new user
 		// save it or else the query will crash
 		[[PFUser currentUser] save];
