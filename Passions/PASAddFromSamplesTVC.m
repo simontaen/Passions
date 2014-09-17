@@ -156,7 +156,7 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 	NSString *artistName = self.artistNames[indexPath.row];
 	cell.artistName.text = artistName;
 	
-	if ([self isFavoriteArtist:artistName]) {
+	if ([self _isFavoriteArtist:artistName]) {
 		cell.detailText.text = @"Favorite!";
 	} else {
 		cell.detailText.text = @"";
@@ -173,7 +173,7 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 	return;
 }
 
-- (BOOL)isFavoriteArtist:(NSString *)artistName
+- (BOOL)_isFavoriteArtist:(NSString *)artistName
 {
 	// get corrected name
 	// this might get a problem when artistNameCorrections is really big and loading from disk

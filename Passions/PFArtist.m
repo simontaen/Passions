@@ -26,11 +26,13 @@
 
 #pragma mark - Parse
 
-+ (void)load {
++ (void)load
+{
 	[self registerSubclass];
 }
 
-+ (NSString *)parseClassName {
++ (NSString *)parseClassName
+{
 	return @"Artist";
 }
 
@@ -46,6 +48,7 @@
 
 + (PFQuery *)_artistWithName:(NSString *)name
 {
+	NSParameterAssert(name);
 	PFQuery *query = [PFArtist query];
 	[query whereKey:@"name" equalTo:name];
 	return query;
@@ -56,6 +59,7 @@
 /// query in Parse, if found ok, if 0 create it, if >1 error
 + (void)favoriteArtistByCurrentUser:(NSString *)artistName withBlock:(void (^)(PFArtist *artist, NSError *error))block
 {
+	NSParameterAssert(artistName);
 	// Query for the Artist in Question
 	PFQuery *query = [PFArtist _artistWithName:artistName];
 	
@@ -124,6 +128,7 @@
 /// calls LFM for corrections and adds the Artists to Parse
 + (void)_createArtistFavoritedByCurrentUser:(NSString *)artistName withBlock:(void (^)(PFArtist *artist, NSError *error))block
 {
+	NSParameterAssert(artistName);
 	// artistName is from unknown source, needs correction
 	[[LastFmFetchr fetchr] getCorrectionForArtist:artistName completion:^(LFMArtist *data, NSError *error) {
 		// now get the corrected name

@@ -6,8 +6,7 @@
 //  Copyright (c) 2013 edgeguard. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <MediaPlayer/MediaPlayer.h>
+@import UIKit;
 #import "PASAddFromSamplesTVC.h"
 
 @interface PASAddFromMusicTVC : PASAddFromSamplesTVC

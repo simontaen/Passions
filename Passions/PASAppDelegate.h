@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 edgeguard. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface PASAppDelegate : UIResponder <UIApplicationDelegate>
 

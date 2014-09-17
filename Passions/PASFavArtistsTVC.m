@@ -54,7 +54,8 @@
 	//self.view.backgroundColor = [UIColor greenColor];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated
+{
 	[super viewDidAppear:animated];
 	[PASResources printViewControllerLayoutStack:self];
 }
@@ -66,7 +67,7 @@
 	// I can't remove the Artist from self.objects manually, need to reload, but seems to slow for the animation.
 	[tableView beginUpdates];
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
-		PFArtist *artist = [self artistAtIndexPath:indexPath];
+		PFArtist *artist = [self _artistAtIndexPath:indexPath];
 		
 		// De-favorite the user from the artist and reload the table view
 		[PFArtist removeCurrentUserFromArtist:artist withBlock:^(BOOL succeeded, NSError *error) {
@@ -85,26 +86,27 @@
 
 #pragma mark - Parse
 
-- (PFArtist *)artistAtIndexPath:(NSIndexPath *)indexPath
+- (PFArtist *)_artistAtIndexPath:(NSIndexPath *)indexPath
 {
 	return (PFArtist *)[self objectAtIndexPath:indexPath];
 }
 
-- (void)objectsDidLoad:(NSError *)error {
+- (void)objectsDidLoad:(NSError *)error
+{
     [super objectsDidLoad:error];
-    
     // This method is called every time objects are loaded from Parse via the PFQuery
 }
 
-- (void)objectsWillLoad {
+- (void)objectsWillLoad
+{
     [super objectsWillLoad];
-    
     // This method is called before a PFQuery is fired to get more objects
 }
 
 // Override to customize what kind of query to perform on the class. The default is to query for
 // all objects ordered by createdAt descending.
-- (PFQuery *)queryForTable {
+- (PFQuery *)queryForTable
+{
 //	PFUser *user = [PFUser currentUser];
 //	NSLog(@"isDataAvailable = %@", ([user isDataAvailable] ? @"YES" : @"NO"));
 //	NSLog(@"isDirty = %@", ([user isDirty] ? @"YES" : @"NO"));
@@ -132,7 +134,8 @@
 
 // Override to customize the look of a cell representing an object. The default is to display
 // a UITableViewCellStyleDefault style cell with the label being the first key in the object.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
+{
 	static NSString *CellIdentifier = @"FavArtist";
 	PFArtist *artist = (PFArtist *)object;
 	
@@ -140,7 +143,7 @@
 	
     // Configure the cell
     cell.textLabel.text = artist.name;
-    cell.detailTextLabel.text = [self stringForNumberOfAlbums:artist.totalAlbums];
+    cell.detailTextLabel.text = [self _stringForNumberOfAlbums:artist.totalAlbums];
 	
 	// get images, ordered big to small
 	NSArray *images = artist.images;
@@ -171,7 +174,7 @@
     return cell;
 }
 
-- (NSString *)stringForNumberOfAlbums:(NSNumber *)noOfAlbums
+- (NSString *)_stringForNumberOfAlbums:(NSNumber *)noOfAlbums
 {
 	if (noOfAlbums.longValue == 1) {
 		return [NSString stringWithFormat:@"%lu Album", noOfAlbums.longValue];

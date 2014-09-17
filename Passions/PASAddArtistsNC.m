@@ -34,7 +34,7 @@
 	[self.pageViewController.navigationItem setLeftBarButtonItem:lbbi];
 	
 	// init and add the page view controllers view controllers
-	self.pageViewController.viewControllers = @[[self viewControllerAtIndex:0], [self viewControllerAtIndex:1]];
+	self.pageViewController.viewControllers = @[[self _viewControllerAtIndex:0], [self _viewControllerAtIndex:1]];
 }
 
 #pragma mark - View Lifecycle
@@ -50,7 +50,7 @@
 	self.view.backgroundColor = [UIColor orangeColor];
 }
 
-- (PASAddFromSamplesTVC *)viewControllerAtIndex:(NSUInteger)index
+- (PASAddFromSamplesTVC *)_viewControllerAtIndex:(NSUInteger)index
 {
 	static PASAddFromSamplesTVC *addFromSamplesTVC;
 	static PASAddFromMusicTVC *addFromMusicTVC;

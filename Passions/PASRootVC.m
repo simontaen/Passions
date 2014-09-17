@@ -25,7 +25,7 @@
 	self.pageViewController = [[PASPageViewController alloc] initWithNibName:nil bundle:nil];
 	
 	// init and add the page view controllers view controllers
-	self.pageViewController.viewControllers = @[[self favArtistsNavController], [self timelineCVC]];
+	self.pageViewController.viewControllers = @[[self _favArtistsNavController], [self _timelineCVC]];
 }
 
 #pragma mark - View Lifecycle
@@ -48,13 +48,13 @@
 	self.view.backgroundColor = [UIColor yellowColor];
 }
 
-- (UINavigationController *)favArtistsNavController
+- (UINavigationController *)_favArtistsNavController
 {
 	// Create a nav controller to hack around the status bar problem (also creates containing view controller)
 	return [self.storyboard instantiateViewControllerWithIdentifier:@"FavArtistsNav"];
 }
 
-- (PASTimelineCVC *)timelineCVC
+- (PASTimelineCVC *)_timelineCVC
 {
 	return [self.storyboard instantiateViewControllerWithIdentifier:@"PASTimelineCVC"];
 }

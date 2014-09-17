@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 edgeguard. All rights reserved.
 //
 
+@import MediaPlayer;
 #import "PASAddFromMusicTVC.h"
 #import "UIImage+Scale.h"
 

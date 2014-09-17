@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 edgeguard. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 /// see http://stackoverflow.com/a/14220605
 @interface UIImage (Scale)
