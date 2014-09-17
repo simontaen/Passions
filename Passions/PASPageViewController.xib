@@ -6,8 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PASPageViewController">
             <connections>
+                <outlet property="containerView" destination="QqO-yS-0wb" id="yh8-q5-61t"/>
                 <outlet property="pageControlView" destination="pLt-1n-6KD" id="L2D-J2-tt1"/>
-                <outlet property="transitionView" destination="QqO-yS-0wb" id="gQ6-cS-oVX"/>
                 <outlet property="view" destination="DXh-iu-RBl" id="GZB-7G-nHz"/>
             </connections>
         </placeholder>

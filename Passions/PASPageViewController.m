@@ -38,8 +38,7 @@
 #pragma mark - PASPageViewController
 
 @interface PASPageViewController () <UIGestureRecognizerDelegate>
-// TODO: rename to containerView
-@property (weak, nonatomic) IBOutlet UIView *transitionView;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic, readwrite) UIViewController *selectedViewController;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControlView;
 @end
@@ -59,14 +58,14 @@
 												  action:@selector(edgePan:)];
 	leftEdge.edges = UIRectEdgeLeft;
 	leftEdge.delegate = self;
-	[self.transitionView addGestureRecognizer:leftEdge];
+	[self.containerView addGestureRecognizer:leftEdge];
 	
 	UIScreenEdgePanGestureRecognizer *rightEdge = [[UIScreenEdgePanGestureRecognizer alloc]
 												   initWithTarget:self
 												   action:@selector(edgePan:)];
 	rightEdge.edges = UIRectEdgeRight;
 	rightEdge.delegate = self;
-	[self.transitionView addGestureRecognizer:rightEdge];
+	[self.containerView addGestureRecognizer:rightEdge];
 	
 	// update the page control
 	self.pageControlView.numberOfPages = self.viewControllers.count;
@@ -112,7 +111,7 @@
 	// remove the currently selected view controller
 	[self.selectedViewController willMoveToParentViewController:nil];
 	if([self.selectedViewController isViewLoaded]
-	   && self.selectedViewController.view.superview == self.transitionView) {
+	   && self.selectedViewController.view.superview == self.containerView) {
 		[self.selectedViewController.view removeFromSuperview];
 	}
 	[self.selectedViewController removeFromParentViewController];
@@ -210,14 +209,14 @@
 	UIView *toView = toVc.view;
 	[toView setTranslatesAutoresizingMaskIntoConstraints:YES];
 	toView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	toView.frame = self.transitionView.bounds;
+	toView.frame = self.containerView.bounds;
 	
 	[fromVc willMoveToParentViewController:nil];
 	[self addChildViewController:toVc];
 	
 	// If this is the initial presentation, add the new child with no animation.
 	if (!fromVc) {
-		[self.transitionView addSubview:toVc.view];
+		[self.containerView addSubview:toVc.view];
 		[toVc didMoveToParentViewController:self];
 		return;
 	}
