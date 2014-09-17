@@ -21,7 +21,7 @@
 @dynamic favByUsers;
 @dynamic images;
 
-// maybe a UIImage getter (small, medium, large), see https://parse.com/docs/ios_guide#subclasses-properties/iOS
+// TODO: UIImage getter (small, medium, large), see https://parse.com/docs/ios_guide#subclasses-properties/iOS
 
 #pragma mark - Parse
 
@@ -43,7 +43,7 @@
 	return query;
 }
 
-+ (PFQuery *)artistWithName:(NSString *)name
++ (PFQuery *)_artistWithName:(NSString *)name
 {
 	PFQuery *query = [PFArtist query];
 	[query whereKey:@"name" equalTo:name];
@@ -52,20 +52,20 @@
 
 #pragma mark - adding / creating
 
+/// query in Parse, if found ok, if 0 create it, if >1 error
 + (void)favoriteArtistByCurrentUser:(NSString *)artistName withBlock:(void (^)(PFArtist *artist, NSError *error))block
 {
 	// Query for the Artist in Question
-	PFQuery *query = [PFArtist artistWithName:artistName];
+	PFQuery *query = [PFArtist _artistWithName:artistName];
 	
 	[query findObjectsInBackgroundWithBlock:^(NSArray *artists, NSError *error) {
 		if (artists && !error) {
 			if (artists.count == 1) {
 				// exactly one is expected, no duplicates allowed
-				// TODO: need to call corrections since we only get exact matches on the artist name
 				
 				// add user to artist
-				PFArtist *artist = artists.lastObject;
-				[artist addCurrentUserAsFavoriteAndRegisterForNotifications];
+				PFArtist *artist = [artists firstObject];
+				[artist _addCurrentUserAsFavoriteAndRegisterForNotifications];
 				[artist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 					// The artist exists and the user has favorited him
 					// ready to pass it back to the caller
@@ -79,7 +79,7 @@
 				
 			} else if (artists.count == 0) {
 				// the artist does not exists yet, create it
-				[PFArtist createArtistFavoritedByCurrentUser:artistName withBlock:^(PFArtist *artist, NSError *error) {
+				[PFArtist _createArtistFavoritedByCurrentUser:artistName withBlock:^(PFArtist *artist, NSError *error) {
 					// The artist exists and the user has favorited him
 					// ready to pass it back to the caller
 					if (artist && !error) {
@@ -93,19 +93,20 @@
 			} else {
 				NSLog(@"Too many artists found (%u)", (int)artists.count);
 			}
+			
 		} else {
 			NSLog(@"%@", error);
 		}
 	}];
 }
 
-- (void)addCurrentUserAsFavoriteAndRegisterForNotifications
+- (void)_addCurrentUserAsFavoriteAndRegisterForNotifications
 {
-	[self registerCurrentUserForNotifications];
-	[self addCurrentUserAsFavorite];
+	[self _registerCurrentUserForNotifications];
+	[self _addCurrentUserAsFavorite];
 }
 
-- (void)registerCurrentUserForNotifications
+- (void)_registerCurrentUserForNotifications
 {
 	// register notifications
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
@@ -113,20 +114,23 @@
 	[currentInstallation saveInBackground];
 }
 
-- (void)addCurrentUserAsFavorite
+- (void)_addCurrentUserAsFavorite
 {
 	// add user as "fan" to the artist, currently I don't use this relation
 	[self addObject:[PFUser currentUser].objectId forKey:@"favByUsers"];
 }
 
-+ (void)createArtistFavoritedByCurrentUser:(NSString *)artistName withBlock:(void (^)(PFArtist *artist, NSError *error))block
+/// calls LFM for corrections and adds the Artists to Parse
++ (void)_createArtistFavoritedByCurrentUser:(NSString *)artistName withBlock:(void (^)(PFArtist *artist, NSError *error))block
 {
+	// TODO: need to call corrections since we only get exact matches on the artist name
+	
 	// Create a new Artist object
 	PFArtist *newArtist = [PFArtist object];
 	newArtist.name	= artistName;
 	
 	// create the relationsship with the user, remember we DO NOT have an objectId currently!
-	[newArtist addCurrentUserAsFavorite];
+	[newArtist _addCurrentUserAsFavorite];
 	
 	// Allow public write access (other users need to modify the Artist when they favorite it)
 	PFACL *artistACL = [PFACL ACL];
@@ -137,7 +141,7 @@
 	[newArtist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 		if (succeeded && !error) {
 			// the new artist exists, register for notifications now
-			[newArtist registerCurrentUserForNotifications];
+			[newArtist _registerCurrentUserForNotifications];
 			block(newArtist, nil);
 		} else {
 			block(nil, error);
@@ -149,14 +153,14 @@
 
 + (void)removeCurrentUserFromArtist:(PFArtist *)artist withBlock:(void (^)(BOOL succeeded, NSError *error))block
 {
-	[artist removeCurrentUserAsFavoriteAndDeregisterNotifications];
+	[artist _removeCurrentUserAsFavoriteAndDeregisterNotifications];
 	
 	[artist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 		block(succeeded, error);
 	}];
 }
 
-- (void)removeCurrentUserAsFavoriteAndDeregisterNotifications
+- (void)_removeCurrentUserAsFavoriteAndDeregisterNotifications
 {
 	// deregister notifications
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
