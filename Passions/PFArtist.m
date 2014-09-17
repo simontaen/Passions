@@ -101,11 +101,20 @@
 
 - (void)addCurrentUserAsFavoriteAndRegisterForNotifications
 {
+	[self registerCurrentUserForNotifications];
+	[self addCurrentUserAsFavorite];
+}
+
+- (void)registerCurrentUserForNotifications
+{
 	// register notifications
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 	[currentInstallation addObject:self.objectId forKey:@"favArtists"];
 	[currentInstallation saveInBackground];
-	
+}
+
+- (void)addCurrentUserAsFavorite
+{
 	// add user as "fan" to the artist, currently I don't use this relation
 	[self addObject:[PFUser currentUser].objectId forKey:@"favByUsers"];
 }
@@ -116,8 +125,8 @@
 	PFArtist *newArtist = [PFArtist object];
 	newArtist.name	= artistName;
 	
-	// create the relationsship with the user
-	[newArtist addCurrentUserAsFavoriteAndRegisterForNotifications];
+	// create the relationsship with the user, remember we DO NOT have an objectId currently!
+	[newArtist addCurrentUserAsFavorite];
 	
 	// Allow public write access (other users need to modify the Artist when they favorite it)
 	PFACL *artistACL = [PFACL ACL];
@@ -127,6 +136,8 @@
 	
 	[newArtist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 		if (succeeded && !error) {
+			// the new artist exists, register for notifications now
+			[newArtist registerCurrentUserForNotifications];
 			block(newArtist, nil);
 		} else {
 			block(nil, error);
