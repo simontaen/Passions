@@ -10,8 +10,9 @@
 #import "UIImageView+AFNetworking.h"
 #import "UIImage+Scale.h"
 #import "PFArtist.h"
+#import "PASAddArtistsNC.h"
 
-@interface PASFavArtistsTVC()
+@interface PASFavArtistsTVC() <PASAddArtistsTVCDelegate>
 
 @end
 
@@ -200,9 +201,18 @@
  }
  */
 
+#pragma mark - PASAddArtistsTVCDelegate
+
+- (void)viewController:(PASAddFromSamplesTVC *)vc didAddArtists:(BOOL)didAddArtists
+{
+	[self _refreshUI];
+	// Go back to the previous view
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - Navigation
 
-- (void)refreshUI
+- (void)_refreshUI
 {
 	// TODO: make it more clear to the user that he added objects
 	[self loadObjects];
@@ -215,8 +225,8 @@
 		if ([segue.destinationViewController respondsToSelector:@selector(setFavArtistNames:)]) {
 			[segue.destinationViewController performSelector:@selector(setFavArtistNames:) withObject:[self artistNames]];
 		}
-		if ([segue.destinationViewController respondsToSelector:@selector(setFavArtistsTVC:)]) {
-			[segue.destinationViewController performSelector:@selector(setFavArtistsTVC:) withObject:self];
+		if ([segue.destinationViewController respondsToSelector:@selector(setMyDelegate:)]) {
+			[segue.destinationViewController performSelector:@selector(setMyDelegate:) withObject:self];
 		}
 	}
 }

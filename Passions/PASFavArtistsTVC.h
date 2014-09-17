@@ -10,6 +10,4 @@
 
 @interface PASFavArtistsTVC : PFQueryTableViewController
 
-- (void)refreshUI;
-
 @end

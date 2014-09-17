@@ -17,6 +17,15 @@
 
 @implementation PASAddArtistsNC
 
+#pragma mark - Accessors
+
+- (void)setFavArtistNames:(NSArray *)favArtistNames
+{
+	for (PASAddFromSamplesTVC *vc in self.pageViewController.viewControllers) {
+		vc.favArtistNames = favArtistNames;
+	}
+}
+
 #pragma mark - Init
 
 - (void)awakeFromNib
@@ -82,12 +91,9 @@
 - (IBAction)doneButtonHandler:(UIBarButtonItem *)sender
 {
 	PASAddFromSamplesTVC *dissapearingTVC = ((PASAddFromSamplesTVC*) self.pageViewController.selectedViewController);
-	if ([dissapearingTVC didAddArtists]) {
-		[self.favArtistsTVC refreshUI];
+	if ([self.myDelegate respondsToSelector:@selector(viewController:didAddArtists:)]) {
+		[self.myDelegate viewController:dissapearingTVC didAddArtists:[dissapearingTVC didAddArtists]];
 	}
-	
-	// Go back to the previous view
-	[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

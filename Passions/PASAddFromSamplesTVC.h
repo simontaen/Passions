@@ -7,7 +7,6 @@
 //
 
 @import UIKit;
-#import "PASFavArtistsTVC.h"
 #import "PASAddingArtistCell.h"
 
 @interface PASAddFromSamplesTVC : UITableViewController

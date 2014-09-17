@@ -8,7 +8,6 @@
 
 #import "PASRootVC.h"
 #import "PASPageViewController.h"
-#import "PASFavArtistsTVC.h"
 #import "PASTimelineCVC.h"
 
 @interface PASRootVC ()
