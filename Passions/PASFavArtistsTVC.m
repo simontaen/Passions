@@ -205,7 +205,9 @@
 
 - (void)viewController:(PASAddFromSamplesTVC *)vc didAddArtists:(BOOL)didAddArtists
 {
-	[self _refreshUI];
+	if (didAddArtists) {
+		[self _refreshUI];
+	}
 	// Go back to the previous view
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
