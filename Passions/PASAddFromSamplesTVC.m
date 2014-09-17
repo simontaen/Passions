@@ -8,7 +8,6 @@
 
 #import "PASAddFromSamplesTVC.h"
 #import "PFArtist.h"
-#import "LastFmFetchr.h"
 #import "PASAddingArtistCell.h"
 
 static NSString *kCellIdentifier = @"PASAddingArtistCell";
@@ -21,7 +20,7 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 @property (nonatomic, strong) NSMutableArray* justFavArtistNames; // of NSString, LFM corrected!
 @property (nonatomic, strong) dispatch_queue_t favoritesQ;
 
-@property (nonatomic, strong) NSMutableDictionary* artistNameCorrections; // of NSString (display) -> NSString (internal on Favorite Artists TVC)
+@property (nonatomic, strong) NSMutableDictionary* artistNameCorrections; // of NSString (display) -> NSString (internal on Favorite Artists TVC, LFM corrected)
 @property (nonatomic, strong) dispatch_queue_t correctionsQ;
 
 @end
@@ -191,43 +190,29 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	PASAddingArtistCell *cell = (PASAddingArtistCell *)[tableView cellForRowAtIndexPath:indexPath];
+	cell.userInteractionEnabled = NO;
 	[cell.activityIndicator startAnimating];
 	
 	NSString *artistName = self.artistNames[indexPath.row];
 	NSString *correctedName = [self.artistNameCorrections objectForKey:artistName];
+	NSString *resolvedName = correctedName ?: artistName;
 	
-	// TODO: grey out the row and put a spinner on it
-	// disable user interaction
-	
-	if (correctedName) {
-		[self favoriteArtist:correctedName atIndexPath:indexPath forCell:cell];
-		
-	} else {
-		// artistName is straight from what this TVC displays, needs correction
-		[[LastFmFetchr fetchr] getCorrectionForArtist:artistName completion:^(LFMArtist *data, NSError *error) {
-			if (!error) {
-				// now get the corrected name and cache it!
-				NSString *resolvedName = data ? data.name : artistName;
-				dispatch_barrier_async(self.correctionsQ, ^{
-					[self.artistNameCorrections setObject:resolvedName forKey:artistName];
-				});
-				
-				// favorite the artist with the corrected name
-				// TODO: maybe this means I don't have to do the correction on the server!
-				[self favoriteArtist:resolvedName atIndexPath:indexPath forCell:cell];
-			}
-		}];
-	}
-}
-
-- (void)favoriteArtist:(NSString *)name atIndexPath:(NSIndexPath *)indexPath forCell:(PASAddingArtistCell *)cell
-{
-	[PFArtist favoriteArtistByCurrentUser:name withBlock:^(PFArtist *artist, NSError *error) {
+	[PFArtist favoriteArtistByCurrentUser:resolvedName withBlock:^(PFArtist *artist, NSError *error) {
 		if (artist && !error) {
+			// get the finalized name on parse
+			NSString *parseArtistName = artist.name;
+			
+			dispatch_barrier_async(self.correctionsQ, ^{
+				// cache the mapping userDisplayed -> corrected
+				[self.artistNameCorrections setObject:parseArtistName forKey:artistName];
+			});
+			
 			dispatch_barrier_async(self.favoritesQ, ^{
-				[self.justFavArtistNames addObject:name];
+				[self.justFavArtistNames addObject:parseArtistName];
+				
 				dispatch_async(dispatch_get_main_queue(), ^{
 					[cell.activityIndicator stopAnimating];
+					cell.userInteractionEnabled = @YES;
 					[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 				});
 			});

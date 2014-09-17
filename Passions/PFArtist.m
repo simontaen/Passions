@@ -8,6 +8,7 @@
 
 #import "PFArtist.h"
 #import <Parse/PFObject+Subclass.h>
+#import "LastFmFetchr.h"
 
 @implementation PFArtist
 
@@ -123,29 +124,35 @@
 /// calls LFM for corrections and adds the Artists to Parse
 + (void)_createArtistFavoritedByCurrentUser:(NSString *)artistName withBlock:(void (^)(PFArtist *artist, NSError *error))block
 {
-	// TODO: need to call corrections since we only get exact matches on the artist name
-	
-	// Create a new Artist object
-	PFArtist *newArtist = [PFArtist object];
-	newArtist.name	= artistName;
-	
-	// create the relationsship with the user, remember we DO NOT have an objectId currently!
-	[newArtist _addCurrentUserAsFavorite];
-	
-	// Allow public write access (other users need to modify the Artist when they favorite it)
-	PFACL *artistACL = [PFACL ACL];
-	[artistACL setPublicReadAccess:YES];
-	[artistACL setPublicWriteAccess:YES];
-	[newArtist setACL:artistACL];
-	
-	[newArtist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-		if (succeeded && !error) {
-			// the new artist exists, register for notifications now
-			[newArtist _registerCurrentUserForNotifications];
-			block(newArtist, nil);
-		} else {
-			block(nil, error);
-		}
+	// artistName is from unknown source, needs correction
+	[[LastFmFetchr fetchr] getCorrectionForArtist:artistName completion:^(LFMArtist *data, NSError *error) {
+		// now get the corrected name
+		BOOL isValidName = !error && data && data.name && ![data.name isEqualToString:@""];
+		NSString *resolvedName = isValidName ? data.name : artistName;
+		
+		// Create a new Artist object
+		PFArtist *newArtist = [PFArtist object];
+		newArtist.name	= resolvedName;
+		
+		// create the relationsship with the user, remember we DO NOT have an objectId currently!
+		[newArtist _addCurrentUserAsFavorite];
+		
+		// Allow public write access (other users need to modify the Artist when they favorite it)
+		PFACL *artistACL = [PFACL ACL];
+		[artistACL setPublicReadAccess:YES];
+		[artistACL setPublicWriteAccess:YES];
+		[newArtist setACL:artistACL];
+		
+		[newArtist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+			if (succeeded && !error) {
+				// the new artist exists, register for notifications now
+				[newArtist _registerCurrentUserForNotifications];
+				block(newArtist, nil);
+			} else {
+				block(nil, error);
+			}
+		}];
+		
 	}];
 }
 
