@@ -15,6 +15,9 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 @interface PASAddFromSamplesTVC ()
 @property (nonatomic, strong) NSArray* artists; // of NSString
 @property (nonatomic, strong) NSArray* artistNames; // of NSString
+@property (nonatomic, strong) NSArray *sectionIndex; // NSString
+@property (nonatomic, strong) NSDictionary *sections; // NSString -> NSMutableArray ( "C" -> @["Artist1", "Artist2"] )
+
 
 // http://stackoverflow.com/a/5511403 / http://stackoverflow.com/a/13705529
 @property (nonatomic, strong) NSMutableArray* justFavArtistNames; // of NSString, LFM corrected!
@@ -55,6 +58,51 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 		_artistNames = self.artists;
 	}
 	return _artistNames;
+}
+
+- (NSArray *)sectionIndex
+{
+	if (!_sectionIndex) {
+		NSMutableArray *array = [[self.sections allKeys] mutableCopy];
+		BOOL containsNonAlphabetic = [array containsObject:@"#"];
+		if (containsNonAlphabetic) {
+			[array removeObject:@"#"];
+		}
+		[array sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+		if (containsNonAlphabetic) {
+			[array addObject:@"#"];
+		}
+		_sectionIndex = [NSArray arrayWithArray:array];
+	}
+	return _sectionIndex;
+}
+
+- (NSDictionary *)sections
+{
+	if (!_sections) {
+		NSArray *index = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M",
+						   @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", @"#"];
+		NSMutableDictionary *mutableSections = [[NSMutableDictionary alloc] initWithCapacity:index.count];
+		
+		for (NSString *name in self.artistNames) {
+			NSString *firstChar = [[name substringToIndex:1] uppercaseString];
+			
+			if (![index containsObject:firstChar]) {
+				// add it to the last element of the index
+				firstChar = [index lastObject];
+			}
+			
+			NSMutableArray *array = mutableSections[firstChar];
+			if (!array) {
+				array = [NSMutableArray array];
+				mutableSections[firstChar] = array;
+			}
+			
+			[array addObject:name];
+		}
+		_sections = [NSDictionary dictionaryWithDictionary:mutableSections];
+	}
+	return _sections;
 }
 
 - (BOOL)didAddArtists
@@ -141,17 +189,14 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	if (!self.artists.count) {
-		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-	}
-    return [self.artists count];
+    return [self.sections[self.sectionIndex[section]] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	PASAddingArtistCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
 	
-	NSString *artistName = self.artistNames[indexPath.row];
+	NSString *artistName = self.sections[self.sectionIndex[indexPath.section]][indexPath.row];
 	cell.artistName.text = artistName;
 	
 	if ([self _isFavoriteArtist:artistName]) {
@@ -181,6 +226,30 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 	NSString *resolvedName = correctedName ? correctedName : artistName;
 	
 	return [self.favArtistNames containsObject:resolvedName] || [self.justFavArtistNames containsObject:resolvedName];
+}
+
+#pragma mark - UITableViewDataSource Index
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+	return self.sectionIndex.count;
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+	return self.sectionIndex;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+{
+	return index;
+}
+
+#pragma mark - UITableViewDataSource Header/Footer Titles
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+	return self.sectionIndex[section];
 }
 
 #pragma mark - UITableViewDelegate
