@@ -260,7 +260,7 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 	cell.userInteractionEnabled = NO;
 	[cell.activityIndicator startAnimating];
 	
-	NSString *artistName = self.artistNames[indexPath.row];
+	NSString *artistName = self.sections[self.sectionIndex[indexPath.section]][indexPath.row];
 	NSString *correctedName = [self.artistNameCorrections objectForKey:artistName];
 	NSString *resolvedName = correctedName ?: artistName;
 	
