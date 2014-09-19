@@ -41,16 +41,11 @@
 	return _artists;
 }
 
-- (NSArray *)artistNames
+- (NSString *)nameForArtist:(id)artist
 {
-	if (!_artistNames) {
-		NSMutableArray *names = [[NSMutableArray alloc] initWithCapacity:self.artists.count];
-		for (MPMediaItem *item in self.artists) {
-			[names addObject:[item valueForProperty: MPMediaItemPropertyArtist]];
-		}
-		_artistNames = names;
-	}
-	return _artistNames;
+	NSAssert([artist isKindOfClass:[MPMediaItem class]], @"%@ cannot handle artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
+	;
+	return [artist valueForProperty: MPMediaItemPropertyArtist];
 }
 
 #pragma mark - View Lifecycle
@@ -70,7 +65,7 @@
 
 - (void)setThumbnailImageForCell:(PASAddingArtistCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-	MPMediaItem *item = self.artists[indexPath.row];
+	MPMediaItem *item = [self artistForIndexPath:indexPath];
 	__weak typeof(cell) weakCell = cell;
 	dispatch_async(self.artworkQ, ^{
 		
@@ -78,15 +73,15 @@
 		UIImage *artworkImage = [artwork imageWithSize:cell.artistImage.image.size];
 		UIImage *newImage;
 		
-		if (artworkImage) {
-			newImage = [artworkImage PASscaleToAspectFillSize:weakCell.artistImage.image.size];
-		} else {
-			newImage = [PASResources artistThumbnailPlaceholder];
-		}
 		dispatch_async(dispatch_get_main_queue(), ^{
 			weakCell.artistImage.image = newImage;
 		});
 	});
 }
+		if (artworkImage) {
+			newImage = [artworkImage PASscaleToAspectFillSize:weakCell.artistImage.image.size];
+		} else {
+			newImage = [PASResources artistThumbnailPlaceholder];
+		}
 
 @end

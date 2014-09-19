@@ -13,8 +13,7 @@
 static NSString *kCellIdentifier = @"PASAddingArtistCell";
 
 @interface PASAddFromSamplesTVC ()
-@property (nonatomic, strong) NSArray* artists; // of NSString
-@property (nonatomic, strong) NSArray* artistNames; // of NSString
+@property (nonatomic, strong) NSArray *artists; // of NSString
 @property (nonatomic, strong) NSArray *sectionIndex; // NSString
 @property (nonatomic, strong) NSDictionary *sections; // NSString -> NSMutableArray ( "C" -> @["Artist1", "Artist2"] )
 
@@ -52,12 +51,16 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 	return _artists;
 }
 
-- (NSArray *)artistNames
+- (NSString *)nameForArtist:(id)artist
 {
-	if (!_artistNames) {
-		_artistNames = self.artists;
-	}
-	return _artistNames;
+	NSAssert([artist isKindOfClass:[NSString class]], @"%@ cannot handle artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
+	;
+	return artist;
+}
+
+- (id)artistForIndexPath:(NSIndexPath *)indexPath
+{
+	return self.sections[self.sectionIndex[indexPath.section]][indexPath.row];
 }
 
 - (NSArray *)sectionIndex
@@ -84,7 +87,8 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 						   @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", @"#"];
 		NSMutableDictionary *mutableSections = [[NSMutableDictionary alloc] initWithCapacity:index.count];
 		
-		for (NSString *name in self.artistNames) {
+		for (id artist in self.artists) {
+			NSString *name = [self nameForArtist:artist];
 			NSString *firstChar = [[name substringToIndex:1] uppercaseString];
 			
 			if (![index containsObject:firstChar]) {
@@ -98,7 +102,7 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 				mutableSections[firstChar] = array;
 			}
 			
-			[array addObject:name];
+			[array addObject:artist];
 		}
 		_sections = [NSDictionary dictionaryWithDictionary:mutableSections];
 	}
@@ -196,7 +200,7 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 {
 	PASAddingArtistCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
 	
-	NSString *artistName = self.sections[self.sectionIndex[indexPath.section]][indexPath.row];
+	NSString *artistName = [self nameForArtist:[self artistForIndexPath:indexPath]];
 	cell.artistName.text = artistName;
 	
 	if ([self _isFavoriteArtist:artistName]) {
@@ -260,7 +264,7 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 	cell.userInteractionEnabled = NO;
 	[cell.activityIndicator startAnimating];
 	
-	NSString *artistName = self.sections[self.sectionIndex[indexPath.section]][indexPath.row];
+	NSString *artistName = [self nameForArtist:[self artistForIndexPath:indexPath]];
 	NSString *correctedName = [self.artistNameCorrections objectForKey:artistName];
 	NSString *resolvedName = correctedName ?: artistName;
 	

@@ -17,7 +17,8 @@
 
 // for subclassing
 - (NSArray *)artists; // of the appropriate object
-- (NSArray *)artistNames; // of NSString
+- (NSString *)nameForArtist:(id)artist;
+- (id)artistForIndexPath:(NSIndexPath *)indexPath;
 - (NSString *)getTitle;
 - (void)setThumbnailImageForCell:(PASAddingArtistCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
