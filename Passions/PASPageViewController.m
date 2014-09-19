@@ -53,19 +53,11 @@
     [super viewDidLoad];
 	
 	// setup gesture recognizers
-	UIScreenEdgePanGestureRecognizer *leftEdge = [[UIScreenEdgePanGestureRecognizer alloc]
-												  initWithTarget:self
-												  action:@selector(edgePan:)];
-	leftEdge.edges = UIRectEdgeLeft;
-	leftEdge.delegate = self;
-	[self.containerView addGestureRecognizer:leftEdge];
-	
-	UIScreenEdgePanGestureRecognizer *rightEdge = [[UIScreenEdgePanGestureRecognizer alloc]
-												   initWithTarget:self
-												   action:@selector(edgePan:)];
-	rightEdge.edges = UIRectEdgeRight;
-	rightEdge.delegate = self;
-	[self.containerView addGestureRecognizer:rightEdge];
+	UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc]
+											 initWithTarget:self
+											 action:@selector(pan:)];
+	//panRecognizer.delegate = self;
+	[self.containerView addGestureRecognizer:panRecognizer];
 	
 	// update the page control
 	self.pageControlView.numberOfPages = self.viewControllers.count;
@@ -160,11 +152,11 @@
 	}
 }
 
-#pragma mark - UIScreenEdgePanGestureRecognizer
+#pragma mark - UIPanGestureRecognizer
 
-- (void)edgePan:(UIScreenEdgePanGestureRecognizer *)recognizer
+- (void)pan:(UIPanGestureRecognizer *)recognizer
 {
-	if (recognizer.state == UIGestureRecognizerStateEnded) {
+	if (recognizer.state == UIGestureRecognizerStateBegan) {
 		
 		BOOL leftToRight = [recognizer velocityInView:recognizer.view].x > 0;
 		
@@ -177,7 +169,7 @@
 			
 		}
 	}
-	NSLog(@"%lu", recognizer.state);
+	NSLog(@"%d", recognizer.state);
 }
 
 #pragma mark - UIGestureRecognizerDelegate
@@ -191,7 +183,7 @@
 {
 	// TODO: The recognition can probably be improved regarding the delete gesture on the TableViewCell
     BOOL result = NO;
-    if (([gestureRecognizer isKindOfClass:[UIScreenEdgePanGestureRecognizer class]]) && [otherGestureRecognizer.view isDescendantOfView:gestureRecognizer.view]) {
+    if (([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) && [otherGestureRecognizer.view isDescendantOfView:gestureRecognizer.view]) {
         result = YES;
     }
     return result;
@@ -296,9 +288,9 @@
 		self.presentationStyle = UIModalPresentationCustom;
 		self.containerView = fromVc.view.superview;
 		self.viewControllers = @{
-										UITransitionContextFromViewControllerKey:fromVc,
-										UITransitionContextToViewControllerKey:toVc,
-										};
+								 UITransitionContextFromViewControllerKey:fromVc,
+								 UITransitionContextToViewControllerKey:toVc,
+								 };
 		
 		// Set the view frame properties which make sense in our specialized ContainerViewController context. Views appear from and disappear to the sides, corresponding to where the icon buttons are positioned. So tapping a button to the right of the currently selected, makes the view disappear to the left and the new view appear from the right. The animator object can choose to use this to determine whether the transition should be going left to right, or right to left, for example.
 		CGFloat travelDistance = (goingRight ? -self.containerView.bounds.size.width : self.containerView.bounds.size.width);
