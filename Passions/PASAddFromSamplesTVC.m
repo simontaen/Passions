@@ -283,7 +283,7 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 				
 				dispatch_async(dispatch_get_main_queue(), ^{
 					[cell.activityIndicator stopAnimating];
-					cell.userInteractionEnabled = @YES;
+					cell.userInteractionEnabled = YES;
 					[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 				});
 			});
