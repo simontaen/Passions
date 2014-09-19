@@ -71,17 +71,12 @@
 		
 		MPMediaItemArtwork *artwork = [item valueForProperty: MPMediaItemPropertyArtwork];
 		UIImage *artworkImage = [artwork imageWithSize:cell.artistImage.image.size];
-		UIImage *newImage;
+		UIImage *newImage = artworkImage ?: [PASResources artistThumbnailPlaceholder];
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			weakCell.artistImage.image = newImage;
 		});
 	});
 }
-		if (artworkImage) {
-			newImage = [artworkImage PASscaleToAspectFillSize:weakCell.artistImage.image.size];
-		} else {
-			newImage = [PASResources artistThumbnailPlaceholder];
-		}
 
 @end
