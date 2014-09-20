@@ -52,7 +52,7 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+	[super viewDidLoad];
 	
 	// update the page control
 	self.pageControlView.numberOfPages = self.viewControllers.count;
@@ -68,13 +68,13 @@
 	[self setupDelegateForTransitionsBetweenViewControllers:self.viewControllers];
 	
 	// call the setter to make sure the view is swapped
-    self.selectedViewController = (self.selectedViewController ?: [self.viewControllers firstObject]);
+	self.selectedViewController = (self.selectedViewController ?: [self.viewControllers firstObject]);
 }
 
 - (void)viewDidLayoutSubviews
 {
-    [super viewDidLayoutSubviews];
-    [self doSomeCustomLayoutStuff];
+	[super viewDidLayoutSubviews];
+	[self doSomeCustomLayoutStuff];
 }
 
 - (void)doSomeCustomLayoutStuff
@@ -109,7 +109,7 @@
 		[self setupDelegateForTransitionsBetweenViewControllers:viewControllers];
 	}
 	
-    _viewControllers = viewControllers;
+	_viewControllers = viewControllers;
 	
 	self.selectedViewController = [_viewControllers firstObject];
 }
@@ -150,18 +150,18 @@
 
 - (int)selectedViewControllerIndex
 {
-    return (int)[self.viewControllers indexOfObject:self.selectedViewController];
+	return (int)[self.viewControllers indexOfObject:self.selectedViewController];
 }
 
 - (void)setSelectedViewControllerIndex:(int)selectedViewControllerIndex
 {
 	// this is the main method for user initiated view controller switching
-    if(selectedViewControllerIndex < 0
+	if(selectedViewControllerIndex < 0
 	   || selectedViewControllerIndex >= self.viewControllers.count
 	   || selectedViewControllerIndex == self.selectedViewControllerIndex)
-        return;
+		return;
 	
-    self.selectedViewController = [self.viewControllers objectAtIndex:selectedViewControllerIndex];
+	self.selectedViewController = [self.viewControllers objectAtIndex:selectedViewControllerIndex];
 	
 	if ([self.delegate respondsToSelector:@selector (pageViewController:didSelectViewController:)]) {
 		[self.delegate pageViewController:self didSelectViewController:self.selectedViewController];
@@ -175,7 +175,7 @@
 	
 	[self _transitionToChildViewController:newVc];
 	
-    _selectedViewController = newVc;
+	_selectedViewController = newVc;
 }
 
 #pragma mark - PASPageControlView Target-Action
@@ -273,14 +273,14 @@
 @implementation UIViewController (PASPageViewControllerAdditions)
 - (PASPageViewController *)pageViewController
 {
-    UIViewController *parent = [self parentViewController];
-    while(parent) {
-        if([parent isKindOfClass:[PASPageViewController class]]) {
-            return (PASPageViewController *)parent;
-        }
-        parent = [parent parentViewController];
-    }
-    return nil;
+	UIViewController *parent = [self parentViewController];
+	while(parent) {
+		if([parent isKindOfClass:[PASPageViewController class]]) {
+			return (PASPageViewController *)parent;
+		}
+		parent = [parent parentViewController];
+	}
+	return nil;
 }
 @end
 
