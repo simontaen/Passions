@@ -8,7 +8,7 @@
 
 #import "PASInteractiveTransition.h"
 
-@interface PASInteractiveTransition ()
+@interface PASInteractiveTransition () <PASPageViewControllerDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, weak) PASPageViewController *pageViewController;
 @end
 
