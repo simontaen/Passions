@@ -234,6 +234,10 @@
 		interactiveTransitionDelegate = [self.delegate pageViewController:self interactionControllerForTransitionFromViewController:fromVc toViewController:toVc];
 	}
 	interactiveTransitionDelegate = (interactiveTransitionDelegate ?: [PASInteractiveTransition new]);
+	if ([interactiveTransitionDelegate respondsToSelector:@selector (setAnimator:)]) {
+		// AWPercentDrivenInteractiveTransition
+		[interactiveTransitionDelegate performSelector:@selector(setAnimator:) withObject:animator];
+	}
 	
 	// Because of the nature of our view controller, with horizontally arranged buttons, we instantiate our private transition context with information about whether this is a left-to-right or right-to-left transition. The animator can use this information if it wants.
 	NSUInteger fromIndex = [self.viewControllers indexOfObject:fromVc];
@@ -371,9 +375,9 @@
 
 // Supress warnings by implementing empty interaction methods for the remainder of the protocol:
 
-- (void)updateInteractiveTransition:(CGFloat)percentComplete { NSLog(@"updateInteractiveTransition"); }
-- (void)finishInteractiveTransition { NSLog(@"finishInteractiveTransition"); }
-- (void)cancelInteractiveTransition { NSLog(@"cancelInteractiveTransition"); }
+- (void)updateInteractiveTransition:(CGFloat)percentComplete {}
+- (void)finishInteractiveTransition {}
+- (void)cancelInteractiveTransition {}
 
 @end
 

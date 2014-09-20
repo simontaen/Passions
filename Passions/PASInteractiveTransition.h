@@ -6,10 +6,11 @@
 //  Copyright (c) 2014 edgeguard. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 #import "PASPageViewController.h"
+#import "AWPercentDrivenInteractiveTransition.h"
 
 // <UIViewControllerInteractiveTransitioning>
-@interface PASInteractiveTransition : UIPercentDrivenInteractiveTransition
+@interface PASInteractiveTransition : AWPercentDrivenInteractiveTransition
 
 @end
