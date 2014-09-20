@@ -74,11 +74,8 @@
 - (void)viewDidLayoutSubviews
 {
 	[super viewDidLayoutSubviews];
-	[self doSomeCustomLayoutStuff];
-}
-
-- (void)doSomeCustomLayoutStuff
-{
+	
+	// custom layout for pageControlView
 	CGRect newFrame = self.pageControlView.frame;
 	CGFloat heightAdj = (int)(newFrame.size.height * 0.541);
 	CGFloat widthAdj = (int)(newFrame.size.width * 0.348);
