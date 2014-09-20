@@ -10,25 +10,43 @@
 
 @interface PASInteractiveTransition () <PASPageViewControllerDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, weak) PASPageViewController *pageViewController;
+@property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
+@property (nonatomic, assign) BOOL leftToRight;
 @end
 
 @implementation PASInteractiveTransition
 
+#pragma mark - PASPageViewControllerDelegate
+
+- (id<UIViewControllerInteractiveTransitioning>)pageViewController:(PASPageViewController *)pageViewController
+			  interactionControllerForTransitionFromViewController:(UIViewController *)fromViewController
+												  toViewController:(UIViewController *)toViewController
+{
+	return self;
+}
+
 - (void)pageViewController:(PASPageViewController *)pageViewController setupInteractionControllerForTransitionFromViewController:(UIViewController *)fromViewController
 		  toViewController:(UIViewController *)toViewController
 {
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
+	if (!self.panRecognizer) {
 		// cache the PVC for later reference
 		self.pageViewController = pageViewController;
 		
 		// setup gesture recognizers
-		UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc]
-												 initWithTarget:self
-												 action:@selector(pan:)];
+		self.panRecognizer = [[UIPanGestureRecognizer alloc]
+							  initWithTarget:self
+							  action:@selector(pan:)];
 		//panRecognizer.delegate = self;
-		[pageViewController addGestureRecognizerToContainerView:panRecognizer];
-	});
+		[pageViewController addGestureRecognizerToContainerView:self.panRecognizer];
+	}
+}
+
+#pragma mark - UIViewControllerInteractiveTransitioning
+
+- (void)startInteractiveTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
+	[super startInteractiveTransition:transitionContext];
+	
+	self.leftToRight = [self.panRecognizer velocityInView:self.panRecognizer.view].x > 0;
 }
 
 #pragma mark - UIPanGestureRecognizer
@@ -36,18 +54,27 @@
 - (void)pan:(UIPanGestureRecognizer *)recognizer
 {
 	if (recognizer.state == UIGestureRecognizerStateBegan) {
+		self.leftToRight = [recognizer velocityInView:recognizer.view].x > 0;
+		int selectedVcIdx = self.pageViewController.selectedViewControllerIndex;
 		
-		BOOL leftToRight = [recognizer velocityInView:recognizer.view].x > 0;
-		
-		int currentVCIndex = self.pageViewController.selectedViewControllerIndex;
-		if (!leftToRight && currentVCIndex != self.pageViewController.viewControllers.count-1) {
-			self.pageViewController.selectedViewControllerIndex = ++currentVCIndex;
-			
-		} else if (leftToRight && currentVCIndex > 0) {
-			self.pageViewController.selectedViewControllerIndex = --currentVCIndex;
-			
+		if (!self.leftToRight && selectedVcIdx != self.pageViewController.viewControllers.count - 1) {
+			// transition right
+			self.pageViewController.selectedViewControllerIndex = ++selectedVcIdx;
+		} else if (self.leftToRight && selectedVcIdx > 0) {
+			// transition left
+			self.pageViewController.selectedViewControllerIndex = --selectedVcIdx;
 		}
+		
+	} else if (recognizer.state == UIGestureRecognizerStateChanged) {
+		CGPoint translation = [recognizer translationInView:recognizer.view];
+		CGFloat d = translation.x / CGRectGetWidth(recognizer.view.bounds);
+		if (!self.leftToRight) d *= -1;
+		[self updateInteractiveTransition:d*0.5];
+		
+	} else if (recognizer.state >= UIGestureRecognizerStateEnded) {
+		[self finishInteractiveTransition];
 	}
+	
 	NSLog(@"%d", recognizer.state);
 }
 

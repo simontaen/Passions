@@ -10,6 +10,7 @@
 //  http://www.iosnomad.com/blog/2014/5/12/interactive-custom-container-view-controller-transitions
 
 #import "PASPageViewController.h"
+#import "PASInteractiveTransition.h"
 
 #pragma mark - PASPrivateTransitionContext
 
@@ -222,13 +223,20 @@
 		return;
 	}
 	
-	// Animate the transition by calling the animator with our private transition context. If we don't have a delegate, or if it doesn't return an animated transitioning object, we will use our own, private animator.
+	// Animate the transition by calling the animator with our private transition context.
+	// If we don't have a delegate, or if it doesn't return an animated transitioning object, we will use our own, private animator.
 	
 	id<UIViewControllerAnimatedTransitioning> animator = nil;
 	if ([self.delegate respondsToSelector:@selector (pageViewController:animationControllerForTransitionFromViewController:toViewController:)]) {
 		animator = [self.delegate pageViewController:self animationControllerForTransitionFromViewController:fromVc toViewController:toVc];
 	}
-	animator = (animator ?: [[PASTransitionAnimator alloc] init]);
+	animator = (animator ?: [PASTransitionAnimator new]);
+	
+	id<UIViewControllerInteractiveTransitioning> interactiveTransitionDelegate = nil;
+	if ([self.delegate respondsToSelector:@selector (pageViewController:interactionControllerForTransitionFromViewController:toViewController:)]) {
+		interactiveTransitionDelegate = [self.delegate pageViewController:self interactionControllerForTransitionFromViewController:fromVc toViewController:toVc];
+	}
+	interactiveTransitionDelegate = (interactiveTransitionDelegate ?: [PASInteractiveTransition new]);
 	
 	// Because of the nature of our view controller, with horizontally arranged buttons, we instantiate our private transition context with information about whether this is a left-to-right or right-to-left transition. The animator can use this information if it wants.
 	NSUInteger fromIndex = [self.viewControllers indexOfObject:fromVc];
@@ -236,7 +244,7 @@
 	PASPrivateTransitionContext *transitionContext = [[PASPrivateTransitionContext alloc] initWithFromViewController:fromVc toViewController:toVc goingRight:toIndex > fromIndex];
 	
 	transitionContext.animated = YES;
-	transitionContext.interactive = NO;
+	transitionContext.interactive = (interactiveTransitionDelegate != nil);
 	transitionContext.completionBlock = ^(BOOL didComplete) {
 		[fromVc.view removeFromSuperview];
 		[fromVc removeFromParentViewController];
@@ -250,7 +258,11 @@
 	};
 	
 	self.pageControlView.userInteractionEnabled = NO; // Prevent user tapping buttons mid-transition, messing up state
-	[animator animateTransition:transitionContext];
+	if ([transitionContext isInteractive]) {
+		[interactiveTransitionDelegate startInteractiveTransition:transitionContext];
+	} else {
+		[animator animateTransition:transitionContext];
+	}
 }
 
 @end
