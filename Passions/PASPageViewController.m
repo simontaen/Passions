@@ -29,10 +29,10 @@
 @property (nonatomic, assign, getter=isInteractive) BOOL interactive;
 @end
 
-#pragma mark - PASPrivateAnimationController
+#pragma mark - PASTransitionAnimator
 
 /// Instances of this private class perform the default transition animation which is to slide child views horizontally.
-@interface PASPrivateAnimationController : NSObject <UIViewControllerInteractiveTransitioning, UIViewControllerAnimatedTransitioning>
+@interface PASTransitionAnimator : NSObject <UIViewControllerInteractiveTransitioning, UIViewControllerAnimatedTransitioning>
 @end
 
 #pragma mark - PASPageViewController
@@ -219,7 +219,7 @@
 	if ([self.delegate respondsToSelector:@selector (pageViewController:animationControllerForTransitionFromViewController:toViewController:)]) {
 		animator = [self.delegate pageViewController:self animationControllerForTransitionFromViewController:fromVc toViewController:toVc];
 	}
-	animator = (animator ?: [[PASPrivateAnimationController alloc] init]);
+	animator = (animator ?: [[PASTransitionAnimator alloc] init]);
 	
 	// Because of the nature of our view controller, with horizontally arranged buttons, we instantiate our private transition context with information about whether this is a left-to-right or right-to-left transition. The animator can use this information if it wants.
 	NSUInteger fromIndex = [self.viewControllers indexOfObject:fromVc];
@@ -359,9 +359,9 @@
 
 @end
 
-#pragma mark - PASPrivateAnimationController
+#pragma mark - PASTransitionAnimator
 
-@implementation PASPrivateAnimationController
+@implementation PASTransitionAnimator
 
 #pragma mark - UIViewControllerInteractiveTransitioning
 
