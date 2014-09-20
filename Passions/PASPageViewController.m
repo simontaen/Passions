@@ -338,11 +338,24 @@
 	return NO;
 }
 
+- (UIView *)viewForKey:(NSString *)key
+{
+	// no manipulation
+	return nil;
+}
+
+
+- (CGAffineTransform)targetTransform
+{
+	// no transformation
+	return CGAffineTransformIdentity;
+}
+
 // Supress warnings by implementing empty interaction methods for the remainder of the protocol:
 
-- (void)updateInteractiveTransition:(CGFloat)percentComplete {}
-- (void)finishInteractiveTransition {}
-- (void)cancelInteractiveTransition {}
+- (void)updateInteractiveTransition:(CGFloat)percentComplete { NSLog(@"updateInteractiveTransition"); }
+- (void)finishInteractiveTransition { NSLog(@"finishInteractiveTransition"); }
+- (void)cancelInteractiveTransition { NSLog(@"cancelInteractiveTransition"); }
 
 @end
 

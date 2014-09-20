@@ -27,6 +27,7 @@
 @end
 
 @protocol PASPageViewControllerDelegate <NSObject>
+// this is very similar to UIViewControllerTransitioningDelegate
 @optional
 /** Informs the delegate that the user selected view controller by tapping the corresponding icon.
  @note The method is called regardless of whether the selected view controller changed or not and only as a result of the user tapped a button. The method is not called when the view controller is changed programmatically. This is the same pattern as UITabBarController uses.
