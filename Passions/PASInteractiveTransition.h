@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PASPageViewController.h"
 
-@interface PASInteractiveTransition : UIPercentDrivenInteractiveTransition // <UIViewControllerInteractiveTransitioning>
+@interface PASInteractiveTransition : UIPercentDrivenInteractiveTransition <PASPageViewControllerDelegate>
+// <UIViewControllerInteractiveTransitioning>
+// <UIGestureRecognizerDelegate>
 
 @end

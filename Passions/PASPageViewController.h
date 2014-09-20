@@ -17,12 +17,15 @@
 
 /// setting this will move the page!
 @property (nonatomic, assign) int selectedViewControllerIndex;
-
 /// the currently displaying view controller
 @property (nonatomic, weak, readonly) UIViewController *selectedViewController;
-
 /// all the view controllers this container displays
 @property (nonatomic, strong) NSArray *viewControllers;
+
+/// let the delegate assign gesture recogizers for an interactive transition
+- (void)addGestureRecognizerToContainerView:(UIGestureRecognizer *)recognizer;
+/// let the delegate remove gesture recogizers for an interactive transition
+- (void)removeGestureRecognizerFromContainerView:(UIGestureRecognizer *)recognizer;
 
 @end
 
@@ -39,4 +42,13 @@
 - (id <UIViewControllerAnimatedTransitioning>)pageViewController:(PASPageViewController *)pageViewController
 			  animationControllerForTransitionFromViewController:(UIViewController *)fromViewController
 												toViewController:(UIViewController *)toViewController;
+
+/// this is called shortly before the transtition, when returned nil, the interaction will not be interactive
+- (id <UIViewControllerInteractiveTransitioning>)pageViewController:(PASPageViewController *)pageViewController
+			   interactionControllerForTransitionFromViewController:(UIViewController *)fromViewController
+												   toViewController:(UIViewController *)toViewController;
+
+/// This gives the delegate a chance to configure the interaction controller(s)
+- (void)pageViewController:(PASPageViewController *)pageViewController setupInteractionControllerForTransitionFromViewController:(UIViewController *)fromViewController
+		  toViewController:(UIViewController *)toViewController;
 @end

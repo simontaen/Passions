@@ -9,9 +9,11 @@
 #import "PASRootVC.h"
 #import "PASPageViewController.h"
 #import "PASTimelineCVC.h"
+#import "PASInteractiveTransition.h"
 
 @interface PASRootVC ()
 @property (nonatomic, strong) PASPageViewController *pageViewController;
+@property (nonatomic, strong) PASInteractiveTransition *bla;
 @end
 
 @implementation PASRootVC
@@ -23,6 +25,10 @@
     // Load the page view controller from the XIB
 	self.pageViewController = [[PASPageViewController alloc] initWithNibName:nil bundle:nil];
 	
+	// TODO: temporary
+	self.bla = [PASInteractiveTransition new];
+	self.pageViewController.delegate = self.bla;
+
 	// init and add the page view controllers view controllers
 	self.pageViewController.viewControllers = @[[self _favArtistsNavController], [self _timelineCVC]];
 }

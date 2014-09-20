@@ -38,7 +38,7 @@
 
 #pragma mark - PASPageViewController
 
-@interface PASPageViewController () <UIGestureRecognizerDelegate>
+@interface PASPageViewController ()
 @property (nonatomic, weak) IBOutlet UIView *containerView;
 @property (nonatomic, weak, readwrite) UIViewController *selectedViewController;
 @property (nonatomic, weak) IBOutlet UIPageControl *pageControlView;
@@ -53,13 +53,6 @@
 {
     [super viewDidLoad];
 	
-	// setup gesture recognizers
-	UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc]
-											 initWithTarget:self
-											 action:@selector(pan:)];
-	//panRecognizer.delegate = self;
-	[self.containerView addGestureRecognizer:panRecognizer];
-	
 	// update the page control
 	self.pageControlView.numberOfPages = self.viewControllers.count;
 	
@@ -70,6 +63,8 @@
 	self.pageControlView.alpha = 0.8f;
 	self.pageControlView.layer.cornerRadius = 7.5;
 	self.pageControlView.layer.masksToBounds = YES;
+	
+	[self setupDelegateForTransitionsBetweenViewControllers:self.viewControllers];
 	
 	// call the setter to make sure the view is swapped
     self.selectedViewController = (self.selectedViewController ?: [self.viewControllers firstObject]);
@@ -109,9 +104,47 @@
 	}
 	[self.selectedViewController removeFromParentViewController];
 	
+	if ([self isViewLoaded]) {
+		[self setupDelegateForTransitionsBetweenViewControllers:viewControllers];
+	}
+	
     _viewControllers = viewControllers;
 	
-	self.selectedViewController = [viewControllers firstObject];
+	self.selectedViewController = [_viewControllers firstObject];
+}
+
+- (void)setupDelegateForTransitionsBetweenViewControllers:(NSArray *)viewControllers
+{
+	BOOL delegateConforms = [self.delegate respondsToSelector:@selector(pageViewController:setupInteractionControllerForTransitionFromViewController:toViewController:)];
+	NSUInteger nrOfVcs = viewControllers.count;
+	
+	if (delegateConforms && nrOfVcs > 1) {
+		for (int i = 0; i < nrOfVcs; i++) {
+			UIViewController *thisVc = viewControllers[i];
+			UIViewController *nextVc;
+			UIViewController *previousVc;
+			
+			if (i == 0) {
+				// first item
+				nextVc = viewControllers[i + 1];
+			} else if (i == nrOfVcs - 1) {
+				// last item
+				previousVc = viewControllers[i - 1];
+			} else {
+				nextVc = viewControllers[i + 1];
+				previousVc = viewControllers[i - 1];
+			}
+			
+			if (previousVc) {
+				[self.delegate pageViewController:self setupInteractionControllerForTransitionFromViewController:previousVc
+								 toViewController:thisVc];
+			}
+			if (nextVc) {
+				[self.delegate pageViewController:self setupInteractionControllerForTransitionFromViewController:thisVc
+								 toViewController:nextVc];
+			}
+		}
+	}
 }
 
 - (int)selectedViewControllerIndex
@@ -153,41 +186,16 @@
 	}
 }
 
-#pragma mark - UIPanGestureRecognizer
+#pragma mark - Gesture Recogizers
 
-- (void)pan:(UIPanGestureRecognizer *)recognizer
+- (void)addGestureRecognizerToContainerView:(UIGestureRecognizer *)recognizer
 {
-	if (recognizer.state == UIGestureRecognizerStateBegan) {
-		
-		BOOL leftToRight = [recognizer velocityInView:recognizer.view].x > 0;
-		
-		int currentVCIndex = self.selectedViewControllerIndex;
-		if (!leftToRight && currentVCIndex != self.viewControllers.count-1) {
-			self.selectedViewControllerIndex = ++currentVCIndex;
-			
-		} else if (leftToRight && currentVCIndex > 0) {
-			self.selectedViewControllerIndex = --currentVCIndex;
-			
-		}
-	}
-	NSLog(@"%d", recognizer.state);
+	[self.containerView addGestureRecognizer:recognizer];
 }
 
-#pragma mark - UIGestureRecognizerDelegate
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+- (void)removeGestureRecognizerFromContainerView:(UIGestureRecognizer *)recognizer
 {
-	return YES;
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-	// TODO: The recognition can probably be improved regarding the delete gesture on the TableViewCell
-    BOOL result = NO;
-    if (([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) && [otherGestureRecognizer.view isDescendantOfView:gestureRecognizer.view]) {
-        result = YES;
-    }
-    return result;
+	[self.containerView removeGestureRecognizer:recognizer];
 }
 
 #pragma mark - Private Methods
