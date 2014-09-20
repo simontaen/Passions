@@ -19,10 +19,10 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 
 
 // http://stackoverflow.com/a/5511403 / http://stackoverflow.com/a/13705529
-@property (nonatomic, strong) NSMutableArray* justFavArtistNames; // of NSString, LFM corrected!
+@property (nonatomic, copy) NSMutableArray* justFavArtistNames; // of NSString, LFM corrected!
 @property (nonatomic, strong) dispatch_queue_t favoritesQ;
 
-@property (nonatomic, strong) NSMutableDictionary* artistNameCorrections; // of NSString (display) -> NSString (internal on Favorite Artists TVC, LFM corrected)
+@property (nonatomic, copy) NSMutableDictionary* artistNameCorrections; // of NSString (display) -> NSString (internal on Favorite Artists TVC, LFM corrected)
 @property (nonatomic, strong) dispatch_queue_t correctionsQ;
 
 @end

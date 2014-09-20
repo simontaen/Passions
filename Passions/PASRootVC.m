@@ -11,7 +11,7 @@
 #import "PASTimelineCVC.h"
 
 @interface PASRootVC ()
-@property (strong, nonatomic) PASPageViewController *pageViewController;
+@property (nonatomic, strong) PASPageViewController *pageViewController;
 @end
 
 @implementation PASRootVC

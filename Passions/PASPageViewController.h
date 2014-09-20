@@ -16,13 +16,13 @@
 @property (nonatomic, weak) id<PASPageViewControllerDelegate>delegate;
 
 /// setting this will move the page!
-@property (nonatomic) int selectedViewControllerIndex;
+@property (nonatomic, assign) int selectedViewControllerIndex;
 
 /// the currently displaying view controller
-@property (weak, nonatomic, readonly) UIViewController *selectedViewController;
+@property (nonatomic, weak, readonly) UIViewController *selectedViewController;
 
 /// all the view controllers this container displays
-@property (nonatomic, copy) NSArray *viewControllers;
+@property (nonatomic, strong) NSArray *viewControllers;
 
 @end
 

@@ -12,7 +12,7 @@
 #import "PASAddFromMusicTVC.h"
 
 @interface PASAddArtistsNC ()
-@property (strong, nonatomic) PASPageViewController *pageViewController;
+@property (nonatomic, strong) PASPageViewController *pageViewController;
 @end
 
 @implementation PASAddArtistsNC

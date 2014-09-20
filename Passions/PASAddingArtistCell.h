@@ -9,8 +9,8 @@
 @import UIKit;
 
 @interface PASAddingArtistCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *artistName;
-@property (weak, nonatomic) IBOutlet UILabel *detailText;
-@property (weak, nonatomic) IBOutlet UIImageView *artistImage;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, weak) IBOutlet UILabel *artistName;
+@property (nonatomic, weak) IBOutlet UILabel *detailText;
+@property (nonatomic, weak) IBOutlet UIImageView *artistImage;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end

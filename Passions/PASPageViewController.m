@@ -39,9 +39,9 @@
 #pragma mark - PASPageViewController
 
 @interface PASPageViewController () <UIGestureRecognizerDelegate>
-@property (weak, nonatomic) IBOutlet UIView *containerView;
-@property (weak, nonatomic, readwrite) UIViewController *selectedViewController;
-@property (weak, nonatomic) IBOutlet UIPageControl *pageControlView;
+@property (nonatomic, weak) IBOutlet UIView *containerView;
+@property (nonatomic, weak, readwrite) UIViewController *selectedViewController;
+@property (nonatomic, weak) IBOutlet UIPageControl *pageControlView;
 @end
 
 @implementation PASPageViewController
