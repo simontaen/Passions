@@ -7,6 +7,7 @@
 //
 //  http://stablekernel.com/blog/view-controller-containers-part-ii/
 //  http://www.objc.io/issue-12/custom-container-view-controller-transitions.html
+//  http://www.iosnomad.com/blog/2014/5/12/interactive-custom-container-view-controller-transitions
 
 #import "PASPageViewController.h"
 
@@ -32,7 +33,7 @@
 #pragma mark - PASTransitionAnimator
 
 /// Instances of this private class perform the default transition animation which is to slide child views horizontally.
-@interface PASTransitionAnimator : NSObject <UIViewControllerInteractiveTransitioning, UIViewControllerAnimatedTransitioning>
+@interface PASTransitionAnimator : NSObject <UIViewControllerAnimatedTransitioning>
 @end
 
 #pragma mark - PASPageViewController
@@ -362,13 +363,6 @@
 #pragma mark - PASTransitionAnimator
 
 @implementation PASTransitionAnimator
-
-#pragma mark - UIViewControllerInteractiveTransitioning
-
-- (void)startInteractiveTransition:(id <UIViewControllerContextTransitioning>)transitionContext
-{
-	NSLog(@"startInteractiveTransition");
-}
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 
