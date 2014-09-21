@@ -172,9 +172,12 @@
 	NSParameterAssert (newVc);
 	NSAssert([self.viewControllers containsObject:newVc], @"Only known View Controllers are allowed to be selected");
 	
-	[self _transitionToChildViewController:newVc];
-	
-	_selectedViewController = newVc;
+	[self _transitionToChildViewController:newVc completion:^(BOOL didTransition) {
+		if (didTransition) {
+			_selectedViewController = newVc;
+			self.pageControlView.currentPage = self.selectedViewControllerIndex;
+		}
+	}];
 }
 
 #pragma mark - PASPageControlView Target-Action
@@ -200,7 +203,7 @@
 
 #pragma mark - Private Methods
 
-- (void)_transitionToChildViewController:(UIViewController *)toVc
+- (void)_transitionToChildViewController:(UIViewController *)toVc completion:(void (^)(BOOL didTransition))completion
 {
 	UIViewController *fromVc = ([self.childViewControllers count] > 0 ? self.childViewControllers[0] : nil);
 	if (toVc == fromVc || ![self isViewLoaded]) {
@@ -220,6 +223,7 @@
 	if (!fromVc) {
 		[self.containerView addSubview:toVc.view];
 		[toVc didMoveToParentViewController:self];
+		completion(YES);
 		return;
 	}
 	
@@ -248,17 +252,24 @@
 	NSUInteger toIndex = [self.viewControllers indexOfObject:toVc];
 	PASPrivateTransitionContext *transitionContext = [[PASPrivateTransitionContext alloc] initWithFromViewController:fromVc toViewController:toVc goingRight:toIndex > fromIndex];
 	
+	BOOL triggeredByControl = [self.pageControlView currentPage] != self.selectedViewControllerIndex;
+	
 	transitionContext.animated = YES;
-	transitionContext.interactive = (interactiveTransitionDelegate != nil);
+	transitionContext.interactive = !triggeredByControl && (interactiveTransitionDelegate != nil);
 	transitionContext.completionBlock = ^(BOOL didComplete) {
-		[fromVc.view removeFromSuperview];
-		[fromVc removeFromParentViewController];
-		[toVc didMoveToParentViewController:self];
+		if (didComplete) {
+			[fromVc.view removeFromSuperview];
+			[fromVc removeFromParentViewController];
+			[toVc didMoveToParentViewController:self];
+			
+		} else {
+			[toVc.view removeFromSuperview];
+		}
+		completion(didComplete);
 		
 		if ([animator respondsToSelector:@selector(animationEnded:)]) {
 			[animator animationEnded:didComplete];
 		}
-		self.pageControlView.currentPage = self.selectedViewControllerIndex + (toIndex - fromIndex);
 		self.pageControlView.userInteractionEnabled = YES;
 	};
 	
@@ -391,7 +402,7 @@
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 
-static CGFloat const kChildViewPadding = 16;
+static CGFloat const kChildViewPadding = 0;
 static CGFloat const kDamping = 0.75;
 static CGFloat const kInitialSpringVelocity = 0.5;
 
@@ -425,7 +436,9 @@ static CGFloat const kInitialSpringVelocity = 0.5;
 						 toVc.view.transform = CGAffineTransformIdentity;
 						 toVc.view.alpha = 1;
 					 } completion:^(BOOL finished) {
+						 // make sure you reset the fromVc view in case we got cancelled
 						 fromVc.view.transform = CGAffineTransformIdentity;
+						 fromVc.view.alpha = 1;
 						 [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
 					 }];
 }
