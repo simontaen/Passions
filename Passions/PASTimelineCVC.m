@@ -16,9 +16,9 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	[PASResources printViewLayoutStack:self];
-	[PASResources printViewControllerLayoutStack:self];
-	[PASResources printGestureRecognizerStack:self];
+	//[PASResources printViewLayoutStack:self];
+	//[PASResources printViewControllerLayoutStack:self];
+	//[PASResources printGestureRecognizerStack:self];
 }
 
 @end

@@ -38,8 +38,13 @@
 + (void)printViewLayoutStack:(UIViewController *)vc
 {
 	NSLog(@"---- %@ ----", NSStringFromClass([vc class]));
-	NSLog(@"%@ %@ | %@", NSStringFromClass([vc.view class]), NSStringFromCGRect(vc.view.bounds), NSStringFromCGRect(vc.view.frame));
-	for (UIView *aView in vc.view.subviews) {
+	[self printSubviews:vc.view];
+}
+
++ (void)printSubviews:(UIView *)vw
+{
+	NSLog(@"Container %@ %@ | %@", NSStringFromClass([vw class]), NSStringFromCGRect(vw.bounds), NSStringFromCGRect(vw.frame));
+	for (UIView *aView in vw.subviews) {
 		NSLog(@"%@ %@ | %@", NSStringFromClass([aView class]), NSStringFromCGRect(aView.bounds), NSStringFromCGRect(aView.frame));
 	}
 }
