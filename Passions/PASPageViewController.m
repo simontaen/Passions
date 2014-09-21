@@ -29,6 +29,8 @@
 @property (nonatomic, assign, getter=isAnimated) BOOL animated;
 /// Private setter for the interactive property.
 @property (nonatomic, assign, getter=isInteractive) BOOL interactive;
+/// Private setter for the transition cacelled property.
+@property (nonatomic, assign) BOOL transitionWasCancelled;
 @end
 
 #pragma mark - PASTransitionAnimator
@@ -205,6 +207,7 @@
 		return;
 	}
 	
+	// prepare the view
 	UIView *toView = toVc.view;
 	[toView setTranslatesAutoresizingMaskIntoConstraints:YES];
 	toView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -227,6 +230,7 @@
 	if ([self.delegate respondsToSelector:@selector (pageViewController:animationControllerForTransitionFromViewController:toViewController:)]) {
 		animator = [self.delegate pageViewController:self animationControllerForTransitionFromViewController:fromVc toViewController:toVc];
 	}
+	// if no animator is provided, the Apple way is to not as for an interactiveTransitionDelegate
 	animator = (animator ?: [PASTransitionAnimator new]);
 	
 	id<UIViewControllerInteractiveTransitioning> interactiveTransitionDelegate = nil;
@@ -251,7 +255,7 @@
 		[fromVc removeFromParentViewController];
 		[toVc didMoveToParentViewController:self];
 		
-		if ([animator respondsToSelector:@selector (animationEnded:)]) {
+		if ([animator respondsToSelector:@selector(animationEnded:)]) {
 			[animator animationEnded:didComplete];
 		}
 		self.pageControlView.currentPage = self.selectedViewControllerIndex + (toIndex - fromIndex);
@@ -259,7 +263,7 @@
 	};
 	
 	self.pageControlView.userInteractionEnabled = NO; // Prevent user tapping buttons mid-transition, messing up state
-	if ([transitionContext isInteractive]) {
+	if (transitionContext.interactive) {
 		[interactiveTransitionDelegate startInteractiveTransition:transitionContext];
 	} else {
 		[animator animateTransition:transitionContext];
@@ -354,18 +358,11 @@
 	}
 }
 
-- (BOOL)transitionWasCancelled
-{
-	// Our non-interactive transition can't be cancelled (it could be interrupted, though)
-	return NO;
-}
-
 - (UIView *)viewForKey:(NSString *)key
 {
 	// no manipulation
 	return nil;
 }
-
 
 - (CGAffineTransform)targetTransform
 {
@@ -373,11 +370,18 @@
 	return CGAffineTransformIdentity;
 }
 
-// Supress warnings by implementing empty interaction methods for the remainder of the protocol:
+- (void)finishInteractiveTransition
+{
+	self.transitionWasCancelled = NO;
+}
 
+- (void)cancelInteractiveTransition
+{
+	self.transitionWasCancelled = YES;
+}
+
+// Supress warnings by implementing empty interaction methods for the remainder of the protocol:
 - (void)updateInteractiveTransition:(CGFloat)percentComplete {}
-- (void)finishInteractiveTransition {}
-- (void)cancelInteractiveTransition {}
 
 @end
 
@@ -407,6 +411,7 @@ static CGFloat const kInitialSpringVelocity = 0.5;
 	CGFloat travelDistance = [transitionContext containerView].bounds.size.width + kChildViewPadding;
 	CGAffineTransform travel = CGAffineTransformMakeTranslation(goingRight ? travelDistance : -travelDistance, 0);
 	
+	// WWDC2013 - 218 - Insertion of "to" view controller's view into the container view
 	[[transitionContext containerView] addSubview:toVc.view];
 	toVc.view.alpha = 0;
 	toVc.view.transform = CGAffineTransformInvert(travel);

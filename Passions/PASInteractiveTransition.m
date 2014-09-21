@@ -72,10 +72,12 @@
 		[self updateInteractiveTransition:d*0.5];
 		
 	} else if (recognizer.state >= UIGestureRecognizerStateEnded) {
-		[self finishInteractiveTransition];
+		if (self.percentComplete > 0.2) {
+			[self finishInteractiveTransition];
+		} else {
+			[self cancelInteractiveTransition];
+		}
 	}
-	
-	NSLog(@"%d", recognizer.state);
 }
 
 #pragma mark - UIGestureRecognizerDelegate
