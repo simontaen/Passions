@@ -22,14 +22,14 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithCoder:aDecoder];
-    if (!self) return nil;
+	self = [super initWithCoder:aDecoder];
+	if (!self) return nil;
 	self.parseClassName = [PFArtist parseClassName];
 	self.title = @"Favorite Artists";
 	self.pullToRefreshEnabled = YES;
 	self.paginationEnabled = YES;
 	self.objectsPerPage = 20;
-    return self;
+	return self;
 }
 
 #pragma mark - Accessors
@@ -48,7 +48,7 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+	[super viewDidLoad];
 	self.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
 	
 	// DEBUG
@@ -94,25 +94,25 @@
 
 - (void)objectsDidLoad:(NSError *)error
 {
-    [super objectsDidLoad:error];
-    // This method is called every time objects are loaded from Parse via the PFQuery
+	[super objectsDidLoad:error];
+	// This method is called every time objects are loaded from Parse via the PFQuery
 }
 
 - (void)objectsWillLoad
 {
-    [super objectsWillLoad];
-    // This method is called before a PFQuery is fired to get more objects
+	[super objectsWillLoad];
+	// This method is called before a PFQuery is fired to get more objects
 }
 
 // Override to customize what kind of query to perform on the class. The default is to query for
 // all objects ordered by createdAt descending.
 - (PFQuery *)queryForTable
 {
-//	PFUser *user = [PFUser currentUser];
-//	NSLog(@"isDataAvailable = %@", ([user isDataAvailable] ? @"YES" : @"NO"));
-//	NSLog(@"isDirty = %@", ([user isDirty] ? @"YES" : @"NO"));
-//	NSLog(@"isNew = %@", ([user isNew] ? @"YES" : @"NO"));
-//	NSLog(@"isDirtyForKey = %@", ([user isDirtyForKey:@"objectId"] ? @"YES" : @"NO"));
+	//	PFUser *user = [PFUser currentUser];
+	//	NSLog(@"isDataAvailable = %@", ([user isDataAvailable] ? @"YES" : @"NO"));
+	//	NSLog(@"isDirty = %@", ([user isDirty] ? @"YES" : @"NO"));
+	//	NSLog(@"isNew = %@", ([user isNew] ? @"YES" : @"NO"));
+	//	NSLog(@"isDirtyForKey = %@", ([user isDirtyForKey:@"objectId"] ? @"YES" : @"NO"));
 	
 	if ([[PFUser currentUser] isDirty]) {
 		// TODO: this is where we create the user, make sure you set an ACL
@@ -142,9 +142,9 @@
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 	
-    // Configure the cell
-    cell.textLabel.text = artist.name;
-    cell.detailTextLabel.text = [self _stringForNumberOfAlbums:artist.totalAlbums];
+	// Configure the cell
+	cell.textLabel.text = artist.name;
+	cell.detailTextLabel.text = [self _stringForNumberOfAlbums:artist.totalAlbums];
 	
 	// get images, ordered big to small
 	NSArray *images = artist.images;
@@ -177,7 +177,7 @@
 		} failure:nil];
 	}
 	
-    return cell;
+	return cell;
 }
 
 - (NSString *)_stringForNumberOfAlbums:(NSNumber *)noOfAlbums
