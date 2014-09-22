@@ -153,6 +153,11 @@
 		// round down, this is only a thumbnail
 		int middle = (int)(images.count / 2 - ((images.count % 2) / 2));
 		
+		// https://developer.apple.com/library/ios/documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/WindowsandViews/WindowsandViews.html
+		// http://stackoverflow.com/questions/3182649/ios-sdk-uiviewcontentmodescaleaspectfit-vs-uiviewcontentmodescaleaspectfill
+		// imageView of UITableViewCell automatically resizes to image, mostly ignoring contentMode, this means
+		// http://nshipster.com/image-resizing/ does not work
+		
 		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:images[middle]]];
 		[request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
 		
