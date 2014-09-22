@@ -79,8 +79,8 @@
 	
 	// custom layout for pageControlView
 	CGRect newFrame = self.pageControlView.frame;
-	CGFloat heightAdj = (int)(newFrame.size.height * 0.541);
-	CGFloat widthAdj = (int)(newFrame.size.width * 0.348);
+	CGFloat heightAdj = (int)(newFrame.size.height * 0.189);
+	CGFloat widthAdj = (int)(newFrame.size.width);
 	
 	newFrame.size.width += widthAdj;
 	newFrame.size.height -= heightAdj;
