@@ -50,9 +50,13 @@
 	// freeze the background view while presenting a modal to explain why notifications are needed
 	// after dismissing the modal reload the table
 	// Register for remote notifications
-	[application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-													 UIRemoteNotificationTypeAlert |
-													 UIRemoteNotificationTypeSound)];
+	UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge |
+																						 UIUserNotificationTypeAlert |
+																						 UIUserNotificationTypeSound)
+																			 categories:nil];
+	[[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+	[[UIApplication sharedApplication] registerForRemoteNotifications];
+
 	return YES;
 }
 
