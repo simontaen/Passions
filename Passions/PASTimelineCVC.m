@@ -22,34 +22,23 @@
 	//[PASResources printViewControllerLayoutStack:self];
 	//[PASResources printGestureRecognizerStack:self];
 	
+	// TODO: something is no right with the PFInstalltion and PFUser sind iOS 8 and the new Parse Framework I think
 	NSArray *favoriteArtistIds = (NSArray *)[[PFInstallation currentInstallation] objectForKey:@"favArtists"];
 	
-	PFQuery *artistQuery = [PFArtist query];
-	[artistQuery whereKey:@"objectId" containedIn:favoriteArtistIds];
+	PFQuery *albumQuery = [PFQuery queryWithClassName:@"Album"];
+	[albumQuery whereKey:@"artistId" containedIn:@[@"3HX2FCVJCC"]];
 	
-	[artistQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-		NSMutableArray *albumsOfFavArtists = [NSMutableArray array];
+	[albumQuery findObjectsInBackgroundWithBlock:^(NSArray *albums, NSError *error) {
 		
-		for (PFArtist *artist in objects) {
-			[albumsOfFavArtists addObjectsFromArray:artist.albums];
+		NSLog(@"Found %lu albums", albums.count);
+		
+		for (PFObject *album in albums) {
+			NSLog(@"Name %@", [album objectForKey:@"name"]);
+			NSLog(@"ReleaseDate %@", [album objectForKey:@"release_date"]);
 		}
-		NSLog(@"Found %lu Album Ids", albumsOfFavArtists.count);
-
-		
-		PFQuery *albumQuery = [PFQuery queryWithClassName:@"Album"];
-		[albumQuery whereKey:@"objectId" containedIn:albumsOfFavArtists];
-		
-		
-		[albumQuery findObjectsInBackgroundWithBlock:^(NSArray *albums, NSError *error) {
-			
-			NSLog(@"Found %lu albums", albums.count);
-			
-			for (PFObject *album in albums) {
-				NSLog(@"Name %@", [album objectForKey:@"name"]);
-			}
-		}];
-		
 	}];
+
+	
 	
 }
 
