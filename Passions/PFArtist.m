@@ -41,7 +41,7 @@
 + (PFQuery *)favArtistsForCurrentUser
 {
 	PFQuery *query = [PFArtist query];
-	[query whereKey:@"favByUsers" containsAllObjectsInArray:@[[PFUser currentUser].objectId]];
+	[query whereKey:@"favByUsers" equalTo:[PFUser currentUser].objectId];
 	[query orderByAscending:@"name"];
 	return query;
 }
