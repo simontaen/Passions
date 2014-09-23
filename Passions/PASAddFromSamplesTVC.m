@@ -268,6 +268,9 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 	NSString *correctedName = [self.artistNameCorrections objectForKey:artistName];
 	NSString *resolvedName = correctedName ?: artistName;
 	
+	// check if adding possible
+	// -> current Installation must exist
+	
 	[PFArtist favoriteArtistByCurrentUser:resolvedName withBlock:^(PFArtist *artist, NSError *error) {
 		if (artist && !error) {
 			// get the finalized name on parse
