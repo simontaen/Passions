@@ -309,6 +309,7 @@
 				ORGANIZATIONNAME = edgeguard;
 				TargetAttributes = {
 					F4A779731793113E00C770B9 = {
+						DevelopmentTeam = KZ2BJ5Q7N6;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -444,7 +445,6 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Simon Taennler (ZNG9G9Z8CK)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Simon Taennler (ZNG9G9Z8CK)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -459,7 +459,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "2928c777-821a-416b-b9e6-96be63ee9000";
+				PROVISIONING_PROFILE = "4173fafb-09f2-4c43-9796-3bb529c13692";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -478,7 +478,6 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Simon Taennler (ZNG9G9Z8CK)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Simon Taennler (ZNG9G9Z8CK)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -486,7 +485,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "2928c777-821a-416b-b9e6-96be63ee9000";
+				PROVISIONING_PROFILE = "4173fafb-09f2-4c43-9796-3bb529c13692";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -496,6 +495,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D420301400214166998C1AC5 /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -505,6 +506,7 @@
 				GCC_PREFIX_HEADER = "Passions/Passions-Prefix.pch";
 				INFOPLIST_FILE = "Passions/Passions-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -513,6 +515,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D420301400214166998C1AC5 /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -522,6 +526,7 @@
 				GCC_PREFIX_HEADER = "Passions/Passions-Prefix.pch";
 				INFOPLIST_FILE = "Passions/Passions-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
