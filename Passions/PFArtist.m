@@ -125,9 +125,6 @@
 		PFArtist *newArtist = [PFArtist object];
 		newArtist.name	= resolvedName;
 		
-		// create the relationsship with the user, remember we DO NOT have an objectId currently!
-		[newArtist _addCurrentUserAsFavorite];
-		
 		// Allow public write access (other users need to modify the Artist when they favorite it)
 		PFACL *artistACL = [PFACL ACL];
 		[artistACL setPublicReadAccess:YES];
@@ -136,6 +133,9 @@
 		
 		[newArtist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 			if (succeeded && !error) {
+				// create the relationsship with the user
+				[newArtist _addCurrentUserAsFavorite];
+				
 				block(newArtist, nil);
 			} else {
 				block(nil, error);
