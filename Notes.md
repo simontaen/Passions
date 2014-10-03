@@ -2,61 +2,108 @@
 
 Passions shows you which Albums of your all time favorite Music Artists you are missing and can notify you when a new album gets released. 
 
-# Code.todo
+# Feature overview
 
-* Draw the UI for the App FIRST!
-	* Because you focus on solving the wrong problems if you don't!
-* Stop focusing on the current problem of have weird sorting and stuff. What you do might seem simple but is really not. Since this is not what is should look like, more a playground, STOP FOCUSING ON SOLVING IT.
-* Why don't you access the Music Library and show what is there in the way you would like it?
-	* Need to access Music Library anyway.
-	* Interface can be "prototyped" with the existing metadata of the files, just show existing albums.
-	* You'll get a feel for what you need (generally and which data needs to persist).
-	* The music library is the staring point for defining what you like and showing what you have. You need LFM and other services mainly for upcoming albums, only (very much) later for defining taste (if at all). My point is you'll NOT just persist complete API data. You'll only use SOME of the data from APIs (upcoming albums, more artist infos, buy options), which means you'll very likely have your own data model.
+* Show a list of favorite artists stored on Parse
+	* Show an initial set on first launch pulled from the iPod library
+	* Name of artist and number of albums
+	* Remove Artists using a swipe
+	* Tapping on the Artist will show the Artists Albums (see below)
 
+* Add artists from various sources
+	* iPod Library (must be working only with that)
+	* Last.fm
+	* Spotify
 
-# Implementation detail
+* Add Artists using a modal view
+	* Show name and plays (if available)
+	* Tap to (un-)favorite
+	* Mark already favorited Artists consistently between different sources
+	* Search for an Artist
+	* Allow settings to change ordering
 
-* Initial set of favourite artists can be pulled from iPod Libray
-* Manually remove/add/edit favourite artists
-* You can work in a mode where you JUST work on the favourite artists from your library.
-* Background fetch to query albums info sources for new album releases
+* Show a collection view of your favorite artists albums, ordered by release date
+	* overlay a color coded release date bubble
 
-# CoreData
-
-I'm getting too detail focused again... Performance DOES NOT MATTER in this early stage of development. For my dataset it MAY NEVER MATTER. It's probably the best way to use `UIManagedDocument` the way they teach it in CS193P. It's the fast track to iCloud and requires very little insight.
-
-
-# Data flow for Parse
-
-## Push Notification for new Albums
-
-* Query for fav. Artists
-	* if empty create them
-	* before save: call LFM for all Albums and the name correction (http://www.last.fm/api/show/artist.getTopAlbums)
-	* Save delivered Albums and save Artist with the corrected name
-
-* Add Users to Artist to remember that the user has favorited the Artist
-	* as an array on Artist, maybe you can create an index on this (modifying fav. Artists)
+* Interactively pan between favorite artists and albums collection
+	* like on the home screen
+	* use a transparent page controle
 
 
+# Todos.todo
 
-* Background Job on Parse
-	* fetch Albums for all Artists
-	* compare against saved Albums, save new ones
-	* if a new Album is release, send a push notification to all "users" of the artist
+## Functionality
 
-* Receive push notification
-
-## Check Discography
-
-* Query for all Albums for parse id for Artist
-	* if empty create them
-	* before save: call LFM for name correction (http://www.last.fm/api/show/album.getInfo)
+* First launch experience
+* implement the albums timeline
+* show the album after a push notification arrives
+	* send over the parseAlbum objectId
 
 
-## Artist Infos
+## UI
 
-* Fetch more infos for parse id for Artist
+* check the iPod Adding regarding thumbnails
+* fix the layout issues regarding the NavBar, it slides under it.
+* A-Z srubber
+	* rethink the A-Z scrubber, should it always show the complete alphabet?
+	* the scrubber seems to blocks the pan gesture
+* Try a TabBarController with a hidden tabBar replaced by a pageControl
+* rework the pageControl look
+
+
+# 2.0
+
+* Ask User for matching when unclear, but don't code for exceptions
+	* "I did my best but I still need your help to identify your favorite Artist"
+* Show more infos about the Album when clicking on the Album Art
+
+# Data communication with Parse
+
+## Fav an Artist
+
+* use a corrected name to query parse
+	* if no correction exits, call LFM
+* if empty create the artist using the corrected name
+* add the artist to the users favArtists array
+* before save on Parse
+	* call spotify for the Artist
+		* try to find an exact match by comparing the name
+	* call background job "fetchFullAlbums"
+
+# Background Jobs on Parse
+
+## findNewAlbums
+
+* Query for all Artists where totalAlbums DOES exist
+* find new albums for the queried artists
+	* fetch total albums of artist
+	* if changed fetch all albums for artist (complete info), if no change return
+		* see below...
+		* return the artist and albums
+	* find the newest album
+		* use a default UTC for date 1000.1.1
+		* for each album, normalize date to UTC and compare against the currently newest
+		* return newest album
+	* query all users where "favArtists" contains the current user
+	* send a push to all installations of these users "installation"
+	* save the artist and return
+* set the status and return
+
+## fetchFullAlbums
+
+* Query for all Artists where totalAlbums DOES NOT exist
+* call spotify to fetch all albums for artist (complete info)
+	* fetch artists (simplified) albums, all
+	* update totalAlbums if changed
+	* process the simplified albums
+		* fetch complete album info
+		* create or update the album
+			* query for the album using the spotify id
+			* if empty create it
+			* update and save the album
+		* return the artist and albums
+* save the artist
+* set the status and return
 
 
 # Helpful parse calls
