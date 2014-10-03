@@ -21,6 +21,7 @@
 @dynamic images;
 
 // TODO: UIImage getter (small, medium, large), see https://parse.com/docs/ios_guide#subclasses-properties/iOS
+// can be reused for Album
 
 #pragma mark - Parse
 
@@ -60,6 +61,7 @@
 	NSParameterAssert(artistName);
 	// TODO: pass a param if the name needs correction
 	// if it does, call LFM now
+	// leads to duplicate artists on parse currently
 	
 	// Query for the Artist in Question
 	PFQuery *query = [PASArtist _artistWithName:artistName];

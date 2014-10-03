@@ -25,6 +25,7 @@
 	// TODO: PFUser subclass
 	NSArray *favoriteArtistIds = (NSArray *)[[PFUser currentUser] objectForKey:@"favArtists"];
 	
+	// TODO: Album subclass
 	PFQuery *albumQuery = [PFQuery queryWithClassName:@"Album"];
 	[albumQuery whereKey:@"artistId" containedIn:favoriteArtistIds];
 	
