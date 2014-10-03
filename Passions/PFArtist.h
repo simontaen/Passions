@@ -11,7 +11,6 @@
 @interface PFArtist : PFObject<PFSubclassing>
 
 @property (nonatomic, strong) NSString* objectId;
-@property (nonatomic, strong) NSArray* albums; // of NSString referencing an Album Record
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, strong) NSString* spotifyId;
 @property (nonatomic, strong) NSNumber* totalAlbums;

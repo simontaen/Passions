@@ -13,7 +13,6 @@
 @implementation PFArtist
 
 @dynamic objectId;
-@dynamic albums;
 @dynamic name;
 @dynamic spotifyId;
 @dynamic totalAlbums;
