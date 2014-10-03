@@ -118,7 +118,9 @@
 		// TODO: this is where we create the user, make sure you set an ACL
 		// this must be a new user
 		// create the assosiation for push notifications
-		[[PFUser currentUser] setObject:[PFInstallation currentInstallation].objectId forKey:@"installation"];
+		PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+		[currentInstallation save];
+		[[PFUser currentUser] setObject:currentInstallation.objectId forKey:@"installation"];
 		// save it or else the query will crash
 		[[PFUser currentUser] save];
 	}
