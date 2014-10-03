@@ -58,6 +58,9 @@
 + (void)favoriteArtistByCurrentUser:(NSString *)artistName withBlock:(void (^)(PASArtist *artist, NSError *error))block
 {
 	NSParameterAssert(artistName);
+	// TODO: pass a param if the name needs correction
+	// if it does, call LFM now
+	
 	// Query for the Artist in Question
 	PFQuery *query = [PASArtist _artistWithName:artistName];
 	
