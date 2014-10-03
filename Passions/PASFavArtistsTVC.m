@@ -186,8 +186,9 @@
 
 - (NSString *)_stringForNumberOfAlbums:(NSNumber *)noOfAlbums
 {
-	// TODO: undefined should default to "Processing...", since fetchFullAlbums
-	if (noOfAlbums.longValue == 1) {
+	if (!noOfAlbums) {
+		return @"Processing...";
+	} else if (noOfAlbums.longValue == 1) {
 		return [NSString stringWithFormat:@"%lu Album", noOfAlbums.longValue];
 	} else {
 		return [NSString stringWithFormat:@"%lu Albums", noOfAlbums.longValue];
