@@ -1,5 +1,5 @@
 //
-//  PFArtist.h
+//  PASArtist.h
 //  Passions
 //
 //  Created by Simon Tännler on 04/09/14.
@@ -8,7 +8,7 @@
 
 #import <Parse/Parse.h>
 
-@interface PFArtist : PFObject<PFSubclassing>
+@interface PASArtist : PFObject<PFSubclassing>
 
 @property (nonatomic, strong) NSString* objectId;
 @property (nonatomic, strong) NSString* name;
@@ -28,10 +28,10 @@
 
 #pragma mark - adding / creating
 
-+ (void)favoriteArtistByCurrentUser:(NSString *)artistName withBlock:(void (^)(PFArtist *artist, NSError *error))block;
++ (void)favoriteArtistByCurrentUser:(NSString *)artistName withBlock:(void (^)(PASArtist *artist, NSError *error))block;
 
 #pragma mark - removing / deleting
 
-+ (void)removeCurrentUserFromArtist:(PFArtist *)artist withBlock:(void (^)(BOOL succeeded, NSError *error))block;
++ (void)removeCurrentUserFromArtist:(PASArtist *)artist withBlock:(void (^)(BOOL succeeded, NSError *error))block;
 
 @end

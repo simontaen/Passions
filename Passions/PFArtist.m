@@ -1,16 +1,16 @@
 //
-//  PFArtist.m
+//  PASArtist.m
 //  Passions
 //
 //  Created by Simon Tännler on 04/09/14.
 //  Copyright (c) 2014 edgeguard. All rights reserved.
 //
 
-#import "PFArtist.h"
+#import "PASArtist.h"
 #import <Parse/PFObject+Subclass.h>
 #import "LastFmFetchr.h"
 
-@implementation PFArtist
+@implementation PASArtist
 
 @dynamic objectId;
 @dynamic name;
@@ -38,7 +38,7 @@
 
 + (PFQuery *)favArtistsForCurrentUser
 {
-	PFQuery *query = [PFArtist query];
+	PFQuery *query = [PASArtist query];
 	[query whereKey:@"objectId" containedIn:(NSArray *)[[PFUser currentUser] objectForKey:@"favArtists"]];
 	[query orderByAscending:@"name"];
 	return query;
@@ -47,7 +47,7 @@
 + (PFQuery *)_artistWithName:(NSString *)name
 {
 	NSParameterAssert(name);
-	PFQuery *query = [PFArtist query];
+	PFQuery *query = [PASArtist query];
 	[query whereKey:@"name" equalTo:name];
 	return query;
 }
@@ -55,11 +55,11 @@
 #pragma mark - adding / creating
 
 /// query in Parse, if found ok, if 0 create it, if >1 error
-+ (void)favoriteArtistByCurrentUser:(NSString *)artistName withBlock:(void (^)(PFArtist *artist, NSError *error))block
++ (void)favoriteArtistByCurrentUser:(NSString *)artistName withBlock:(void (^)(PASArtist *artist, NSError *error))block
 {
 	NSParameterAssert(artistName);
 	// Query for the Artist in Question
-	PFQuery *query = [PFArtist _artistWithName:artistName];
+	PFQuery *query = [PASArtist _artistWithName:artistName];
 	
 	[query findObjectsInBackgroundWithBlock:^(NSArray *artists, NSError *error) {
 		if (artists && !error) {
@@ -67,7 +67,7 @@
 				// exactly one is expected, no duplicates allowed
 				
 				// add user to artist
-				PFArtist *artist = [artists firstObject];
+				PASArtist *artist = [artists firstObject];
 				[artist _addCurrentUserAsFavorite];
 				[artist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 					// The artist exists and the user has favorited him
@@ -82,7 +82,7 @@
 				
 			} else if (artists.count == 0) {
 				// the artist does not exists yet, create it
-				[PFArtist _createArtistFavoritedByCurrentUser:artistName withBlock:^(PFArtist *artist, NSError *error) {
+				[PASArtist _createArtistFavoritedByCurrentUser:artistName withBlock:^(PASArtist *artist, NSError *error) {
 					// The artist exists and the user has favorited him
 					// ready to pass it back to the caller
 					if (artist && !error) {
@@ -112,7 +112,7 @@
 }
 
 /// calls LFM for corrections and adds the Artists to Parse
-+ (void)_createArtistFavoritedByCurrentUser:(NSString *)artistName withBlock:(void (^)(PFArtist *artist, NSError *error))block
++ (void)_createArtistFavoritedByCurrentUser:(NSString *)artistName withBlock:(void (^)(PASArtist *artist, NSError *error))block
 {
 	NSParameterAssert(artistName);
 	// artistName is from unknown source, needs correction
@@ -122,7 +122,7 @@
 		NSString *resolvedName = isValidName ? data.name : artistName;
 		
 		// Create a new Artist object
-		PFArtist *newArtist = [PFArtist object];
+		PASArtist *newArtist = [PASArtist object];
 		newArtist.name	= resolvedName;
 		
 		// Allow public write access (other users need to modify the Artist when they favorite it)
@@ -147,7 +147,7 @@
 
 #pragma mark - removing / deleting
 
-+ (void)removeCurrentUserFromArtist:(PFArtist *)artist withBlock:(void (^)(BOOL succeeded, NSError *error))block
++ (void)removeCurrentUserFromArtist:(PASArtist *)artist withBlock:(void (^)(BOOL succeeded, NSError *error))block
 {
 	// TODO: this should be done by a PFUser subclass
 	// remove the relation

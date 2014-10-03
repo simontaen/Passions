@@ -8,7 +8,7 @@
 
 #import "PASTimelineCVC.h"
 #import <Parse/Parse.h>
-#import "PFArtist.h"
+#import "PASArtist.h"
 
 @interface PASTimelineCVC ()
 

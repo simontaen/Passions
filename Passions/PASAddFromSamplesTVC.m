@@ -7,7 +7,7 @@
 //
 
 #import "PASAddFromSamplesTVC.h"
-#import "PFArtist.h"
+#import "PASArtist.h"
 #import "PASAddingArtistCell.h"
 
 static NSString *kCellIdentifier = @"PASAddingArtistCell";
@@ -271,7 +271,7 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 	// check if adding possible
 	// -> current Installation must exist
 	
-	[PFArtist favoriteArtistByCurrentUser:resolvedName withBlock:^(PFArtist *artist, NSError *error) {
+	[PASArtist favoriteArtistByCurrentUser:resolvedName withBlock:^(PASArtist *artist, NSError *error) {
 		if (artist && !error) {
 			// get the finalized name on parse
 			NSString *parseArtistName = artist.name;

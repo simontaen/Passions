@@ -9,7 +9,7 @@
 #import "PASFavArtistsTVC.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIImage+Scale.h"
-#import "PFArtist.h"
+#import "PASArtist.h"
 #import "PASAddArtistsNC.h"
 
 @interface PASFavArtistsTVC() <PASAddArtistsTVCDelegate>
@@ -24,7 +24,7 @@
 {
 	self = [super initWithCoder:aDecoder];
 	if (!self) return nil;
-	self.parseClassName = [PFArtist parseClassName];
+	self.parseClassName = [PASArtist parseClassName];
 	self.title = @"Favorite Artists";
 	self.pullToRefreshEnabled = YES;
 	self.paginationEnabled = YES;
@@ -38,7 +38,7 @@
 - (NSArray *)artistNames
 {
 	NSMutableArray *artistNames = [[NSMutableArray alloc] initWithCapacity:self.objects.count];
-	for (PFArtist *artist in self.objects) {
+	for (PASArtist *artist in self.objects) {
 		[artistNames addObject:artist.name];
 	}
 	return artistNames;
@@ -68,10 +68,10 @@
 	// I can't remove the Artist from self.objects manually, need to reload, but seems to slow for the animation.
 	[tableView beginUpdates];
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
-		PFArtist *artist = [self _artistAtIndexPath:indexPath];
+		PASArtist *artist = [self _artistAtIndexPath:indexPath];
 		
 		// De-favorite the user from the artist and reload the table view
-		[PFArtist removeCurrentUserFromArtist:artist withBlock:^(BOOL succeeded, NSError *error) {
+		[PASArtist removeCurrentUserFromArtist:artist withBlock:^(BOOL succeeded, NSError *error) {
 			if (succeeded) {
 				dispatch_async(dispatch_get_main_queue(), ^{
 					[self loadObjects];
@@ -87,9 +87,9 @@
 
 #pragma mark - Parse
 
-- (PFArtist *)_artistAtIndexPath:(NSIndexPath *)indexPath
+- (PASArtist *)_artistAtIndexPath:(NSIndexPath *)indexPath
 {
-	return (PFArtist *)[self objectAtIndexPath:indexPath];
+	return (PASArtist *)[self objectAtIndexPath:indexPath];
 }
 
 - (void)objectsDidLoad:(NSError *)error
@@ -125,7 +125,7 @@
 		[[PFUser currentUser] save];
 	}
 	
-	PFQuery *query = [PFArtist favArtistsForCurrentUser];
+	PFQuery *query = [PASArtist favArtistsForCurrentUser];
 	
 	// If no objects are loaded in memory, we look to the cache first to fill the table
 	// and then subsequently do a query against the network.
@@ -142,7 +142,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
 	static NSString *CellIdentifier = @"FavArtist";
-	PFArtist *artist = (PFArtist *)object;
+	PASArtist *artist = (PASArtist *)object;
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 	
