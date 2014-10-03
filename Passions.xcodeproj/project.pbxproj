@@ -21,7 +21,7 @@
 		F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */; };
 		F4589D3D19C240D500E17D49 /* PASPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4589D3C19C240D500E17D49 /* PASPageViewController.m */; };
 		F4694D6419B74ABB00D12576 /* PASFavArtistsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */; };
-		F476F0EB19B8D8EA00185544 /* PFArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0EA19B8D8EA00185544 /* PFArtist.m */; };
+		F476F0EB19B8D8EA00185544 /* PASArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0EA19B8D8EA00185544 /* PASArtist.m */; };
 		F476F0EE19B8D9A100185544 /* PASResources.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0ED19B8D9A100185544 /* PASResources.m */; };
 		F476F0F119B8FFA700185544 /* PASAddFromSamplesTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0F019B8FFA700185544 /* PASAddFromSamplesTVC.m */; };
 		F49137F119B7137900E4FC0D /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F019B7137900E4FC0D /* Accounts.framework */; };
@@ -66,8 +66,8 @@
 		F4589D3C19C240D500E17D49 /* PASPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASPageViewController.m; sourceTree = "<group>"; };
 		F4694D6219B74ABB00D12576 /* PASFavArtistsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASFavArtistsTVC.h; sourceTree = "<group>"; };
 		F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASFavArtistsTVC.m; sourceTree = "<group>"; };
-		F476F0E919B8D8EA00185544 /* PFArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFArtist.h; sourceTree = "<group>"; };
-		F476F0EA19B8D8EA00185544 /* PFArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFArtist.m; sourceTree = "<group>"; };
+		F476F0E919B8D8EA00185544 /* PASArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASArtist.h; sourceTree = "<group>"; };
+		F476F0EA19B8D8EA00185544 /* PASArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASArtist.m; sourceTree = "<group>"; };
 		F476F0EC19B8D9A100185544 /* PASResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASResources.h; sourceTree = "<group>"; };
 		F476F0ED19B8D9A100185544 /* PASResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASResources.m; sourceTree = "<group>"; };
 		F476F0EF19B8FFA700185544 /* PASAddFromSamplesTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddFromSamplesTVC.h; sourceTree = "<group>"; };
@@ -146,8 +146,8 @@
 		F476F0E819B8D8C500185544 /* Parse Objects */ = {
 			isa = PBXGroup;
 			children = (
-				F476F0E919B8D8EA00185544 /* PFArtist.h */,
-				F476F0EA19B8D8EA00185544 /* PFArtist.m */,
+				F476F0E919B8D8EA00185544 /* PASArtist.h */,
+				F476F0EA19B8D8EA00185544 /* PASArtist.m */,
 			);
 			name = "Parse Objects";
 			sourceTree = "<group>";
@@ -395,7 +395,7 @@
 				F42422A519CD8FCA0097C0F1 /* PASInteractiveTransition.m in Sources */,
 				F4589D3D19C240D500E17D49 /* PASPageViewController.m in Sources */,
 				F4D6C4B319BFAB8800465781 /* PASAddingArtistCell.m in Sources */,
-				F476F0EB19B8D8EA00185544 /* PFArtist.m in Sources */,
+				F476F0EB19B8D8EA00185544 /* PASArtist.m in Sources */,
 				F4A779841793113E00C770B9 /* main.m in Sources */,
 				F49618B319BC4CAC00B4F3FE /* PASTimelineCVC.m in Sources */,
 				F49618C819BCDD1600B4F3FE /* PASAddArtistsNC.m in Sources */,
