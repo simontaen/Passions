@@ -17,7 +17,6 @@
 @property (nonatomic, strong) NSNumber* totalAlbums;
 @property (nonatomic, strong) NSDate* createdAt;
 @property (nonatomic, strong) NSDate* updatedAt;
-@property (nonatomic, strong) NSArray* favByUsers; // of PFUser.objectId 's
 @property (nonatomic, strong) NSArray* images; // of NSString
 
 #pragma mark - Parse

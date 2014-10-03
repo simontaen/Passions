@@ -19,7 +19,6 @@
 @dynamic totalAlbums;
 @dynamic createdAt;
 @dynamic updatedAt;
-@dynamic favByUsers;
 @dynamic images;
 
 // TODO: UIImage getter (small, medium, large), see https://parse.com/docs/ios_guide#subclasses-properties/iOS
@@ -41,7 +40,7 @@
 + (PFQuery *)favArtistsForCurrentUser
 {
 	PFQuery *query = [PFArtist query];
-	[query whereKey:@"favByUsers" equalTo:[PFUser currentUser].objectId];
+	[query whereKey:@"objectId" containedIn:(NSArray *)[[PFUser currentUser] objectForKey:@"favArtists"]];
 	[query orderByAscending:@"name"];
 	return query;
 }
@@ -70,7 +69,7 @@
 				
 				// add user to artist
 				PFArtist *artist = [artists firstObject];
-				[artist _addCurrentUserAsFavoriteAndRegisterForNotifications];
+				[artist _addCurrentUserAsFavorite];
 				[artist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 					// The artist exists and the user has favorited him
 					// ready to pass it back to the caller
@@ -105,24 +104,12 @@
 	}];
 }
 
-- (void)_addCurrentUserAsFavoriteAndRegisterForNotifications
-{
-	[self _registerCurrentUserForNotifications];
-	[self _addCurrentUserAsFavorite];
-}
-
-- (void)_registerCurrentUserForNotifications
-{
-	// register notifications
-	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-	[currentInstallation addObject:self.objectId forKey:@"favArtists"];
-	[currentInstallation saveInBackground];
-}
-
 - (void)_addCurrentUserAsFavorite
 {
-	// add user as "fan" to the artist, currently I don't use this relation
-	[self addObject:[PFUser currentUser].objectId forKey:@"favByUsers"];
+	// TODO: this should be done by a PFUser subclass
+	// add artist to the users favorites
+	[[PFUser currentUser] addObject:self.objectId forKey:@"favArtists"];
+	[[PFUser currentUser] saveInBackground];
 }
 
 /// calls LFM for corrections and adds the Artists to Parse
@@ -150,8 +137,6 @@
 		
 		[newArtist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 			if (succeeded && !error) {
-				// the new artist exists, register for notifications now
-				[newArtist _registerCurrentUserForNotifications];
 				block(newArtist, nil);
 			} else {
 				block(nil, error);
@@ -165,23 +150,14 @@
 
 + (void)removeCurrentUserFromArtist:(PFArtist *)artist withBlock:(void (^)(BOOL succeeded, NSError *error))block
 {
-	[artist _removeCurrentUserAsFavoriteAndDeregisterNotifications];
+	// TODO: this should be done by a PFUser subclass
+	// remove the relation
+	[[PFUser currentUser] removeObject:artist.objectId forKey:@"favArtists"];
+	[[PFUser currentUser] saveInBackground];
 	
 	[artist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 		block(succeeded, error);
 	}];
 }
-
-- (void)_removeCurrentUserAsFavoriteAndDeregisterNotifications
-{
-	// deregister notifications
-	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-	[currentInstallation removeObject:self.objectId forKey:@"favArtists"];
-	[currentInstallation saveInBackground];
-	
-	// remove the relation
-	[self removeObject:[PFUser currentUser].objectId forKey:@"favByUsers"];
-}
-
 
 @end

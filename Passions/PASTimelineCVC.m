@@ -22,15 +22,15 @@
 	//[PASResources printViewControllerLayoutStack:self];
 	//[PASResources printGestureRecognizerStack:self];
 	
-	// TODO: something is no right with the PFInstalltion and PFUser sind iOS 8 and the new Parse Framework I think
-	NSArray *favoriteArtistIds = (NSArray *)[[PFInstallation currentInstallation] objectForKey:@"favArtists"];
+	// TODO: PFUser subclass
+	NSArray *favoriteArtistIds = (NSArray *)[[PFUser currentUser] objectForKey:@"favArtists"];
 	
 	PFQuery *albumQuery = [PFQuery queryWithClassName:@"Album"];
-	[albumQuery whereKey:@"artistId" containedIn:@[@"3HX2FCVJCC"]];
+	[albumQuery whereKey:@"artistId" containedIn:favoriteArtistIds];
 	
 	[albumQuery findObjectsInBackgroundWithBlock:^(NSArray *albums, NSError *error) {
 		
-		NSLog(@"Found %lu albums", albums.count);
+		NSLog(@"Found %lu albums", (unsigned long)albums.count);
 		
 		for (PFObject *album in albums) {
 			NSLog(@"Name %@", [album objectForKey:@"name"]);

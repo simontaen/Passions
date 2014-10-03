@@ -117,6 +117,8 @@
 	if ([[PFUser currentUser] isDirty]) {
 		// TODO: this is where we create the user, make sure you set an ACL
 		// this must be a new user
+		// create the assosiation for push notifications
+		[[PFUser currentUser] setObject:[PFInstallation currentInstallation].objectId forKey:@"installation"];
 		// save it or else the query will crash
 		[[PFUser currentUser] save];
 	}
@@ -182,6 +184,7 @@
 
 - (NSString *)_stringForNumberOfAlbums:(NSNumber *)noOfAlbums
 {
+	// TODO: undefined should default to "Processing...", since fetchFullAlbums
 	if (noOfAlbums.longValue == 1) {
 		return [NSString stringWithFormat:@"%lu Album", noOfAlbums.longValue];
 	} else {
