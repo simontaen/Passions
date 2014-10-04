@@ -40,7 +40,7 @@
 {
 	PFQuery *query = [PASAlbum query];
 	[query whereKey:@"artistId" containedIn:(NSArray *)[[PFUser currentUser] objectForKey:@"favArtists"]];
-	[query orderByAscending:@"releaseDate"];
+	[query orderByDescending:@"releaseDate"];
 	return query;
 }
 
