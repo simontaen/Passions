@@ -10,6 +10,7 @@
 #import "PASAlbumCVC.h"
 #import <Parse/Parse.h>
 #import "PASArtist.h"
+#import "PASResources.h"
 
 @interface PASTimelineCVC ()
 
@@ -28,8 +29,6 @@ static NSString * const CellIdentifier = @"AlbumCell";
 	// Uncomment the following line to preserve selection between presentations
 	// self.clearsSelectionOnViewWillAppear = NO;
 	
-	// Register cell classes
-	[self.collectionView registerClass:[PASAlbumCVC class] forCellWithReuseIdentifier:CellIdentifier];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -38,6 +37,12 @@ static NSString * const CellIdentifier = @"AlbumCell";
 	//[PASResources printViewControllerLayoutStack:self];
 	//[PASResources printGestureRecognizerStack:self];
 	
+}
+
+#pragma mark - CPFQueryCollectionViewController
+
+- (PFQuery *)queryForCollection
+{
 	// TODO: PFUser subclass
 	NSArray *favoriteArtistIds = (NSArray *)[[PFUser currentUser] objectForKey:@"favArtists"];
 	
@@ -45,28 +50,27 @@ static NSString * const CellIdentifier = @"AlbumCell";
 	PFQuery *albumQuery = [PFQuery queryWithClassName:@"Album"];
 	[albumQuery whereKey:@"artistId" containedIn:favoriteArtistIds];
 	
-	[albumQuery findObjectsInBackgroundWithBlock:^(NSArray *albums, NSError *error) {
-		
-		NSLog(@"Found %lu albums", (unsigned long)albums.count);
-		
-		for (PFObject *album in albums) {
-			NSLog(@"Name %@", [album objectForKey:@"name"]);
-			NSLog(@"ReleaseDate %@", [album objectForKey:@"release_date"]);
-		}
-	}];	
+//	[albumQuery findObjectsInBackgroundWithBlock:^(NSArray *albums, NSError *error) {
+//		
+//		NSLog(@"Found %lu albums", (unsigned long)albums.count);
+//		
+//		for (PFObject *album in albums) {
+//			NSLog(@"Name %@", [album objectForKey:@"name"]);
+//			NSLog(@"ReleaseDate %@", [album objectForKey:@"release_date"]);
+//		}
+//	}];
+	return albumQuery;
 }
 
-#pragma mark - UICollectionViewDataSource required
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-	// Return the number of items in the section
-	return 0;
-}
+#pragma mark - CPFQueryCollectionViewController required
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
-	PASAlbumCVC *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+	PASAlbumCVC *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+	cell.imageView.image = [PASResources artistThumbnailPlaceholder];
+	cell.releaseDateLabel.text = [object objectForKey:@"release_date"];
+	NSLog(@"%@ - %@", [object objectForKey:@"name"], [object objectForKey:@"release_date"]);
 	
 	// Configure the cell
 	

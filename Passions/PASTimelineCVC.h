@@ -7,7 +7,8 @@
 //
 
 @import UIKit;
+#import "CPFQueryCollectionViewController.h"
 
-@interface PASTimelineCVC : UICollectionViewController
+@interface PASTimelineCVC : CPFQueryCollectionViewController
 
 @end

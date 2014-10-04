@@ -11,5 +11,6 @@
 @interface PASAlbumCVC : UICollectionViewCell
 
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UILabel *releaseDateLabel;
 
 @end
