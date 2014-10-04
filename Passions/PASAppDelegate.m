@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "LastFmFetchr.h"
 #import "FICImageCache.h"
+#import "PASAlbum.h"
 
 @interface PASAppDelegate () <FICImageCacheDelegate>
 
@@ -72,12 +73,9 @@
 
 - (void)_configureFastImageCache
 {
-	static NSString *ImageFormatNameAlbumThumbnailMedium = @"ch.taennler.simon.Passions.ImageFormatNameAlbumThumbnailMedium";
-	static NSString *ImageFormatFamilyAlbumThumbnails = @"ch.taennler.simon.Passions.ImageFormatFamilyAlbumThumbnails";
-	
 	FICImageFormat *mediumAlbumThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameAlbumThumbnailMedium
 																			  family:ImageFormatFamilyAlbumThumbnails
-																		   imageSize:CGSizeMake(154, 154)
+																		   imageSize:ImageFormatImageSizeAlbumThumbnailMedium
 																			   style:FICImageFormatStyle32BitBGR
 																		maximumCount:250
 																			 devices:FICImageFormatDevicePhone
