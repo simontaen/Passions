@@ -15,7 +15,7 @@
 @dynamic name;
 @dynamic spotifyId;
 @dynamic href;
-@dynamic artistId;
+@dynamic artistId; // PASArtist.objectId
 @dynamic releaseDate;
 @dynamic releaseDatePrecision;
 @dynamic utc;

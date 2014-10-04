@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, strong) NSString* spotifyId;
 @property (nonatomic, strong) NSString* href;
-@property (nonatomic, strong) NSString* artistId;
+@property (nonatomic, strong) NSString* artistId; // PASArtist.objectId
 @property (nonatomic, strong) NSString* releaseDate;
 @property (nonatomic, strong) NSString* releaseDatePrecision;
 @property (nonatomic, strong) NSNumber* utc;
