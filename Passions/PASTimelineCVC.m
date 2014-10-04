@@ -10,6 +10,7 @@
 #import "PASAlbumCVC.h"
 #import <Parse/Parse.h>
 #import "PASArtist.h"
+#import "PASAlbum.h"
 #import "PASResources.h"
 
 @interface PASTimelineCVC ()
@@ -28,7 +29,6 @@ static NSString * const CellIdentifier = @"AlbumCell";
 	
 	// Uncomment the following line to preserve selection between presentations
 	// self.clearsSelectionOnViewWillAppear = NO;
-	
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -43,23 +43,7 @@ static NSString * const CellIdentifier = @"AlbumCell";
 
 - (PFQuery *)queryForCollection
 {
-	// TODO: PFUser subclass
-	NSArray *favoriteArtistIds = (NSArray *)[[PFUser currentUser] objectForKey:@"favArtists"];
-	
-	// TODO: Album subclass
-	PFQuery *albumQuery = [PFQuery queryWithClassName:@"Album"];
-	[albumQuery whereKey:@"artistId" containedIn:favoriteArtistIds];
-	
-//	[albumQuery findObjectsInBackgroundWithBlock:^(NSArray *albums, NSError *error) {
-//		
-//		NSLog(@"Found %lu albums", (unsigned long)albums.count);
-//		
-//		for (PFObject *album in albums) {
-//			NSLog(@"Name %@", [album objectForKey:@"name"]);
-//			NSLog(@"ReleaseDate %@", [album objectForKey:@"release_date"]);
-//		}
-//	}];
-	return albumQuery;
+	return [PASAlbum albumsOfCurrentUsersFavoriteArtists];
 }
 
 
@@ -67,12 +51,14 @@ static NSString * const CellIdentifier = @"AlbumCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
+	PASAlbum *album = (PASAlbum *)object;
 	PASAlbumCVC *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-	cell.imageView.image = [PASResources artistThumbnailPlaceholder];
-	cell.releaseDateLabel.text = [object objectForKey:@"release_date"];
-	NSLog(@"%@ - %@", [object objectForKey:@"name"], [object objectForKey:@"release_date"]);
-	
+
 	// Configure the cell
+	cell.imageView.image = [PASResources albumThumbnailPlaceholder];
+	cell.releaseDateLabel.text = album.releaseDate;
+
+	NSLog(@"%@ - %@", album.name, album.releaseDate);
 	
 	return cell;
 }

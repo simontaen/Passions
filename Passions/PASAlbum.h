@@ -26,4 +26,8 @@
 
 + (NSString *)parseClassName;
 
+#pragma mark - Queries
+
++ (PFQuery *)albumsOfCurrentUsersFavoriteArtists;
+
 @end

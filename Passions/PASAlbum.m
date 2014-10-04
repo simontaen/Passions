@@ -35,4 +35,14 @@
 	return @"Album";
 }
 
+#pragma mark - Queries
+
++ (PFQuery *)albumsOfCurrentUsersFavoriteArtists
+{
+	PFQuery *query = [PASAlbum query];
+	[query whereKey:@"artistId" containedIn:(NSArray *)[[PFUser currentUser] objectForKey:@"favArtists"]];
+	[query orderByAscending:@"releaseDate"];
+	return query;
+}
+
 @end
