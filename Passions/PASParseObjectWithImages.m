@@ -9,14 +9,13 @@
 #import "PASParseObjectWithImages.h"
 
 @interface PASParseObjectWithImages ()
-@property (nonatomic, copy, readwrite) NSString *UUID;
-@property (nonatomic, copy, readwrite) NSString *sourceImageUUID;
+{
+	NSString *_UUID;
+}
 @end
 
 @implementation PASParseObjectWithImages
 
-@synthesize UUID;
-@synthesize sourceImageUUID;
 @dynamic images; // of NSString
 
 #pragma mark - FICEntity
