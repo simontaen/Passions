@@ -75,15 +75,13 @@
 	static NSString *ImageFormatNameAlbumThumbnailMedium = @"ch.taennler.simon.Passions.ImageFormatNameAlbumThumbnailMedium";
 	static NSString *ImageFormatFamilyAlbumThumbnails = @"ch.taennler.simon.Passions.ImageFormatFamilyAlbumThumbnails";
 	
-	FICImageFormat *mediumAlbumThumbnailImageFormat = [[FICImageFormat alloc] init];
-	mediumAlbumThumbnailImageFormat.name = ImageFormatNameAlbumThumbnailMedium;
-	mediumAlbumThumbnailImageFormat.family = ImageFormatFamilyAlbumThumbnails;
-	mediumAlbumThumbnailImageFormat.style = FICImageFormatStyle32BitBGR;
-	mediumAlbumThumbnailImageFormat.imageSize = CGSizeMake(154, 154);
-	mediumAlbumThumbnailImageFormat.maximumCount = 250;
-	mediumAlbumThumbnailImageFormat.devices = FICImageFormatDevicePhone;
-	mediumAlbumThumbnailImageFormat.protectionMode = FICImageFormatProtectionModeNone;
-	
+	FICImageFormat *mediumAlbumThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameAlbumThumbnailMedium
+																			  family:ImageFormatFamilyAlbumThumbnails
+																		   imageSize:CGSizeMake(154, 154)
+																			   style:FICImageFormatStyle32BitBGR
+																		maximumCount:250
+																			 devices:FICImageFormatDevicePhone
+																	  protectionMode:FICImageFormatProtectionModeNone];
 	FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
 	sharedImageCache.delegate = self;
 	sharedImageCache.formats = @[mediumAlbumThumbnailImageFormat];
@@ -101,6 +99,16 @@
 			completionBlock(sourceImage);
 		});
 	});
+}
+
+- (BOOL)imageCache:(FICImageCache *)imageCache shouldProcessAllFormatsInFamily:(NSString *)formatFamily forEntity:(id<FICEntity>)entity
+{
+	return NO;
+}
+
+- (void)imageCache:(FICImageCache *)imageCache errorDidOccurWithMessage:(NSString *)errorMessage
+{
+	NSLog(@"%@", errorMessage);
 }
 
 #pragma mark - Notifications
