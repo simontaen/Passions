@@ -7,14 +7,14 @@
 //
 
 #import <Parse/Parse.h>
+#import "PASParseObjectWithImages.h"
 
-@interface PASArtist : PFObject<PFSubclassing>
+@interface PASArtist : PASParseObjectWithImages
 
 @property (nonatomic, strong) NSString* objectId;
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, strong) NSString* spotifyId;
 @property (nonatomic, strong) NSNumber* totalAlbums;
-@property (nonatomic, strong) NSArray* images; // of NSString
 @property (nonatomic, strong) NSArray* favByUsers; // of NSString PFUser.objectId
 @property (nonatomic, strong) NSDate* createdAt;
 @property (nonatomic, strong) NSDate* updatedAt;

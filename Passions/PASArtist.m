@@ -16,7 +16,6 @@
 @dynamic name;
 @dynamic spotifyId;
 @dynamic totalAlbums;
-@dynamic images; // of NSString
 @dynamic favByUsers; // of NSString PFUser.objectId
 @dynamic createdAt;
 @dynamic updatedAt;

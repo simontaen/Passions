@@ -9,6 +9,11 @@
 #import "PASAppDelegate.h"
 #import <Parse/Parse.h>
 #import "LastFmFetchr.h"
+#import "FICImageCache.h"
+
+@interface PASAppDelegate () <FICImageCacheDelegate>
+
+@end
 
 @implementation PASAppDelegate
 
@@ -56,9 +61,49 @@
 																			 categories:nil];
 	[[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 	[[UIApplication sharedApplication] registerForRemoteNotifications];
+	
+	// Setup Image Cache
+	[self _configureFastImageCache];
 
 	return YES;
 }
+
+#pragma mark - FICImageCacheDelegate
+
+- (void)_configureFastImageCache
+{
+	static NSString *ImageFormatNameAlbumThumbnailMedium = @"ch.taennler.simon.Passions.ImageFormatNameAlbumThumbnailMedium";
+	static NSString *ImageFormatFamilyAlbumThumbnails = @"ch.taennler.simon.Passions.ImageFormatFamilyAlbumThumbnails";
+	
+	FICImageFormat *mediumAlbumThumbnailImageFormat = [[FICImageFormat alloc] init];
+	mediumAlbumThumbnailImageFormat.name = ImageFormatNameAlbumThumbnailMedium;
+	mediumAlbumThumbnailImageFormat.family = ImageFormatFamilyAlbumThumbnails;
+	mediumAlbumThumbnailImageFormat.style = FICImageFormatStyle32BitBGR;
+	mediumAlbumThumbnailImageFormat.imageSize = CGSizeMake(154, 154);
+	mediumAlbumThumbnailImageFormat.maximumCount = 250;
+	mediumAlbumThumbnailImageFormat.devices = FICImageFormatDevicePhone;
+	mediumAlbumThumbnailImageFormat.protectionMode = FICImageFormatProtectionModeNone;
+	
+	FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
+	sharedImageCache.delegate = self;
+	sharedImageCache.formats = @[mediumAlbumThumbnailImageFormat];
+}
+
+- (void)imageCache:(FICImageCache *)imageCache wantsSourceImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName completionBlock:(FICImageRequestCompletionBlock)completionBlock
+{
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		// Fetch the desired source image by making a network request
+		NSURL *requestURL = [entity sourceImageURLWithFormatName:formatName];
+		// TODO: this might not be ideal
+		UIImage *sourceImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:requestURL]];
+		
+		dispatch_async(dispatch_get_main_queue(), ^{
+			completionBlock(sourceImage);
+		});
+	});
+}
+
+#pragma mark - Notifications
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
@@ -107,6 +152,8 @@
         [PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
     }
 }
+
+#pragma mark - Application Lifecycle
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

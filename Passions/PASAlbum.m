@@ -19,7 +19,6 @@
 @dynamic releaseDate;
 @dynamic releaseDatePrecision;
 @dynamic utc;
-@dynamic images; // of NSString
 @dynamic createdAt;
 @dynamic updatedAt;
 

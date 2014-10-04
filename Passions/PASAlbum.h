@@ -7,8 +7,9 @@
 //
 
 #import <Parse/Parse.h>
+#import "PASParseObjectWithImages.h"
 
-@interface PASAlbum : PFObject<PFSubclassing>
+@interface PASAlbum : PASParseObjectWithImages
 
 @property (nonatomic, strong) NSString* objectId;
 @property (nonatomic, strong) NSString* name;
@@ -18,7 +19,6 @@
 @property (nonatomic, strong) NSString* releaseDate;
 @property (nonatomic, strong) NSString* releaseDatePrecision;
 @property (nonatomic, strong) NSNumber* utc;
-@property (nonatomic, strong) NSArray* images; // of NSString
 @property (nonatomic, strong) NSDate* createdAt;
 @property (nonatomic, strong) NSDate* updatedAt;
 

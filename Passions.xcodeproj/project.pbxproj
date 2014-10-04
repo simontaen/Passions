@@ -44,6 +44,7 @@
 		F4B8B0B619E039EE00E1064D /* PASAlbumCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B8B0B519E039EE00E1064D /* PASAlbumCVC.m */; };
 		F4B8B0B919E060AD00E1064D /* CPFQueryCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B8B0B819E060AD00E1064D /* CPFQueryCollectionViewController.m */; };
 		F4D284CD19E087D0008A3913 /* PASAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D284CC19E087D0008A3913 /* PASAlbum.m */; };
+		F4D284D019E0AE26008A3913 /* PASParseObjectWithImages.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D284CF19E0AE26008A3913 /* PASParseObjectWithImages.m */; };
 		F4D6C4B319BFAB8800465781 /* PASAddingArtistCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D6C4B119BFAB8800465781 /* PASAddingArtistCell.m */; };
 		F4D6C4B419BFAB8800465781 /* PASAddingArtistCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4D6C4B219BFAB8800465781 /* PASAddingArtistCell.xib */; };
 		F4D9E94C19C39AB100B762A7 /* PASPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4D9E94B19C39AB100B762A7 /* PASPageViewController.xib */; };
@@ -106,6 +107,8 @@
 		F4B8B0B819E060AD00E1064D /* CPFQueryCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPFQueryCollectionViewController.m; sourceTree = "<group>"; };
 		F4D284CB19E087D0008A3913 /* PASAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAlbum.h; sourceTree = "<group>"; };
 		F4D284CC19E087D0008A3913 /* PASAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAlbum.m; sourceTree = "<group>"; };
+		F4D284CE19E0AE26008A3913 /* PASParseObjectWithImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASParseObjectWithImages.h; sourceTree = "<group>"; };
+		F4D284CF19E0AE26008A3913 /* PASParseObjectWithImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASParseObjectWithImages.m; sourceTree = "<group>"; };
 		F4D6C4B019BFAB8800465781 /* PASAddingArtistCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddingArtistCell.h; sourceTree = "<group>"; };
 		F4D6C4B119BFAB8800465781 /* PASAddingArtistCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAddingArtistCell.m; sourceTree = "<group>"; };
 		F4D6C4B219BFAB8800465781 /* PASAddingArtistCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PASAddingArtistCell.xib; sourceTree = "<group>"; };
@@ -155,6 +158,8 @@
 		F476F0E819B8D8C500185544 /* Parse Objects */ = {
 			isa = PBXGroup;
 			children = (
+				F4D284CE19E0AE26008A3913 /* PASParseObjectWithImages.h */,
+				F4D284CF19E0AE26008A3913 /* PASParseObjectWithImages.m */,
 				F476F0E919B8D8EA00185544 /* PASArtist.h */,
 				F476F0EA19B8D8EA00185544 /* PASArtist.m */,
 				F4D284CB19E087D0008A3913 /* PASAlbum.h */,
@@ -418,6 +423,7 @@
 				F4FA316819B8B867000337A0 /* UIImage+Scale.m in Sources */,
 				F4B8B0B619E039EE00E1064D /* PASAlbumCVC.m in Sources */,
 				F4D9E94F19C39D6200B762A7 /* PASRootVC.m in Sources */,
+				F4D284D019E0AE26008A3913 /* PASParseObjectWithImages.m in Sources */,
 				F4A779881793113E00C770B9 /* PASAppDelegate.m in Sources */,
 				F4D284CD19E087D0008A3913 /* PASAlbum.m in Sources */,
 				F476F0F119B8FFA700185544 /* PASAddFromSamplesTVC.m in Sources */,
