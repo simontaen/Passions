@@ -9,7 +9,7 @@
 #import <Parse/Parse.h>
 #import "PASParseObjectWithImages.h"
 
-@interface PASArtist : PASParseObjectWithImages
+@interface PASArtist : PASParseObjectWithImages <PFSubclassing>
 
 @property (nonatomic, strong) NSString* objectId;
 @property (nonatomic, strong) NSString* name;

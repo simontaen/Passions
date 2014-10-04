@@ -11,7 +11,6 @@
 @interface PASParseObjectWithImages ()
 @property (nonatomic, copy, readwrite) NSString *UUID;
 @property (nonatomic, copy, readwrite) NSString *sourceImageUUID;
-
 @end
 
 @implementation PASParseObjectWithImages
