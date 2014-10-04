@@ -7,6 +7,7 @@
 //
 
 #import "PASTimelineCVC.h"
+#import "PASAlbumCVC.h"
 #import <Parse/Parse.h>
 #import "PASArtist.h"
 
@@ -15,6 +16,26 @@
 @end
 
 @implementation PASTimelineCVC
+
+static NSString * const CellIdentifier = @"AlbumCell";
+
+#pragma mark - View Lifecycle
+
+- (void)viewDidLoad
+{
+	[super viewDidLoad];
+	
+	// Uncomment the following line to preserve selection between presentations
+	// self.clearsSelectionOnViewWillAppear = NO;
+	
+	// Register cell classes
+	[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:CellIdentifier];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+}
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
@@ -37,10 +58,24 @@
 			NSLog(@"Name %@", [album objectForKey:@"name"]);
 			NSLog(@"ReleaseDate %@", [album objectForKey:@"release_date"]);
 		}
-	}];
+	}];	
+}
 
+#pragma mark - UICollectionViewDataSource required
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+	// Return the number of items in the section
+	return 0;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+	PASAlbumCVC *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
 	
+	// Configure the cell
 	
+	return cell;
 }
 
 @end

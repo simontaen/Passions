@@ -93,7 +93,7 @@
                             <inset key="sectionInset" minX="5" minY="10" maxX="10" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AFCollectionViewCell" id="BMk-3s-m0K" customClass="AFCollectionViewCell">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AlbumCell" id="BMk-3s-m0K" customClass="PASAlbumCVC">
                                 <rect key="frame" x="5" y="10" width="147" height="147"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -113,7 +113,7 @@
                                     <constraint firstItem="Doa-Fp-vv6" firstAttribute="leading" secondItem="BMk-3s-m0K" secondAttribute="leading" id="krT-te-Nu8"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="imageView" destination="Doa-Fp-vv6" id="OW8-k8-VL1"/>
+                                    <outlet property="imageView" destination="Doa-Fp-vv6" id="huR-sx-pVi"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -122,8 +122,6 @@
                             <outlet property="delegate" destination="FfG-q4-MGg" id="RWT-Qa-jWM"/>
                         </connections>
                     </collectionView>
-                    <tabBarItem key="tabBarItem" systemItem="recents" id="dex-h0-QUA"/>
-                    <navigationItem key="navigationItem" id="C7u-re-iaN"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yVW-XG-a60" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
