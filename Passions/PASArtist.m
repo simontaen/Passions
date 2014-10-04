@@ -16,9 +16,10 @@
 @dynamic name;
 @dynamic spotifyId;
 @dynamic totalAlbums;
+@dynamic images; // of NSString
+@dynamic favByUsers; // of NSString PFUser.objectId
 @dynamic createdAt;
 @dynamic updatedAt;
-@dynamic images;
 
 // TODO: UIImage getter (small, medium, large), see https://parse.com/docs/ios_guide#subclasses-properties/iOS
 // can be reused for Album
