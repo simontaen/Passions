@@ -27,7 +27,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 * Interactively pan between favorite artists and albums collection
 	* like on the home screen
-	* use a transparent page controle
+	* use a transparent page control
 
 
 # Todos.todo
@@ -44,7 +44,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 * check the iPod Adding regarding thumbnails
 * fix the layout issues regarding the NavBar, it slides under it.
-* A-Z srubber
+* A-Z scrubber
 	* rethink the A-Z scrubber, should it always show the complete alphabet?
 	* the scrubber seems to blocks the pan gesture
 * Try a TabBarController with a hidden tabBar replaced by a pageControl
