@@ -29,12 +29,7 @@ static NSString * const CellIdentifier = @"AlbumCell";
 	// self.clearsSelectionOnViewWillAppear = NO;
 	
 	// Register cell classes
-	[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:CellIdentifier];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
+	[self.collectionView registerClass:[PASAlbumCVC class] forCellWithReuseIdentifier:CellIdentifier];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
