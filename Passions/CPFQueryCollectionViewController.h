@@ -10,7 +10,7 @@
 
 #import <Parse/Parse.h>
 
-@interface CPFQueryCollectionViewController : UICollectionViewController <UICollectionViewDataSource, PF_EGORefreshTableHeaderDelegate>
+@interface CPFQueryCollectionViewController : UICollectionViewController <UICollectionViewDataSource>
 
 /**
  * Is the query currently loading (being fetched)?
@@ -26,12 +26,6 @@
  * Should the collection view show an activity indicator while a query is in progress?
  */
 @property (nonatomic) BOOL loadingViewEnabled;
-
-/**
- * Should the collection display the pull-to-refresh view?
- * This is not supported for horizontally scrolled collection views
- */
-@property (nonatomic) BOOL pullToRefreshEnabled;
 
 /**
  * Should the collection use pagination?

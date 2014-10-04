@@ -21,8 +21,6 @@
 
 @implementation CPFQueryCollectionViewController
 {
-    NSDate *_lastLoadedData;
-    PF_EGORefreshTableHeaderView *_refreshHeaderView;
     UIActivityIndicatorView *_loadingIndicator;
 }
 
@@ -30,12 +28,9 @@
 - (void)_initDefaults
 {
     _loadingViewEnabled = YES;
-    _pullToRefreshEnabled = YES;
     _paginationEnabled = NO;
     _objectsPerPage = 15;
     _objects = [NSArray new];
-    
-    _lastLoadedData = nil;
 }
 
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
@@ -74,23 +69,8 @@
 {
     [super viewDidLoad];
     
-    // Add the refresh view if necessary
-    if (self.pullToRefreshEnabled)
-    {
-        // Create the view and set it's delegate
-        // This will not work well if the layout is horizontal...
-        _refreshHeaderView = [[PF_EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0, -1000, self.view.frame.size.width, 1000)];
-        _refreshHeaderView.delegate = self;
-        [self.collectionView addSubview:_refreshHeaderView];
-    }
-    
     // Perform the first query
     [self performQuery];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 #pragma mark - Parse.com logic
@@ -155,8 +135,6 @@
 
 - (void)objectsDidLoad:(NSError *)error
 {
-    _lastLoadedData = [NSDate date];
-    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.collectionView];
     [_loadingIndicator stopAnimating];
     [self.collectionView reloadData];
 }
@@ -209,17 +187,6 @@
 
 #pragma mark - Scroll View delegate
 
-// Forward these messages to the refresh view
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
-}
-
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     //if the scrollView has reached the bottom fetch the next page of objects
@@ -228,27 +195,6 @@
         [self setIsRefreshing:NO];
         [self performQuery];
     }
-}
-
-#pragma mark - EGO Refresh delegate
-
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(PF_EGORefreshTableHeaderView *)view
-{
-    // Trigger the refresh
-    [self setIsRefreshing:YES];
-    [self performQuery];
-}
-
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(PF_EGORefreshTableHeaderView *)view
-{
-    return self.isLoading;
-}
-
-- (NSDate *)egoRefreshTableHeaderDataSourceLastUpdated:(PF_EGORefreshTableHeaderView *)view
-{
-    // First time we will return nil, which is OK.
-    // (Further returns of nil will result in (null) being displayed in the refresh view
-    return _lastLoadedData;
 }
 
 @end
