@@ -35,4 +35,11 @@
 	return cell;
 }
 
+#pragma mark - UIViewController
+
+- (BOOL)prefersStatusBarHidden
+{
+	return YES;
+}
+
 @end

@@ -175,6 +175,7 @@
 	[self _transitionToChildViewController:newVc completion:^(BOOL didTransition) {
 		if (didTransition) {
 			_selectedViewController = newVc;
+			[self setNeedsStatusBarAppearanceUpdate];
 			self.pageControlView.currentPage = self.selectedViewControllerIndex;
 		}
 	}];
@@ -199,6 +200,13 @@
 - (void)removeGestureRecognizerFromContainerView:(UIGestureRecognizer *)recognizer
 {
 	[self.containerView removeGestureRecognizer:recognizer];
+}
+
+#pragma mark - UIViewController
+
+- (BOOL)prefersStatusBarHidden
+{
+	return [self.selectedViewController prefersStatusBarHidden];
 }
 
 #pragma mark - Private Methods

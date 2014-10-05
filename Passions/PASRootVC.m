@@ -64,4 +64,11 @@
 	return [self.storyboard instantiateViewControllerWithIdentifier:@"PASTimelineCVC"];
 }
 
+#pragma mark - UIViewController
+
+- (BOOL)prefersStatusBarHidden
+{
+	return [self.pageViewController prefersStatusBarHidden];
+}
+
 @end
