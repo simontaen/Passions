@@ -32,8 +32,6 @@
 	
 	cell.album = album;
 
-	NSLog(@"%@ - %@", album.name, album.releaseDate);
-	
 	return cell;
 }
 
