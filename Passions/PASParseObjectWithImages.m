@@ -7,6 +7,7 @@
 //
 
 #import "PASParseObjectWithImages.h"
+#import "FICUtilities.h"
 
 @interface PASParseObjectWithImages ()
 {
@@ -38,22 +39,39 @@
 
 - (NSString *)UUID
 {
-	return nil;
+	if (_UUID == nil) {
+		// MD5 hashing is expensive enough that we only want to do it once
+		NSString *imageName = [_sourceImageURL lastPathComponent];
+		CFUUIDBytes UUIDBytes = FICUUIDBytesFromMD5HashOfString(imageName);
+		_UUID = FICStringWithUUIDBytes(UUIDBytes);
+	}
+	
+	return _UUID;
 }
 
 - (NSString *)sourceImageUUID
 {
-	return nil;
+	return [self UUID];
 }
 
 - (NSURL *)sourceImageURLWithFormatName:(NSString *)formatName
 {
-	return nil;
+	return [self sourceImageURL];
 }
 
 - (FICEntityImageDrawingBlock)drawingBlockForImage:(UIImage *)image withFormatName:(NSString *)formatName
 {
-	return nil;
+	FICEntityImageDrawingBlock drawingBlock = ^(CGContextRef context, CGSize contextSize) {
+		CGRect contextBounds = CGRectZero;
+		contextBounds.size = contextSize;
+		CGContextClearRect(context, contextBounds);
+		
+		UIGraphicsPushContext(context);
+		[image drawInRect:contextBounds];
+		UIGraphicsPopContext();
+	};
+	
+	return drawingBlock;
 }
 
 @end
