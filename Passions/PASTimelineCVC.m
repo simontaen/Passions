@@ -55,6 +55,7 @@ static NSString * const CellIdentifier = @"AlbumCell";
 	PASAlbumCVC *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
 
 	// Configure the cell
+	// TODO: request the image from the cache
 	cell.imageView.image = [PASResources albumThumbnailPlaceholder];
 	cell.releaseDateLabel.text = album.releaseDate;
 

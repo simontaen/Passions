@@ -73,6 +73,7 @@
 
 - (void)_configureFastImageCache
 {
+	// TODO: figure out a better maximumCount
 	FICImageFormat *mediumAlbumThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameAlbumThumbnailMedium
 																			  family:ImageFormatFamilyAlbumThumbnails
 																		   imageSize:ImageFormatImageSizeAlbumThumbnailMedium
