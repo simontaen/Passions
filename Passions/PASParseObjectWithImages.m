@@ -10,13 +10,29 @@
 
 @interface PASParseObjectWithImages ()
 {
+	NSURL *_sourceImageURL;
 	NSString *_UUID;
 }
+@property (nonatomic, strong) NSArray* images; // of NSString, ordered big to small
+
 @end
 
 @implementation PASParseObjectWithImages
 
 @dynamic images; // of NSString
+
+#pragma mark - Accessors
+
+- (NSURL *)sourceImageURL
+{
+	if (!_sourceImageURL && self.images.count != 0) {
+		// you could switch based on interface idiom here
+		// round down, this is only a thumbnail
+		int middle = (int)(self.images.count / 2 - ((self.images.count % 2) / 2));
+		_sourceImageURL = [NSURL URLWithString:self.images[middle]];
+	}
+	return _sourceImageURL;
+}
 
 #pragma mark - FICEntity
 

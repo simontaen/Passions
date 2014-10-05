@@ -150,19 +150,14 @@
 	cell.textLabel.text = artist.name;
 	cell.detailTextLabel.text = [self _stringForNumberOfAlbums:artist.totalAlbums];
 	
-	// get images, ordered big to small
-	NSArray *images = artist.images;
-	
-	if (images.count != 0) {
-		// round down, this is only a thumbnail
-		int middle = (int)(images.count / 2 - ((images.count % 2) / 2));
+	if (artist.sourceImageURL) {
 		
 		// https://developer.apple.com/library/ios/documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/WindowsandViews/WindowsandViews.html
 		// http://stackoverflow.com/questions/3182649/ios-sdk-uiviewcontentmodescaleaspectfit-vs-uiviewcontentmodescaleaspectfill
 		// imageView of UITableViewCell automatically resizes to image, mostly ignoring contentMode, this means
 		// http://nshipster.com/image-resizing/ does not work
 		
-		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:images[middle]]];
+		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:artist.sourceImageURL];
 		[request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
 		
 		__weak typeof(cell) weakCell = cell;

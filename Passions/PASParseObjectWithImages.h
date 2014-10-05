@@ -9,8 +9,8 @@
 #import <Parse/Parse.h>
 #import "FICImageCache.h"
 
-@interface PASParseObjectWithImages : PFObject //, FICEntity>
+@interface PASParseObjectWithImages : PFObject <FICEntity>
 
-@property (nonatomic, strong) NSArray* images; // of NSString
+@property (nonatomic, copy, readonly) NSURL *sourceImageURL;
 
 @end
