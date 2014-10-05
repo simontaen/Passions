@@ -19,15 +19,18 @@
 	if (album != _album) {
 		_album = album;
 		
+		// clear the image to avoid seeing old images when scrolling
+		self.albumImage.image = nil;
+		
 		[[FICImageCache sharedImageCache] retrieveImageForEntity:album
 												  withFormatName:ImageFormatNameAlbumThumbnailMedium
 												 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
 			// check if this cell hasn't been reused for a different album
 			if (album == self.album) {
 				if (image) {
-					self.imageView.image = image;
+					self.albumImage.image = image;
 				} else {
-					self.imageView.image = [PASResources albumThumbnailPlaceholder];
+					self.albumImage.image = [PASResources albumThumbnailPlaceholder];
 				}
 			}
 		}];

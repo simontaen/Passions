@@ -16,7 +16,7 @@
 @property (nonatomic, weak) IBOutlet UIImageView *artistImage;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
 
-@property (nonatomic, copy) PASArtist *artist;
+@property (nonatomic, strong) PASArtist *artist;
 
 + (NSString *)reuseIdentifier;
 

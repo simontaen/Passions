@@ -11,10 +11,10 @@
 
 @interface PASAlbumCVCell : UICollectionViewCell
 
-@property (nonatomic, strong) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) IBOutlet UIImageView *albumImage;
 @property (weak, nonatomic) IBOutlet UILabel *releaseDateLabel;
 
-@property (nonatomic, copy) PASAlbum *album;
+@property (nonatomic, strong) PASAlbum *album;
 
 + (NSString *)reuseIdentifier;
 

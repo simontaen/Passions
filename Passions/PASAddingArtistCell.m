@@ -18,6 +18,9 @@
 	if (artist != _artist) {
 		_artist = artist;
 		
+		// clear the image to avoid seeing old images when scrolling
+		self.artistImage.image = nil;
+		
 		[[FICImageCache sharedImageCache] retrieveImageForEntity:artist
 												  withFormatName:ImageFormatNameArtistThumbnailSmall
 												 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
