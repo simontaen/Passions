@@ -43,7 +43,7 @@
 	// TODO: maybe use the objectId, https://github.com/path/FastImageCache#creating-entities
 	if (_UUID == nil) {
 		// MD5 hashing is expensive enough that we only want to do it once
-		NSString *imageName = [_sourceImageURL lastPathComponent];
+		NSString *imageName = [self.sourceImageURL lastPathComponent];
 		CFUUIDBytes UUIDBytes = FICUUIDBytesFromMD5HashOfString(imageName);
 		_UUID = FICStringWithUUIDBytes(UUIDBytes);
 	}
