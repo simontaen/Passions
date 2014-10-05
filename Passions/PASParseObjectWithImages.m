@@ -8,6 +8,7 @@
 
 #import "PASParseObjectWithImages.h"
 #import "FICUtilities.h"
+#import "UIImage+Scale.h"
 
 @interface PASParseObjectWithImages ()
 {
@@ -68,10 +69,15 @@
 		contextBounds.size = contextSize;
 		CGContextClearRect(context, contextBounds);
 		
-		// TODO: check the demo app, they have pretty cool image helper functions like _FICDSquareImageFromImage
+		// Fill with white for image formats that are opaque
+		CGContextSetFillColorWithColor(context, [[UIColor whiteColor] CGColor]);
+		CGContextFillRect(context, contextBounds);
+		
+		// crop to a square image
+		UIImage *squareImage = [UIImage FICDSquareImageFromImage:image];
 		
 		UIGraphicsPushContext(context);
-		[image drawInRect:contextBounds];
+		[squareImage drawInRect:contextBounds];
 		UIGraphicsPopContext();
 	};
 	

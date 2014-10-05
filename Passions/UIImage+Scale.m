@@ -81,4 +81,32 @@
     return newImage;
 }
 
+// https://github.com/path/FastImageCache/blob/9cf321046790194a14cf1ddda4fee56b5bf1e640/FastImageCacheDemo/Classes/FICDPhoto.m#L84
++ (UIImage *)FICDSquareImageFromImage:(UIImage *)image
+{
+	UIImage *squareImage = nil;
+	CGSize imageSize = [image size];
+	
+	if (imageSize.width == imageSize.height) {
+		squareImage = image;
+	} else {
+		// Compute square crop rect
+		CGFloat smallerDimension = MIN(imageSize.width, imageSize.height);
+		CGRect cropRect = CGRectMake(0, 0, smallerDimension, smallerDimension);
+		
+		// Center the crop rect either vertically or horizontally, depending on which dimension is smaller
+		if (imageSize.width <= imageSize.height) {
+			cropRect.origin = CGPointMake(0, rintf((imageSize.height - smallerDimension) / 2.0));
+		} else {
+			cropRect.origin = CGPointMake(rintf((imageSize.width - smallerDimension) / 2.0), 0);
+		}
+		
+		CGImageRef croppedImageRef = CGImageCreateWithImageInRect([image CGImage], cropRect);
+		squareImage = [UIImage imageWithCGImage:croppedImageRef];
+		CGImageRelease(croppedImageRef);
+	}
+	
+	return squareImage;
+}
+
 @end

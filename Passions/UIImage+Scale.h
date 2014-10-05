@@ -22,4 +22,8 @@
 /// the SMALLER side fits the passed size exactly (cropping!)
 - (UIImage*)PASscaleToAspectFillSize:(CGSize)size;
 
+/// Similar to AspectFillSize
+/// the SMALLER side fits the passed size exactly (cropping!)
++ (UIImage *)FICDSquareImageFromImage:(UIImage *)image;
+
 @end
