@@ -19,7 +19,9 @@
 	if (album != _album) {
 		_album = album;
 		
-		[[FICImageCache sharedImageCache] retrieveImageForEntity:album withFormatName:ImageFormatNameAlbumThumbnailMedium completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+		[[FICImageCache sharedImageCache] retrieveImageForEntity:album
+												  withFormatName:ImageFormatNameAlbumThumbnailMedium
+												 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
 			// check if this cell hasn't been reused for a different album
 			if (album == self.album) {
 				if (image) {

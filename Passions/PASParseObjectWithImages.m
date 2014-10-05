@@ -68,6 +68,8 @@
 		contextBounds.size = contextSize;
 		CGContextClearRect(context, contextBounds);
 		
+		// TODO: check the demo app, they have pretty cool image helper functions like _FICDSquareImageFromImage
+		
 		UIGraphicsPushContext(context);
 		[image drawInRect:contextBounds];
 		UIGraphicsPopContext();
