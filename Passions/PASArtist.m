@@ -10,6 +10,10 @@
 #import <Parse/PFObject+Subclass.h>
 #import "LastFmFetchr.h"
 
+NSString *const ImageFormatFamilyArtistThumbnails = @"ch.taennler.simon.Passions.ImageFormatFamilyArtistThumbnails";
+NSString *const ImageFormatNameArtistThumbnailSmall = @"ch.taennler.simon.Passions.ImageFormatNameArtistThumbnailSmall";
+CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
+
 @implementation PASArtist
 
 @dynamic objectId;
@@ -19,10 +23,6 @@
 @dynamic favByUsers; // of NSString PFUser.objectId
 @dynamic createdAt;
 @dynamic updatedAt;
-
-// TODO: UIImage getter (small, medium, large), see https://parse.com/docs/ios_guide#subclasses-properties/iOS
-// can be reused for Album
-// TODO: image management should be done in this class, all the caching and resizing, see https://github.com/path/FastImageCache
 
 #pragma mark - Parse
 

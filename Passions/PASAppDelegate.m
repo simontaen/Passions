@@ -11,7 +11,7 @@
 #import "LastFmFetchr.h"
 #import "FICImageCache.h"
 #import "PASAlbum.h"
-//#import "PASArtist.h"
+#import "PASArtist.h"
 
 @interface PASAppDelegate () <FICImageCacheDelegate>
 
@@ -73,9 +73,16 @@
 																		maximumCount:250
 																			 devices:FICImageFormatDevicePhone
 																	  protectionMode:FICImageFormatProtectionModeNone];
+	FICImageFormat *smallArtistThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameArtistThumbnailSmall
+																			  family:ImageFormatFamilyArtistThumbnails
+																		   imageSize:ImageFormatImageSizeArtistThumbnailSmall
+																			   style:FICImageFormatStyle32BitBGR
+																		maximumCount:250
+																			 devices:FICImageFormatDevicePhone
+																	  protectionMode:FICImageFormatProtectionModeNone];
 	FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
 	sharedImageCache.delegate = self;
-	sharedImageCache.formats = @[mediumAlbumThumbnailImageFormat];
+	sharedImageCache.formats = @[mediumAlbumThumbnailImageFormat, smallArtistThumbnailImageFormat];
 
 	return YES;
 }
