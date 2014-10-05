@@ -171,14 +171,11 @@
 		F49618B419BC4CC000B4F3FE /* Favorite Artists */ = {
 			isa = PBXGroup;
 			children = (
-				F4D9E94D19C39D6200B762A7 /* PASRootVC.h */,
-				F4D9E94E19C39D6200B762A7 /* PASRootVC.m */,
-				F49618B119BC4CAC00B4F3FE /* PASTimelineCVC.h */,
-				F49618B219BC4CAC00B4F3FE /* PASTimelineCVC.m */,
-				F4B8B0B419E039EE00E1064D /* PASAlbumCVCell.h */,
-				F4B8B0B519E039EE00E1064D /* PASAlbumCVCell.m */,
 				F4694D6219B74ABB00D12576 /* PASFavArtistsTVC.h */,
 				F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */,
+				F4D6C4B019BFAB8800465781 /* PASAddingArtistCell.h */,
+				F4D6C4B119BFAB8800465781 /* PASAddingArtistCell.m */,
+				F4D6C4B219BFAB8800465781 /* PASAddingArtistCell.xib */,
 			);
 			name = "Favorite Artists";
 			sourceTree = "<group>";
@@ -192,9 +189,6 @@
 				F476F0F019B8FFA700185544 /* PASAddFromSamplesTVC.m */,
 				F40BBA6918538DAD00877D60 /* PASAddFromMusicTVC.h */,
 				F40BBA6A18538DAD00877D60 /* PASAddFromMusicTVC.m */,
-				F4D6C4B019BFAB8800465781 /* PASAddingArtistCell.h */,
-				F4D6C4B119BFAB8800465781 /* PASAddingArtistCell.m */,
-				F4D6C4B219BFAB8800465781 /* PASAddingArtistCell.xib */,
 			);
 			name = "Add Artists";
 			sourceTree = "<group>";
@@ -244,6 +238,9 @@
 			isa = PBXGroup;
 			children = (
 				F4A7798F1793113E00C770B9 /* iPhone.storyboard */,
+				F4D9E94D19C39D6200B762A7 /* PASRootVC.h */,
+				F4D9E94E19C39D6200B762A7 /* PASRootVC.m */,
+				F4A814B219E1D3E5003879B0 /* Album Timeline */,
 				F49618B419BC4CC000B4F3FE /* Favorite Artists */,
 				F49618B519BC4CCB00B4F3FE /* Add Artists */,
 				F4D9E94619C3612800B762A7 /* PageViewController */,
@@ -269,6 +266,17 @@
 				F4A7798D1793113E00C770B9 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F4A814B219E1D3E5003879B0 /* Album Timeline */ = {
+			isa = PBXGroup;
+			children = (
+				F49618B119BC4CAC00B4F3FE /* PASTimelineCVC.h */,
+				F49618B219BC4CAC00B4F3FE /* PASTimelineCVC.m */,
+				F4B8B0B419E039EE00E1064D /* PASAlbumCVCell.h */,
+				F4B8B0B519E039EE00E1064D /* PASAlbumCVCell.m */,
+			);
+			name = "Album Timeline";
 			sourceTree = "<group>";
 		};
 		F4D9E94619C3612800B762A7 /* PageViewController */ = {
