@@ -65,15 +65,6 @@
 	[[UIApplication sharedApplication] registerForRemoteNotifications];
 	
 	// Setup Image Cache
-	[self _configureFastImageCache];
-
-	return YES;
-}
-
-#pragma mark - FICImageCacheDelegate
-
-- (void)_configureFastImageCache
-{
 	// TODO: figure out a better maximumCount
 	FICImageFormat *mediumAlbumThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameAlbumThumbnailMedium
 																			  family:ImageFormatFamilyAlbumThumbnails
@@ -85,7 +76,11 @@
 	FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
 	sharedImageCache.delegate = self;
 	sharedImageCache.formats = @[mediumAlbumThumbnailImageFormat];
+
+	return YES;
 }
+
+#pragma mark - FICImageCacheDelegate
 
 - (void)imageCache:(FICImageCache *)imageCache wantsSourceImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName completionBlock:(FICImageRequestCompletionBlock)completionBlock
 {
@@ -108,7 +103,7 @@
 
 - (void)imageCache:(FICImageCache *)imageCache errorDidOccurWithMessage:(NSString *)errorMessage
 {
-	NSLog(@"%@", errorMessage);
+	NSLog(@"imageCache:errorDidOccurWithMessage: %@", errorMessage);
 }
 
 #pragma mark - Notifications
@@ -122,15 +117,6 @@
     [currentInstallation setDeviceTokenFromData:deviceToken];
     currentInstallation.channels = @[@"global", @"allFavArtists"];
     [currentInstallation saveInBackground];
-}
-
-- (void)subscribeFinished:(NSNumber *)result error:(NSError *)error
-{
-    if ([result boolValue]) {
-        NSLog(@"ParseStarterProject successfully subscribed to push notifications on the broadcast channel.");
-    } else {
-        NSLog(@"ParseStarterProject failed to subscribe to push notifications on the broadcast channel.");
-    }
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error

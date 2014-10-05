@@ -9,8 +9,6 @@
 #import "PASAlbum.h"
 #import <Parse/PFObject+Subclass.h>
 
-#pragma mark - External Definitions
-
 NSString *const ImageFormatFamilyAlbumThumbnails = @"ch.taennler.simon.Passions.ImageFormatFamilyAlbumThumbnails";
 NSString *const ImageFormatNameAlbumThumbnailMedium = @"ch.taennler.simon.Passions.ImageFormatNameAlbumThumbnailMedium";
 CGSize const ImageFormatImageSizeAlbumThumbnailMedium = {154, 154};
