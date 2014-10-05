@@ -87,6 +87,13 @@
 	[tableView endUpdates];
 }
 
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return 50;
+}
+
 #pragma mark - PFQueryTableViewController
 
 - (PASArtist *)_artistAtIndexPath:(NSIndexPath *)indexPath
