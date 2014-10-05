@@ -7,6 +7,7 @@
 //
 
 #import "PASFavArtistsTVC.h"
+#import "PASAddingArtistCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIImage+Scale.h"
 #import "PASArtist.h"
@@ -50,6 +51,7 @@
 {
 	[super viewDidLoad];
 	self.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
+	[self.tableView registerNib:[UINib nibWithNibName:[PASAddingArtistCell reuseIdentifier] bundle:nil] forCellReuseIdentifier:[PASAddingArtistCell reuseIdentifier]];
 	
 	// DEBUG
 	//self.view.backgroundColor = [UIColor greenColor];
@@ -129,14 +131,13 @@
 // a UITableViewCellStyleDefault style cell with the label being the first key in the object.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
-	static NSString *CellIdentifier = @"FavArtist";
 	PASArtist *artist = (PASArtist *)object;
 	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+	PASAddingArtistCell *cell = [tableView dequeueReusableCellWithIdentifier:[PASAddingArtistCell reuseIdentifier] forIndexPath:indexPath];
 	
 	// Configure the cell
-	cell.textLabel.text = artist.name;
-	cell.detailTextLabel.text = [self _stringForNumberOfAlbums:artist.totalAlbums];
+	cell.artistName.text = artist.name;
+	cell.detailText.text = [self _stringForNumberOfAlbums:artist.totalAlbums];
 	
 	if (artist.sourceImageURL) {
 		
@@ -159,7 +160,7 @@
 				newImage = [PASResources artistThumbnailPlaceholder];
 			}
 			dispatch_async(dispatch_get_main_queue(), ^{
-				weakCell.imageView.image = newImage;
+				weakCell.artistImage.image = newImage;
 			});
 		} failure:nil];
 	}
