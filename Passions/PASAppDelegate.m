@@ -25,8 +25,8 @@
 	[LastFmFetchr fetchrWithApiKey:@"aed3367b0133ab707cb4e5b6b04da3e7"];
 	
 	// Setup Parse
-	[Parse setApplicationId:@"nCQQ7cw92dCJJoH1cwbEv5ZBFmsEyFgSlVfmljp9"
-				  clientKey:@"Zpg8dAMm0f7IKpun9GTIRArCbgdY7e7Gj27vWPFc"];
+	[Parse setApplicationId:@"nLPKoK0wdW9csg2mTwwPkiGEDBh4AlU3f6il9qqQ"
+				  clientKey:@"jxhd6vVmIttc1EVfre4Lcza9uwlKzDrCzqZJGSI9"];
 	
 	[PFUser enableAutomaticUser];
 	// the app will crash if currentUser is a new user!
