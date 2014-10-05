@@ -91,6 +91,7 @@
 
 - (void)imageCache:(FICImageCache *)imageCache wantsSourceImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName completionBlock:(FICImageRequestCompletionBlock)completionBlock
 {
+	// TODO: iPod Artwork does not come from the internet
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		// Fetch the desired source image by making a network request
 		NSURL *requestURL = [entity sourceImageURLWithFormatName:formatName];
