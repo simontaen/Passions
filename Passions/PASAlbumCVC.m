@@ -1,16 +1,16 @@
 //
-//  PASAlbumCVC.m
+//  PASAlbumCVCell.m
 //  Passions
 //
 //  Created by Simon Tännler on 04/10/14.
 //  Copyright (c) 2014 edgeguard. All rights reserved.
 //
 
-#import "PASAlbumCVC.h"
+#import "PASAlbumCVCell.h"
 #import "FICImageCache.h"
 #import "PASResources.h"
 
-@implementation PASAlbumCVC
+@implementation PASAlbumCVCell
 
 #pragma mark - Accessors
 

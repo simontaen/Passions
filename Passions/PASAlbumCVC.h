@@ -1,5 +1,5 @@
 //
-//  PASAlbumCVC.h
+//  PASAlbumCVCell.h
 //  Passions
 //
 //  Created by Simon Tännler on 04/10/14.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PASAlbum.h"
 
-@interface PASAlbumCVC : UICollectionViewCell
+@interface PASAlbumCVCell : UICollectionViewCell
 
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *releaseDateLabel;

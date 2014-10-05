@@ -7,7 +7,7 @@
 //
 
 #import "PASTimelineCVC.h"
-#import "PASAlbumCVC.h"
+#import "PASAlbumCVCell.h"
 #import "PASAlbum.h"
 
 @interface PASTimelineCVC ()
@@ -28,7 +28,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
 	PASAlbum *album = (PASAlbum *)object;
-	PASAlbumCVC *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[PASAlbumCVC reuseIdentifier] forIndexPath:indexPath];
+	PASAlbumCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[PASAlbumCVCell reuseIdentifier] forIndexPath:indexPath];
 	
 	cell.album = album;
 
