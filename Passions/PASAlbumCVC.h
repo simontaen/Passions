@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PASAlbum.h"
 
 @interface PASAlbumCVC : UICollectionViewCell
 
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *releaseDateLabel;
+
+@property (nonatomic, copy) PASAlbum *album;
+
++ (NSString *)reuseIdentifier;
 
 @end
