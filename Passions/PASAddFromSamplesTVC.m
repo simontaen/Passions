@@ -10,8 +10,6 @@
 #import "PASArtist.h"
 #import "PASAddingArtistCell.h"
 
-static NSString *kCellIdentifier = @"PASAddingArtistCell";
-
 @interface PASAddFromSamplesTVC ()
 @property (nonatomic, strong) NSArray *artists; // of NSString
 @property (nonatomic, strong) NSArray *sectionIndex; // NSString
@@ -54,7 +52,6 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 - (NSString *)nameForArtist:(id)artist
 {
 	NSAssert([artist isKindOfClass:[NSString class]], @"%@ cannot handle artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
-	;
 	return artist;
 }
 
@@ -119,7 +116,7 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[self.tableView registerNib:[UINib nibWithNibName:kCellIdentifier bundle:nil] forCellReuseIdentifier:kCellIdentifier];
+	[self.tableView registerNib:[UINib nibWithNibName:[PASAddingArtistCell reuseIdentifier] bundle:nil] forCellReuseIdentifier:[PASAddingArtistCell reuseIdentifier]];
 	
 	// setup artists to choose from, for example
 	// go to spotify, last.fm or prepare MediaQuery
@@ -198,7 +195,7 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	PASAddingArtistCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
+	PASAddingArtistCell *cell = [tableView dequeueReusableCellWithIdentifier:[PASAddingArtistCell reuseIdentifier] forIndexPath:indexPath];
 	
 	NSString *artistName = [self nameForArtist:[self artistForIndexPath:indexPath]];
 	cell.artistName.text = artistName;

@@ -13,4 +13,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *detailText;
 @property (nonatomic, weak) IBOutlet UIImageView *artistImage;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
+
++ (NSString *)reuseIdentifier;
+
 @end

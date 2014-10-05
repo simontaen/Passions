@@ -22,4 +22,10 @@
     // Configure the view for the selected state
 }
 
+#pragma mark - Static
+
++ (NSString *)reuseIdentifier {
+	return @"PASAddingArtistCell";
+}
+
 @end
