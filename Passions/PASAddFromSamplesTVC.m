@@ -289,16 +289,50 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 				
 				dispatch_async(dispatch_get_main_queue(), cleanup);
 			});
+			
 		} else {
-			// TODO: show the error to the user
-			dispatch_async(dispatch_get_main_queue(), cleanup);
+			dispatch_async(dispatch_get_main_queue(), ^{
+				cleanup();
+				[self handleError:error];
+				
+			});
 		}
 	}];
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	return 50;
+}
+
+#pragma mark - Error Handling
+
+- (void)handleError:(NSError *)error
+{
+	NSLog(@"%@", [error localizedDescription]);
+
+	NSString *title;
+	switch (error.code) {
+		case 141:
+			title = @"The operation timed out";
+			break;
+		default:
+			title = @"An Error occured";
+			break;
+	}
+	
+	UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+																   message:[error localizedDescription]
+															preferredStyle:UIAlertControllerStyleAlert];
+	
+	UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"I'll try again later"
+															style:UIAlertActionStyleDefault
+														  handler:^(UIAlertAction * action) {
+															  [alert dismissViewControllerAnimated:YES completion:nil];
+														  }];
+	[alert addAction:defaultAction];
+	
+	[self presentViewController:alert animated:YES completion:nil];
 }
 
 @end
