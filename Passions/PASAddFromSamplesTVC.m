@@ -197,7 +197,9 @@
 {
 	PASAddingArtistCell *cell = [tableView dequeueReusableCellWithIdentifier:[PASAddingArtistCell reuseIdentifier] forIndexPath:indexPath];
 	
-	NSString *artistName = [self nameForArtist:[self artistForIndexPath:indexPath]];
+	id artist = [self artistForIndexPath:indexPath];
+	NSString *artistName = [self nameForArtist:artist];
+
 	cell.artistName.text = artistName;
 	
 	if ([self _isFavoriteArtist:artistName]) {
@@ -206,12 +208,12 @@
 		cell.detailText.text = @"";
 	}
 	
-	[self setThumbnailImageForCell:cell atIndexPath:indexPath];
+	[self setThumbnailImageForCell:cell withArtist:artist];
 	
 	return cell;
 }
 
-- (void)setThumbnailImageForCell:(PASAddingArtistCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)setThumbnailImageForCell:(PASAddingArtistCell *)cell withArtist:(id)artist
 {
 	cell.artistImage.image = [PASResources artistThumbnailPlaceholder];
 	return;

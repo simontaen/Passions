@@ -63,9 +63,11 @@
 
 #pragma mark - UITableViewDataSource required
 
-- (void)setThumbnailImageForCell:(PASAddingArtistCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)setThumbnailImageForCell:(PASAddingArtistCell *)cell withArtist:(id)artist
 {
-	MPMediaItem *item = [self artistForIndexPath:indexPath];
+	NSAssert([artist isKindOfClass:[MPMediaItem class]], @"%@ cannot handle artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
+	
+	MPMediaItem *item = (MPMediaItem *)artist;
 	__weak typeof(cell) weakCell = cell;
 	dispatch_async(self.artworkQ, ^{
 		
