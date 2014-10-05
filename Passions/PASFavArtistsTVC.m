@@ -85,23 +85,11 @@
 	[tableView endUpdates];
 }
 
-#pragma mark - Parse
+#pragma mark - PFQueryTableViewController
 
 - (PASArtist *)_artistAtIndexPath:(NSIndexPath *)indexPath
 {
 	return (PASArtist *)[self objectAtIndexPath:indexPath];
-}
-
-- (void)objectsDidLoad:(NSError *)error
-{
-	[super objectsDidLoad:error];
-	// This method is called every time objects are loaded from Parse via the PFQuery
-}
-
-- (void)objectsWillLoad
-{
-	[super objectsWillLoad];
-	// This method is called before a PFQuery is fired to get more objects
 }
 
 // Override to customize what kind of query to perform on the class. The default is to query for

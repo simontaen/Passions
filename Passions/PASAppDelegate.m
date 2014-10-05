@@ -11,6 +11,7 @@
 #import "LastFmFetchr.h"
 #import "FICImageCache.h"
 #import "PASAlbum.h"
+//#import "PASArtist.h"
 
 @interface PASAppDelegate () <FICImageCacheDelegate>
 

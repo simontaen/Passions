@@ -7,7 +7,7 @@
 //
 
 #import <Parse/Parse.h>
-#import "FICImageCache.h"
+#import "FICEntity.h"
 
 @interface PASParseObjectWithImages : PFObject <FICEntity>
 
