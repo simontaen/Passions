@@ -32,25 +32,25 @@
 	// the app will crash if currentUser is a new user!
 	// queryForTable required a saved users for the parse object ID
 	
-    PFACL *defaultACL = [PFACL ACL];
+	PFACL *defaultACL = [PFACL ACL];
 	
-    // If you would like all objects to be private by default, remove this line.
-    [defaultACL setPublicReadAccess:YES];
-    
-    [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
+	// If you would like all objects to be private by default, remove this line.
+	[defaultACL setPublicReadAccess:YES];
 	
-    if (application.applicationState != UIApplicationStateBackground) {
-        // Track an app open here if we launch with a push, unless
-        // "content_available" was used to trigger a background push (introduced
-        // in iOS 7). In that case, we skip tracking here to avoid double
-        // counting the app-open.
-        BOOL preBackgroundPush = ![application respondsToSelector:@selector(backgroundRefreshStatus)];
-        BOOL oldPushHandlerOnly = ![self respondsToSelector:@selector(application:didReceiveRemoteNotification:fetchCompletionHandler:)];
-        BOOL noPushPayload = ![launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-        if (preBackgroundPush || oldPushHandlerOnly || noPushPayload) {
-            //[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-        }
-    }
+	[PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
+	
+	if (application.applicationState != UIApplicationStateBackground) {
+		// Track an app open here if we launch with a push, unless
+		// "content_available" was used to trigger a background push (introduced
+		// in iOS 7). In that case, we skip tracking here to avoid double
+		// counting the app-open.
+		BOOL preBackgroundPush = ![application respondsToSelector:@selector(backgroundRefreshStatus)];
+		BOOL oldPushHandlerOnly = ![self respondsToSelector:@selector(application:didReceiveRemoteNotification:fetchCompletionHandler:)];
+		BOOL noPushPayload = ![launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+		if (preBackgroundPush || oldPushHandlerOnly || noPushPayload) {
+			//[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+		}
+	}
 	
 	// TODO: handle this later in the app
 	// this gives you a chance to load all data from the current users favorite artists
@@ -83,7 +83,7 @@
 	FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
 	sharedImageCache.delegate = self;
 	sharedImageCache.formats = @[mediumAlbumThumbnailImageFormat, smallArtistThumbnailImageFormat];
-
+	
 	return YES;
 }
 
@@ -121,37 +121,37 @@
 	// TODO: this is where we create the installation, make sure you set an ACL
 	// Store the deviceToken in the current installation and save it to Parse.
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    [currentInstallation setDeviceTokenFromData:deviceToken];
-    currentInstallation.channels = @[@"global", @"allFavArtists"];
-    [currentInstallation saveInBackground];
+	[currentInstallation setDeviceTokenFromData:deviceToken];
+	currentInstallation.channels = @[@"global", @"allFavArtists"];
+	[currentInstallation saveInBackground];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    if (error.code == 3010) {
-        NSLog(@"Push notifications are not supported in the iOS Simulator.");
-    } else {
-        // show some alert or otherwise handle the failure to register.
-        NSLog(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
+	if (error.code == 3010) {
+		NSLog(@"Push notifications are not supported in the iOS Simulator.");
+	} else {
+		// show some alert or otherwise handle the failure to register.
+		NSLog(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
 	}
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [PFPush handlePush:userInfo];
+	[PFPush handlePush:userInfo];
 	
-    if (application.applicationState == UIApplicationStateInactive) {
-        [PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
-    }
+	if (application.applicationState == UIApplicationStateInactive) {
+		[PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
+	}
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    [PFPush handlePush:userInfo];
+	[PFPush handlePush:userInfo];
 	
-    if (application.applicationState == UIApplicationStateInactive) {
-        [PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
-    }
+	if (application.applicationState == UIApplicationStateInactive) {
+		[PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
+	}
 }
 
 #pragma mark - Application Lifecycle
