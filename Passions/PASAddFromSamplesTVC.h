@@ -20,6 +20,6 @@
 - (NSString *)nameForArtist:(id)artist;
 - (id)artistForIndexPath:(NSIndexPath *)indexPath;
 - (NSString *)getTitle;
-- (void)setThumbnailImageForCell:(PASAddingArtistCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void)setThumbnailImageForCell:(PASAddingArtistCell *)cell withArtist:(id)artist;
 
 @end
