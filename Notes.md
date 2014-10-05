@@ -109,29 +109,29 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 # Helpful parse calls
 
 curl -X POST \
--H "X-Parse-Application-Id: nCQQ7cw92dCJJoH1cwbEv5ZBFmsEyFgSlVfmljp9" \
--H "X-Parse-REST-API-Key: 5iM8ff4mv3rHgq7iXQQEFgVXldqDHZOegM36qcyx" \
+-H "X-Parse-Application-Id: nLPKoK0wdW9csg2mTwwPkiGEDBh4AlU3f6il9qqQ" \
+-H "X-Parse-REST-API-Key: gsJjdh7QYmQri2oZMiFJgbFiKYnPJY2kDolqfo3T" \
 -H "Content-Type: application/json" \
 -d '{ "where": { "channels": "global" }, "data": { "alert": "Hello World on global!" }}' \
 https://api.parse.com/1/push
 
 curl -X POST \
--H "X-Parse-Application-Id: nCQQ7cw92dCJJoH1cwbEv5ZBFmsEyFgSlVfmljp9" \
--H "X-Parse-REST-API-Key: 5iM8ff4mv3rHgq7iXQQEFgVXldqDHZOegM36qcyx" \
+-H "X-Parse-Application-Id: nLPKoK0wdW9csg2mTwwPkiGEDBh4AlU3f6il9qqQ" \
+-H "X-Parse-REST-API-Key: gsJjdh7QYmQri2oZMiFJgbFiKYnPJY2kDolqfo3T" \
 -H "Content-Type: application/json" \
 -d '{ "where": { "channels": "allFavArtists" }, "data": { "alert": "Hello for all favorite Artists!" }}' \
 https://api.parse.com/1/push
 
 curl -X POST \
--H "X-Parse-Application-Id: nCQQ7cw92dCJJoH1cwbEv5ZBFmsEyFgSlVfmljp9" \
--H "X-Parse-Master-Key: 5iM8ff4mv3rHgq7iXQQEFgVXldqDHZOegM36qcyx" \
+-H "X-Parse-Application-Id: nLPKoK0wdW9csg2mTwwPkiGEDBh4AlU3f6il9qqQ" \
+-H "X-Parse-Master-Key: gsJjdh7QYmQri2oZMiFJgbFiKYnPJY2kDolqfo3T" \
 -H "Content-Type: application/json" \
 -d '{"plan":"paid"}' \
 https://api.parse.com/1/jobs/findNewAlbums
 
 curl -X POST \
--H "X-Parse-Application-Id: nCQQ7cw92dCJJoH1cwbEv5ZBFmsEyFgSlVfmljp9" \
--H "X-Parse-Master-Key: 5iM8ff4mv3rHgq7iXQQEFgVXldqDHZOegM36qcyx" \
+-H "X-Parse-Application-Id: nLPKoK0wdW9csg2mTwwPkiGEDBh4AlU3f6il9qqQ" \
+-H "X-Parse-Master-Key: gsJjdh7QYmQri2oZMiFJgbFiKYnPJY2kDolqfo3T" \
 -H "Content-Type: application/json" \
 -d '{}' \
 https://api.parse.com/1/jobs/fetchSimplifiedAlbums
