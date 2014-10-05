@@ -268,6 +268,12 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 	NSString *correctedName = [self.artistNameCorrections objectForKey:artistName];
 	NSString *resolvedName = correctedName ?: artistName;
 	
+	void (^cleanup)() = ^{
+		[cell.activityIndicator stopAnimating];
+		cell.userInteractionEnabled = YES;
+		[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+	};
+	
 	[PASArtist favoriteArtistByCurrentUser:resolvedName withBlock:^(PASArtist *artist, NSError *error) {
 		if (artist && !error) {
 			// get the finalized name on parse
@@ -281,12 +287,11 @@ static NSString *kCellIdentifier = @"PASAddingArtistCell";
 			dispatch_barrier_async(self.favoritesQ, ^{
 				[self.justFavArtistNames addObject:parseArtistName];
 				
-				dispatch_async(dispatch_get_main_queue(), ^{
-					[cell.activityIndicator stopAnimating];
-					cell.userInteractionEnabled = YES;
-					[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-				});
+				dispatch_async(dispatch_get_main_queue(), cleanup);
 			});
+		} else {
+			// TODO: show the error to the user
+			dispatch_async(dispatch_get_main_queue(), cleanup);
 		}
 	}];
 }
