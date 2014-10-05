@@ -18,6 +18,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="vNY-MB-Kos">
+                        <barButtonItem key="leftBarButtonItem" title="Reset" id="dvE-cb-HYx">
+                            <connections>
+                                <action selector="resetFastimageCache:" destination="E2G-RX-2YE" id="Lbg-28-Taa"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="twI-2l-I0I">
                             <connections>
                                 <segue destination="iMX-aW-THQ" kind="modal" identifier="setFavArtistNames:" modalTransitionStyle="coverVertical" id="cou-Wj-9nI"/>

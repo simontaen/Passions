@@ -10,6 +10,7 @@
 #import "PASAddingArtistCell.h"
 #import "PASArtist.h"
 #import "PASAddArtistsNC.h"
+#import "FICImageCache.h"
 
 @interface PASFavArtistsTVC() <PASAddArtistsTVCDelegate>
 
@@ -59,6 +60,12 @@
 {
 	[super viewDidAppear:animated];
 	//[PASResources printViewControllerLayoutStack:self];
+}
+
+- (IBAction)resetFastimageCache:(UIBarButtonItem *)sender
+{
+	[[FICImageCache sharedImageCache] reset];
+	[self loadObjects];
 }
 
 #pragma mark - UITableViewDataSource Editing
