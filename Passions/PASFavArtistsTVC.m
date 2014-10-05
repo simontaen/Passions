@@ -64,8 +64,9 @@
 
 - (IBAction)resetFastimageCache:(UIBarButtonItem *)sender
 {
+	// TODO: DEBUG only
 	[[FICImageCache sharedImageCache] reset];
-	[self loadObjects];
+	[self _refreshUI];
 }
 
 #pragma mark - UITableViewDataSource Editing
