@@ -137,6 +137,13 @@ curl -X POST \
 https://api.parse.com/1/jobs/fetchSimplifiedAlbums
 
 
+# Regarding UITableViewCell's imageView
+
+https://developer.apple.com/library/ios/documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/WindowsandViews/WindowsandViews.html
+http://stackoverflow.com/questions/3182649/ios-sdk-uiviewcontentmodescaleaspectfit-vs-uiviewcontentmodescaleaspectfill
+imageView of UITableViewCell automatically resizes to image, mostly ignoring contentMode, this means
+http://nshipster.com/image-resizing/ does not work
+
 
 # This is far off
 

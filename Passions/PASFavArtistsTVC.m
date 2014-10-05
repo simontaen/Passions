@@ -8,8 +8,6 @@
 
 #import "PASFavArtistsTVC.h"
 #import "PASAddingArtistCell.h"
-#import "UIImageView+AFNetworking.h"
-#import "UIImage+Scale.h"
 #import "PASArtist.h"
 #import "PASAddArtistsNC.h"
 
@@ -133,57 +131,16 @@
 	return query;
 }
 
-
 // Override to customize the look of a cell representing an object. The default is to display
 // a UITableViewCellStyleDefault style cell with the label being the first key in the object.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
 	PASArtist *artist = (PASArtist *)object;
-	
 	PASAddingArtistCell *cell = [tableView dequeueReusableCellWithIdentifier:[PASAddingArtistCell reuseIdentifier] forIndexPath:indexPath];
 	
-	// Configure the cell
-	cell.artistName.text = artist.name;
-	cell.detailText.text = [self _stringForNumberOfAlbums:artist.totalAlbums];
-	
-	if (artist.sourceImageURL) {
-		
-		// https://developer.apple.com/library/ios/documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/WindowsandViews/WindowsandViews.html
-		// http://stackoverflow.com/questions/3182649/ios-sdk-uiviewcontentmodescaleaspectfit-vs-uiviewcontentmodescaleaspectfill
-		// imageView of UITableViewCell automatically resizes to image, mostly ignoring contentMode, this means
-		// http://nshipster.com/image-resizing/ does not work
-		
-		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:artist.sourceImageURL];
-		[request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-		
-		__weak typeof(cell) weakCell = cell;
-		[cell.imageView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-			
-			UIImage *newImage;
-			
-			if (image) {
-				newImage = [image PASscaleToAspectFillSize:weakCell.imageView.image.size];
-			} else {
-				newImage = [PASResources artistThumbnailPlaceholder];
-			}
-			dispatch_async(dispatch_get_main_queue(), ^{
-				weakCell.artistImage.image = newImage;
-			});
-		} failure:nil];
-	}
+	cell.artist = artist;
 	
 	return cell;
-}
-
-- (NSString *)_stringForNumberOfAlbums:(NSNumber *)noOfAlbums
-{
-	if (!noOfAlbums) {
-		return @"Processing...";
-	} else if (noOfAlbums.longValue == 1) {
-		return [NSString stringWithFormat:@"%lu Album", noOfAlbums.longValue];
-	} else {
-		return [NSString stringWithFormat:@"%lu Albums", noOfAlbums.longValue];
-	}
 }
 
 /*
