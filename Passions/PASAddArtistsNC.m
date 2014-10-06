@@ -31,11 +31,10 @@
 
 - (void)awakeFromNib
 {
-	// make sure the view initially does not slide below the nav bar
-	self.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
-
 	// setup the only child view controller
 	self.pageViewController = [[PASPageViewController alloc] initWithNibName:nil bundle:nil];
+	// don't scroll under top bars, pageViewController does not support automaticallyAdjustsScrollViewInsets
+	self.pageViewController.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
 	
 	UIBarButtonItem *lbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																		  target:self
@@ -55,9 +54,8 @@
 	
 	// add the child to the nav controller
 	[self pushViewController:self.pageViewController animated:NO];
-
-	// DEBUG
-	self.view.backgroundColor = [UIColor orangeColor];
+	// make sure the NavBar looks the same as on PASFavArtistsTVC
+	self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (PASAddFromSamplesTVC *)_viewControllerAtIndex:(NSUInteger)index
