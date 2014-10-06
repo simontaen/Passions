@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "LastFmFetchr.h"
 #import "FICImageCache.h"
+#import "PASSourceImage.h"
 #import "PASAlbum.h"
 #import "PASArtist.h"
 
@@ -93,10 +94,16 @@
 {
 	// TODO: iPod Artwork does not come from the internet
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		// Fetch the desired source image by making a network request
-		NSURL *requestURL = [entity sourceImageURLWithFormatName:formatName];
-		// TODO: this might not be ideal
-		UIImage *sourceImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:requestURL]];
+		UIImage *sourceImage;
+		if ([entity conformsToProtocol:@protocol(PASSourceImage)]) {
+			sourceImage = [(id<PASSourceImage>)entity sourceImage];
+			
+		} else {
+			// Fetch the desired source image by making a network request
+			NSURL *requestURL = [entity sourceImageURLWithFormatName:formatName];
+			// TODO: this might not be ideal
+			sourceImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:requestURL]];
+		}
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			completionBlock(sourceImage);

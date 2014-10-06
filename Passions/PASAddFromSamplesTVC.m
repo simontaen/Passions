@@ -9,6 +9,8 @@
 #import "PASAddFromSamplesTVC.h"
 #import "PASArtist.h"
 #import "PASAddingArtistCell.h"
+#import "FICImageCache.h"
+#import "PASSourceImage.h"
 
 @interface PASAddFromSamplesTVC ()
 @property (nonatomic, strong) NSArray *artists; // of NSString
@@ -208,6 +210,7 @@
 		cell.detailText.text = @"";
 	}
 	
+	// TODO: move this to the cell itself, import the categories and do the check for the protocoll there!
 	[self setThumbnailImageForCell:cell withArtist:artist];
 	
 	return cell;
@@ -215,7 +218,21 @@
 
 - (void)setThumbnailImageForCell:(PASAddingArtistCell *)cell withArtist:(id)artist
 {
-	cell.artistImage.image = [PASResources artistThumbnailPlaceholder];
+	NSAssert([artist conformsToProtocol:@protocol(PASSourceImage)], @"%@ cannot handle artists of class %@, must conform to %@", NSStringFromClass([self class]), NSStringFromClass([artist class]), NSStringFromProtocol(@protocol(PASSourceImage)));
+	
+	// clear the image to avoid seeing old images when scrolling
+	cell.artistImage.image = nil;
+	
+	[[FICImageCache sharedImageCache] retrieveImageForEntity:artist
+											  withFormatName:ImageFormatNameArtistThumbnailSmall
+											 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+												 // check if this cell hasn't been reused for a different artist
+												 if (image) {
+													 cell.artistImage.image = image;
+												 } else {
+													 cell.artistImage.image = [PASResources artistThumbnailPlaceholder];
+												 }
+											 }];
 	return;
 }
 
