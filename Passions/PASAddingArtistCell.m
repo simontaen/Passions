@@ -51,7 +51,8 @@
 
 #pragma mark - Static
 
-+ (NSString *)reuseIdentifier {
++ (NSString *)reuseIdentifier
+{
 	return @"PASAddingArtistCell";
 }
 
