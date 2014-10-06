@@ -96,7 +96,7 @@
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		UIImage *sourceImage;
 		if ([entity conformsToProtocol:@protocol(PASSourceImage)]) {
-			sourceImage = [(id<PASSourceImage>)entity sourceImage];
+			sourceImage = [(id<PASSourceImage>)entity sourceImageWithFormatName:formatName];
 			
 		} else {
 			// Fetch the desired source image by making a network request

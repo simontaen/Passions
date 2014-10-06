@@ -13,6 +13,6 @@
 
 @required
 
-@property (nonatomic, copy, readonly) UIImage *sourceImage;
+- (UIImage *)sourceImageWithFormatName:(NSString *)formatName;
 
 @end

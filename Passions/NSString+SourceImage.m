@@ -17,7 +17,7 @@ static void *UUIDKey;
 
 #pragma mark - PASSourceImage
 
-- (UIImage *)sourceImage
+- (UIImage *)sourceImageWithFormatName:(NSString *)formatName;
 {
 	return [PASResources artistThumbnailPlaceholder];
 }
