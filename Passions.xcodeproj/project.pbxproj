@@ -242,15 +242,15 @@
 			isa = PBXGroup;
 			children = (
 				F4A7798F1793113E00C770B9 /* iPhone.storyboard */,
-				F4D9E94D19C39D6200B762A7 /* PASRootVC.h */,
-				F4D9E94E19C39D6200B762A7 /* PASRootVC.m */,
+				F4FEC99619E3032C00935B1E /* Root */,
 				F4A814B219E1D3E5003879B0 /* Album Timeline */,
 				F49618B419BC4CC000B4F3FE /* Favorite Artists */,
 				F49618B519BC4CCB00B4F3FE /* Add Artists */,
 				F4D9E94619C3612800B762A7 /* PageViewController */,
-				F409BBE017ADC74000091B7A /* Visuals */,
-				F4FA316519B8B7F2000337A0 /* Utils */,
+				F4FEC99719E3038000935B1E /* Image Cache */,
 				F476F0E819B8D8C500185544 /* Parse Objects */,
+				F4FA316519B8B7F2000337A0 /* Utils */,
+				F409BBE017ADC74000091B7A /* Visuals */,
 				F4A7797E1793113E00C770B9 /* Supporting Files */,
 			);
 			path = Passions;
@@ -259,8 +259,6 @@
 		F4A7797E1793113E00C770B9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F4A779861793113E00C770B9 /* PASAppDelegate.h */,
-				F4A779871793113E00C770B9 /* PASAppDelegate.m */,
 				F4A7797F1793113E00C770B9 /* Passions-Info.plist */,
 				F4A779801793113E00C770B9 /* InfoPlist.strings */,
 				F4A779831793113E00C770B9 /* main.m */,
@@ -300,15 +298,33 @@
 			children = (
 				F4B8B0B719E060AD00E1064D /* CPFQueryCollectionViewController.h */,
 				F4B8B0B819E060AD00E1064D /* CPFQueryCollectionViewController.m */,
-				F4FA316619B8B867000337A0 /* UIImage+Utils.h */,
-				F4FA316719B8B867000337A0 /* UIImage+Utils.m */,
 				F476F0EC19B8D9A100185544 /* PASResources.h */,
 				F476F0ED19B8D9A100185544 /* PASResources.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		F4FEC99619E3032C00935B1E /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				F4D9E94D19C39D6200B762A7 /* PASRootVC.h */,
+				F4D9E94E19C39D6200B762A7 /* PASRootVC.m */,
+				F4A779861793113E00C770B9 /* PASAppDelegate.h */,
+				F4A779871793113E00C770B9 /* PASAppDelegate.m */,
+			);
+			name = Root;
+			sourceTree = "<group>";
+		};
+		F4FEC99719E3038000935B1E /* Image Cache */ = {
+			isa = PBXGroup;
+			children = (
+				F4FA316619B8B867000337A0 /* UIImage+Utils.h */,
+				F4FA316719B8B867000337A0 /* UIImage+Utils.m */,
 				F4A814B619E2056B003879B0 /* PASSourceImage.h */,
 				F4A814B719E20CBD003879B0 /* NSString+SourceImage.h */,
 				F4A814B819E20CBD003879B0 /* NSString+SourceImage.m */,
 			);
-			name = Utils;
+			name = "Image Cache";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
