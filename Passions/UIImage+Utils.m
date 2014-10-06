@@ -109,4 +109,26 @@
 	return squareImage;
 }
 
++ (FICEntityImageDrawingBlock)drawingBlockForImage:(UIImage *)image withFormatName:(NSString *)formatName
+{
+	FICEntityImageDrawingBlock drawingBlock = ^(CGContextRef context, CGSize contextSize) {
+		CGRect contextBounds = CGRectZero;
+		contextBounds.size = contextSize;
+		CGContextClearRect(context, contextBounds);
+		
+		// Fill with white for image formats that are opaque
+		CGContextSetFillColorWithColor(context, [[UIColor whiteColor] CGColor]);
+		CGContextFillRect(context, contextBounds);
+		
+		// crop to a square image
+		UIImage *squareImage = [UIImage FICDSquareImageFromImage:image];
+		
+		UIGraphicsPushContext(context);
+		[squareImage drawInRect:contextBounds];
+		UIGraphicsPopContext();
+	};
+	
+	return drawingBlock;
+}
+
 @end

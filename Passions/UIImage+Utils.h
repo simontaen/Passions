@@ -7,6 +7,7 @@
 //
 
 @import UIKit;
+#import "FICEntity.h"
 
 /// see http://stackoverflow.com/a/14220605
 @interface UIImage (Utils)
@@ -25,5 +26,8 @@
 /// Similar to AspectFillSize
 /// the SMALLER side fits the passed size exactly (cropping!)
 + (UIImage *)FICDSquareImageFromImage:(UIImage *)image;
+
+/// see FICEntity
++ (FICEntityImageDrawingBlock)drawingBlockForImage:(UIImage *)image withFormatName:(NSString *)formatName;
 
 @end
