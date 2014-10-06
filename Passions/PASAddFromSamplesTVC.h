@@ -20,6 +20,5 @@
 - (NSString *)nameForArtist:(id)artist;
 - (id)artistForIndexPath:(NSIndexPath *)indexPath;
 - (NSString *)getTitle;
-- (void)setThumbnailImageForCell:(PASArtistTVCell *)cell withArtist:(id)artist;
 
 @end
