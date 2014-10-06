@@ -26,21 +26,7 @@
 	if (artist != self.entity) {
 		self.entity = artist;
 		
-		// clear the image to avoid seeing old images when scrolling
-		self.artistImage.image = nil;
-		
-		[[FICImageCache sharedImageCache] retrieveImageForEntity:artist
-												  withFormatName:ImageFormatNameArtistThumbnailSmall
-												 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
-													 // check if this cell hasn't been reused for a different artist
-													 if (artist == self.entity) {
-														 if (image) {
-															 self.artistImage.image = image;
-														 } else {
-															 self.artistImage.image = [PASResources artistThumbnailPlaceholder];
-														 }
-													 }
-												 }];
+		[self _loadThumbnailImageForArtist:artist];
 		self.artistName.text = artist.name;
 		self.detailText.text = [self _stringForNumberOfAlbums:artist.totalAlbums];
 	}
@@ -55,19 +41,7 @@
 	if (artist != self.entity) {
 		self.entity = artist;
 		
-		// clear the image to avoid seeing old images when scrolling
-		self.artistImage.image = nil;
-		
-		[[FICImageCache sharedImageCache] retrieveImageForEntity:artist
-												  withFormatName:ImageFormatNameArtistThumbnailSmall
-												 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
-													 // check if this cell hasn't been reused for a different artist
-													 if (image) {
-														 self.artistImage.image = image;
-													 } else {
-														 self.artistImage.image = [PASResources artistThumbnailPlaceholder];
-													 }
-												 }];
+		[self _loadThumbnailImageForArtist:artist];
 		self.artistName.text = name;
 		self.detailText.text = isFav ? @"Favorite!" : @"";
 	}
@@ -75,6 +49,25 @@
 
 
 #pragma mark - Private Methods
+
+- (void)_loadThumbnailImageForArtist:(id<FICEntity>)artist
+{
+	// clear the image to avoid seeing old images when scrolling
+	self.artistImage.image = nil;
+	
+	[[FICImageCache sharedImageCache] retrieveImageForEntity:artist
+											  withFormatName:ImageFormatNameArtistThumbnailSmall
+											 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+												 // check if this cell hasn't been reused for a different artist
+												 if (artist == self.entity) {
+													 if (image) {
+														 self.artistImage.image = image;
+													 } else {
+														 self.artistImage.image = [PASResources artistThumbnailPlaceholder];
+													 }
+												 }
+											 }];
+}
 
 - (NSString *)_stringForNumberOfAlbums:(NSNumber *)noOfAlbums
 {
