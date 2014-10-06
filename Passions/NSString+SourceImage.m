@@ -9,10 +9,13 @@
 #import "NSString+SourceImage.h"
 #import "FICUtilities.h"
 #import "UIImage+Scale.h"
+#import <objc/runtime.h>
+
+static void *UUIDKey;
 
 @implementation NSString (SourceImage)
 
-#pragma mark - SourceImage
+#pragma mark - PASSourceImage
 
 - (UIImage *)sourceImage
 {
@@ -21,24 +24,31 @@
 
 #pragma mark - FICEntity
 
+@dynamic UUID;
+
 - (NSString *)UUID
 {
-	// TODO: Don't make me calculate each time (maybe assosiated things like in LFMFetcher?)
-	// MD5 hashing is expensive enough that we only want to do it once
-	CFUUIDBytes UUIDBytes = FICUUIDBytesFromMD5HashOfString(self);
-	return FICStringWithUUIDBytes(UUIDBytes);
+    // http://oleb.net/blog/2011/05/faking-ivars-in-objc-categories-with-associative-references/
+	id obj = objc_getAssociatedObject(self, UUIDKey);
+	if (!obj) {
+		CFUUIDBytes UUIDBytes = FICUUIDBytesFromMD5HashOfString(self);
+		NSString *uuid = FICStringWithUUIDBytes(UUIDBytes);
+		objc_setAssociatedObject(self, UUIDKey, uuid, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+		return uuid;
+	}
+	return obj;
 }
 
 - (NSString *)sourceImageUUID
 {
-	return [self UUID];
+	return self.UUID;
 }
 
 - (NSURL *)sourceImageURLWithFormatName:(NSString *)formatName
 {
 	// This does not HAVE to be a valid URL
 	// FIC uses this to key the pending requests
-	return [NSURL URLWithString:[self UUID]];
+	return [NSURL URLWithString:self.UUID];
 }
 
 - (FICEntityImageDrawingBlock)drawingBlockForImage:(UIImage *)image withFormatName:(NSString *)formatName
