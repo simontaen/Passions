@@ -11,17 +11,16 @@
 #import "UIImage+Scale.h"
 
 @interface PASParseObjectWithImages ()
-{
-	NSURL *_sourceImageURL;
-	NSString *_UUID;
-}
+@property (nonatomic, copy, readwrite) NSString *UUID;
+@property (nonatomic, copy, readwrite) NSURL *sourceImageURL;
 @property (nonatomic, strong) NSArray* images; // of NSString, ordered big to small
-
 @end
 
 @implementation PASParseObjectWithImages
 
-@dynamic images; // of NSString
+@synthesize UUID = _UUID;
+@synthesize sourceImageURL = _sourceImageURL;
+@dynamic images;
 
 #pragma mark - Accessors
 
@@ -41,7 +40,6 @@
 
 - (NSString *)UUID
 {
-	// TODO: maybe use the objectId, https://github.com/path/FastImageCache#creating-entities
 	if (_UUID == nil) {
 		// MD5 hashing is expensive enough that we only want to do it once
 		NSString *imageName = [self.sourceImageURL lastPathComponent];
@@ -54,12 +52,12 @@
 
 - (NSString *)sourceImageUUID
 {
-	return [self UUID];
+	return self.UUID;
 }
 
 - (NSURL *)sourceImageURLWithFormatName:(NSString *)formatName
 {
-	return [self sourceImageURL];
+	return self.sourceImageURL;
 }
 
 - (FICEntityImageDrawingBlock)drawingBlockForImage:(UIImage *)image withFormatName:(NSString *)formatName

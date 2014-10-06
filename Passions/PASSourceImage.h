@@ -13,6 +13,6 @@
 
 @required
 
-- (UIImage *)sourceImage;
+@property (nonatomic, copy, readonly) UIImage *sourceImage;
 
 @end
