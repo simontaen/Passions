@@ -8,7 +8,7 @@
 
 #import "NSString+SourceImage.h"
 #import "FICUtilities.h"
-#import "UIImage+Scale.h"
+#import "UIImage+Utils.h"
 #import <objc/runtime.h>
 
 static void *UUIDKey;

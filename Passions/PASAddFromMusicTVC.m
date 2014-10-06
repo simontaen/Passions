@@ -8,7 +8,6 @@
 
 @import MediaPlayer;
 #import "PASAddFromMusicTVC.h"
-#import "UIImage+Scale.h"
 
 @interface PASAddFromMusicTVC ()
 @property (nonatomic, strong) NSArray* artists; // of MPMediaItem

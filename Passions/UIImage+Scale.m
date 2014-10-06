@@ -1,15 +1,15 @@
 //
-//  UIImage+Scale.m
+//  UIImage+Utils.m
 //  Passions
 //
 //  Created by Simon Tännler on 04/09/14.
 //  Copyright (c) 2014 edgeguard. All rights reserved.
 //
 
-#import "UIImage+Scale.h"
+#import "UIImage+Utils.h"
 
 /// inspired by http://stackoverflow.com/a/17676011
-@implementation UIImage (Scale)
+@implementation UIImage (Utils)
 
 - (UIImage*)PASscaleToFillSize:(CGSize)size
 {

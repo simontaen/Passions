@@ -8,7 +8,7 @@
 
 #import "PASParseObjectWithImages.h"
 #import "FICUtilities.h"
-#import "UIImage+Scale.h"
+#import "UIImage+Utils.h"
 
 @interface PASParseObjectWithImages ()
 @property (nonatomic, copy, readwrite) NSString *UUID;

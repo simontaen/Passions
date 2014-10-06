@@ -1,5 +1,5 @@
 //
-//  UIImage+Scale.h
+//  UIImage+Utils.h
 //  Passions
 //
 //  Created by Simon Tännler on 04/09/14.
@@ -9,7 +9,7 @@
 @import UIKit;
 
 /// see http://stackoverflow.com/a/14220605
-@interface UIImage (Scale)
+@interface UIImage (Utils)
 
 /// This will squeeze/strech the image until it fits the passed size (distortions!)
 - (UIImage*)PASscaleToFillSize:(CGSize)size;
