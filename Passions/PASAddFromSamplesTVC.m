@@ -211,6 +211,8 @@
 	}
 	
 	// TODO: move this to the cell itself, import the categories and do the check for the protocoll there!
+	// technically the imports don't need to happen, but I still like to do them
+	// the runtime attaches them to each instance
 	[self setThumbnailImageForCell:cell withArtist:artist];
 	
 	return cell;
