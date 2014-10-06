@@ -10,8 +10,8 @@
 #import <Parse/PFObject+Subclass.h>
 #import "LastFmFetchr.h"
 
-NSString *const ImageFormatFamilyArtistThumbnails = @"ch.taennler.simon.Passions.ImageFormatFamilyArtistThumbnails";
-NSString *const ImageFormatNameArtistThumbnailSmall = @"ch.taennler.simon.Passions.ImageFormatNameArtistThumbnailSmall";
+NSString *const ImageFormatFamilyArtistThumbnails = @"ImageFormatFamilyArtistThumbnails";
+NSString *const ImageFormatNameArtistThumbnailSmall = @"ImageFormatNameArtistThumbnailSmall";
 CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
 
 @implementation PASArtist
