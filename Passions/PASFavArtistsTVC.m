@@ -7,7 +7,7 @@
 //
 
 #import "PASFavArtistsTVC.h"
-#import "PASAddingArtistCell.h"
+#import "PASArtistTVCell.h"
 #import "PASArtist.h"
 #import "PASAddArtistsNC.h"
 #import "FICImageCache.h"
@@ -50,7 +50,7 @@
 {
 	[super viewDidLoad];
 	self.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
-	[self.tableView registerNib:[UINib nibWithNibName:[PASAddingArtistCell reuseIdentifier] bundle:nil] forCellReuseIdentifier:[PASAddingArtistCell reuseIdentifier]];
+	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil] forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];
 	
 	// DEBUG
 	//self.view.backgroundColor = [UIColor greenColor];
@@ -144,7 +144,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
 	PASArtist *artist = (PASArtist *)object;
-	PASAddingArtistCell *cell = [tableView dequeueReusableCellWithIdentifier:[PASAddingArtistCell reuseIdentifier] forIndexPath:indexPath];
+	PASArtistTVCell *cell = [tableView dequeueReusableCellWithIdentifier:[PASArtistTVCell reuseIdentifier] forIndexPath:indexPath];
 	
 	[cell showArtist:artist];
 	

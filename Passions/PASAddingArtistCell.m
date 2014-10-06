@@ -1,23 +1,23 @@
 //
-//  PASAddingArtistCell.m
+//  PASArtistTVCell.m
 //  Passions
 //
 //  Created by Simon Tännler on 09/09/14.
 //  Copyright (c) 2014 edgeguard. All rights reserved.
 //
 
-#import "PASAddingArtistCell.h"
+#import "PASArtistTVCell.h"
 #import "FICImageCache.h"
 // technically the imports don't need to happen, as the runtime attaches them to each instance
 // but I still like to do them for clarity
 #import "NSString+SourceImage.h"
 #import "MPMediaItem+SourceImage.h"
 
-@interface PASAddingArtistCell()
+@interface PASArtistTVCell()
 @property (nonatomic, strong) id<FICEntity> entity;
 @end
 
-@implementation PASAddingArtistCell
+@implementation PASArtistTVCell
 
 #pragma mark - Accessors
 
@@ -84,7 +84,7 @@
 
 + (NSString *)reuseIdentifier
 {
-	return @"PASAddingArtistCell";
+	return @"PASArtistTVCell";
 }
 
 @end

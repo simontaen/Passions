@@ -7,7 +7,7 @@
 //
 
 @import UIKit;
-#import "PASAddingArtistCell.h"
+#import "PASArtistTVCell.h"
 
 @interface PASAddFromSamplesTVC : UITableViewController
 
@@ -20,6 +20,6 @@
 - (NSString *)nameForArtist:(id)artist;
 - (id)artistForIndexPath:(NSIndexPath *)indexPath;
 - (NSString *)getTitle;
-- (void)setThumbnailImageForCell:(PASAddingArtistCell *)cell withArtist:(id)artist;
+- (void)setThumbnailImageForCell:(PASArtistTVCell *)cell withArtist:(id)artist;
 
 @end

@@ -8,7 +8,7 @@
 
 #import "PASAddFromSamplesTVC.h"
 #import "PASArtist.h"
-#import "PASAddingArtistCell.h"
+#import "PASArtistTVCell.h"
 #import "FICImageCache.h"
 #import "PASSourceImage.h"
 
@@ -118,7 +118,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[self.tableView registerNib:[UINib nibWithNibName:[PASAddingArtistCell reuseIdentifier] bundle:nil] forCellReuseIdentifier:[PASAddingArtistCell reuseIdentifier]];
+	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil] forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];
 	
 	// setup artists to choose from, for example
 	// go to spotify, last.fm or prepare MediaQuery
@@ -197,7 +197,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	PASAddingArtistCell *cell = [tableView dequeueReusableCellWithIdentifier:[PASAddingArtistCell reuseIdentifier] forIndexPath:indexPath];
+	PASArtistTVCell *cell = [tableView dequeueReusableCellWithIdentifier:[PASArtistTVCell reuseIdentifier] forIndexPath:indexPath];
 	
 	id artist = [self artistForIndexPath:indexPath];
 	NSString *artistName = [self nameForArtist:artist];
@@ -247,7 +247,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	PASAddingArtistCell *cell = (PASAddingArtistCell *)[tableView cellForRowAtIndexPath:indexPath];
+	PASArtistTVCell *cell = (PASArtistTVCell *)[tableView cellForRowAtIndexPath:indexPath];
 	cell.userInteractionEnabled = NO;
 	[cell.activityIndicator startAnimating];
 	

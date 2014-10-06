@@ -1,5 +1,5 @@
 //
-//  PASAddingArtistCell.h
+//  PASArtistTVCell.h
 //  Passions
 //
 //  Created by Simon Tännler on 09/09/14.
@@ -10,7 +10,7 @@
 #import "PASArtist.h"
 #import "PASSourceImage.h"
 
-@interface PASAddingArtistCell : UITableViewCell
+@interface PASArtistTVCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel *artistName;
 @property (nonatomic, weak) IBOutlet UILabel *detailText;
