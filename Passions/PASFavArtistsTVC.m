@@ -146,7 +146,7 @@
 	PASArtist *artist = (PASArtist *)object;
 	PASAddingArtistCell *cell = [tableView dequeueReusableCellWithIdentifier:[PASAddingArtistCell reuseIdentifier] forIndexPath:indexPath];
 	
-	cell.artist = artist;
+	[cell showArtist:artist];
 	
 	return cell;
 }

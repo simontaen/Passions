@@ -201,41 +201,10 @@
 	
 	id artist = [self artistForIndexPath:indexPath];
 	NSString *artistName = [self nameForArtist:artist];
-
-	cell.artistName.text = artistName;
 	
-	if ([self _isFavoriteArtist:artistName]) {
-		cell.detailText.text = @"Favorite!";
-	} else {
-		cell.detailText.text = @"";
-	}
-	
-	// TODO: move this to the cell itself, import the categories and do the check for the protocoll there!
-	// technically the imports don't need to happen, but I still like to do them
-	// the runtime attaches them to each instance
-	[self setThumbnailImageForCell:cell withArtist:artist];
+	[cell showArtist:artist withName:artistName isFavorite:[self _isFavoriteArtist:artistName]];
 	
 	return cell;
-}
-
-- (void)setThumbnailImageForCell:(PASAddingArtistCell *)cell withArtist:(id)artist
-{
-	NSAssert([artist conformsToProtocol:@protocol(PASSourceImage)], @"%@ cannot handle artists of class %@, must conform to %@", NSStringFromClass([self class]), NSStringFromClass([artist class]), NSStringFromProtocol(@protocol(PASSourceImage)));
-	
-	// clear the image to avoid seeing old images when scrolling
-	cell.artistImage.image = nil;
-	
-	[[FICImageCache sharedImageCache] retrieveImageForEntity:artist
-											  withFormatName:ImageFormatNameArtistThumbnailSmall
-											 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
-												 // check if this cell hasn't been reused for a different artist
-												 if (image) {
-													 cell.artistImage.image = image;
-												 } else {
-													 cell.artistImage.image = [PASResources artistThumbnailPlaceholder];
-												 }
-											 }];
-	return;
 }
 
 - (BOOL)_isFavoriteArtist:(NSString *)artistName

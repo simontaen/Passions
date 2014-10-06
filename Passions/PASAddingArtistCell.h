@@ -8,6 +8,7 @@
 
 @import UIKit;
 #import "PASArtist.h"
+#import "PASSourceImage.h"
 
 @interface PASAddingArtistCell : UITableViewCell
 
@@ -16,7 +17,8 @@
 @property (nonatomic, weak) IBOutlet UIImageView *artistImage;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
 
-@property (nonatomic, strong) PASArtist *artist;
+- (void)showArtist:(PASArtist *)artist;
+- (void)showArtist:(id<PASSourceImage>)artist withName:(NSString *)name isFavorite:(BOOL)isFav;
 
 + (NSString *)reuseIdentifier;
 

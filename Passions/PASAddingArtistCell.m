@@ -8,15 +8,23 @@
 
 #import "PASAddingArtistCell.h"
 #import "FICImageCache.h"
+// technically the imports don't need to happen, as the runtime attaches them to each instance
+// but I still like to do them for clarity
+#import "NSString+SourceImage.h"
+#import "MPMediaItem+SourceImage.h"
+
+@interface PASAddingArtistCell()
+@property (nonatomic, strong) id<FICEntity> entity;
+@end
 
 @implementation PASAddingArtistCell
 
 #pragma mark - Accessors
 
--(void)setArtist:(PASArtist *)artist
+- (void)showArtist:(PASArtist *)artist
 {
-	if (artist != _artist) {
-		_artist = artist;
+	if (artist != self.entity) {
+		self.entity = artist;
 		
 		// clear the image to avoid seeing old images when scrolling
 		self.artistImage.image = nil;
@@ -25,7 +33,7 @@
 												  withFormatName:ImageFormatNameArtistThumbnailSmall
 												 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
 													 // check if this cell hasn't been reused for a different artist
-													 if (artist == self.artist) {
+													 if (artist == self.entity) {
 														 if (image) {
 															 self.artistImage.image = image;
 														 } else {
@@ -37,6 +45,36 @@
 		self.detailText.text = [self _stringForNumberOfAlbums:artist.totalAlbums];
 	}
 }
+
+#pragma mark - Other setters
+
+- (void)showArtist:(id<PASSourceImage>)artist withName:(NSString *)name isFavorite:(BOOL)isFav
+{
+	NSAssert([artist conformsToProtocol:@protocol(PASSourceImage)], @"%@ cannot handle artists of class %@, must conform to %@", NSStringFromClass([self class]), NSStringFromClass([artist class]), NSStringFromProtocol(@protocol(PASSourceImage)));
+	
+	if (artist != self.entity) {
+		self.entity = artist;
+		
+		// clear the image to avoid seeing old images when scrolling
+		self.artistImage.image = nil;
+		
+		[[FICImageCache sharedImageCache] retrieveImageForEntity:artist
+												  withFormatName:ImageFormatNameArtistThumbnailSmall
+												 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+													 // check if this cell hasn't been reused for a different artist
+													 if (image) {
+														 self.artistImage.image = image;
+													 } else {
+														 self.artistImage.image = [PASResources artistThumbnailPlaceholder];
+													 }
+												 }];
+		self.artistName.text = name;
+		self.detailText.text = isFav ? @"Favorite!" : @"";
+	}
+}
+
+
+#pragma mark - Private Methods
 
 - (NSString *)_stringForNumberOfAlbums:(NSNumber *)noOfAlbums
 {
