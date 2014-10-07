@@ -37,6 +37,9 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * First launch experience
 * show the album after a push notification arrives
 	* send over the parseAlbum objectId
+* Silent push after fav'ing an Artist (Status Processing) to update UI automatically
+* "-1" cell on Timeline to filter results
+* Autorefresh/paging on Timeline
 
 
 ## UI
