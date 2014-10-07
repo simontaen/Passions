@@ -298,21 +298,21 @@
 {
 	NSLog(@"%@", [error localizedDescription]);
 
-	NSString *title;
+	NSString *msg;
 	switch (error.code) {
 		case 141:
-			title = @"The operation timed out";
+			msg = @"The operation timed out";
 			break;
 		default:
-			title = @"An Error occured";
+			msg = [error localizedDescription];
 			break;
 	}
 	
-	UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
-																   message:[error localizedDescription]
+	UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Try Again"
+																   message:msg
 															preferredStyle:UIAlertControllerStyleAlert];
 	
-	UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"I'll try again later"
+	UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK"
 															style:UIAlertActionStyleDefault
 														  handler:^(UIAlertAction * action) {
 															  [alert dismissViewControllerAnimated:YES completion:nil];
