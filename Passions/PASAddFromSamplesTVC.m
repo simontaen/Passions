@@ -260,7 +260,6 @@
 	void (^cleanup)() = ^{
 		[cell.activityIndicator stopAnimating];
 		cell.userInteractionEnabled = YES;
-		[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 	};
 	
 	[PASArtist favoriteArtistByCurrentUser:resolvedName completion:^(PASArtist *artist, NSError *error) {
@@ -276,14 +275,16 @@
 			dispatch_barrier_async(self.favoritesQ, ^{
 				[self.justFavArtistNames addObject:parseArtistName];
 				
-				dispatch_async(dispatch_get_main_queue(), cleanup);
+				dispatch_async(dispatch_get_main_queue(), ^{
+					cleanup();
+					[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+				});
 			});
 			
 		} else {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				cleanup();
 				[self handleError:error];
-				
 			});
 		}
 	}];
