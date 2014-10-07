@@ -50,16 +50,8 @@
 {
 	[super viewDidLoad];
 	self.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
-	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil] forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];
-	
-	// DEBUG
-	//self.view.backgroundColor = [UIColor greenColor];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-	[super viewDidAppear:animated];
-	//[PASResources printViewControllerLayoutStack:self];
+	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil]
+		 forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];
 }
 
 - (IBAction)resetFastimageCache:(UIBarButtonItem *)sender
