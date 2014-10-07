@@ -51,6 +51,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Ask User for matching when unclear, but don't code for exceptions
 	* "I did my best but I still need your help to identify your favorite Artist"
 * Show more infos about the Album when clicking on the Album Art
+* Animate the cell when an Artist has been favorited.
 
 # Data communication with Parse
 
