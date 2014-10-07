@@ -27,8 +27,8 @@
 	self.parseClassName = [PASArtist parseClassName];
 	self.title = @"Favorite Artists";
 	self.pullToRefreshEnabled = YES;
-	self.paginationEnabled = YES;
-	self.objectsPerPage = 20;
+	// no paging, I don't expect >200 fav artists
+	self.paginationEnabled = NO;
 	return self;
 }
 
