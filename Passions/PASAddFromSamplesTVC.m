@@ -262,7 +262,7 @@
 		cell.userInteractionEnabled = YES;
 	};
 	
-	[PASArtist favoriteArtistByCurrentUser:resolvedName completion:^(PASArtist *artist, NSError *error) {
+	[PASArtist favoriteArtistByCurrentUser:resolvedName needsCorrection:!correctedName completion:^(PASArtist *artist, NSError *error) {
 		if (artist && !error) {
 			// get the finalized name on parse
 			NSString *parseArtistName = artist.name;

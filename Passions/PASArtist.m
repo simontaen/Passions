@@ -56,111 +56,94 @@ CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
 
 #pragma mark - adding / creating
 
-/// query in Parse, if found ok, if 0 create it, if >1 error
-+ (void)favoriteArtistByCurrentUser:(NSString *)artistName completion:(void (^)(PASArtist *artist, NSError *error))completion
++ (void)favoriteArtistByCurrentUser:(NSString *)artistName
+					needsCorrection:(BOOL)needsCorrection
+						 completion:(void (^)(PASArtist *artist, NSError *error))completion;
 {
 	NSParameterAssert(artistName);
-	// TODO: pass a param if the name needs correction
-	// if it does, call LFM now
-	// leads to duplicate artists on parse currently
 	
-	// Query for the Artist in Question
+	void (^favingBlock)(PASArtist*, NSError*) = ^void(PASArtist *favingArtist, NSError *error) {
+		// create the relationsship with the user
+		[favingArtist _addCurrentUserAsFavoriteWithCompletion:^(PASArtist *blockArtist, NSError *error) {
+			blockArtist && !error ? completion(blockArtist, nil) : completion(nil, error);
+		}];
+	};
+	
+	if (needsCorrection) {
+		[[LastFmFetchr fetchr] getCorrectionForArtist:artistName completion:^(LFMArtist *data, NSError *error) {
+			// now get the corrected name
+			BOOL isValidName = !error && data && data.name && ![data.name isEqualToString:@""];
+			NSString *resolvedName = isValidName ? data.name : artistName;
+			
+			[PASArtist _createOrFindArtist:resolvedName completion:favingBlock];
+		}];
+	} else {
+		[PASArtist _createOrFindArtist:artistName completion:favingBlock];
+	}
+}
+
++ (void)_createOrFindArtist:(NSString *)artistName completion:(void (^)(PASArtist *artist, NSError *error))completion
+{
+	// Query for the Artist in question
 	PFQuery *query = [PASArtist _artistWithName:artistName];
 	
-	[query findObjectsInBackgroundWithBlock:^(NSArray *artists, NSError *error) {
-		if (artists && !error) {
-			if (artists.count == 1) {
-				// exactly one is expected, no duplicates allowed
-				
-				// add user to artist
-				PASArtist *artist = [artists firstObject];
-				[artist _addCurrentUserAsFavorite];
-				[artist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-					// The artist exists and the user has favorited him
-					// ready to pass it back to the caller
-					if (succeeded) {
-						completion(artist, nil);
-					} else {
-						completion(nil, error);
-					}
-				}];
-				
-				
-			} else if (artists.count == 0) {
-				// the artist does not exists yet, create it
-				[PASArtist _createArtistFavoritedByCurrentUser:artistName completion:^(PASArtist *artist, NSError *error) {
-					// The artist exists and the user has favorited him
-					// ready to pass it back to the caller
-					if (artist && !error) {
-						completion(artist, nil);
-					} else {
-						completion(nil, error);
-					}
-				}];
-				
-				
-			} else {
-				NSLog(@"Too many artists found (%u)", (int)artists.count);
-			}
+	// exactly one is expected, no duplicates allowed
+	[query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+		if (!object && error.code == kPFErrorObjectNotFound) {
+			// the artist does not exists yet, create it
+			NSLog(@"Creating new Artist \"%@\"", artistName);
+			[PASArtist _createArtist:artistName completion:completion];
+			
+		} else if (object && !error) {
+			NSLog(@"Found existing Artist \"%@\"", artistName);
+			completion((PASArtist *)object, error);
 			
 		} else {
-			NSLog(@"%@", error);
+			completion(nil, error);
 		}
 	}];
 }
 
-/// calls LFM for corrections and adds the Artists to Parse
-+ (void)_createArtistFavoritedByCurrentUser:(NSString *)artistName completion:(void (^)(PASArtist *artist, NSError *error))completion
++ (void)_createArtist:(NSString *)artistName completion:(void (^)(PASArtist *artist, NSError *error))completion
 {
-	NSParameterAssert(artistName);
-	// artistName is from unknown source, needs correction
-	[[LastFmFetchr fetchr] getCorrectionForArtist:artistName completion:^(LFMArtist *data, NSError *error) {
-		// now get the corrected name
-		BOOL isValidName = !error && data && data.name && ![data.name isEqualToString:@""];
-		NSString *resolvedName = isValidName ? data.name : artistName;
-		
-		// Create a new Artist object
-		PASArtist *newArtist = [PASArtist object];
-		newArtist.name	= resolvedName;
-		
-		// Allow public write access (other users need to modify the Artist when they favorite it)
-		PFACL *artistACL = [PFACL ACL];
-		[artistACL setPublicReadAccess:YES];
-		[artistACL setPublicWriteAccess:YES];
-		[newArtist setACL:artistACL];
-		
-		[newArtist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-			if (succeeded && !error) {
-				// create the relationsship with the user
-				[newArtist _addCurrentUserAsFavorite];
-				
-				completion(newArtist, nil);
-			} else {
-				completion(nil, error);
-			}
-		}];
-		
+	// Create a new Artist object
+	PASArtist *newArtist = [PASArtist object];
+	newArtist.name	= artistName;
+	
+	// Allow public readwrite access (although currently I never write again)
+	PFACL *artistACL = [PFACL ACL];
+	[artistACL setPublicReadAccess:YES];
+	[artistACL setPublicWriteAccess:YES];
+	[newArtist setACL:artistACL];
+	
+	[newArtist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+		succeeded && !error ? completion(newArtist, nil) : completion(nil, error);
 	}];
 }
 
-- (void)_addCurrentUserAsFavorite
+- (void)_addCurrentUserAsFavoriteWithCompletion:(void (^)(PASArtist *artist, NSError *error))completion
 {
-	// TODO: this should be done by a PFUser subclass
 	// add artist to the users favorites
-	[[PFUser currentUser] addObject:self.objectId forKey:@"favArtists"];
-	[[PFUser currentUser] saveInBackground];
+	PFUser *currentUser = [PFUser currentUser];
+	NSLog(@"Faving \"%@\" for User \"%@\"", self.name,  currentUser.objectId);
+
+	[currentUser addObject:self.objectId forKey:@"favArtists"];
+	[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+		succeeded && !error ? completion(self, nil) : completion(nil, error);
+	}];
 }
 
 #pragma mark - removing / deleting
 
 + (void)removeCurrentUserFromArtist:(PASArtist *)artist completion:(void (^)(BOOL succeeded, NSError *error))completion
 {
-	// TODO: this should be done by a PFUser subclass
+	NSAssert(artist.objectId, @"The passed artist does not have a valid objectId. Maybe save the artist first.");
 	// remove the relation
-	[[PFUser currentUser] removeObject:artist.objectId forKey:@"favArtists"];
-	[[PFUser currentUser] saveInBackground];
-	
-	[artist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+	PFUser *currentUser = [PFUser currentUser];
+	NSLog(@"Removing \"%@\" from User \"%@\"", artist.name,  currentUser.objectId);
+
+	[currentUser removeObject:artist.objectId forKey:@"favArtists"];
+	[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 		completion(succeeded, error);
 	}];
 }

@@ -33,7 +33,9 @@ extern CGSize const ImageFormatImageSizeArtistThumbnailSmall;
 
 #pragma mark - adding / creating
 
-+ (void)favoriteArtistByCurrentUser:(NSString *)artistName completion:(void (^)(PASArtist *artist, NSError *error))completion;
++ (void)favoriteArtistByCurrentUser:(NSString *)artistName
+					needsCorrection:(BOOL)needsCorrection
+						 completion:(void (^)(PASArtist *artist, NSError *error))completion;
 
 #pragma mark - removing / deleting
 
