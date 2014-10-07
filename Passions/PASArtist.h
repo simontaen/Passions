@@ -33,10 +33,10 @@ extern CGSize const ImageFormatImageSizeArtistThumbnailSmall;
 
 #pragma mark - adding / creating
 
-+ (void)favoriteArtistByCurrentUser:(NSString *)artistName withBlock:(void (^)(PASArtist *artist, NSError *error))block;
++ (void)favoriteArtistByCurrentUser:(NSString *)artistName completion:(void (^)(PASArtist *artist, NSError *error))completion;
 
 #pragma mark - removing / deleting
 
-+ (void)removeCurrentUserFromArtist:(PASArtist *)artist withBlock:(void (^)(BOOL succeeded, NSError *error))block;
++ (void)removeCurrentUserFromArtist:(PASArtist *)artist completion:(void (^)(BOOL succeeded, NSError *error))completion;
 
 @end

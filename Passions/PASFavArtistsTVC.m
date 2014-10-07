@@ -79,8 +79,8 @@
 		PASArtist *artist = [self _artistAtIndexPath:indexPath];
 		
 		// De-favorite the user from the artist and reload the table view
-		[PASArtist removeCurrentUserFromArtist:artist withBlock:^(BOOL succeeded, NSError *error) {
-			if (succeeded) {
+		[PASArtist removeCurrentUserFromArtist:artist completion:^(BOOL succeeded, NSError *error) {
+			if (succeeded && !error) {
 				dispatch_async(dispatch_get_main_queue(), ^{
 					[self loadObjects];
 				});

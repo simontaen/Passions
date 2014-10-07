@@ -263,7 +263,7 @@
 		[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 	};
 	
-	[PASArtist favoriteArtistByCurrentUser:resolvedName withBlock:^(PASArtist *artist, NSError *error) {
+	[PASArtist favoriteArtistByCurrentUser:resolvedName completion:^(PASArtist *artist, NSError *error) {
 		if (artist && !error) {
 			// get the finalized name on parse
 			NSString *parseArtistName = artist.name;

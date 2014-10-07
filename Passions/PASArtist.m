@@ -57,7 +57,7 @@ CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
 #pragma mark - adding / creating
 
 /// query in Parse, if found ok, if 0 create it, if >1 error
-+ (void)favoriteArtistByCurrentUser:(NSString *)artistName withBlock:(void (^)(PASArtist *artist, NSError *error))block
++ (void)favoriteArtistByCurrentUser:(NSString *)artistName withBlock:(void (^)(PASArtist *artist, NSError *error))completion
 {
 	NSParameterAssert(artistName);
 	// TODO: pass a param if the name needs correction
@@ -79,22 +79,22 @@ CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
 					// The artist exists and the user has favorited him
 					// ready to pass it back to the caller
 					if (succeeded) {
-						block(artist, nil);
+						completion(artist, nil);
 					} else {
-						block(nil, error);
+						completion(nil, error);
 					}
 				}];
 				
 				
 			} else if (artists.count == 0) {
 				// the artist does not exists yet, create it
-				[PASArtist _createArtistFavoritedByCurrentUser:artistName withBlock:^(PASArtist *artist, NSError *error) {
+				[PASArtist _createArtistFavoritedByCurrentUser:artistName completion:^(PASArtist *artist, NSError *error) {
 					// The artist exists and the user has favorited him
 					// ready to pass it back to the caller
 					if (artist && !error) {
-						block(artist, nil);
+						completion(artist, nil);
 					} else {
-						block(nil, error);
+						completion(nil, error);
 					}
 				}];
 				
@@ -118,7 +118,7 @@ CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
 }
 
 /// calls LFM for corrections and adds the Artists to Parse
-+ (void)_createArtistFavoritedByCurrentUser:(NSString *)artistName withBlock:(void (^)(PASArtist *artist, NSError *error))block
++ (void)_createArtistFavoritedByCurrentUser:(NSString *)artistName completion:(void (^)(PASArtist *artist, NSError *error))completion
 {
 	NSParameterAssert(artistName);
 	// artistName is from unknown source, needs correction
@@ -142,9 +142,9 @@ CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
 				// create the relationsship with the user
 				[newArtist _addCurrentUserAsFavorite];
 				
-				block(newArtist, nil);
+				completion(newArtist, nil);
 			} else {
-				block(nil, error);
+				completion(nil, error);
 			}
 		}];
 		
