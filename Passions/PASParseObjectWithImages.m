@@ -27,11 +27,13 @@
 - (NSURL *)sourceImageURL
 {
 	if (!_sourceImageURL && self.images.count != 0) {
-		// TODO: what could be your biggest size? Choose based on that
-		// you could switch based on interface idiom here
-		// round down, this is only a thumbnail
-		int middle = (int)(self.images.count / 2 - ((self.images.count % 2) / 2));
-		_sourceImageURL = [NSURL URLWithString:self.images[middle]];
+		NSString *url;
+		if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+			url = [self.images lastObject];
+		} else {
+			url = self.images[self.images.count -2];
+		}
+		_sourceImageURL = [NSURL URLWithString:url];
 	}
 	return _sourceImageURL;
 }

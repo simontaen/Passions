@@ -131,6 +131,8 @@ curl -X POST \
 -d '{}' \
 https://api.parse.com/1/jobs/fetchSimplifiedAlbums
 
+int middle = (int)(self.images.count / 2 - ((self.images.count % 2) / 2));
+
 
 # Regarding UITableViewCell's imageView
 
