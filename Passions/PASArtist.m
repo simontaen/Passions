@@ -109,14 +109,6 @@ CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
 	}];
 }
 
-- (void)_addCurrentUserAsFavorite
-{
-	// TODO: this should be done by a PFUser subclass
-	// add artist to the users favorites
-	[[PFUser currentUser] addObject:self.objectId forKey:@"favArtists"];
-	[[PFUser currentUser] saveInBackground];
-}
-
 /// calls LFM for corrections and adds the Artists to Parse
 + (void)_createArtistFavoritedByCurrentUser:(NSString *)artistName completion:(void (^)(PASArtist *artist, NSError *error))completion
 {
@@ -149,6 +141,14 @@ CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
 		}];
 		
 	}];
+}
+
+- (void)_addCurrentUserAsFavorite
+{
+	// TODO: this should be done by a PFUser subclass
+	// add artist to the users favorites
+	[[PFUser currentUser] addObject:self.objectId forKey:@"favArtists"];
+	[[PFUser currentUser] saveInBackground];
 }
 
 #pragma mark - removing / deleting
