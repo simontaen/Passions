@@ -77,6 +77,7 @@
 {
 	[super viewDidLayoutSubviews];
 	
+	// TODO: rework the pageControl look
 	// custom layout for pageControlView
 	CGRect newFrame = self.pageControlView.frame;
 	CGFloat heightAdj = (int)(newFrame.size.height * 0.189);

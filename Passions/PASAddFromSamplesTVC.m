@@ -81,6 +81,8 @@
 
 - (NSDictionary *)sections
 {
+	// TODO: rethink the A-Z scrubber, should it always show the complete alphabet?
+	// TODO: the scrubber seems to blocks the pan gesture
 	if (!_sections) {
 		NSArray *index = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M",
 						   @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", @"#"];

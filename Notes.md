@@ -44,12 +44,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## UI
 
-* A-Z scrubber
-	* rethink the A-Z scrubber, should it always show the complete alphabet?
-	* the scrubber seems to blocks the pan gesture
 * Try a TabBarController with a hidden tabBar replaced by a pageControl
-* rework the pageControl look
-
 
 # 2.0
 
