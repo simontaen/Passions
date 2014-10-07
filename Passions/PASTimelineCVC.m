@@ -16,6 +16,14 @@
 
 @implementation PASTimelineCVC
 
+#pragma mark - View Lifecycle
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	[self loadObjects];
+}
+
 #pragma mark - CPFQueryCollectionViewController
 
 - (PFQuery *)queryForCollection

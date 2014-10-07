@@ -49,6 +49,11 @@
 @property NSArray *objects;
 
 /**
+ * Loads the first page of objects.
+ */
+- (void)loadObjects;
+
+/**
  * Called when a new query has been issued.
  * Overload this in a subclass if necessary. You must call [super] to make the view behave properly.
  */

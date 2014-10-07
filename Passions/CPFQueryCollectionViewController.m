@@ -111,6 +111,11 @@
     }];
 }
 
+- (void)loadObjects
+{
+	[self performQuery];
+}
+
 - (void)objectsWillLoad
 {
     // Enter the loading state
