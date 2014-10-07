@@ -30,20 +30,17 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 	* use a transparent page control
 
 
-# Todos.todo
+# NewStuff.todo
 
 ## Functionality
 
 * First launch experience
-* implement the albums timeline
 * show the album after a push notification arrives
 	* send over the parseAlbum objectId
 
 
 ## UI
 
-* check the iPod Adding regarding thumbnails
-* fix the layout issues regarding the NavBar, it slides under it.
 * A-Z scrubber
 	* rethink the A-Z scrubber, should it always show the complete alphabet?
 	* the scrubber seems to blocks the pan gesture
