@@ -57,7 +57,7 @@ CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
 #pragma mark - adding / creating
 
 /// query in Parse, if found ok, if 0 create it, if >1 error
-+ (void)favoriteArtistByCurrentUser:(NSString *)artistName withBlock:(void (^)(PASArtist *artist, NSError *error))completion
++ (void)favoriteArtistByCurrentUser:(NSString *)artistName completion:(void (^)(PASArtist *artist, NSError *error))completion
 {
 	NSParameterAssert(artistName);
 	// TODO: pass a param if the name needs correction
@@ -153,7 +153,7 @@ CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
 
 #pragma mark - removing / deleting
 
-+ (void)removeCurrentUserFromArtist:(PASArtist *)artist withBlock:(void (^)(BOOL succeeded, NSError *error))block
++ (void)removeCurrentUserFromArtist:(PASArtist *)artist completion:(void (^)(BOOL succeeded, NSError *error))completion
 {
 	// TODO: this should be done by a PFUser subclass
 	// remove the relation
@@ -161,7 +161,7 @@ CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
 	[[PFUser currentUser] saveInBackground];
 	
 	[artist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-		block(succeeded, error);
+		completion(succeeded, error);
 	}];
 }
 
