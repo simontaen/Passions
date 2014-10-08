@@ -66,19 +66,18 @@
 	[[UIApplication sharedApplication] registerForRemoteNotifications];
 	
 	// Setup Image Cache
-	// TODO: figure out a better maximumCount
 	FICImageFormat *mediumAlbumThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameAlbumThumbnailMedium
 																			  family:ImageFormatFamilyAlbumThumbnails
 																		   imageSize:ImageFormatImageSizeAlbumThumbnailMedium
 																			   style:FICImageFormatStyle32BitBGR
-																		maximumCount:250
+																		maximumCount:800
 																			 devices:FICImageFormatDevicePhone
 																	  protectionMode:FICImageFormatProtectionModeNone];
 	FICImageFormat *smallArtistThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameArtistThumbnailSmall
 																			  family:ImageFormatFamilyArtistThumbnails
 																		   imageSize:ImageFormatImageSizeArtistThumbnailSmall
 																			   style:FICImageFormatStyle32BitBGR
-																		maximumCount:250
+																		maximumCount:200
 																			 devices:FICImageFormatDevicePhone
 																	  protectionMode:FICImageFormatProtectionModeNone];
 	FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
