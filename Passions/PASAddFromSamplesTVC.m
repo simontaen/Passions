@@ -17,7 +17,6 @@
 @property (nonatomic, strong) NSArray *sectionIndex; // NSString
 @property (nonatomic, strong) NSDictionary *sections; // NSString -> NSMutableArray ( "C" -> @["Artist1", "Artist2"] )
 
-
 // http://stackoverflow.com/a/5511403 / http://stackoverflow.com/a/13705529
 @property (nonatomic, strong) NSMutableArray* justFavArtistNames; // of NSString, LFM corrected!
 @property (nonatomic, strong) dispatch_queue_t favoritesQ;
@@ -120,11 +119,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil] forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];
-	
-	// setup artists to choose from, for example
-	// go to spotify, last.fm or prepare MediaQuery
-	// maybe read cache when network is involved? or let AFNetworking handle it?
+	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil]
+		 forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];
 }
 
 - (NSString *)getTitle
@@ -153,13 +149,6 @@
 			self.artistNameCorrections = [[NSMutableDictionary alloc] initWithCapacity:self.artists.count];
 		}
 	});
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-	[super viewDidAppear:animated];
-	//[PASResources printViewControllerLayoutStack:self];
-	//[PASResources printViewLayoutStack:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
