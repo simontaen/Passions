@@ -22,8 +22,9 @@
 - (void)setFavArtistNames:(NSArray *)favArtistNames
 {
 	for (PASAddFromSamplesTVC *vc in self.pageViewController.viewControllers) {
-		// TODO: deleted artists still show up as favorites
-		vc.favArtistNames = favArtistNames;
+		if (vc.favArtistNames != favArtistNames) {
+			vc.favArtistNames = favArtistNames;
+		}
 	}
 }
 

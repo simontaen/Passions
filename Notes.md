@@ -52,6 +52,9 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 	* "I did my best but I still need your help to identify your favorite Artist"
 * Show more infos about the Album when clicking on the Album Art
 * Animate the cell when an Artist has been favorited.
+* Already favorited Artists passing in PASFavArtistsTVC (artistNames)
+	* It could be improved by checking if self.objects actually did change
+	* only then create a new artistNames array
 
 # Data communication with Parse
 

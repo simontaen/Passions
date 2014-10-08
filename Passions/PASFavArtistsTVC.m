@@ -34,7 +34,6 @@
 
 #pragma mark - Accessors
 
-// goes to add artists, needs to know about current favorites
 - (NSArray *)artistNames
 {
 	NSMutableArray *artistNames = [[NSMutableArray alloc] initWithCapacity:self.objects.count];

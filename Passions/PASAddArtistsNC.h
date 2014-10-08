@@ -17,6 +17,9 @@
 @end
 
 @interface PASAddArtistsNC : UINavigationController
-@property (nonatomic, strong) NSArray* favArtistNames; // passed by the segue, LFM Corrected!
+
 @property (nonatomic, weak) id<PASAddArtistsTVCDelegate> myDelegate;
+
+- (void)setFavArtistNames:(NSArray *)favArtistNames; // passed by the segue, LFM Corrected!
+
 @end

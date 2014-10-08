@@ -39,12 +39,15 @@
 	NSAssert([artist conformsToProtocol:@protocol(PASSourceImage)], @"%@ cannot handle artists of class %@, must conform to %@", NSStringFromClass([self class]), NSStringFromClass([artist class]), NSStringFromProtocol(@protocol(PASSourceImage)));
 	
 	if (artist != self.entity) {
+		// only update cell if entity has actually changed
 		self.entity = artist;
 		
 		[self _loadThumbnailImageForArtist:artist];
 		self.artistName.text = name;
-		self.detailText.text = isFav ? @"Favorite!" : @"";
 	}
+	
+	// the artist could have been unfavorited, updated this in every case
+	self.detailText.text = isFav ? @"Favorite!" : @"";
 }
 
 
