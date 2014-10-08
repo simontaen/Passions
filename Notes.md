@@ -8,7 +8,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 	* Show an initial set on first launch pulled from the iPod library
 	* Name of artist and number of albums
 	* Remove Artists using a swipe
-	* Tapping on the Artist will show the Artists Albums (see below)
+	* Tapping on the Artist will show more infos about the artist
 
 * Add artists from various sources
 	* iPod Library (must be working only with that)
@@ -24,6 +24,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 * Show a collection view of your favorite artists albums, ordered by release date
 	* overlay a color coded release date bubble
+	* Tapping on the Album will show more infos about the album
 
 * Interactively pan between favorite artists and albums collection
 	* like on the home screen
@@ -35,16 +36,25 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Functionality
 
 * First launch experience
+	* favorite 3 most played
+	* setup User/Installation
+
 * show the album after a push notification arrives
 	* send over the parseAlbum objectId
 * Silent push after fav'ing an Artist (Status Processing) to update UI automatically
 * "-1" cell on Timeline to filter results
-* Autorefresh/paging on Timeline
+* Auto-refresh / paging on Timeline
+* search for an artist to add (but consider all resources!)
+* change ordering on adding artists & fav artists
+* Unfaving when tapping on adding artist
+* Album Info screen
+* Artist Info screen (this could be reused on adding artists, but the cell needs to be a bit different then)
 
 
 ## UI
 
 * Try a TabBarController with a hidden tabBar replaced by a pageControl
+* redesign FavArtist cell, maybe add Playcount?
 
 # 2.0
 
