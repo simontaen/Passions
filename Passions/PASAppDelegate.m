@@ -99,7 +99,8 @@
 		} else {
 			// Fetch the desired source image by making a network request
 			NSURL *requestURL = [entity sourceImageURLWithFormatName:formatName];
-			// TODO: this might not be ideal
+			// I could use something like AFNetworking or https://github.com/rs/SDWebImage
+			// but it seems to work pretty good actually
 			sourceImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:requestURL]];
 		}
 		
@@ -116,7 +117,7 @@
 
 - (void)imageCache:(FICImageCache *)imageCache errorDidOccurWithMessage:(NSString *)errorMessage
 {
-	NSLog(@"imageCache:errorDidOccurWithMessage: %@", errorMessage);
+	NSLog(@"%@", errorMessage);
 }
 
 #pragma mark - Notifications
