@@ -45,8 +45,10 @@
 	if (_UUID == nil) {
 		// MD5 hashing is expensive enough that we only want to do it once
 		NSString *imageName = [self.sourceImageURL lastPathComponent];
-		CFUUIDBytes UUIDBytes = FICUUIDBytesFromMD5HashOfString(imageName);
-		_UUID = FICStringWithUUIDBytes(UUIDBytes);
+		if (imageName) {
+			CFUUIDBytes UUIDBytes = FICUUIDBytesFromMD5HashOfString(imageName);
+			_UUID = FICStringWithUUIDBytes(UUIDBytes);
+		}
 	}
 	
 	return _UUID;
