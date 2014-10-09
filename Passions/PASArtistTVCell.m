@@ -77,9 +77,9 @@
 	if (!noOfAlbums) {
 		return @"Processing...";
 	} else if (noOfAlbums.longValue == 1) {
-		return [NSString stringWithFormat:@"%lu Album", noOfAlbums.longValue];
+		return [NSString stringWithFormat:@"%lu Album available", noOfAlbums.longValue];
 	} else {
-		return [NSString stringWithFormat:@"%lu Albums", noOfAlbums.longValue];
+		return [NSString stringWithFormat:@"%lu Albums available", noOfAlbums.longValue];
 	}
 }
 
