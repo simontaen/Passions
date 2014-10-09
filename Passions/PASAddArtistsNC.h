@@ -20,6 +20,6 @@
 
 @property (nonatomic, weak) id<PASAddArtistsTVCDelegate> myDelegate;
 
-- (void)setFavArtists:(NSArray *)favArtists; // of PASArtist, passed by the segue, LFM Corrected!
+- (void)setFavArtists:(NSMutableArray *)favArtists; // of PASArtist, passed by the segue, LFM Corrected!
 
 @end

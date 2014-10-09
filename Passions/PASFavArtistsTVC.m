@@ -59,7 +59,7 @@
 		PASArtist *artist = [self _artistAtIndexPath:indexPath];
 		
 		// De-favorite the user from the artist and reload the table view
-		[PASArtist removeCurrentUserFromArtist:artist completion:^(BOOL succeeded, NSError *error) {
+		[artist removeCurrentUserAsFavoriteWithCompletion:^(BOOL succeeded, NSError *error) {
 			if (succeeded && !error) {
 				dispatch_async(dispatch_get_main_queue(), ^{
 					[self loadObjects];
@@ -154,7 +154,7 @@
 {
 	if ([segue.identifier isEqualToString:@"setFavArtists:"]) {
 		if ([segue.destinationViewController respondsToSelector:@selector(setFavArtists:)]) {
-			[segue.destinationViewController performSelector:@selector(setFavArtists:) withObject:self.objects];
+			[segue.destinationViewController performSelector:@selector(setFavArtists:) withObject:[self.objects mutableCopy]];
 		}
 		if ([segue.destinationViewController respondsToSelector:@selector(setMyDelegate:)]) {
 			[segue.destinationViewController performSelector:@selector(setMyDelegate:) withObject:self];

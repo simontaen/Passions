@@ -17,10 +17,11 @@
 @property (nonatomic, strong) NSArray *sectionIndex; // NSString
 @property (nonatomic, strong) NSDictionary *sections; // NSString -> NSMutableArray ( "C" -> @["Artist1", "Artist2"] )
 
-@property (nonatomic, strong, readonly) NSArray* favArtistNames;
+@property (nonatomic, strong, readonly) NSMutableArray* favArtistNames; // of NSString, passed by the segue, LFM Corrected!
 
 // http://stackoverflow.com/a/5511403 / http://stackoverflow.com/a/13705529
 @property (nonatomic, strong) NSMutableArray* justFavArtistNames; // of NSString, LFM corrected!
+@property (nonatomic, strong) NSMutableArray* justFavArtists; // of PASArtist
 @property (nonatomic, strong) dispatch_queue_t favoritesQ;
 
 @property (nonatomic, strong) NSMutableDictionary* artistNameCorrections; // of NSString (display) -> NSString (internal on Favorite Artists TVC, LFM corrected)
@@ -52,15 +53,14 @@
 	return _artists;
 }
 
-- (void)setFavArtists:(NSArray *)favArtists
+- (void)setFavArtists:(NSMutableArray *)favArtists
 {
 	_favArtists = favArtists;
-	NSMutableArray *myArray = [[NSMutableArray alloc] initWithCapacity:favArtists.count];
+	_favArtistNames = [[NSMutableArray alloc] initWithCapacity:favArtists.count];
 	
 	for (PASArtist *artist in favArtists) {
-		[myArray addObject:artist.name];
+		[_favArtistNames addObject:artist.name];
 	}
-	_favArtistNames = [NSArray arrayWithArray:myArray];
 }
 
 - (NSString *)nameForArtist:(id)artist
@@ -149,6 +149,7 @@
 	// perpare for user favoriting artists
 	self.favoritesQ = dispatch_queue_create("favoritesQ", DISPATCH_QUEUE_CONCURRENT);
 	self.justFavArtistNames = [[NSMutableArray alloc] initWithCapacity:(int)(self.artists.count / 4)];
+	self.justFavArtists = [[NSMutableArray alloc] initWithCapacity:(int)(self.artists.count / 4)];
 	
 	// load name corrections
 	self.correctionsQ = dispatch_queue_create("correctionsQ", DISPATCH_QUEUE_CONCURRENT);
@@ -252,7 +253,34 @@
 	};
 	
 	if ([self _isFavoriteArtist:artistName]) {
-		NSLog(@"Remove Artist");
+		PASArtist *artist = [self _artistForResolvedName:resolvedName];
+		// The artist is favorited, a correctedName MUST exists
+		NSAssert([self _correctedArtistName:artistName], @"The current Artist \"%@\" (%@) is favorited but has no corrected Name.", artistName, artist.objectId);
+		
+		[artist removeCurrentUserAsFavoriteWithCompletion:^(BOOL succeeded, NSError *error) {
+			if (succeeded && !error) {
+				dispatch_barrier_async(self.favoritesQ, ^{
+					if ([self.favArtistNames containsObject:resolvedName]) {
+						[self.favArtists removeObjectAtIndex:[self.favArtistNames indexOfObject:resolvedName]];
+						[self.favArtistNames removeObject:resolvedName];
+					} else {
+						[self.justFavArtists removeObjectAtIndex:[self.justFavArtistNames indexOfObject:resolvedName]];
+						[self.justFavArtistNames removeObject:resolvedName];
+					}
+					
+					dispatch_async(dispatch_get_main_queue(), ^{
+						cleanup();
+						[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+					});
+				});
+				
+			} else {
+				dispatch_async(dispatch_get_main_queue(), ^{
+					cleanup();
+					[self handleError:error];
+				});
+			}
+		}];
 		
 	} else {
 		[PASArtist favoriteArtistByCurrentUser:resolvedName needsCorrection:![self _correctedArtistName:artistName]	completion:^(PASArtist *artist, NSError *error) {
@@ -267,6 +295,7 @@
 				
 				dispatch_barrier_async(self.favoritesQ, ^{
 					[self.justFavArtistNames addObject:parseArtistName];
+					[self.justFavArtists addObject:artist];
 					
 					dispatch_async(dispatch_get_main_queue(), ^{
 						cleanup();
@@ -345,7 +374,11 @@
 
 - (PASArtist *)_artistForResolvedName:(NSString *)resolvedName
 {
-	return self.favArtists[[self.favArtistNames indexOfObject:resolvedName]];
+	if ([self.favArtistNames containsObject:resolvedName]) {
+		return [self.favArtists objectAtIndex:[self.favArtistNames indexOfObject:resolvedName]];
+	} else {
+		return [self.justFavArtists objectAtIndex:[self.justFavArtistNames indexOfObject:resolvedName]];
+	}
 }
 
 @end

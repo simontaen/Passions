@@ -39,6 +39,6 @@ extern CGSize const ImageFormatImageSizeArtistThumbnailSmall;
 
 #pragma mark - removing / deleting
 
-+ (void)removeCurrentUserFromArtist:(PASArtist *)artist completion:(void (^)(BOOL succeeded, NSError *error))completion;
+- (void)removeCurrentUserAsFavoriteWithCompletion:(void (^)(BOOL succeeded, NSError *error))completion;
 
 @end

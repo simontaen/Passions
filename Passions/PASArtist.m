@@ -135,14 +135,14 @@ CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
 
 #pragma mark - removing / deleting
 
-+ (void)removeCurrentUserFromArtist:(PASArtist *)artist completion:(void (^)(BOOL succeeded, NSError *error))completion
+- (void)removeCurrentUserAsFavoriteWithCompletion:(void (^)(BOOL succeeded, NSError *error))completion
 {
-	NSAssert(artist.objectId, @"The passed artist does not have a valid objectId. Maybe save the artist first.");
+	NSAssert(self.objectId, @"The passed artist does not have a valid objectId. Maybe save the artist first.");
 	// remove the relation
 	PFUser *currentUser = [PFUser currentUser];
-	NSLog(@"Removing \"%@\" from User \"%@\"", artist.name,  currentUser.objectId);
+	NSLog(@"Removing \"%@\" from User \"%@\"", self.name,  currentUser.objectId);
 
-	[currentUser removeObject:artist.objectId forKey:@"favArtists"];
+	[currentUser removeObject:self.objectId forKey:@"favArtists"];
 	[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 		completion(succeeded, error);
 	}];

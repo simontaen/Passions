@@ -11,7 +11,7 @@
 
 @interface PASAddFromSamplesTVC : UITableViewController
 
-@property (nonatomic, strong) NSArray* favArtists; // of PASArtist, passed by the segue, LFM Corrected!
+@property (nonatomic, strong) NSMutableArray* favArtists; // of PASArtist, passed by the segue, LFM Corrected!
 
 - (BOOL)didAddArtists;
 
