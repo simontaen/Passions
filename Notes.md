@@ -37,16 +37,19 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 * First launch experience
 	* favorite 3 most played
+		*this could get tricky with the artistNameCorrections
 	* setup User/Installation
 
 * show the album after a push notification arrives
 	* send over the parseAlbum objectId
 * Silent push after fav'ing an Artist (Status Processing) to update UI automatically
+
 * "-1" cell on Timeline to filter results
-* Auto-refresh / paging on Timeline
 * search for an artist to add (but consider all resources!)
 * change ordering on adding artists & fav artists
-* Unfaving when tapping on adding artist
+
+* Auto-refresh / paging on Timeline
+
 * Album Info screen
 * Artist Info screen (this could be reused on adding artists, but the cell needs to be a bit different then)
 
@@ -55,6 +58,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 * Try a TabBarController with a hidden tabBar replaced by a pageControl
 * redesign FavArtist cell, maybe add Playcount?
+* add a fancy control to (un-)fav the artist
 
 # 2.0
 
