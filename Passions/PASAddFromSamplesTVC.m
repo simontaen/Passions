@@ -211,33 +211,6 @@
 	return cell;
 }
 
-- (BOOL)_isFavoriteArtist:(NSString *)artistName
-{
-	NSString *resolvedName = [self _resolveArtistName:artistName];
-	
-	return [self.favArtistNames containsObject:resolvedName] || [self.justFavArtistNames containsObject:resolvedName];
-}
-
-- (NSString *)_resolveArtistName:(NSString *)name
-{
-	NSString *correctedName = [self _correctedArtistName:name];
-	// this is mandatory as self.artistNameCorrections is initially empty
-	return correctedName ? correctedName : name;
-}
-
-- (NSString *)_correctedArtistName:(NSString *)name
-{
-	// get corrected name
-	// this might get a problem when artistNameCorrections is really big and loading from disk
-	// takes a long time -> could result in artistNameCorrections being nil here!
-	return [self.artistNameCorrections objectForKey:name];
-}
-
-- (PASArtist *)_artistForResolvedName:(NSString *)resolvedName
-{
-	return self.favArtists[[self.favArtistNames indexOfObject:resolvedName]];
-}
-
 #pragma mark - UITableViewDataSource Index
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -344,6 +317,35 @@
 	[alert addAction:defaultAction];
 	
 	[self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - Private Methods
+
+- (BOOL)_isFavoriteArtist:(NSString *)artistName
+{
+	NSString *resolvedName = [self _resolveArtistName:artistName];
+	
+	return [self.favArtistNames containsObject:resolvedName] || [self.justFavArtistNames containsObject:resolvedName];
+}
+
+- (NSString *)_resolveArtistName:(NSString *)name
+{
+	NSString *correctedName = [self _correctedArtistName:name];
+	// this is mandatory as self.artistNameCorrections is initially empty
+	return correctedName ? correctedName : name;
+}
+
+- (NSString *)_correctedArtistName:(NSString *)name
+{
+	// get corrected name
+	// this might get a problem when artistNameCorrections is really big and loading from disk
+	// takes a long time -> could result in artistNameCorrections being nil here!
+	return [self.artistNameCorrections objectForKey:name];
+}
+
+- (PASArtist *)_artistForResolvedName:(NSString *)resolvedName
+{
+	return self.favArtists[[self.favArtistNames indexOfObject:resolvedName]];
 }
 
 @end
