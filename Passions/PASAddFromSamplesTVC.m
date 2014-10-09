@@ -200,14 +200,24 @@
 
 - (BOOL)_isFavoriteArtist:(NSString *)artistName
 {
+	NSString *resolvedName = [self _resolveArtistName:artistName];
+	
+	return [self.favArtistNames containsObject:resolvedName] || [self.justFavArtistNames containsObject:resolvedName];
+}
+
+- (NSString *)_resolveArtistName:(NSString *)name
+{
+	NSString *correctedName = [self _correctedArtistName:name];
+	// this is mandatory as self.artistNameCorrections is initially empty
+	return correctedName ? correctedName : name;
+}
+
+- (NSString *)_correctedArtistName:(NSString *)name
+{
 	// get corrected name
 	// this might get a problem when artistNameCorrections is really big and loading from disk
 	// takes a long time -> could result in artistNameCorrections being nil here!
-	NSString *correctedName = [self.artistNameCorrections objectForKey:artistName];
-	// this is mandatory as self.artistNameCorrections is initially empty
-	NSString *resolvedName = correctedName ? correctedName : artistName;
-	
-	return [self.favArtistNames containsObject:resolvedName] || [self.justFavArtistNames containsObject:resolvedName];
+	return [self.artistNameCorrections objectForKey:name];
 }
 
 #pragma mark - UITableViewDataSource Index
@@ -243,40 +253,44 @@
 	[cell.activityIndicator startAnimating];
 	
 	NSString *artistName = [self nameForArtist:[self artistForIndexPath:indexPath]];
-	NSString *correctedName = [self.artistNameCorrections objectForKey:artistName];
-	NSString *resolvedName = correctedName ?: artistName;
+	NSString *resolvedName = [self _resolveArtistName:artistName];
 	
 	void (^cleanup)() = ^{
 		[cell.activityIndicator stopAnimating];
 		cell.userInteractionEnabled = YES;
 	};
 	
-	[PASArtist favoriteArtistByCurrentUser:resolvedName needsCorrection:!correctedName completion:^(PASArtist *artist, NSError *error) {
-		if (artist && !error) {
-			// get the finalized name on parse
-			NSString *parseArtistName = artist.name;
-			
-			dispatch_barrier_async(self.correctionsQ, ^{
-				// cache the mapping userDisplayed -> corrected
-				[self.artistNameCorrections setObject:parseArtistName forKey:artistName];
-			});
-			
-			dispatch_barrier_async(self.favoritesQ, ^{
-				[self.justFavArtistNames addObject:parseArtistName];
+	if ([self _isFavoriteArtist:artistName]) {
+		NSLog(@"Remove Artist");
+		
+	} else {
+		[PASArtist favoriteArtistByCurrentUser:resolvedName needsCorrection:![self _correctedArtistName:artistName]	completion:^(PASArtist *artist, NSError *error) {
+			if (artist && !error) {
+				// get the finalized name on parse
+				NSString *parseArtistName = artist.name;
 				
+				dispatch_barrier_async(self.correctionsQ, ^{
+					// cache the mapping userDisplayed -> corrected
+					[self.artistNameCorrections setObject:parseArtistName forKey:artistName];
+				});
+				
+				dispatch_barrier_async(self.favoritesQ, ^{
+					[self.justFavArtistNames addObject:parseArtistName];
+					
+					dispatch_async(dispatch_get_main_queue(), ^{
+						cleanup();
+						[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+					});
+				});
+				
+			} else {
 				dispatch_async(dispatch_get_main_queue(), ^{
 					cleanup();
-					[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+					[self handleError:error];
 				});
-			});
-			
-		} else {
-			dispatch_async(dispatch_get_main_queue(), ^{
-				cleanup();
-				[self handleError:error];
-			});
-		}
-	}];
+			}
+		}];
+	}
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
