@@ -72,11 +72,20 @@
 	PASAddFromSamplesTVC *addArtistsTVC;
 	switch (index) {
 		case 0:
-			addArtistsTVC = addFromSamplesTVC;
+			if ([[UIDevice currentDevice].model containsString:@"Simulator"]) {
+				addArtistsTVC = addFromSamplesTVC;
+			} else {
+				addArtistsTVC = addFromMusicTVC;
+			}
+
 			break;
 			
 		case 1:
-			addArtistsTVC = addFromMusicTVC;
+			if ([[UIDevice currentDevice].model containsString:@"Simulator"]) {
+				addArtistsTVC = addFromMusicTVC;
+			} else {
+				addArtistsTVC = addFromSamplesTVC;
+			}
 			break;
 			
 		default:
