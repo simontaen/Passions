@@ -17,6 +17,8 @@
 @property (nonatomic, strong) NSArray *sectionIndex; // NSString
 @property (nonatomic, strong) NSDictionary *sections; // NSString -> NSMutableArray ( "C" -> @["Artist1", "Artist2"] )
 
+@property (nonatomic, strong, readonly) NSArray* favArtistNames;
+
 // http://stackoverflow.com/a/5511403 / http://stackoverflow.com/a/13705529
 @property (nonatomic, strong) NSMutableArray* justFavArtistNames; // of NSString, LFM corrected!
 @property (nonatomic, strong) dispatch_queue_t favoritesQ;
@@ -48,6 +50,17 @@
 					  ] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 	};
 	return _artists;
+}
+
+- (void)setFavArtists:(NSArray *)favArtists
+{
+	_favArtists = favArtists;
+	NSMutableArray *myArray = [[NSMutableArray alloc] initWithCapacity:favArtists.count];
+	
+	for (PASArtist *artist in favArtists) {
+		[myArray addObject:artist.name];
+	}
+	_favArtistNames = [NSArray arrayWithArray:myArray];
 }
 
 - (NSString *)nameForArtist:(id)artist
@@ -218,6 +231,11 @@
 	// this might get a problem when artistNameCorrections is really big and loading from disk
 	// takes a long time -> could result in artistNameCorrections being nil here!
 	return [self.artistNameCorrections objectForKey:name];
+}
+
+- (PASArtist *)_artistForResolvedName:(NSString *)resolvedName
+{
+	return self.favArtists[[self.favArtistNames indexOfObject:resolvedName]];
 }
 
 #pragma mark - UITableViewDataSource Index

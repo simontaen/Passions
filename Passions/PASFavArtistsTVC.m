@@ -32,17 +32,6 @@
 	return self;
 }
 
-#pragma mark - Accessors
-
-- (NSArray *)artistNames
-{
-	NSMutableArray *artistNames = [[NSMutableArray alloc] initWithCapacity:self.objects.count];
-	for (PASArtist *artist in self.objects) {
-		[artistNames addObject:artist.name];
-	}
-	return artistNames;
-}
-
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
@@ -163,9 +152,9 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-	if ([segue.identifier isEqualToString:@"setFavArtistNames:"]) {
-		if ([segue.destinationViewController respondsToSelector:@selector(setFavArtistNames:)]) {
-			[segue.destinationViewController performSelector:@selector(setFavArtistNames:) withObject:[self artistNames]];
+	if ([segue.identifier isEqualToString:@"setFavArtists:"]) {
+		if ([segue.destinationViewController respondsToSelector:@selector(setFavArtists:)]) {
+			[segue.destinationViewController performSelector:@selector(setFavArtists:) withObject:self.objects];
 		}
 		if ([segue.destinationViewController respondsToSelector:@selector(setMyDelegate:)]) {
 			[segue.destinationViewController performSelector:@selector(setMyDelegate:) withObject:self];

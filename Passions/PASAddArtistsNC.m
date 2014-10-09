@@ -19,11 +19,11 @@
 
 #pragma mark - Accessors
 
-- (void)setFavArtistNames:(NSArray *)favArtistNames
+- (void)setFavArtists:(NSArray *)favArtists
 {
 	for (PASAddFromSamplesTVC *vc in self.pageViewController.viewControllers) {
-		if (vc.favArtistNames != favArtistNames) {
-			vc.favArtistNames = favArtistNames;
+		if (vc.favArtists != favArtists) {
+			vc.favArtists = favArtists;
 		}
 	}
 }
