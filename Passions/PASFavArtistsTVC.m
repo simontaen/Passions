@@ -102,6 +102,7 @@
 		// this must be a new user
 		// create the assosiation for push notifications
 		PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+		[currentInstallation setObject:[UIDevice currentDevice].model forKey:@"deviceModel"];
 		[currentInstallation save];
 		[[PFUser currentUser] setObject:currentInstallation.objectId forKey:@"installation"];
 		// save it or else the query will crash
