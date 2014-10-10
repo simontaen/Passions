@@ -53,6 +53,9 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Album Info screen
 * Artist Info screen (this could be reused on adding artists, but the cell needs to be a bit different then)
 
+* Parse seems to just take a default date of today for the Albums sometimes (check Bruce and Beatles)
+	* actually Spotify delivers shit data! (Track of my Years from Bryan Adams for example!)
+
 
 ## UI
 
