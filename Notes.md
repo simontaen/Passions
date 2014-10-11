@@ -62,6 +62,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Try a TabBarController with a hidden tabBar replaced by a pageControl
 * redesign FavArtist cell, maybe add Playcount?
 * add a fancy control to (un-)fav the artist
+* A guy rocking out when refreshing on pull-to-refresh
 
 # 2.0
 
