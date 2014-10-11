@@ -2,3 +2,5 @@
 pod 'AWPercentDrivenInteractiveTransition'
 pod 'FastImageCache'
 pod 'LastFmFetchr', :path => '/Users/simon/Documents/code/ObjC/iOS/LastFmFetchr/'
+# debugging
+pod 'DebugView'
