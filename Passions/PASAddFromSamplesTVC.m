@@ -229,11 +229,26 @@
 	return index;
 }
 
-#pragma mark - UITableViewDataSource Header/Footer Titles
+#pragma mark - UITableViewDataSource Header
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+static CGFloat const kSectionHeaderHeight = 28;
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-	return self.sectionIndex[section];
+	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, kSectionHeaderHeight)];
+	[view setBackgroundColor:[UIColor whiteColor]];
+ 
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width, kSectionHeaderHeight)];
+	label.text = self.sectionIndex[section];
+	label.textColor = [UIColor darkTextColor];
+	[view addSubview:label];
+ 
+	return view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+	return kSectionHeaderHeight;
 }
 
 #pragma mark - UITableViewDelegate
