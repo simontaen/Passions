@@ -29,7 +29,6 @@
 	self.pullToRefreshEnabled = YES;
 	// no paging, I don't expect >200 fav artists
 	self.paginationEnabled = NO;
-	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9 alpha:1.0];
 	return self;
 }
 
@@ -41,6 +40,7 @@
 	self.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
 	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil]
 		 forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];
+	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9 alpha:1.0];
 }
 
 - (IBAction)resetFastimageCache:(UIBarButtonItem *)sender
