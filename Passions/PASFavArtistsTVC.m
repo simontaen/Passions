@@ -29,6 +29,7 @@
 	self.pullToRefreshEnabled = YES;
 	// no paging, I don't expect >200 fav artists
 	self.paginationEnabled = NO;
+	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9 alpha:1.0];
 	return self;
 }
 
