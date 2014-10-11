@@ -22,7 +22,7 @@
 
 - (void)awakeFromNib
 {
-    // Load the page view controller from the XIB
+    // Create the page view controller
 	self.pageViewController = [[PASPageViewController alloc] initWithNibName:nil bundle:nil];
 	
 	// TODO: temporary
