@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSArray *sectionIndex; // NSString
 @property (nonatomic, strong) NSDictionary *sections; // NSString -> NSMutableArray ( "C" -> @["Artist1", "Artist2"] )
 
+@property (nonatomic, strong, readonly) NSArray* originalFavArtists; // of PASArtist, passed by the segue, LFM Corrected!
 @property (nonatomic, strong, readonly) NSMutableArray* favArtistNames; // of NSString, passed by the segue, LFM Corrected!
 
 // http://stackoverflow.com/a/5511403 / http://stackoverflow.com/a/13705529
@@ -56,6 +57,7 @@
 - (void)setFavArtists:(NSMutableArray *)favArtists
 {
 	_favArtists = favArtists;
+	_originalFavArtists = [NSArray arrayWithArray:favArtists];
 	_favArtistNames = [[NSMutableArray alloc] initWithCapacity:favArtists.count];
 	
 	for (PASArtist *artist in favArtists) {
@@ -122,9 +124,9 @@
 	return _sections;
 }
 
-- (BOOL)didAddArtists
+- (BOOL)didEditArtists
 {
-	return self.justFavArtistNames.count != 0;
+	return self.justFavArtistNames.count != 0 || self.favArtists.count != self.originalFavArtists.count;
 }
 
 #pragma mark - View Lifecycle

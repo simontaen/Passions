@@ -12,7 +12,7 @@
 
 @protocol PASAddArtistsTVCDelegate <NSObject>
 
-- (void)viewController:(PASAddFromSamplesTVC *)vc didAddArtists:(BOOL)didAddArtists;
+- (void)viewController:(PASAddFromSamplesTVC *)vc didEditArtists:(BOOL)didEditArtists;
 
 @end
 

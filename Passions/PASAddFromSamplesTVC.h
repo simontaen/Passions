@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) NSMutableArray* favArtists; // of PASArtist, passed by the segue, LFM Corrected!
 
-- (BOOL)didAddArtists;
+- (BOOL)didEditArtists;
 
 // for subclassing
 - (NSArray *)artists; // of the appropriate object

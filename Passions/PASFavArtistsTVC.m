@@ -135,9 +135,9 @@
 
 #pragma mark - PASAddArtistsTVCDelegate
 
-- (void)viewController:(PASAddFromSamplesTVC *)vc didAddArtists:(BOOL)didAddArtists
+- (void)viewController:(PASAddFromSamplesTVC *)vc didEditArtists:(BOOL)didEditArtists
 {
-	if (didAddArtists) {
+	if (didEditArtists) {
 		[self _refreshUI];
 	}
 	// Go back to the previous view

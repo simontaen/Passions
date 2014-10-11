@@ -98,8 +98,8 @@
 - (IBAction)doneButtonHandler:(UIBarButtonItem *)sender
 {
 	PASAddFromSamplesTVC *dissapearingTVC = ((PASAddFromSamplesTVC*) self.pageViewController.selectedViewController);
-	if ([self.myDelegate respondsToSelector:@selector(viewController:didAddArtists:)]) {
-		[self.myDelegate viewController:dissapearingTVC didAddArtists:[dissapearingTVC didAddArtists]];
+	if ([self.myDelegate respondsToSelector:@selector(viewController:didEditArtists:)]) {
+		[self.myDelegate viewController:dissapearingTVC didEditArtists:[dissapearingTVC didEditArtists]];
 	}
 }
 
