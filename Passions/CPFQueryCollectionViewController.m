@@ -19,6 +19,10 @@
 	#define ALog(...) NSLog(@"*** %s: %@", __PRETTY_FUNCTION__, [NSString stringWithFormat:__VA_ARGS__])
 #endif // DEBUG
 
+@interface CPFQueryCollectionViewController()
+@property (nonatomic, assign) NSUInteger expectedObjects;
+@end
+
 @implementation CPFQueryCollectionViewController
 {
     UIActivityIndicatorView *_loadingIndicator;
@@ -71,6 +75,19 @@
     
     // Perform the first query
     [self performQuery];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	if (_paginationEnabled) {
+		// we need to know how many objects there are to prevent
+		// constant refreshing without getting new objects
+		PFQuery *query = self.queryForCollection;
+		[query countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
+			_expectedObjects = number;
+		}];
+	}
 }
 
 #pragma mark - Parse.com logic
@@ -196,10 +213,17 @@
 {
     //if the scrollView has reached the bottom fetch the next page of objects
     float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
-    if (bottomEdge >= scrollView.contentSize.height) {
+    if (bottomEdge >= scrollView.contentSize.height && [self hasMoreObjects]) {
         [self setIsRefreshing:NO];
         [self performQuery];
     }
+}
+
+#pragma mark - Private Methods
+
+- (BOOL)hasMoreObjects
+{
+	return _paginationEnabled && self.objects.count < _expectedObjects;
 }
 
 @end

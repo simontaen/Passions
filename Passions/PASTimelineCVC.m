@@ -16,11 +16,22 @@
 
 @implementation PASTimelineCVC
 
+#pragma mark - Init
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+	self = [super initWithCoder:aDecoder];
+	if (!self) return nil;
+	self.paginationEnabled = YES;
+	self.objectsPerPage = 500;
+	return self;
+}
+
 #pragma mark - View Lifecycle
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	[super viewDidAppear:animated];
+	[super viewWillAppear:animated];
 	[self loadObjects];
 }
 
