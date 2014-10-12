@@ -19,6 +19,5 @@
 - (NSArray *)artists; // of the appropriate object
 - (NSString *)nameForArtist:(id)artist;
 - (id)artistForIndexPath:(NSIndexPath *)indexPath;
-- (NSString *)getTitle;
 
 @end

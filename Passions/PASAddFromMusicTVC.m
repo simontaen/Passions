@@ -18,6 +18,11 @@
 
 #pragma mark - Accessors
 
+- (NSString *)title
+{
+	return @"iPod Artists";
+}
+
 // returns the proper objects
 - (NSArray *)artists
 {
@@ -43,13 +48,6 @@
 {
 	NSAssert([artist isKindOfClass:[MPMediaItem class]], @"%@ cannot handle artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
 	return [artist valueForProperty: MPMediaItemPropertyArtist];
-}
-
-#pragma mark - View Lifecycle
-
-- (NSString *)getTitle
-{
-	return @"iPod Artists";
 }
 
 @end

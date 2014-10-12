@@ -34,6 +34,11 @@
 
 #pragma mark - Accessors
 
+- (NSString *)title
+{
+	return @"Samples";
+}
+
 // returns the proper objects
 - (NSArray *)artists
 {
@@ -138,15 +143,9 @@
 		 forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];
 }
 
-- (NSString *)getTitle
-{
-	return @"Samples";
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	[self.parentViewController setTitle:[self getTitle]];
 	
 	// perpare for user favoriting artists
 	self.favoritesQ = dispatch_queue_create("favoritesQ", DISPATCH_QUEUE_CONCURRENT);

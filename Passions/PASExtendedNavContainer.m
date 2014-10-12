@@ -22,6 +22,8 @@ CGFloat const kSegmentBarHeight = 40;
 
 @implementation PASExtendedNavContainer
 
+#pragma mark - Init
+
 - (instancetype)initWithIndex:(NSUInteger)index
 {
 	self = [super initWithNibName:nil bundle:nil];
@@ -40,6 +42,14 @@ CGFloat const kSegmentBarHeight = 40;
 	} else {
 		return [[PASAddFromMusicTVC alloc] initWithNibName:nil bundle:nil];
 	}
+}
+
+#pragma mark - Accessors
+
+- (NSString *)title
+{
+	// this is a container, forwared the call
+	return self.addTvc.title;
 }
 
 #pragma mark - View Lifecycle
