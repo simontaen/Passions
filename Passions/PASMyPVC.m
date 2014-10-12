@@ -11,9 +11,7 @@
 #import "PASAddFromMusicTVC.h"
 
 @interface PASMyPVC ()
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIToolbar *segmentbar;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @end
 
 @implementation PASMyPVC
@@ -25,12 +23,6 @@
 	for (PASAddFromSamplesTVC *vc in self.viewControllers) {
 		vc.favArtists = favArtists;
 	}
-}
-
-- (void)setTitle:(NSString *)title
-{
-	[super setTitle:title];
-	self.titleLabel.text = title;
 }
 
 #pragma mark - Init
@@ -48,22 +40,26 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	
+
+	// Setup navigationBar Items
 	UIBarButtonItem *lbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
 																		  target:self
 																		  action:@selector(doneButtonHandler:)];
-	UILabel *title = [[UILabel alloc] init];
-	title.text = self.title;
-	UIBarButtonItem *mbbi = [[UIBarButtonItem alloc] initWithCustomView:title];
-	self.titleLabel = title;
-
+	self.navigationItem.leftBarButtonItem = lbbi;
 	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																		  target:self
 																		  action:@selector(doneButtonHandler:)];
-	UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-																			   target:nil action:nil];
-	// add the navigation item
-	self.toolbar.items = @[lbbi, flexSpace, mbbi, flexSpace, rbbi];
+	self.navigationItem.rightBarButtonItem = rbbi;
+	
+	// The navigation bar's shadowImage is set to a transparent image.  In
+	// conjunction with providing a custom background image, this removes
+	// the grey hairline at the bottom of the navigation bar.  The
+	// ExtendedNavBarView will draw its own hairline.
+	self.navigationController.navigationBar.shadowImage = [UIImage imageNamed:@"TransparentPixel"];
+	[self.segmentbar setShadowImage:[UIImage imageNamed:@"TransparentPixel"] forToolbarPosition:UIBarPositionAny];
+	// "Pixel" is a solid white 1x1 image.
+	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Pixel"] forBarMetrics:UIBarMetricsDefault];
+	[self.segmentbar setBackgroundImage:[UIImage imageNamed:@"Pixel"] forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
 	
 	// DEBUG
 	self.view.backgroundColor = [UIColor greenColor];

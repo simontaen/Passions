@@ -238,7 +238,7 @@ static CGFloat const kSectionHeaderHeight = 28;
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
 	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, kSectionHeaderHeight)];
-	[view setBackgroundColor:[UIColor whiteColor]];
+	view.backgroundColor = [UIColor whiteColor];
  
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width, kSectionHeaderHeight)];
 	label.text = self.sectionIndex[section];

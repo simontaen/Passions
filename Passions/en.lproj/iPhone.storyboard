@@ -25,7 +25,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="twI-2l-I0I">
                             <connections>
-                                <segue destination="rfb-Xc-jTG" kind="modal" identifier="setFavArtists:" modalTransitionStyle="coverVertical" id="rsj-DE-e4c"/>
+                                <segue destination="cma-Wh-Sq8" kind="modal" identifier="setFavArtists:" modalTransitionStyle="coverVertical" id="rsj-DE-e4c"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -49,10 +49,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JuB-dl-Nac">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
-                                <items/>
-                            </toolbar>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rEB-Lh-DhO">
                                 <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                                 <items/>
@@ -78,16 +74,16 @@
                             <constraint firstItem="dhC-ef-VnS" firstAttribute="centerX" secondItem="3z2-6T-nYY" secondAttribute="centerX" id="zSY-Vv-iPK"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="SsX-wf-yB0"/>
                     <connections>
                         <outlet property="containerView" destination="HEo-q1-PUB" id="yjw-BW-w1I"/>
                         <outlet property="pageControlView" destination="dhC-ef-VnS" id="mga-WJ-QgD"/>
                         <outlet property="segmentbar" destination="rEB-Lh-DhO" id="Mfg-jS-6Kl"/>
-                        <outlet property="toolbar" destination="JuB-dl-Nac" id="tNh-Kt-V3C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wzR-ZF-1FM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1283" y="-178"/>
+            <point key="canvasLocation" x="-751" y="-178"/>
         </scene>
         <!--RootVC-->
         <scene sceneID="39e-Dv-tP6">
@@ -197,6 +193,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pJo-t6-ltZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1703" y="-178"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="8Rl-lo-BUx">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cma-Wh-Sq8" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tEk-Wc-Xd7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="rfb-Xc-jTG" kind="relationship" relationship="rootViewController" id="guA-Cf-N5E"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4ak-kt-S9Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1283" y="-178"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
