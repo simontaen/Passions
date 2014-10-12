@@ -21,6 +21,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Reset" id="dvE-cb-HYx">
                             <connections>
                                 <action selector="resetFastimageCache:" destination="E2G-RX-2YE" id="Lbg-28-Taa"/>
+                                <segue destination="rfb-Xc-jTG" kind="modal" id="ygB-sm-MOf"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="twI-2l-I0I">
@@ -36,6 +37,104 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G6R-0w-a0i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1283" y="-848"/>
+        </scene>
+        <!--MyPVC-->
+        <scene sceneID="xzA-43-z2o">
+            <objects>
+                <viewController id="rfb-Xc-jTG" customClass="PASMyPVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HxJ-4a-o8N"/>
+                        <viewControllerLayoutGuide type="bottom" id="vy8-xU-QMd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3z2-6T-nYY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HEo-q1-PUB">
+                                <rect key="frame" x="0.0" y="108" width="320" height="460"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                            </view>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="dhC-ef-VnS">
+                                <rect key="frame" x="141" y="511" width="39" height="37"/>
+                                <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="currentPageIndicatorTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </pageControl>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="HEo-q1-PUB" firstAttribute="top" secondItem="3z2-6T-nYY" secondAttribute="top" constant="108" id="577-3M-juO"/>
+                            <constraint firstAttribute="bottom" secondItem="HEo-q1-PUB" secondAttribute="bottom" id="RcK-Ka-obQ"/>
+                            <constraint firstAttribute="bottom" secondItem="dhC-ef-VnS" secondAttribute="bottom" constant="20" symbolic="YES" id="dwg-cw-dgr"/>
+                            <constraint firstItem="HEo-q1-PUB" firstAttribute="leading" secondItem="3z2-6T-nYY" secondAttribute="leading" id="kFm-RQ-VCz"/>
+                            <constraint firstItem="dhC-ef-VnS" firstAttribute="centerX" secondItem="HEo-q1-PUB" secondAttribute="centerX" id="qS0-iO-ekR"/>
+                            <constraint firstItem="dhC-ef-VnS" firstAttribute="centerX" secondItem="3z2-6T-nYY" secondAttribute="centerX" id="zSY-Vv-iPK"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="containerView" destination="HEo-q1-PUB" id="yjw-BW-w1I"/>
+                        <outlet property="pageControlView" destination="dhC-ef-VnS" id="mga-WJ-QgD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wzR-ZF-1FM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-895" y="-848"/>
+        </scene>
+        <!--Add ArtistsVC-->
+        <scene sceneID="LJ6-tU-N9O">
+            <objects>
+                <viewController storyboardIdentifier="PASAddArtistsVC" id="IZK-od-ZpY" customClass="PASAddArtistsVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PGw-If-Etd"/>
+                        <viewControllerLayoutGuide type="bottom" id="PZM-lk-p0U"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="DMJ-hJ-Ps1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pus-o2-caM">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bTN-qN-MIW">
+                                        <rect key="frame" x="99" y="11" width="123" height="29"/>
+                                        <segments>
+                                            <segment title="First"/>
+                                            <segment title="Second"/>
+                                        </segments>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="fEB-hn-IQj"/>
+                                    <constraint firstAttribute="height" constant="50" id="qmk-G3-Xfm"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UCt-PH-h0M">
+                                <rect key="frame" x="0.0" y="50" width="320" height="454"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="UCt-PH-h0M" firstAttribute="trailing" secondItem="PZM-lk-p0U" secondAttribute="trailing" id="10h-7j-gp1"/>
+                            <constraint firstItem="Pus-o2-caM" firstAttribute="trailing" secondItem="PGw-If-Etd" secondAttribute="trailing" id="Aat-T4-HMN"/>
+                            <constraint firstItem="UCt-PH-h0M" firstAttribute="bottom" secondItem="PZM-lk-p0U" secondAttribute="top" id="Q71-1a-TPe"/>
+                            <constraint firstItem="Pus-o2-caM" firstAttribute="top" secondItem="PGw-If-Etd" secondAttribute="bottom" id="UZD-gF-37L"/>
+                            <constraint firstItem="UCt-PH-h0M" firstAttribute="top" secondItem="Pus-o2-caM" secondAttribute="bottom" id="ZvL-2L-lj9"/>
+                            <constraint firstItem="Pus-o2-caM" firstAttribute="leading" secondItem="PGw-If-Etd" secondAttribute="leading" id="h0P-um-k6I"/>
+                            <constraint firstItem="UCt-PH-h0M" firstAttribute="leading" secondItem="PZM-lk-p0U" secondAttribute="leading" id="yRg-Xt-GDd"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="RT8-Cv-6x5">
+                        <barButtonItem key="leftBarButtonItem" title="Search" id="muZ-pU-9Y6"/>
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="LoS-DJ-hKO"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="container" destination="UCt-PH-h0M" id="yiy-D0-aCW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g8Z-P1-43k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-895" y="-178"/>
         </scene>
         <!--RootVC-->
         <scene sceneID="39e-Dv-tP6">
