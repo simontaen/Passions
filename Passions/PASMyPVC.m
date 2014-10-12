@@ -12,6 +12,7 @@
 
 @interface PASMyPVC ()
 @property (weak, nonatomic) IBOutlet UIToolbar *segmentbar;
+@property (weak, nonatomic) UIImageView *navHairline;
 @end
 
 @implementation PASMyPVC
@@ -51,18 +52,43 @@
 																		  action:@selector(doneButtonHandler:)];
 	self.navigationItem.rightBarButtonItem = rbbi;
 	
-	// The navigation bar's shadowImage is set to a transparent image.  In
-	// conjunction with providing a custom background image, this removes
-	// the grey hairline at the bottom of the navigation bar.  The
-	// ExtendedNavBarView will draw its own hairline.
-	self.navigationController.navigationBar.shadowImage = [UIImage imageNamed:@"TransparentPixel"];
-	[self.segmentbar setShadowImage:[UIImage imageNamed:@"TransparentPixel"] forToolbarPosition:UIBarPositionAny];
-	// "Pixel" is a solid white 1x1 image.
-	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Pixel"] forBarMetrics:UIBarMetricsDefault];
-	[self.segmentbar setBackgroundImage:[UIImage imageNamed:@"Pixel"] forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
-	
+	// find the hairline below the navigationBar
+	for (UIView *aView in self.navigationController.navigationBar.subviews) {
+		for (UIView *bView in aView.subviews) {
+			if ([bView isKindOfClass:[UIImageView class]] &&
+				bView.bounds.size.width == self.navigationController.navigationBar.frame.size.width &&
+				bView.bounds.size.height < 2) {
+				self.navHairline = (UIImageView *)bView;
+			}
+		}
+	}
+
 	// DEBUG
 	self.view.backgroundColor = [UIColor greenColor];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	[self _moveHairline:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+	[self _moveHairline:NO];
+}
+
+- (void)_moveHairline:(BOOL)appearing
+{
+	// move the hairline below the segmentbar
+	CGRect hairlineFrame = self.navHairline.frame;
+	if (appearing) {
+		hairlineFrame.origin.y += self.segmentbar.bounds.size.height;
+	} else {
+		hairlineFrame.origin.y -= self.segmentbar.bounds.size.height;
+	}
+	self.navHairline.frame = hairlineFrame;
 }
 
 - (PASAddFromSamplesTVC *)_viewControllerAtIndex:(NSUInteger)index
