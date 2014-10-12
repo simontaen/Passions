@@ -73,10 +73,11 @@
 	
 	if (!self.pageControlView) {
 		UIPageControl *myPc = [[UIPageControl alloc] initWithFrame:CGRectMake(141, 350, 39, 37)];
-		[myPc addTarget:self action:@selector(didChangeCurrentPage:) forControlEvents:UIControlEventValueChanged];
 		[self.view addSubview:myPc];
 		self.pageControlView = myPc;
 	}
+	[self.pageControlView addTarget:self action:@selector(didChangeCurrentPage:) forControlEvents:UIControlEventValueChanged];
+	
 }
 
 - (void)viewDidLoad
