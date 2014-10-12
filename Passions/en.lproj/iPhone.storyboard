@@ -20,13 +20,12 @@
                     <navigationItem key="navigationItem" id="vNY-MB-Kos">
                         <barButtonItem key="leftBarButtonItem" title="Reset" id="dvE-cb-HYx">
                             <connections>
-                                <action selector="resetFastimageCache:" destination="E2G-RX-2YE" id="Lbg-28-Taa"/>
-                                <segue destination="rfb-Xc-jTG" kind="modal" id="ygB-sm-MOf"/>
+                                <action selector="resetFastimageCache:" destination="E2G-RX-2YE" id="HAf-Ns-cuJ"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="twI-2l-I0I">
                             <connections>
-                                <segue destination="2EF-hv-1he" kind="modal" identifier="setFavArtists:" modalTransitionStyle="coverVertical" id="FO3-FJ-4Pw"/>
+                                <segue destination="rfb-Xc-jTG" kind="modal" identifier="setFavArtists:" modalTransitionStyle="coverVertical" id="rsj-DE-e4c"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -50,6 +49,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JuB-dl-Nac">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <items/>
+                            </toolbar>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rEB-Lh-DhO">
+                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                <items/>
+                            </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HEo-q1-PUB">
                                 <rect key="frame" x="0.0" y="108" width="320" height="460"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -74,67 +81,13 @@
                     <connections>
                         <outlet property="containerView" destination="HEo-q1-PUB" id="yjw-BW-w1I"/>
                         <outlet property="pageControlView" destination="dhC-ef-VnS" id="mga-WJ-QgD"/>
+                        <outlet property="segmentbar" destination="rEB-Lh-DhO" id="Mfg-jS-6Kl"/>
+                        <outlet property="toolbar" destination="JuB-dl-Nac" id="tNh-Kt-V3C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wzR-ZF-1FM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-895" y="-848"/>
-        </scene>
-        <!--Add ArtistsVC-->
-        <scene sceneID="LJ6-tU-N9O">
-            <objects>
-                <viewController storyboardIdentifier="PASAddArtistsVC" id="IZK-od-ZpY" customClass="PASAddArtistsVC" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="PGw-If-Etd"/>
-                        <viewControllerLayoutGuide type="bottom" id="PZM-lk-p0U"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="DMJ-hJ-Ps1">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pus-o2-caM">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-                                <subviews>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bTN-qN-MIW">
-                                        <rect key="frame" x="99" y="11" width="123" height="29"/>
-                                        <segments>
-                                            <segment title="First"/>
-                                            <segment title="Second"/>
-                                        </segments>
-                                    </segmentedControl>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="320" id="fEB-hn-IQj"/>
-                                    <constraint firstAttribute="height" constant="50" id="qmk-G3-Xfm"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UCt-PH-h0M">
-                                <rect key="frame" x="0.0" y="50" width="320" height="454"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="UCt-PH-h0M" firstAttribute="trailing" secondItem="PZM-lk-p0U" secondAttribute="trailing" id="10h-7j-gp1"/>
-                            <constraint firstItem="Pus-o2-caM" firstAttribute="trailing" secondItem="PGw-If-Etd" secondAttribute="trailing" id="Aat-T4-HMN"/>
-                            <constraint firstItem="UCt-PH-h0M" firstAttribute="bottom" secondItem="PZM-lk-p0U" secondAttribute="top" id="Q71-1a-TPe"/>
-                            <constraint firstItem="Pus-o2-caM" firstAttribute="top" secondItem="PGw-If-Etd" secondAttribute="bottom" id="UZD-gF-37L"/>
-                            <constraint firstItem="UCt-PH-h0M" firstAttribute="top" secondItem="Pus-o2-caM" secondAttribute="bottom" id="ZvL-2L-lj9"/>
-                            <constraint firstItem="Pus-o2-caM" firstAttribute="leading" secondItem="PGw-If-Etd" secondAttribute="leading" id="h0P-um-k6I"/>
-                            <constraint firstItem="UCt-PH-h0M" firstAttribute="leading" secondItem="PZM-lk-p0U" secondAttribute="leading" id="yRg-Xt-GDd"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="RT8-Cv-6x5">
-                        <barButtonItem key="leftBarButtonItem" title="Search" id="muZ-pU-9Y6"/>
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="LoS-DJ-hKO"/>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="container" destination="UCt-PH-h0M" id="yiy-D0-aCW"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="g8Z-P1-43k" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-895" y="-178"/>
+            <point key="canvasLocation" x="-1283" y="-178"/>
         </scene>
         <!--RootVC-->
         <scene sceneID="39e-Dv-tP6">
@@ -245,25 +198,7 @@
             </objects>
             <point key="canvasLocation" x="-1703" y="-178"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="snq-Gk-R6t">
-            <objects>
-                <navigationController storyboardIdentifier="PASAddArtistsNC" definesPresentationContext="YES" id="2EF-hv-1he" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" shadowImage="TransparentPixel" id="1c0-85-MtC">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="IZK-od-ZpY" kind="relationship" relationship="rootViewController" id="rgG-gh-0nK"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="An4-aW-4zF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1283" y="-178"/>
-        </scene>
     </scenes>
-    <resources>
-        <image name="TransparentPixel" width="1" height="1"/>
-    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

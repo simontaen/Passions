@@ -9,7 +9,7 @@
 #import "PASFavArtistsTVC.h"
 #import "PASArtistTVCell.h"
 #import "PASArtist.h"
-#import "PASAddArtistsNC.h"
+#import "PASMyPVC.h"
 #import "FICImageCache.h"
 
 @interface PASFavArtistsTVC() <PASAddArtistsTVCDelegate>

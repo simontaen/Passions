@@ -61,29 +61,12 @@
 
 #pragma mark - View Lifecycle
 
-- (void)loadView
-{
-	[super loadView];
-	
-	if (!self.containerView) {
-		UIView *myView = [[UIView alloc] initWithFrame:self.view.bounds];
-		[self.view addSubview:myView];
-		self.containerView = myView;
-	}
-	
-	if (!self.pageControlView) {
-		UIPageControl *myPc = [[UIPageControl alloc] initWithFrame:CGRectMake(141, 350, 39, 37)];
-		[self.view addSubview:myPc];
-		self.pageControlView = myPc;
-	}
-	[self.pageControlView addTarget:self action:@selector(didChangeCurrentPage:) forControlEvents:UIControlEventValueChanged];
-	
-}
-
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
 	
+	// hook up the page control
+	[self.pageControlView addTarget:self action:@selector(didChangeCurrentPage:) forControlEvents:UIControlEventValueChanged];
 	// update the page control
 	self.pageControlView.numberOfPages = self.viewControllers.count;
 	
