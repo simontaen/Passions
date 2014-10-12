@@ -70,7 +70,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * add a fancy control to (un-)fav the artist
 * A guy rocking out when refreshing on pull-to-refresh
 * Faster transition (see homescreen)
-* segmented control and navbar hiding
+* segmented control and navbar hiding, as on AppStore Top Charts, hide when slide
 
 # 2.0
 
