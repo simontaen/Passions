@@ -51,7 +51,18 @@
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rEB-Lh-DhO">
                                 <rect key="frame" x="0.0" y="64" width="320" height="44"/>
-                                <items/>
+                                <items>
+                                    <barButtonItem style="plain" id="GV8-ro-AFE">
+                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" segmentControlStyle="bar" selectedSegmentIndex="0" id="31R-qp-MBE">
+                                            <rect key="frame" x="16" y="8" width="288" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="alphabetical"/>
+                                                <segment title="by playcount"/>
+                                            </segments>
+                                        </segmentedControl>
+                                    </barButtonItem>
+                                </items>
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HEo-q1-PUB">
                                 <rect key="frame" x="0.0" y="108" width="320" height="460"/>
@@ -79,6 +90,7 @@
                         <outlet property="containerView" destination="HEo-q1-PUB" id="yjw-BW-w1I"/>
                         <outlet property="pageControlView" destination="dhC-ef-VnS" id="mga-WJ-QgD"/>
                         <outlet property="segmentbar" destination="rEB-Lh-DhO" id="Mfg-jS-6Kl"/>
+                        <outlet property="segmentedControl" destination="31R-qp-MBE" id="CJf-S7-fGm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wzR-ZF-1FM" userLabel="First Responder" sceneMemberID="firstResponder"/>

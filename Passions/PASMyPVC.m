@@ -13,6 +13,7 @@
 @interface PASMyPVC ()
 @property (weak, nonatomic) IBOutlet UIToolbar *segmentbar;
 @property (weak, nonatomic) UIImageView *navHairline;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @end
 
 @implementation PASMyPVC
@@ -51,6 +52,9 @@
 																		  target:self
 																		  action:@selector(doneButtonHandler:)];
 	self.navigationItem.rightBarButtonItem = rbbi;
+	
+	// Setup segmentedControl
+	[self.segmentedControl addTarget:self action:@selector(segmentChanged:) forControlEvents:UIControlEventValueChanged];
 	
 	// find the hairline below the navigationBar
 	for (UIView *aView in self.navigationController.navigationBar.subviews) {
@@ -134,6 +138,13 @@
 	} else {
 		[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 	}
+}
+
+#pragma mark - Ordering
+
+- (IBAction)segmentChanged:(UISegmentedControl *)sender
+{
+	NSLog(@"Selected Segment: %ld", (long)[sender selectedSegmentIndex]);
 }
 
 @end

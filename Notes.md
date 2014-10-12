@@ -45,7 +45,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Silent push after fav'ing an Artist (Status Processing) to update UI automatically
 
 * "-1" cell on Timeline to filter results
-* segmented control and navbar hiding
 * change ordering on adding artists & fav artists
 
 * search for not in library artists to add (but consider all resources!)
@@ -70,6 +69,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * add a fancy control to (un-)fav the artist
 * A guy rocking out when refreshing on pull-to-refresh
 * Faster transition (see homescreen)
+* segmented control and navbar hiding
 
 # 2.0
 
