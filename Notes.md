@@ -37,15 +37,16 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 * First launch experience
 	* favorite 3 most played
-		*this could get tricky with the artistNameCorrections
+		* this could get tricky with the artistNameCorrections
 	* setup User/Installation
 
 * show the album after a push notification arrives
 	* send over the parseAlbum objectId
 * Silent push after fav'ing an Artist (Status Processing) to update UI automatically
 
-* "-1" cell on Timeline to filter results
-* change ordering on adding artists & fav artists
+* segmented control on Timeline to filter results based on release date, in NavBar, hide on swipe
+
+* segmented control to change ordering on adding artists & fav artists
 
 * search for not in library artists to add (but consider all resources!)
 
