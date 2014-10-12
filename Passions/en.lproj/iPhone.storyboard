@@ -26,7 +26,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="twI-2l-I0I">
                             <connections>
-                                <segue destination="iMX-aW-THQ" kind="modal" identifier="setFavArtists:" modalTransitionStyle="coverVertical" id="cou-Wj-9nI"/>
+                                <segue destination="2EF-hv-1he" kind="modal" identifier="setFavArtists:" modalTransitionStyle="coverVertical" id="FO3-FJ-4Pw"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -144,7 +144,7 @@
                         <viewControllerLayoutGuide type="top" id="6UW-d1-pxo"/>
                         <viewControllerLayoutGuide type="bottom" id="F0Z-Rn-fQT"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="m20-XY-aeK">
+                    <view key="view" contentMode="scaleToFill" id="uZN-DO-h9s">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
