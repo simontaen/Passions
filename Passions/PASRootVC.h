@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 edgeguard. All rights reserved.
 //
 
-@import UIKit;
+#import "PASPageViewController.h"
 
-@interface PASRootVC : UIViewController
+@interface PASRootVC : PASPageViewController
 
 @end

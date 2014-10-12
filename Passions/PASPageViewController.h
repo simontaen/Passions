@@ -11,6 +11,8 @@
 @protocol PASPageViewControllerDelegate;
 
 @interface PASPageViewController : UIViewController
+/// Set a custom container view when overriding
+@property (nonatomic, weak) IBOutlet UIView *containerView;
 
 /// The container view controller delegate receiving the protocol callbacks.
 @property (nonatomic, weak) id<PASPageViewControllerDelegate>delegate;

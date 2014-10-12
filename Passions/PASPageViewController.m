@@ -42,7 +42,6 @@
 #pragma mark - PASPageViewController
 
 @interface PASPageViewController ()
-@property (nonatomic, weak) IBOutlet UIView *containerView;
 @property (nonatomic, weak, readwrite) UIViewController *selectedViewController;
 @property (nonatomic, weak) IBOutlet UIPageControl *pageControlView;
 @end
@@ -51,6 +50,24 @@
 @dynamic selectedViewControllerIndex;
 
 #pragma mark - View Lifecycle
+
+- (void)loadView
+{
+	[super loadView];
+	
+	if (!self.containerView) {
+		UIView *myView = [[UIView alloc] initWithFrame:self.view.bounds];
+		[self.view addSubview:myView];
+		self.containerView = myView;
+	}
+	
+	if (!self.pageControlView) {
+		UIPageControl *myPc = [[UIPageControl alloc] initWithFrame:CGRectMake(141, 350, 39, 37)];
+		[myPc addTarget:self action:@selector(didChangeCurrentPage:) forControlEvents:UIControlEventValueChanged];
+		[self.view addSubview:myPc];
+		self.pageControlView = myPc;
+	}
+}
 
 - (void)viewDidLoad
 {
