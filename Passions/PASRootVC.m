@@ -11,7 +11,6 @@
 #import "PASInteractiveTransition.h"
 
 @interface PASRootVC ()
-@property (nonatomic, strong) PASInteractiveTransition *bla;
 @end
 
 @implementation PASRootVC
@@ -21,7 +20,6 @@
 - (void)awakeFromNib
 {
 	[super awakeFromNib];
-	
 	// init and add the page view controllers view controllers
 	self.viewControllers = @[[self _favArtistsNavController], [self _timelineCVC]];
 }

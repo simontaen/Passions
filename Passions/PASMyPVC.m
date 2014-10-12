@@ -31,7 +31,6 @@
 - (void)awakeFromNib
 {
 	[super awakeFromNib];
-
 	// init and add the page view controllers view controllers
 	self.viewControllers = @[[self _viewControllerAtIndex:0], [self _viewControllerAtIndex:1]];
 }
