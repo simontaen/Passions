@@ -40,6 +40,7 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+	self.view.backgroundColor = [UIColor whiteColor];
 
 	// Setup navigationBar Items
 	UIBarButtonItem *lbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
@@ -61,9 +62,6 @@
 			}
 		}
 	}
-
-	// DEBUG
-	self.view.backgroundColor = [UIColor greenColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
