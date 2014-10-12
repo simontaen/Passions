@@ -8,6 +8,19 @@
 
 #import "PASPageViewController.h"
 
+@class PASAddFromSamplesTVC;
+
+@protocol PASAddArtistsTVCDelegate <NSObject>
+
+- (void)viewController:(PASAddFromSamplesTVC *)vc didEditArtists:(BOOL)didEditArtists;
+
+@end
+
 @interface PASMyPVC : PASPageViewController
+
+@property (nonatomic, weak) id<PASAddArtistsTVCDelegate> myDelegate;
+
+- (void)setFavArtists:(NSMutableArray *)favArtists; // of PASArtist, passed by the segue, LFM Corrected!
+
 
 @end
