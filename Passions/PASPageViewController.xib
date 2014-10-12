@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PASPageViewController">
+            <connections>
+                <outlet property="containerView" destination="QqO-yS-0wb" id="yh8-q5-61t"/>
+                <outlet property="pageControlView" destination="pLt-1n-6KD" id="L2D-J2-tt1"/>
+                <outlet property="view" destination="DXh-iu-RBl" id="GZB-7G-nHz"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="DXh-iu-RBl">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QqO-yS-0wb">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <gestureRecognizers/>
+                </view>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="pLt-1n-6KD">
+                    <rect key="frame" x="141" y="511" width="39" height="37"/>
+                    <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="currentPageIndicatorTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <action selector="didChangeCurrentPage:" destination="-1" eventType="valueChanged" id="jWL-hY-JEr"/>
+                    </connections>
+                </pageControl>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="pLt-1n-6KD" secondAttribute="bottom" constant="20" symbolic="YES" id="EcC-SM-Tyl"/>
+                <constraint firstItem="QqO-yS-0wb" firstAttribute="top" secondItem="DXh-iu-RBl" secondAttribute="top" id="Ux3-io-1KE"/>
+                <constraint firstItem="pLt-1n-6KD" firstAttribute="centerX" secondItem="QqO-yS-0wb" secondAttribute="centerX" id="apD-pY-4aI"/>
+                <constraint firstItem="pLt-1n-6KD" firstAttribute="centerX" secondItem="DXh-iu-RBl" secondAttribute="centerX" id="cWp-wR-4Os"/>
+                <constraint firstAttribute="bottom" secondItem="QqO-yS-0wb" secondAttribute="bottom" id="qTJ-7d-C45"/>
+                <constraint firstItem="QqO-yS-0wb" firstAttribute="leading" secondItem="DXh-iu-RBl" secondAttribute="leading" id="vAV-Se-0SK"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
