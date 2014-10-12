@@ -71,12 +71,14 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * A guy rocking out when refreshing on pull-to-refresh
 * Faster transition (see homescreen)
 * segmented control and navbar hiding, as on AppStore Top Charts, hide when slide
+* hairlines below extended nav bars and table view headers
+* flickering when the transition gets aborted
+* extended nav bar color when transitioning
 
 # 2.0
 
 * Ask User for matching when unclear, but don't code for exceptions
 	* "I did my best but I still need your help to identify your favorite Artist"
-* Show more infos about the Album when clicking on the Album Art
 * Animate the cell when an Artist has been favorited.
 * Already favorited Artists passing in PASFavArtistsTVC (artistNames)
 	* It could be improved by checking if self.objects actually did change
