@@ -108,6 +108,8 @@
 	PASAddFromSamplesTVC *dissapearingTVC = ((PASAddFromSamplesTVC*) self.selectedViewController);
 	if ([self.myDelegate respondsToSelector:@selector(viewController:didEditArtists:)]) {
 		[self.myDelegate viewController:dissapearingTVC didEditArtists:[dissapearingTVC didEditArtists]];
+	} else {
+		[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 	}
 }
 
