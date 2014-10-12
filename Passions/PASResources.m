@@ -45,7 +45,10 @@
 {
 	NSLog(@"Container %@ %@ | %@", NSStringFromClass([vw class]), NSStringFromCGRect(vw.bounds), NSStringFromCGRect(vw.frame));
 	for (UIView *aView in vw.subviews) {
-		NSLog(@"%@ | %@ %@ ", NSStringFromCGRect(aView.bounds), NSStringFromCGRect(aView.frame), NSStringFromClass([aView class]));
+		if (aView.subviews.count == 0) {
+			return NSLog(@"%@ | %@ %@ ", NSStringFromCGRect(aView.bounds), NSStringFromCGRect(aView.frame), NSStringFromClass([aView class]));
+		}
+		[self printSubviews:aView];
 	}
 }
 
