@@ -44,10 +44,20 @@
 @interface PASPageViewController ()
 @property (nonatomic, weak, readwrite) UIViewController *selectedViewController;
 @property (nonatomic, weak) IBOutlet UIPageControl *pageControlView;
+@property (nonatomic, strong) PASInteractiveTransition *bla;
 @end
 
 @implementation PASPageViewController
 @dynamic selectedViewControllerIndex;
+
+#pragma mark - Init
+
+- (void)awakeFromNib
+{
+	// TODO: temporary
+	self.bla = [PASInteractiveTransition new];
+	self.delegate = (id<PASPageViewControllerDelegate>)self.bla;
+}
 
 #pragma mark - View Lifecycle
 

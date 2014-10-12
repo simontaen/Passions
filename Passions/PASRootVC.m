@@ -20,10 +20,6 @@
 
 - (void)awakeFromNib
 {
-	// TODO: temporary
-	self.bla = [PASInteractiveTransition new];
-	self.delegate = self.bla;
-
 	// init and add the page view controllers view controllers
 	self.viewControllers = @[[self _favArtistsNavController], [self _timelineCVC]];
 }
