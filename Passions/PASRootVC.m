@@ -20,6 +20,8 @@
 
 - (void)awakeFromNib
 {
+	[super awakeFromNib];
+	
 	// init and add the page view controllers view controllers
 	self.viewControllers = @[[self _favArtistsNavController], [self _timelineCVC]];
 }
