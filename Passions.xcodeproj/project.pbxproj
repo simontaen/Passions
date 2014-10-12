@@ -17,6 +17,7 @@
 		F424EE3019B656DD0010B3E1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F424EE2F19B656DD0010B3E1 /* CFNetwork.framework */; };
 		F424EE3419B656FA0010B3E1 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F424EE3319B656FA0010B3E1 /* libz.dylib */; };
 		F424EE3819B657120010B3E1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F424EE3719B657120010B3E1 /* Security.framework */; };
+		F4256EC419EB1AAB00B9D95B /* PASExtendedNavContainer.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4256EC319EB1AAB00B9D95B /* PASExtendedNavContainer.xib */; };
 		F438692A17A55CE6000B7817 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */; };
 		F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */; };
 		F4589D3D19C240D500E17D49 /* PASPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4589D3C19C240D500E17D49 /* PASPageViewController.m */; };
@@ -70,6 +71,7 @@
 		F424EE2F19B656DD0010B3E1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		F424EE3319B656FA0010B3E1 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		F424EE3719B657120010B3E1 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		F4256EC319EB1AAB00B9D95B /* PASExtendedNavContainer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PASExtendedNavContainer.xib; sourceTree = "<group>"; };
 		F4589D3B19C240D500E17D49 /* PASPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASPageViewController.h; sourceTree = "<group>"; };
 		F4589D3C19C240D500E17D49 /* PASPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASPageViewController.m; sourceTree = "<group>"; };
 		F461C8DE19EB006C0081B445 /* PASExtendedNavContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASExtendedNavContainer.h; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				F4BB585D19E9F23600221912 /* PASMyPVC.m */,
 				F461C8DE19EB006C0081B445 /* PASExtendedNavContainer.h */,
 				F461C8DF19EB006C0081B445 /* PASExtendedNavContainer.m */,
+				F4256EC319EB1AAB00B9D95B /* PASExtendedNavContainer.xib */,
 				F476F0EF19B8FFA700185544 /* PASAddFromSamplesTVC.h */,
 				F476F0F019B8FFA700185544 /* PASAddFromSamplesTVC.m */,
 				F40BBA6918538DAD00877D60 /* PASAddFromMusicTVC.h */,
@@ -407,6 +410,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4A779821793113E00C770B9 /* InfoPlist.strings in Resources */,
+				F4256EC419EB1AAB00B9D95B /* PASExtendedNavContainer.xib in Resources */,
 				F4EC62C019E66ADF009C5EF5 /* Images.xcassets in Resources */,
 				F4A7798A1793113E00C770B9 /* Default.png in Resources */,
 				F4D6C4B419BFAB8800465781 /* PASArtistTVCell.xib in Resources */,
