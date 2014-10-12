@@ -45,16 +45,22 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Silent push after fav'ing an Artist (Status Processing) to update UI automatically
 
 * "-1" cell on Timeline to filter results
-* search for an artist to add (but consider all resources!)
+* segmented control and navbar hiding
 * change ordering on adding artists & fav artists
 
-* Auto-refresh / paging on Timeline
+* search for not in library artists to add (but consider all resources!)
 
 * Album Info screen
 * Artist Info screen (this could be reused on adding artists, but the cell needs to be a bit different then)
 
 * Parse seems to just take a default date of today for the Albums sometimes (check Bruce and Beatles)
 	* actually Spotify delivers shit data! (Track of my Years from Bryan Adams for example!)
+
+* Album image resources
+
+* communication with add vc's (no delegate...)
+
+* Network activity spinner when downloading (especially artwork)
 
 
 ## UI
@@ -63,6 +69,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * redesign FavArtist cell, maybe add Playcount?
 * add a fancy control to (un-)fav the artist
 * A guy rocking out when refreshing on pull-to-refresh
+* Faster transition (see homescreen)
 
 # 2.0
 
