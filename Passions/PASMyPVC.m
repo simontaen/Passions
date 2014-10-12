@@ -33,6 +33,18 @@
 	self.viewControllers = @[[self _viewControllerAtIndex:0], [self _viewControllerAtIndex:1]];
 }
 
+- (PASExtendedNavContainer *)_viewControllerAtIndex:(NSUInteger)index
+{
+	static NSMutableArray *viewControllers;
+	if (!viewControllers) viewControllers = [NSMutableArray arrayWithCapacity:2];
+	
+	if (index >= viewControllers.count) {
+		viewControllers[index] = [[PASExtendedNavContainer alloc] initWithIndex:index];
+	}
+	
+	return viewControllers[index];
+}
+
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
@@ -62,18 +74,6 @@
 			}
 		}
 	}
-}
-
-- (PASExtendedNavContainer *)_viewControllerAtIndex:(NSUInteger)index
-{
-	static NSMutableArray *viewControllers;
-	if (!viewControllers) viewControllers = [NSMutableArray arrayWithCapacity:2];
-	
-	if (index >= viewControllers.count) {
-		viewControllers[index] = [[PASExtendedNavContainer alloc] initWithIndex:index];
-	}
-	
-	return viewControllers[index];
 }
 
 - (void)viewWillAppear:(BOOL)animated
