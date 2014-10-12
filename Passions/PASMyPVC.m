@@ -7,13 +7,9 @@
 //
 
 #import "PASMyPVC.h"
-#import "PASAddFromSamplesTVC.h"
-#import "PASAddFromMusicTVC.h"
+#import "PASExtendedNavContainer.h"
 
 @interface PASMyPVC ()
-@property (weak, nonatomic) IBOutlet UIToolbar *segmentbar;
-@property (weak, nonatomic) UIImageView *navHairline;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @end
 
 @implementation PASMyPVC
@@ -22,9 +18,9 @@
 
 - (void)setFavArtists:(NSMutableArray *)favArtists
 {
-	for (PASAddFromSamplesTVC *vc in self.viewControllers) {
-		vc.favArtists = favArtists;
-	}
+//	for (PASExtendedNavContainer *vc in self.viewControllers) {
+//		vc.favArtists = favArtists;
+//	}
 }
 
 #pragma mark - Init
@@ -52,99 +48,30 @@
 																		  target:self
 																		  action:@selector(doneButtonHandler:)];
 	self.navigationItem.rightBarButtonItem = rbbi;
-	
-	// Setup segmentedControl
-	[self.segmentedControl addTarget:self action:@selector(segmentChanged:) forControlEvents:UIControlEventValueChanged];
-	
-	// find the hairline below the navigationBar
-	for (UIView *aView in self.navigationController.navigationBar.subviews) {
-		for (UIView *bView in aView.subviews) {
-			if ([bView isKindOfClass:[UIImageView class]] &&
-				bView.bounds.size.width == self.navigationController.navigationBar.frame.size.width &&
-				bView.bounds.size.height < 2) {
-				self.navHairline = (UIImageView *)bView;
-			}
-		}
-	}
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (PASExtendedNavContainer *)_viewControllerAtIndex:(NSUInteger)index
 {
-	[super viewWillAppear:animated];
-	[self _moveHairline:YES];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-	[self _moveHairline:NO];
-}
-
-- (void)_moveHairline:(BOOL)appearing
-{
-	// move the hairline below the segmentbar
-	CGRect hairlineFrame = self.navHairline.frame;
-	if (appearing) {
-		hairlineFrame.origin.y += self.segmentbar.bounds.size.height;
-	} else {
-		hairlineFrame.origin.y -= self.segmentbar.bounds.size.height;
-	}
-	self.navHairline.frame = hairlineFrame;
-}
-
-- (PASAddFromSamplesTVC *)_viewControllerAtIndex:(NSUInteger)index
-{
-	static PASAddFromSamplesTVC *addFromSamplesTVC;
-	static PASAddFromMusicTVC *addFromMusicTVC;
+	static NSMutableArray *viewControllers;
+	if (!viewControllers) viewControllers = [NSMutableArray arrayWithCapacity:2];
 	
-	if (!addFromMusicTVC && !addFromMusicTVC) {
-		addFromSamplesTVC = [[PASAddFromSamplesTVC alloc] initWithStyle:UITableViewStylePlain];
-		addFromMusicTVC = [[PASAddFromMusicTVC alloc] initWithStyle:UITableViewStylePlain];
+	if (index >= viewControllers.count) {
+		viewControllers[index] = [[PASExtendedNavContainer alloc] initWithIndex:index];
 	}
 	
-	PASAddFromSamplesTVC *addArtistsTVC;
-	switch (index) {
-		case 0:
-			if ([[UIDevice currentDevice].model containsString:@"Simulator"]) {
-				addArtistsTVC = addFromSamplesTVC;
-			} else {
-				addArtistsTVC = addFromMusicTVC;
-			}
-			
-			break;
-			
-		case 1:
-			if ([[UIDevice currentDevice].model containsString:@"Simulator"]) {
-				addArtistsTVC = addFromMusicTVC;
-			} else {
-				addArtistsTVC = addFromSamplesTVC;
-			}
-			break;
-			
-		default:
-			addArtistsTVC = nil;
-	}
-	
-	return addArtistsTVC;
+	return viewControllers[index];
 }
 
 #pragma mark - Navigation
 
 - (IBAction)doneButtonHandler:(UIBarButtonItem *)sender
 {
-	PASAddFromSamplesTVC *dissapearingTVC = ((PASAddFromSamplesTVC*) self.selectedViewController);
+	//PASExtendedNavContainer *dissapearingTVC = ((PASExtendedNavContainer*) self.selectedViewController);
 	if ([self.myDelegate respondsToSelector:@selector(viewController:didEditArtists:)]) {
-		[self.myDelegate viewController:dissapearingTVC didEditArtists:[dissapearingTVC didEditArtists]];
+//		[self.myDelegate viewController:dissapearingTVC didEditArtists:[dissapearingTVC didEditArtists]];
 	} else {
 		[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 	}
-}
-
-#pragma mark - Ordering
-
-- (IBAction)segmentChanged:(UISegmentedControl *)sender
-{
-	NSLog(@"Selected Segment: %ld", (long)[sender selectedSegmentIndex]);
 }
 
 @end

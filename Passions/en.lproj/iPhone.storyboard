@@ -49,23 +49,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rEB-Lh-DhO">
-                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
-                                <items>
-                                    <barButtonItem style="plain" id="GV8-ro-AFE">
-                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" segmentControlStyle="bar" selectedSegmentIndex="0" id="31R-qp-MBE">
-                                            <rect key="frame" x="16" y="8" width="288" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <segments>
-                                                <segment title="alphabetical"/>
-                                                <segment title="by playcount"/>
-                                            </segments>
-                                        </segmentedControl>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HEo-q1-PUB">
-                                <rect key="frame" x="0.0" y="108" width="320" height="460"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                             </view>
@@ -77,7 +62,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="HEo-q1-PUB" firstAttribute="top" secondItem="3z2-6T-nYY" secondAttribute="top" constant="108" id="577-3M-juO"/>
+                            <constraint firstItem="HEo-q1-PUB" firstAttribute="top" secondItem="3z2-6T-nYY" secondAttribute="top" constant="64" id="577-3M-juO"/>
                             <constraint firstAttribute="bottom" secondItem="HEo-q1-PUB" secondAttribute="bottom" id="RcK-Ka-obQ"/>
                             <constraint firstAttribute="bottom" secondItem="dhC-ef-VnS" secondAttribute="bottom" constant="20" symbolic="YES" id="dwg-cw-dgr"/>
                             <constraint firstItem="HEo-q1-PUB" firstAttribute="leading" secondItem="3z2-6T-nYY" secondAttribute="leading" id="kFm-RQ-VCz"/>
@@ -89,13 +74,11 @@
                     <connections>
                         <outlet property="containerView" destination="HEo-q1-PUB" id="yjw-BW-w1I"/>
                         <outlet property="pageControlView" destination="dhC-ef-VnS" id="mga-WJ-QgD"/>
-                        <outlet property="segmentbar" destination="rEB-Lh-DhO" id="Mfg-jS-6Kl"/>
-                        <outlet property="segmentedControl" destination="31R-qp-MBE" id="CJf-S7-fGm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wzR-ZF-1FM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-751" y="-178"/>
+            <point key="canvasLocation" x="-902" y="-178"/>
         </scene>
         <!--RootVC-->
         <scene sceneID="39e-Dv-tP6">
