@@ -10,6 +10,7 @@
 #import "PASExtendedNavContainer.h"
 
 @interface PASMyPVC ()
+@property (weak, nonatomic) UIImageView *navHairline;
 @end
 
 @implementation PASMyPVC
@@ -48,6 +49,19 @@
 																		  target:self
 																		  action:@selector(doneButtonHandler:)];
 	self.navigationItem.rightBarButtonItem = rbbi;
+
+	// find the hairline below the navigationBar
+	if (!self.navHairline) {
+		for (UIView *aView in self.navigationController.navigationBar.subviews) {
+			for (UIView *bView in aView.subviews) {
+				if ([bView isKindOfClass:[UIImageView class]] &&
+					bView.bounds.size.width == self.navigationController.navigationBar.frame.size.width &&
+					bView.bounds.size.height < 2) {
+					self.navHairline = (UIImageView *)bView;
+				}
+			}
+		}
+	}
 }
 
 - (PASExtendedNavContainer *)_viewControllerAtIndex:(NSUInteger)index
@@ -60,6 +74,30 @@
 	}
 	
 	return viewControllers[index];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	[self _moveHairline:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+	[super viewDidDisappear:animated];
+	[self _moveHairline:NO];
+}
+
+- (void)_moveHairline:(BOOL)appearing
+{
+	// move the hairline below the segmentBar
+	CGRect hairlineFrame = self.navHairline.frame;
+	if (appearing) {
+		hairlineFrame.origin.y += kSegmentBarHeight;
+	} else {
+		hairlineFrame.origin.y -= kSegmentBarHeight;
+	}
+	self.navHairline.frame = hairlineFrame;
 }
 
 #pragma mark - Navigation
