@@ -299,7 +299,9 @@ static CGFloat const kSectionHeaderHeight = 28;
 		}];
 		
 	} else {
-		[PASArtist favoriteArtistByCurrentUser:resolvedName needsCorrection:![self _correctedArtistName:artistName]	completion:^(PASArtist *artist, NSError *error) {
+		[PASArtist favoriteArtistByCurrentUser:resolvedName
+							   needsCorrection:![self _correctedArtistName:artistName]
+									completion:^(PASArtist *artist, NSError *error) {
 			if (artist && !error) {
 				// get the finalized name on parse
 				NSString *parseArtistName = artist.name;
