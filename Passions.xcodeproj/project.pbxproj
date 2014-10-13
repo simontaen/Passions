@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		65F86A33B682476FBAAC9AE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF473646EE4645ECB8A1B050 /* libPods.a */; };
-		F409BBDF17ADC73A00091B7A /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = F409BBDE17ADC73A00091B7A /* image.png */; };
-		F409BBE217ADC75600091B7A /* image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F409BBE117ADC75600091B7A /* image@2x.png */; };
 		F40BBA6B18538DAD00877D60 /* PASAddFromMusicTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F40BBA6A18538DAD00877D60 /* PASAddFromMusicTVC.m */; };
 		F40BBA6E1853908700877D60 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F40BBA6D1853908700877D60 /* MediaPlayer.framework */; };
 		F42422A519CD8FCA0097C0F1 /* PASInteractiveTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = F42422A419CD8FCA0097C0F1 /* PASInteractiveTransition.m */; };
@@ -38,9 +36,6 @@
 		F4A779821793113E00C770B9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4A779801793113E00C770B9 /* InfoPlist.strings */; };
 		F4A779841793113E00C770B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A779831793113E00C770B9 /* main.m */; };
 		F4A779881793113E00C770B9 /* PASAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A779871793113E00C770B9 /* PASAppDelegate.m */; };
-		F4A7798A1793113E00C770B9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A779891793113E00C770B9 /* Default.png */; };
-		F4A7798C1793113E00C770B9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A7798B1793113E00C770B9 /* Default@2x.png */; };
-		F4A7798E1793113E00C770B9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A7798D1793113E00C770B9 /* Default-568h@2x.png */; };
 		F4A779911793113E00C770B9 /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4A7798F1793113E00C770B9 /* iPhone.storyboard */; };
 		F4A814B919E20CBD003879B0 /* NSString+SourceImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A814B819E20CBD003879B0 /* NSString+SourceImage.m */; };
 		F4B8B0B619E039EE00E1064D /* PASAlbumCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B8B0B519E039EE00E1064D /* PASAlbumCVCell.m */; };
@@ -60,8 +55,6 @@
 /* Begin PBXFileReference section */
 		CF473646EE4645ECB8A1B050 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D420301400214166998C1AC5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
-		F409BBDE17ADC73A00091B7A /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image.png; sourceTree = "<group>"; };
-		F409BBE117ADC75600091B7A /* image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "image@2x.png"; sourceTree = "<group>"; };
 		F40BBA6918538DAD00877D60 /* PASAddFromMusicTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddFromMusicTVC.h; sourceTree = "<group>"; };
 		F40BBA6A18538DAD00877D60 /* PASAddFromMusicTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAddFromMusicTVC.m; sourceTree = "<group>"; };
 		F40BBA6D1853908700877D60 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -103,9 +96,6 @@
 		F4A779851793113E00C770B9 /* Passions-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Passions-Prefix.pch"; sourceTree = "<group>"; };
 		F4A779861793113E00C770B9 /* PASAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PASAppDelegate.h; sourceTree = "<group>"; };
 		F4A779871793113E00C770B9 /* PASAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PASAppDelegate.m; sourceTree = "<group>"; };
-		F4A779891793113E00C770B9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		F4A7798B1793113E00C770B9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		F4A7798D1793113E00C770B9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		F4A779901793113E00C770B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPhone.storyboard; sourceTree = "<group>"; };
 		F4A814B619E2056B003879B0 /* PASSourceImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASSourceImage.h; sourceTree = "<group>"; };
 		F4A814B719E20CBD003879B0 /* NSString+SourceImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SourceImage.h"; sourceTree = "<group>"; };
@@ -160,16 +150,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F409BBE017ADC74000091B7A /* Visuals */ = {
-			isa = PBXGroup;
-			children = (
-				F4EC62BF19E66ADF009C5EF5 /* Images.xcassets */,
-				F409BBDE17ADC73A00091B7A /* image.png */,
-				F409BBE117ADC75600091B7A /* image@2x.png */,
-			);
-			name = Visuals;
-			sourceTree = "<group>";
-		};
 		F476F0E819B8D8C500185544 /* Parse Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,7 +244,6 @@
 				F4FEC99719E3038000935B1E /* Image Cache */,
 				F476F0E819B8D8C500185544 /* Parse Objects */,
 				F4FA316519B8B7F2000337A0 /* Utils */,
-				F409BBE017ADC74000091B7A /* Visuals */,
 				F4A7797E1793113E00C770B9 /* Supporting Files */,
 			);
 			path = Passions;
@@ -273,13 +252,11 @@
 		F4A7797E1793113E00C770B9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F4EC62BF19E66ADF009C5EF5 /* Images.xcassets */,
 				F4A7797F1793113E00C770B9 /* Passions-Info.plist */,
 				F4A779801793113E00C770B9 /* InfoPlist.strings */,
 				F4A779831793113E00C770B9 /* main.m */,
 				F4A779851793113E00C770B9 /* Passions-Prefix.pch */,
-				F4A779891793113E00C770B9 /* Default.png */,
-				F4A7798B1793113E00C770B9 /* Default@2x.png */,
-				F4A7798D1793113E00C770B9 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -412,14 +389,9 @@
 				F4A779821793113E00C770B9 /* InfoPlist.strings in Resources */,
 				F4256EC419EB1AAB00B9D95B /* PASExtendedNavContainer.xib in Resources */,
 				F4EC62C019E66ADF009C5EF5 /* Images.xcassets in Resources */,
-				F4A7798A1793113E00C770B9 /* Default.png in Resources */,
 				F4D6C4B419BFAB8800465781 /* PASArtistTVCell.xib in Resources */,
 				F4D9E94C19C39AB100B762A7 /* PASPageViewController.xib in Resources */,
-				F4A7798C1793113E00C770B9 /* Default@2x.png in Resources */,
-				F4A7798E1793113E00C770B9 /* Default-568h@2x.png in Resources */,
 				F4A779911793113E00C770B9 /* iPhone.storyboard in Resources */,
-				F409BBDF17ADC73A00091B7A /* image.png in Resources */,
-				F409BBE217ADC75600091B7A /* image@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
