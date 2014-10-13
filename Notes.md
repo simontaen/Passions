@@ -30,6 +30,9 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 	* like on the home screen
 	* use a transparent page control
 
+* Get a push Notification when a new Album gets released
+	* tapping the notification will show Album infos
+
 
 # NewStuff.todo
 
@@ -44,11 +47,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 	* send over the parseAlbum objectId
 * Silent push after fav'ing an Artist (Status Processing) to update UI automatically
 
-* segmented control on Timeline to filter results based on release date, in NavBar, hide on swipe
-
 * segmented control to change ordering on adding artists & fav artists
-
-* search for not in library artists to add (but consider all resources!)
 
 * Album Info screen
 * Artist Info screen (this could be reused on adding artists, but the cell needs to be a bit different then)
@@ -74,6 +73,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * hairlines below extended nav bars and table view headers
 * flickering when the transition gets aborted
 * extended nav bar color when transitioning
+* ReleaseDateView on Timeline
 
 # 2.0
 
@@ -83,6 +83,11 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Already favorited Artists passing in PASFavArtistsTVC (artistNames)
 	* It could be improved by checking if self.objects actually did change
 	* only then create a new artistNames array
+* segmented control on Timeline, in NavBar which hide on swipe.
+	* to filter results based on release date? Where do I get info on pre-releases?
+	* to filter results and show all or only missing albums (this is the most interesting!)
+	* change ordering: by release date, by artist.
+* search for not in library artists to add (but consider all resources!)
 
 # Data communication with Parse
 
