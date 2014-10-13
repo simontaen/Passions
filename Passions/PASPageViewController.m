@@ -187,6 +187,7 @@
 	[self _transitionToChildViewController:newVc completion:^(BOOL didTransition) {
 		if (didTransition) {
 			_selectedViewController = newVc;
+			self.title = newVc.title;
 			[self setNeedsStatusBarAppearanceUpdate];
 			self.pageControlView.currentPage = self.selectedViewControllerIndex;
 		}

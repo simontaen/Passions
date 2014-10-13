@@ -80,8 +80,6 @@
 {
 	[super viewWillAppear:animated];
 	[self _moveHairline:YES];
-	// grab the title from the current child
-	self.title = self.selectedViewController.title;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
