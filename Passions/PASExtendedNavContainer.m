@@ -86,7 +86,7 @@ CGFloat const kSegmentBarHeight = 40;
 	// Setup segmentedControl
 	self.segmentedControl.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
 	self.segmentedControl.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
-	[self.segmentedControl addTarget:self action:@selector(segmentChanged:) forControlEvents:UIControlEventValueChanged];
+	[self.segmentedControl addTarget:self.addTvc action:@selector(segmentChanged:) forControlEvents:UIControlEventValueChanged];
 	
 	// add the child view controller
 	[self.addTvc.tableView setTranslatesAutoresizingMaskIntoConstraints:YES];
@@ -97,13 +97,6 @@ CGFloat const kSegmentBarHeight = 40;
 	[self.containerView addSubview:self.addTvc.view];
 	
 	[self.addTvc didMoveToParentViewController:self];
-}
-
-#pragma mark - Ordering
-
-- (IBAction)segmentChanged:(UISegmentedControl *)sender
-{
-	NSLog(@"Selected Segment: %ld", (long)[sender selectedSegmentIndex]);
 }
 
 @end

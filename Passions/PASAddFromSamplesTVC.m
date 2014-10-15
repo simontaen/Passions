@@ -12,19 +12,42 @@
 #import "FICImageCache.h"
 #import "PASSourceImage.h"
 
-@interface PASAddFromSamplesTVC ()
-@property (nonatomic, strong) NSArray *artists; // of NSString
-@property (nonatomic, strong) NSArray *sectionIndex; // NSString
-@property (nonatomic, strong) NSDictionary *sections; // NSString -> NSMutableArray ( "C" -> @["Artist1", "Artist2"] )
+typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
+	PASAddArtistsSortOrderAlphabetical,
+	PASAddArtistsSortOrderByPlaycount
+};
 
+@interface PASAddFromSamplesTVC ()
+
+#pragma mark - Sections
+@property (nonatomic, assign) PASAddArtistsSortOrder selectedSortOrder;
+
+// Accessors that know which sort order is used and cache the results
+@property (nonatomic, strong, readonly) NSArray *artists; // of the appropriate object
+@property (nonatomic, strong, readonly) NSArray *sectionIndex; // NSString
+@property (nonatomic, strong, readonly) NSDictionary *sections; // NSString -> NSMutableArray ( "C" -> @["Artist1", "Artist2"] )
+
+@property (nonatomic, strong) NSArray *cachedArtistsOrderedByName;
+@property (nonatomic, strong) NSArray *cachedAlphabeticalSectionIndex;
+@property (nonatomic, strong) NSDictionary *cachedAlphabeticalSections;
+
+@property (nonatomic, strong) NSArray *cachedArtistsOrderedByPlaycout;
+@property (nonatomic, strong) NSArray *cachedPlaycountSectionIndex;
+@property (nonatomic, strong) NSDictionary *cachedPlaycountSections;
+
+// cache of artists, unordered (The Model of this class)
+@property (nonatomic, strong) NSArray *sampleArtists; // NSString
+
+#pragma mark - Faving Artists
 @property (nonatomic, strong, readonly) NSArray* originalFavArtists; // of PASArtist, passed by the segue, LFM Corrected!
 @property (nonatomic, strong, readonly) NSMutableArray* favArtistNames; // of NSString, passed by the segue, LFM Corrected!
 
-// http://stackoverflow.com/a/5511403 / http://stackoverflow.com/a/13705529
 @property (nonatomic, strong) NSMutableArray* justFavArtistNames; // of NSString, LFM corrected!
 @property (nonatomic, strong) NSMutableArray* justFavArtists; // of PASArtist
+// http://stackoverflow.com/a/5511403 / http://stackoverflow.com/a/13705529
 @property (nonatomic, strong) dispatch_queue_t favoritesQ;
 
+#pragma mark - Corrections
 @property (nonatomic, strong) NSMutableDictionary* artistNameCorrections; // of NSString (display) -> NSString (internal on Favorite Artists TVC, LFM corrected)
 @property (nonatomic, strong) dispatch_queue_t correctionsQ;
 
@@ -32,31 +55,14 @@
 
 @implementation PASAddFromSamplesTVC
 
+static NSString * const kPlaycountSectionIndex = @"playcount";
+static CGFloat const kSectionHeaderHeight = 28;
+
 #pragma mark - Accessors
 
 - (NSString *)title
 {
 	return @"Samples";
-}
-
-// returns the proper objects
-- (NSArray *)artists
-{
-	if (!_artists) {
-		//_artists = @[@"Beatles", @"AC/DC", @"Pink Floid", @"Guns 'n roses"];
-		//_artists = @[@"Deadmouse"];
-		_artists = [@[
-					  @"Beatles", @"Air", @"Pink Floid", @"Rammstein", @"Bloodhound Gang",
-					  @"Ancien Régime", @"Genius/GZA ", @"Belle & Sebastian", @"Björk",
-					  @"Ugress", @"ADELE", @"The Asteroids Galaxy Tour", @"Bar 9",
-					  @"Baskerville", @"Beastie Boys", @"Bee Gees", @"Bit Shifter",
-					  @"Bomfunk MC's", @"C-Mon & Kypski", @"The Cardigans", @"Carly Commando",
-					  @"Caro Emerald", @"Coldplay", @"Coolio", @"Cypress Hill",
-					  @"David Bowie", @"Dukes of Stratosphear", @"[dunkelbunt]",
-					  @"Eminem", @"Enigma", @"Deadmouse", @"ACDC", @"Quiet Riot"
-					  ] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-	};
-	return _artists;
 }
 
 - (void)setFavArtists:(NSMutableArray *)favArtists
@@ -70,68 +76,165 @@
 	}
 }
 
-- (NSString *)nameForArtist:(id)artist
+- (NSArray *)sampleArtists
 {
-	NSAssert([artist isKindOfClass:[NSString class]], @"%@ cannot handle artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
-	return artist;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		_sampleArtists = @[
+						   @"Beatles", @"Air", @"Pink Floid", @"Rammstein", @"Bloodhound Gang",
+						   @"Ancien Régime", @"Genius/GZA ", @"Belle & Sebastian", @"Björk",
+						   @"Ugress", @"ADELE", @"The Asteroids Galaxy Tour", @"Bar 9",
+						   @"Baskerville", @"Beastie Boys", @"Bee Gees", @"Bit Shifter",
+						   @"Bomfunk MC's", @"C-Mon & Kypski", @"The Cardigans", @"Carly Commando",
+						   @"Caro Emerald", @"Coldplay", @"Coolio", @"Cypress Hill",
+						   @"David Bowie", @"Dukes of Stratosphear", @"[dunkelbunt]",
+						   @"Eminem", @"Enigma", @"Deadmouse", @"ACDC", @"Quiet Riot"
+						   ];
+	});
+	return _sampleArtists;
 }
 
-- (id)artistForIndexPath:(NSIndexPath *)indexPath
+- (NSArray *)artists
 {
-	return self.sections[self.sectionIndex[indexPath.section]][indexPath.row];
+	switch (self.selectedSortOrder) {
+		case PASAddArtistsSortOrderAlphabetical:
+			if (!self.cachedArtistsOrderedByName) {
+				self.cachedArtistsOrderedByName = [self artistsOrderedByName];
+			}
+			return self.cachedArtistsOrderedByName;
+		default:
+			if (!self.cachedArtistsOrderedByPlaycout) {
+				self.cachedArtistsOrderedByPlaycout = [self artistsOrderedByPlaycout];
+			}
+			return self.cachedArtistsOrderedByPlaycout;
+	}
+}
+
+// will be implemented by subclass
+- (NSArray *)artistsOrderedByName
+{
+	return [self.sampleArtists sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+}
+
+// will be implemented by subclass
+- (NSArray *)artistsOrderedByPlaycout
+{
+	return [self.sampleArtists sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+		int result = [self playcountForArtist:obj1] - [self playcountForArtist:obj2];
+		
+		if (result > 0) {
+			// The left operand is greater than the right operand.
+			return NSOrderedDescending;
+		} else if (result < 0) {
+			// The left operand is smaller than the right operand.
+			return NSOrderedAscending;
+		}
+		return NSOrderedSame;
+	}];
 }
 
 - (NSArray *)sectionIndex
 {
-	if (!_sectionIndex) {
-		NSMutableArray *array = [[self.sections allKeys] mutableCopy];
-		BOOL containsNonAlphabetic = [array containsObject:@"#"];
-		if (containsNonAlphabetic) {
-			[array removeObject:@"#"];
-		}
-		[array sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-		if (containsNonAlphabetic) {
-			[array addObject:@"#"];
-		}
-		_sectionIndex = [NSArray arrayWithArray:array];
+	switch (self.selectedSortOrder) {
+		case PASAddArtistsSortOrderAlphabetical:
+			if (!self.cachedAlphabeticalSectionIndex) {
+				self.cachedAlphabeticalSectionIndex = [self _alphabeticalSectionIndex];
+			}
+			return self.cachedAlphabeticalSectionIndex;
+		default:
+			if (!self.cachedPlaycountSectionIndex) {
+				self.cachedPlaycountSectionIndex = [self _playcountSectionIndex];
+			}
+			return self.cachedPlaycountSectionIndex;
 	}
-	return _sectionIndex;
+}
+
+- (NSArray *)_alphabeticalSectionIndex
+{
+	NSMutableArray *array = [[self.sections allKeys] mutableCopy];
+	BOOL containsNonAlphabetic = [array containsObject:@"#"];
+	if (containsNonAlphabetic) {
+		[array removeObject:@"#"];
+	}
+	[array sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+	if (containsNonAlphabetic) {
+		[array addObject:@"#"];
+	}
+	return [NSArray arrayWithArray:array];
+}
+
+- (NSArray *)_playcountSectionIndex
+{
+	return @[kPlaycountSectionIndex];
 }
 
 - (NSDictionary *)sections
 {
 	// TODO: rethink the A-Z scrubber, should it always show the complete alphabet?
 	// TODO: the scrubber seems to blocks the pan gesture
-	if (!_sections) {
-		NSArray *index = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M",
-						   @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", @"#"];
-		NSMutableDictionary *mutableSections = [[NSMutableDictionary alloc] initWithCapacity:index.count];
-		
-		for (id artist in self.artists) {
-			NSString *name = [self nameForArtist:artist];
-			NSString *firstChar = [[name substringToIndex:1] uppercaseString];
-			
-			if (![index containsObject:firstChar]) {
-				// add it to the last element of the index
-				firstChar = [index lastObject];
+	switch (self.selectedSortOrder) {
+		case PASAddArtistsSortOrderAlphabetical:
+			if (!self.cachedAlphabeticalSections) {
+				self.cachedAlphabeticalSections = [self _alphabeticalSections];
 			}
-			
-			NSMutableArray *array = mutableSections[firstChar];
-			if (!array) {
-				array = [NSMutableArray array];
-				mutableSections[firstChar] = array;
+			return self.cachedAlphabeticalSections;
+		default:
+			if (!self.cachedPlaycountSections) {
+				self.cachedPlaycountSections = [self _playcountSections];
 			}
-			
-			[array addObject:artist];
-		}
-		_sections = [NSDictionary dictionaryWithDictionary:mutableSections];
+			return self.cachedPlaycountSections;
 	}
-	return _sections;
 }
+
+- (NSDictionary *)_alphabeticalSections
+{
+	NSArray *index = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M",
+					   @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", @"#"];
+	NSMutableDictionary *mutableSections = [[NSMutableDictionary alloc] initWithCapacity:index.count];
+	
+	for (id artist in self.artists) {
+		NSString *name = [self nameForArtist:artist];
+		NSString *firstChar = [[name substringToIndex:1] uppercaseString];
+		
+		if (![index containsObject:firstChar]) {
+			// add it to the last element of the index
+			firstChar = [index lastObject];
+		}
+		
+		NSMutableArray *array = mutableSections[firstChar];
+		if (!array) {
+			array = [NSMutableArray array];
+			mutableSections[firstChar] = array;
+		}
+		
+		[array addObject:artist];
+	}
+	return [NSDictionary dictionaryWithDictionary:mutableSections];
+}
+
+- (NSDictionary *)_playcountSections
+{
+	NSAssert(self.artists, @"Can't have nil artists");
+	return @{ kPlaycountSectionIndex : self.artists };
+}
+
+#pragma mark - Subclassing
 
 - (BOOL)didEditArtists
 {
 	return self.justFavArtistNames.count != 0 || self.favArtists.count != self.originalFavArtists.count;
+}
+
+- (NSString *)nameForArtist:(id)artist
+{
+	NSAssert([artist isKindOfClass:[NSString class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
+	return artist;
+}
+
+- (NSUInteger)playcountForArtist:(id)artist
+{
+	NSAssert([artist isKindOfClass:[NSString class]], @"%@ cannot get playcount for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
+	return ((NSString *)artist).length;
 }
 
 #pragma mark - View Lifecycle
@@ -141,6 +244,8 @@
     [super viewDidLoad];
 	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil]
 		 forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];
+	
+	self.selectedSortOrder = PASAddArtistsSortOrderAlphabetical;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -205,7 +310,7 @@
 {
 	PASArtistTVCell *cell = [tableView dequeueReusableCellWithIdentifier:[PASArtistTVCell reuseIdentifier] forIndexPath:indexPath];
 	
-	id artist = [self artistForIndexPath:indexPath];
+	id artist = [self _artistForIndexPath:indexPath];
 	NSString *artistName = [self nameForArtist:artist];
 	
 	[cell showArtist:artist withName:artistName isFavorite:[self _isFavoriteArtist:artistName]];
@@ -222,7 +327,12 @@
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-	return self.sectionIndex;
+	switch (self.selectedSortOrder) {
+		case PASAddArtistsSortOrderAlphabetical:
+			return self.sectionIndex;
+		default:
+			return nil;
+	}
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
@@ -232,9 +342,17 @@
 
 #pragma mark - UITableViewDataSource Header
 
-static CGFloat const kSectionHeaderHeight = 28;
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+	switch (self.selectedSortOrder) {
+		case PASAddArtistsSortOrderAlphabetical:
+			return [self tableView:tableView _viewForHeaderInAlphabeticalSection:section];
+		default:
+			return nil;
+	}
+}
+
+- (UIView *)tableView:(UITableView *)tableView _viewForHeaderInAlphabeticalSection:(NSInteger)section
 {
 	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, kSectionHeaderHeight)];
 	view.backgroundColor = [UIColor whiteColor];
@@ -249,7 +367,12 @@ static CGFloat const kSectionHeaderHeight = 28;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-	return kSectionHeaderHeight;
+	switch (self.selectedSortOrder) {
+		case PASAddArtistsSortOrderAlphabetical:
+			return kSectionHeaderHeight;
+		default:
+			return 0;
+	}
 }
 
 #pragma mark - UITableViewDelegate
@@ -260,7 +383,7 @@ static CGFloat const kSectionHeaderHeight = 28;
 	cell.userInteractionEnabled = NO;
 	[cell.activityIndicator startAnimating];
 	
-	NSString *artistName = [self nameForArtist:[self artistForIndexPath:indexPath]];
+	NSString *artistName = [self nameForArtist:[self _artistForIndexPath:indexPath]];
 	NSString *resolvedName = [self _resolveArtistName:artistName];
 	
 	void (^cleanup)() = ^{
@@ -293,7 +416,7 @@ static CGFloat const kSectionHeaderHeight = 28;
 			} else {
 				dispatch_async(dispatch_get_main_queue(), ^{
 					cleanup();
-					[self handleError:error];
+					[self _handleError:error];
 				});
 			}
 		}];
@@ -324,7 +447,7 @@ static CGFloat const kSectionHeaderHeight = 28;
 			} else {
 				dispatch_async(dispatch_get_main_queue(), ^{
 					cleanup();
-					[self handleError:error];
+					[self _handleError:error];
 				});
 			}
 		}];
@@ -336,9 +459,25 @@ static CGFloat const kSectionHeaderHeight = 28;
 	return 50;
 }
 
+#pragma mark - Ordering, UISegmentedControl Action
+
+- (IBAction)segmentChanged:(UISegmentedControl *)sender
+{
+	switch ([sender selectedSegmentIndex]) {
+		case 0:
+			self.selectedSortOrder = PASAddArtistsSortOrderAlphabetical;
+			break;
+		default:
+			self.selectedSortOrder = PASAddArtistsSortOrderByPlaycount;
+			break;
+	}
+	
+	[self _refreshUI];
+}
+
 #pragma mark - Error Handling
 
-- (void)handleError:(NSError *)error
+- (void)_handleError:(NSError *)error
 {
 	NSLog(@"%@", [error localizedDescription]);
 
@@ -367,6 +506,16 @@ static CGFloat const kSectionHeaderHeight = 28;
 }
 
 #pragma mark - Private Methods
+
+- (id)_artistForIndexPath:(NSIndexPath *)indexPath
+{
+	return self.sections[self.sectionIndex[indexPath.section]][indexPath.row];
+}
+
+- (void)_refreshUI
+{
+	[self.tableView reloadData];
+}
 
 - (BOOL)_isFavoriteArtist:(NSString *)artistName
 {

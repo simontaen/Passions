@@ -11,7 +11,6 @@
 
 @interface PASAddFromMusicTVC ()
 @property (nonatomic, strong) NSArray* artists; // of MPMediaItem
-@property (nonatomic, strong) NSArray* artistNames; // of NSString
 @end
 
 @implementation PASAddFromMusicTVC
@@ -23,31 +22,55 @@
 	return @"iPod Artists";
 }
 
-// returns the proper objects
+// order by a combination of
+// MPMediaItemPropertyPlayCount
+// MPMediaItemPropertyRating
+// see MPMediaItem Class Reference
+
 - (NSArray *)artists
 {
 	if (!_artists) {
-		// order by a combination of
-		// MPMediaItemPropertyPlayCount
-		// MPMediaItemPropertyRating
-		// see MPMediaItem Class Reference
 		NSArray *collections = [[MPMediaQuery artistsQuery] collections];
 		NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:collections.count];
 		for (MPMediaItemCollection *itemCollection in collections) {
 			[items addObject:[itemCollection representativeItem]];
 		}
-		
-		NSSortDescriptor *artistNameSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:MPMediaItemPropertyArtist ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-		
-		_artists = [items sortedArrayUsingDescriptors:@[artistNameSortDescriptor]];
+		_artists = items;
 	};
 	return _artists;
 }
 
+#pragma mark - Subclassing
+
+// will be implemented by subclass
+- (NSArray *)artistsOrderedByName
+{
+	NSSortDescriptor *artistNameSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:MPMediaItemPropertyArtist
+																			   ascending:YES
+																				selector:@selector(localizedCaseInsensitiveCompare:)];
+	return [self.artists sortedArrayUsingDescriptors:@[artistNameSortDescriptor]];
+}
+
+// will be implemented by subclass
+- (NSArray *)artistsOrderedByPlaycout
+{
+	NSSortDescriptor *playCountSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:MPMediaItemPropertyPlayCount
+																			  ascending:NO
+																			   selector:@selector(caseInsensitiveCompare:)];
+	return [self.artists sortedArrayUsingDescriptors:@[playCountSortDescriptor]];
+}
+
 - (NSString *)nameForArtist:(id)artist
 {
-	NSAssert([artist isKindOfClass:[MPMediaItem class]], @"%@ cannot handle artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
-	return [artist valueForProperty: MPMediaItemPropertyArtist];
+	NSAssert([artist isKindOfClass:[MPMediaItem class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
+	return [artist valueForProperty:MPMediaItemPropertyArtist];
+}
+
+- (NSUInteger)playcountForArtist:(id)artist
+{
+	NSAssert([artist isKindOfClass:[MPMediaItem class]], @"%@ cannot get playcount for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
+	NSNumber *playCount = (NSNumber *) [artist valueForProperty:MPMediaItemPropertyPlayCount];
+	return [playCount unsignedIntegerValue];
 }
 
 @end
