@@ -18,7 +18,7 @@
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 - (void)showArtist:(PASArtist *)artist;
-- (void)showArtist:(id<PASSourceImage>)artist withName:(NSString *)name isFavorite:(BOOL)isFav;
+- (void)showArtist:(id<PASSourceImage>)artist withName:(NSString *)name isFavorite:(BOOL)isFav playcount:(NSUInteger)playcount;
 
 + (NSString *)reuseIdentifier;
 

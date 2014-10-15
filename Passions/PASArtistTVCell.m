@@ -34,7 +34,7 @@
 
 #pragma mark - Other setters
 
-- (void)showArtist:(id<PASSourceImage>)artist withName:(NSString *)name isFavorite:(BOOL)isFav
+- (void)showArtist:(id<PASSourceImage>)artist withName:(NSString *)name isFavorite:(BOOL)isFav playcount:(NSUInteger)playcount
 {
 	NSAssert([artist conformsToProtocol:@protocol(PASSourceImage)], @"%@ cannot handle artists of class %@, must conform to %@", NSStringFromClass([self class]), NSStringFromClass([artist class]), NSStringFromProtocol(@protocol(PASSourceImage)));
 	
@@ -47,7 +47,7 @@
 	}
 	
 	// the artist could have been unfavorited, updated this in every case
-	self.detailText.text = isFav ? @"Favorite!" : @"";
+	self.detailText.text = isFav ? [NSString stringWithFormat:@"%@ - Favorite!", [self _stringForPlaycount:playcount]] : [self _stringForPlaycount:playcount];
 }
 
 
@@ -81,6 +81,15 @@
 		return [NSString stringWithFormat:@"%lu Album available", noOfAlbums.longValue];
 	} else {
 		return [NSString stringWithFormat:@"%lu Albums available", noOfAlbums.longValue];
+	}
+}
+
+- (NSString *)_stringForPlaycount:(NSUInteger)playcount
+{
+	if (playcount == 1) {
+		return [NSString stringWithFormat:@"%u Play", playcount];
+	} else {
+		return [NSString stringWithFormat:@"%u Plays", playcount];
 	}
 }
 

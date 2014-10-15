@@ -313,7 +313,9 @@ static CGFloat const kSectionHeaderHeight = 28;
 	id artist = [self _artistForIndexPath:indexPath];
 	NSString *artistName = [self nameForArtist:artist];
 	
-	[cell showArtist:artist withName:artistName isFavorite:[self _isFavoriteArtist:artistName]];
+	[cell showArtist:artist withName:artistName
+		  isFavorite:[self _isFavoriteArtist:artistName]
+		   playcount:[self playcountForArtist:artist]];
 	
 	return cell;
 }
