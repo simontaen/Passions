@@ -72,7 +72,7 @@
 		[self updateInteractiveTransition:d*0.5];
 		
 	} else if (recognizer.state >= UIGestureRecognizerStateEnded) {
-		if (self.percentComplete > 0.2) {
+		if (self.percentComplete > 0.08) {
 			[self finishInteractiveTransition];
 		} else {
 			[self cancelInteractiveTransition];
