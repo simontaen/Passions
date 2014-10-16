@@ -13,8 +13,9 @@
 #import "FICImageCache.h"
 
 NSString * const kPASSetFavArtists = @"kPASSetFavArtists";
+NSString * const kPASDidEditFavArtists = @"kPASDidEditFavArtists";
 
-@interface PASFavArtistsTVC() <PASAddArtistsTVCDelegate>
+@interface PASFavArtistsTVC()
 
 @end
 
@@ -39,10 +40,29 @@ NSString * const kPASSetFavArtists = @"kPASSetFavArtists";
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+
+	// layout and look
 	self.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
+	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9 alpha:1.0];
+	
+	// register the custom cell
 	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil]
 		 forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];
-	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9 alpha:1.0];
+	
+	// register to get notified if fav artists have been edited
+	[[NSNotificationCenter defaultCenter] addObserverForName:kPASDidEditFavArtists
+													  object:nil queue:nil
+												  usingBlock:^(NSNotification *note) {
+													  // get didEditArtists from the notification
+													  id obj = note.userInfo[kPASDidEditFavArtists];
+													  NSAssert([obj isKindOfClass:[NSNumber class]], @"kPASDidEditFavArtists must carry a NSNumber");
+													  BOOL didEditArtists = [((NSNumber *)obj) boolValue];
+													  if (didEditArtists) {
+														  [self _refreshUI];
+													  }
+													  // Go back to the previous view
+													  [self dismissViewControllerAnimated:YES completion:nil];
+												  }];
 }
 
 - (IBAction)resetFastimageCache:(UIBarButtonItem *)sender
@@ -135,17 +155,6 @@ NSString * const kPASSetFavArtists = @"kPASSetFavArtists";
 	return cell;
 }
 
-#pragma mark - PASAddArtistsTVCDelegate
-
-- (void)viewController:(PASAddFromSamplesTVC *)vc didEditArtists:(BOOL)didEditArtists
-{
-	if (didEditArtists) {
-		[self _refreshUI];
-	}
-	// Go back to the previous view
-	[self dismissViewControllerAnimated:YES completion:nil];
-}
-
 #pragma mark - Navigation
 
 - (void)_refreshUI
@@ -157,11 +166,11 @@ NSString * const kPASSetFavArtists = @"kPASSetFavArtists";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	if ([segue.identifier isEqualToString:kPASSetFavArtists]) {
-		if ([segue.destinationViewController respondsToSelector:@selector(setFavArtists:)]) {
-			[segue.destinationViewController performSelector:@selector(setFavArtists:) withObject:[self.objects mutableCopy]];
-		}
-		if ([segue.destinationViewController respondsToSelector:@selector(setMyDelegate:)]) {
-			[segue.destinationViewController performSelector:@selector(setMyDelegate:) withObject:self];
+		NSMutableArray *artists = [self.objects mutableCopy];
+		if (artists.count > 0) {
+			[[NSNotificationCenter defaultCenter] postNotificationName:kPASSetFavArtists
+																object:self
+															  userInfo:@{ kPASSetFavArtists : artists }];
 		}
 	}
 }

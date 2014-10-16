@@ -55,8 +55,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Parse seems to just take a default date of today for the Albums sometimes (check Bruce and Beatles)
 	* actually Spotify delivers shit data! (Track of my Years from Bryan Adams for example!)
 
-* communication with add vc's (no delegate...)
-
 
 ## UI
 

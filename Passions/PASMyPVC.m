@@ -8,6 +8,7 @@
 
 #import "PASMyPVC.h"
 #import "PASExtendedNavContainer.h"
+#import "PASFavArtistsTVC.h"
 
 @interface PASMyPVC ()
 @property (weak, nonatomic) UIImageView *navHairline;
@@ -104,11 +105,11 @@
 
 - (IBAction)doneButtonHandler:(UIBarButtonItem *)sender
 {
-	//PASExtendedNavContainer *dissapearingTVC = ((PASExtendedNavContainer*) self.selectedViewController);
-	if ([self.myDelegate respondsToSelector:@selector(viewController:didEditArtists:)]) {
-//		[self.myDelegate viewController:dissapearingTVC didEditArtists:[dissapearingTVC didEditArtists]];
-	} else {
-		[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+	BOOL didEditArtists = [((PASExtendedNavContainer*) self.selectedViewController).addTvc didEditArtists];
+	if (didEditArtists) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditFavArtists
+															object:self
+														  userInfo:@{ kPASDidEditFavArtists : [NSNumber numberWithBool:didEditArtists] }];
 	}
 }
 

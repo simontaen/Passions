@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PASAddFromSamplesTVC.h"
 
 extern CGFloat const kPASSegmentBarHeight;
 
+// Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been edited
+// currently only when and edit actually happened
 @interface PASExtendedNavContainer : UIViewController
+
+// the contained view controller
+@property (nonatomic, strong) PASAddFromSamplesTVC *addTvc;
 
 /// designated initializer
 - (instancetype)initWithIndex:(NSUInteger)index;

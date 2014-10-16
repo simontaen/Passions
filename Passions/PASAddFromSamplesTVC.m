@@ -7,6 +7,7 @@
 //
 
 #import "PASAddFromSamplesTVC.h"
+#import "PASFavArtistsTVC.h"
 #import "PASArtist.h"
 #import "PASArtistTVCell.h"
 #import "FICImageCache.h"
@@ -39,16 +40,21 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 @property (nonatomic, strong) NSArray *sampleArtists; // NSString
 
 #pragma mark - Faving Artists
-@property (nonatomic, strong, readonly) NSArray* originalFavArtists; // of PASArtist, passed by the segue, LFM Corrected!
-@property (nonatomic, strong, readonly) NSMutableArray* favArtistNames; // of NSString, passed by the segue, LFM Corrected!
-
-@property (nonatomic, strong) NSMutableArray* justFavArtistNames; // of NSString, LFM corrected!
-@property (nonatomic, strong) NSMutableArray* justFavArtists; // of PASArtist
-// http://stackoverflow.com/a/5511403 / http://stackoverflow.com/a/13705529
+// worker Q http://stackoverflow.com/a/5511403 / http://stackoverflow.com/a/13705529
 @property (nonatomic, strong) dispatch_queue_t favoritesQ;
 
+// passed by the segue, LFM Corrected!
+@property (nonatomic, strong, readonly) NSArray* originalFavArtists; // PASArtist, never changed
+// these contain current changes
+@property (nonatomic, strong) NSMutableArray* favArtists; // PASArtist
+@property (nonatomic, strong, readonly) NSMutableArray* favArtistNames; // NSString, built based on favArtists
+
+// for newly favorited artists
+@property (nonatomic, strong) NSMutableArray* justFavArtists; // PASArtist
+@property (nonatomic, strong) NSMutableArray* justFavArtistNames; // NSString, LFM corrected!
+
 #pragma mark - Corrections
-@property (nonatomic, strong) NSMutableDictionary* artistNameCorrections; // of NSString (display) -> NSString (internal on Favorite Artists TVC, LFM corrected)
+@property (nonatomic, strong) NSMutableDictionary* artistNameCorrections; // NSString (display) -> NSString (internal on Favorite Artists TVC, LFM corrected)
 @property (nonatomic, strong) dispatch_queue_t correctionsQ;
 
 @end
@@ -67,7 +73,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (void)setFavArtists:(NSMutableArray *)favArtists
 {
-	_favArtists = favArtists;
+	_favArtists = favArtists ? favArtists : [NSMutableArray array];
 	_originalFavArtists = [NSArray arrayWithArray:favArtists];
 	_favArtistNames = [[NSMutableArray alloc] initWithCapacity:favArtists.count];
 	
@@ -120,7 +126,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 - (NSArray *)artistsOrderedByPlaycout
 {
 	return [self.sampleArtists sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-		int result = [self playcountForArtist:obj1] - [self playcountForArtist:obj2];
+		NSInteger result = [self playcountForArtist:obj1] - [self playcountForArtist:obj2];
 		
 		if (result > 0) {
 			// The left operand is greater than the right operand.
@@ -242,10 +248,23 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	// register the custom cell
 	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil]
 		 forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];
 	
+	// default is alphabetical
 	self.selectedSortOrder = PASAddArtistsSortOrderAlphabetical;
+	
+	// register to receive already favorited artists
+	[[NSNotificationCenter defaultCenter] addObserverForName:kPASSetFavArtists
+													  object:nil queue:nil
+												  usingBlock:^(NSNotification *note) {
+													  // get fav artists from the notification
+													  id obj = note.userInfo[kPASSetFavArtists];
+													  NSAssert([obj isKindOfClass:[NSMutableArray class]], @"kPASSetFavArtists must carry a NSMutableArray");
+													  self.favArtists = (NSMutableArray *)obj;
+												  }];
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -9,10 +9,8 @@
 @import UIKit;
 #import "PASArtistTVCell.h"
 
+// Listens for kPASSetFavArtists Notifications to receive already favorited Artists
 @interface PASAddFromSamplesTVC : UITableViewController
-
-// communication with creator
-@property (nonatomic, strong) NSMutableArray* favArtists; // of PASArtist, passed by the segue, LFM Corrected!
 
 - (BOOL)didEditArtists;
 
