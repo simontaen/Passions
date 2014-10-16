@@ -15,7 +15,7 @@
 	static UIImage *artistThumbnailPlaceholder;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		artistThumbnailPlaceholder = [UIImage imageNamed: @"image.png"];
+		artistThumbnailPlaceholder = [UIImage imageNamed: @"artistPlaceholder"];
 	});
 	return artistThumbnailPlaceholder;
 }
