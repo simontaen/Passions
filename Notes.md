@@ -47,8 +47,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 	* send over the parseAlbum objectId
 * Silent push after fav'ing an Artist (Status Processing) to update UI automatically
 
-* segmented control to change ordering on adding artists & fav artists
-
 * Album Info screen
 * Artist Info screen (this could be reused on adding artists, but the cell needs to be a bit different then)
 

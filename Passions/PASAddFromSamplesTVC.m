@@ -130,10 +130,10 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 		
 		if (result > 0) {
 			// The left operand is greater than the right operand.
-			return NSOrderedDescending;
+			return NSOrderedAscending;
 		} else if (result < 0) {
 			// The left operand is smaller than the right operand.
-			return NSOrderedAscending;
+			return NSOrderedDescending;
 		}
 		return NSOrderedSame;
 	}];

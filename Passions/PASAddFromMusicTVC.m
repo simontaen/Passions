@@ -10,7 +10,7 @@
 #import "PASAddFromMusicTVC.h"
 
 @interface PASAddFromMusicTVC ()
-@property (nonatomic, strong) NSArray* artists; // of MPMediaItem
+@property (nonatomic, strong) NSArray* myArtists; // of MPMediaItem
 @end
 
 @implementation PASAddFromMusicTVC
@@ -27,17 +27,22 @@
 // MPMediaItemPropertyRating
 // see MPMediaItem Class Reference
 
-- (NSArray *)artists
+// don't call this artists as you would overwrite the superclass!
+- (NSArray *)myArtists
 {
-	if (!_artists) {
-		NSArray *collections = [[MPMediaQuery artistsQuery] collections];
+	if (!_myArtists) {
+		MPMediaQuery *everything = [[MPMediaQuery alloc] init];
+		[everything setGroupingType: MPMediaGroupingAlbumArtist];
+		
+		NSArray *collections = [everything collections];
+		
 		NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:collections.count];
 		for (MPMediaItemCollection *itemCollection in collections) {
 			[items addObject:[itemCollection representativeItem]];
 		}
-		_artists = items;
+		_myArtists = items;
 	};
-	return _artists;
+	return _myArtists;
 }
 
 #pragma mark - Subclassing
@@ -48,7 +53,7 @@
 	NSSortDescriptor *artistNameSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:MPMediaItemPropertyArtist
 																			   ascending:YES
 																				selector:@selector(localizedCaseInsensitiveCompare:)];
-	return [self.artists sortedArrayUsingDescriptors:@[artistNameSortDescriptor]];
+	return [self.myArtists sortedArrayUsingDescriptors:@[artistNameSortDescriptor]];
 }
 
 // will be implemented by subclass
@@ -56,8 +61,8 @@
 {
 	NSSortDescriptor *playCountSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:MPMediaItemPropertyPlayCount
 																			  ascending:NO
-																			   selector:@selector(caseInsensitiveCompare:)];
-	return [self.artists sortedArrayUsingDescriptors:@[playCountSortDescriptor]];
+																			   selector:@selector(compare:)];
+	return [self.myArtists sortedArrayUsingDescriptors:@[playCountSortDescriptor]];
 }
 
 - (NSString *)nameForArtist:(id)artist
