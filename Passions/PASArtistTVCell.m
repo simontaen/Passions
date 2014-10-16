@@ -76,7 +76,7 @@
 - (NSString *)_stringForNumberOfAlbums:(NSNumber *)noOfAlbums
 {
 	if (!noOfAlbums) {
-		return @"Processing...";
+		return @"Processing on Server...";
 	} else if (noOfAlbums.longValue == 1) {
 		return [NSString stringWithFormat:@"%lu Album available", noOfAlbums.longValue];
 	} else {
