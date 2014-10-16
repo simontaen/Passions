@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-extern CGFloat const kSegmentBarHeight;
+extern CGFloat const kPASSegmentBarHeight;
 
 @interface PASExtendedNavContainer : UIViewController
 

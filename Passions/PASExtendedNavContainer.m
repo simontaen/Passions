@@ -10,7 +10,7 @@
 #import "PASAddFromSamplesTVC.h"
 #import "PASAddFromMusicTVC.h"
 
-CGFloat const kSegmentBarHeight = 40;
+CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 
 @interface PASExtendedNavContainer ()
 
@@ -65,16 +65,16 @@ CGFloat const kSegmentBarHeight = 40;
 //	CGFloat myWith = self.view.bounds.size.width;
 //	CGFloat myHeight = self.view.bounds.size.height;
 //	
-//	UIToolbar *myBar = [[UIToolbar alloc] initWithFrame:CGRectMake(myX, myY, myWith, kSegmentBarHeight)];
+//	UIToolbar *myBar = [[UIToolbar alloc] initWithFrame:CGRectMake(myX, myY, myWith, kPASSegmentBarHeight)];
 //	self.segmentBar = myBar;
 //	[self.view addSubview:myBar];
 //	
 //	UISegmentedControl *mySegCont = [[UISegmentedControl alloc] initWithItems:@[@"alphabetical", @"by playcount"]];
-//	self.segmentedControl.frame = CGRectMake(16, 8, myWith - 32, kSegmentBarHeight - 14);
+//	self.segmentedControl.frame = CGRectMake(16, 8, myWith - 32, kPASSegmentBarHeight - 14);
 //	self.segmentedControl = mySegCont;
 //	[self.segmentBar addSubview:mySegCont];
 //	
-//	UIView *myTable = [[UIView alloc] initWithFrame:CGRectMake(myX, kSegmentBarHeight, myWith, myHeight - kSegmentBarHeight)];
+//	UIView *myTable = [[UIView alloc] initWithFrame:CGRectMake(myX, kPASSegmentBarHeight, myWith, myHeight - kPASSegmentBarHeight)];
 //	self.containerView = myTable;
 //	[self.view addSubview:myTable];
 //}

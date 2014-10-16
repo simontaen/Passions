@@ -423,9 +423,9 @@
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 
-static CGFloat const kChildViewPadding = 0;
-static CGFloat const kDamping = 0.75;
-static CGFloat const kInitialSpringVelocity = 0.5;
+static CGFloat const kPASChildViewPadding = 0;
+static CGFloat const kPASDamping = 0.75;
+static CGFloat const kPASInitialSpringVelocity = 0.5;
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
 {
@@ -440,7 +440,7 @@ static CGFloat const kInitialSpringVelocity = 0.5;
 	
 	// When sliding the views horizontally in and out, figure out whether we are going left or right.
 	BOOL goingRight = ([transitionContext initialFrameForViewController:toVc].origin.x < [transitionContext finalFrameForViewController:toVc].origin.x);
-	CGFloat travelDistance = [transitionContext containerView].bounds.size.width + kChildViewPadding;
+	CGFloat travelDistance = [transitionContext containerView].bounds.size.width + kPASChildViewPadding;
 	CGAffineTransform travel = CGAffineTransformMakeTranslation(goingRight ? travelDistance : -travelDistance, 0);
 	
 	// WWDC2013 - 218 - Insertion of "to" view controller's view into the container view
@@ -449,8 +449,8 @@ static CGFloat const kInitialSpringVelocity = 0.5;
 	toVc.view.transform = CGAffineTransformInvert(travel);
 	
 	[UIView animateWithDuration:[self transitionDuration:transitionContext]
-						  delay:0 usingSpringWithDamping:kDamping
-		  initialSpringVelocity:kInitialSpringVelocity options:0x00
+						  delay:0 usingSpringWithDamping:kPASDamping
+		  initialSpringVelocity:kPASInitialSpringVelocity options:0x00
 					 animations:^{
 						 fromVc.view.transform = travel;
 						 fromVc.view.alpha = 0;

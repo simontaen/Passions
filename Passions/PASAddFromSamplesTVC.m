@@ -55,8 +55,8 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 
 @implementation PASAddFromSamplesTVC
 
-static NSString * const kPlaycountSectionIndex = @"playcount";
-static CGFloat const kSectionHeaderHeight = 28;
+static NSString * const kPASPlaycountSectionIndex = @"playcount";
+static CGFloat const kPASSectionHeaderHeight = 28;
 
 #pragma mark - Accessors
 
@@ -165,7 +165,7 @@ static CGFloat const kSectionHeaderHeight = 28;
 
 - (NSArray *)_playcountSectionIndex
 {
-	return @[kPlaycountSectionIndex];
+	return @[kPASPlaycountSectionIndex];
 }
 
 - (NSDictionary *)sections
@@ -215,7 +215,7 @@ static CGFloat const kSectionHeaderHeight = 28;
 - (NSDictionary *)_playcountSections
 {
 	NSAssert(self.artists, @"Can't have nil artists");
-	return @{ kPlaycountSectionIndex : self.artists };
+	return @{ kPASPlaycountSectionIndex : self.artists };
 }
 
 #pragma mark - Subclassing
@@ -356,10 +356,10 @@ static CGFloat const kSectionHeaderHeight = 28;
 
 - (UIView *)tableView:(UITableView *)tableView _viewForHeaderInAlphabeticalSection:(NSInteger)section
 {
-	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, kSectionHeaderHeight)];
+	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, kPASSectionHeaderHeight)];
 	view.backgroundColor = [UIColor whiteColor];
  
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width, kSectionHeaderHeight)];
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width, kPASSectionHeaderHeight)];
 	label.text = self.sectionIndex[section];
 	label.textColor = [UIColor darkTextColor];
 	[view addSubview:label];
@@ -371,7 +371,7 @@ static CGFloat const kSectionHeaderHeight = 28;
 {
 	switch (self.selectedSortOrder) {
 		case PASAddArtistsSortOrderAlphabetical:
-			return kSectionHeaderHeight;
+			return kPASSectionHeaderHeight;
 		default:
 			return 0;
 	}

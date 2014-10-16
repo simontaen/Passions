@@ -93,9 +93,9 @@
 	// move the hairline below the segmentBar
 	CGRect hairlineFrame = self.navHairline.frame;
 	if (appearing) {
-		hairlineFrame.origin.y += kSegmentBarHeight;
+		hairlineFrame.origin.y += kPASSegmentBarHeight;
 	} else {
-		hairlineFrame.origin.y -= kSegmentBarHeight;
+		hairlineFrame.origin.y -= kPASSegmentBarHeight;
 	}
 	self.navHairline.frame = hairlineFrame;
 }

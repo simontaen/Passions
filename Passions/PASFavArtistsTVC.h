@@ -8,6 +8,8 @@
 
 #import <Parse/Parse.h>
 
+extern NSString * const kPASSetFavArtists;
+
 @interface PASFavArtistsTVC : PFQueryTableViewController
 
 @end

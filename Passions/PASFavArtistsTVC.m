@@ -12,6 +12,8 @@
 #import "PASMyPVC.h"
 #import "FICImageCache.h"
 
+NSString * const kPASSetFavArtists = @"kPASSetFavArtists";
+
 @interface PASFavArtistsTVC() <PASAddArtistsTVCDelegate>
 
 @end
@@ -154,7 +156,7 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-	if ([segue.identifier isEqualToString:@"setFavArtists:"]) {
+	if ([segue.identifier isEqualToString:kPASSetFavArtists]) {
 		if ([segue.destinationViewController respondsToSelector:@selector(setFavArtists:)]) {
 			[segue.destinationViewController performSelector:@selector(setFavArtists:) withObject:[self.objects mutableCopy]];
 		}
