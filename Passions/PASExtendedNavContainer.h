@@ -11,8 +11,6 @@
 
 extern CGFloat const kPASSegmentBarHeight;
 
-// Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been edited
-// currently only when and edit actually happened
 @interface PASExtendedNavContainer : UIViewController
 
 // the contained view controller

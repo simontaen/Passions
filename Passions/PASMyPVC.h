@@ -8,19 +8,7 @@
 
 #import "PASPageViewController.h"
 
-@class PASAddFromSamplesTVC;
-
-@protocol PASAddArtistsTVCDelegate <NSObject>
-
-- (void)viewController:(PASAddFromSamplesTVC *)vc didEditArtists:(BOOL)didEditArtists;
-
-@end
-
+// Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been edited
 @interface PASMyPVC : PASPageViewController
-
-@property (nonatomic, weak) id<PASAddArtistsTVCDelegate> myDelegate;
-
-- (void)setFavArtists:(NSMutableArray *)favArtists; // of PASArtist, passed by the segue, LFM Corrected!
-
 
 @end

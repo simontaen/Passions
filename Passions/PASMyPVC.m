@@ -16,15 +16,6 @@
 
 @implementation PASMyPVC
 
-#pragma mark - Accessors
-
-- (void)setFavArtists:(NSMutableArray *)favArtists
-{
-//	for (PASExtendedNavContainer *vc in self.viewControllers) {
-//		vc.favArtists = favArtists;
-//	}
-}
-
 #pragma mark - Init
 
 - (void)awakeFromNib
@@ -106,11 +97,9 @@
 - (IBAction)doneButtonHandler:(UIBarButtonItem *)sender
 {
 	BOOL didEditArtists = [((PASExtendedNavContainer*) self.selectedViewController).addTvc didEditArtists];
-	if (didEditArtists) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditFavArtists
-															object:self
-														  userInfo:@{ kPASDidEditFavArtists : [NSNumber numberWithBool:didEditArtists] }];
-	}
+	[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditFavArtists
+														object:self
+													  userInfo:@{ kPASDidEditFavArtists : [NSNumber numberWithBool:didEditArtists] }];
 }
 
 @end
