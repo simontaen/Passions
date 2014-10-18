@@ -28,7 +28,7 @@
 		
 		[self _loadThumbnailImageForArtist:artist];
 		self.artistName.text = artist.name;
-		self.detailText.text = [self _stringForNumberOfAlbums:artist.totalAlbums];
+		self.detailText.text = [artist availableAlbums];
 	}
 }
 
@@ -58,30 +58,14 @@
 	// clear the image to avoid seeing old images when scrolling
 	self.artistImage.image = nil;
 	
-	if ([artist sourceImageURLWithFormatName:ImageFormatNameArtistThumbnailSmall]) {
-		// an image is available, so get it from the cache
-		[[FICImageCache sharedImageCache] retrieveImageForEntity:artist
-												  withFormatName:ImageFormatNameArtistThumbnailSmall
-												 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
-													 // check if this cell hasn't been reused for a different artist
-													 if (artist == self.entity && image) {
-														 self.artistImage.image = image;
-													 }
-												  }];
-	} else {
-		self.artistImage.image = [PASResources artistThumbnailPlaceholder];
-	}
-}
-
-- (NSString *)_stringForNumberOfAlbums:(NSNumber *)noOfAlbums
-{
-	if (!noOfAlbums) {
-		return @"Processing on Server...";
-	} else if (noOfAlbums.longValue == 1) {
-		return [NSString stringWithFormat:@"%lu Album available", noOfAlbums.longValue];
-	} else {
-		return [NSString stringWithFormat:@"%lu Albums available", noOfAlbums.longValue];
-	}
+	[[FICImageCache sharedImageCache] retrieveImageForEntity:artist
+											  withFormatName:ImageFormatNameArtistThumbnailSmall
+											 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+												 // check if this cell hasn't been reused for a different artist
+												 if (artist == self.entity) {
+													 self.artistImage.image = image ?: [PASResources artistThumbnailPlaceholder];
+												 }
+											 }];
 }
 
 - (NSString *)_stringForPlaycount:(NSUInteger)playcount

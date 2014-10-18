@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="dVK-cM-Icv">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Fav ArtistsTVC-->
@@ -36,6 +37,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G6R-0w-a0i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1283" y="-848"/>
+        </scene>
+        <!--Artist Info-->
+        <scene sceneID="8VM-tf-Mx8">
+            <objects>
+                <viewController storyboardIdentifier="PASArtistInfo" id="v9L-8X-8X7" customClass="PASArtistInfo" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JVj-ya-1Z4"/>
+                        <viewControllerLayoutGuide type="bottom" id="AKQ-CD-78U"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="b8S-ab-Phz">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IYd-fl-c6s">
+                                <rect key="frame" x="0.0" y="20" width="320" height="320"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="Ds7-FX-BVY"/>
+                                    <constraint firstAttribute="height" constant="320" id="VEt-2Q-kgG"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="320" id="lzz-UU-SkG"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qRW-K6-BfA">
+                                <rect key="frame" x="16" y="348" width="288" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="2Oz-v0-LND"/>
+                                    <constraint firstAttribute="width" constant="288" id="64l-o8-0wh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qRW-K6-BfA" firstAttribute="leading" secondItem="b8S-ab-Phz" secondAttribute="leadingMargin" id="B0z-80-9IU"/>
+                            <constraint firstItem="qRW-K6-BfA" firstAttribute="centerX" secondItem="IYd-fl-c6s" secondAttribute="centerX" id="Nv7-4D-9wu"/>
+                            <constraint firstItem="qRW-K6-BfA" firstAttribute="top" secondItem="IYd-fl-c6s" secondAttribute="bottom" constant="8" symbolic="YES" id="Y2t-By-m6F"/>
+                            <constraint firstItem="IYd-fl-c6s" firstAttribute="leading" secondItem="JVj-ya-1Z4" secondAttribute="leading" id="aKu-2b-uTa"/>
+                            <constraint firstItem="IYd-fl-c6s" firstAttribute="top" secondItem="JVj-ya-1Z4" secondAttribute="bottom" id="b3G-Uj-S7z"/>
+                            <constraint firstItem="IYd-fl-c6s" firstAttribute="trailing" secondItem="JVj-ya-1Z4" secondAttribute="trailing" id="qgR-Pd-URe"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="artistImage" destination="IYd-fl-c6s" id="mKE-Io-8Hj"/>
+                        <outlet property="name" destination="qRW-K6-BfA" id="u8S-ES-ArR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O0U-Cq-Zsu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-892" y="-848"/>
         </scene>
         <!--MyPVC-->
         <scene sceneID="xzA-43-z2o">

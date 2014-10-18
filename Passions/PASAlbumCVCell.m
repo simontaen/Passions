@@ -8,7 +8,6 @@
 
 #import "PASAlbumCVCell.h"
 #import "FICImageCache.h"
-#import "PASResources.h"
 
 @implementation PASAlbumCVCell
 
@@ -25,15 +24,12 @@
 		[[FICImageCache sharedImageCache] retrieveImageForEntity:album
 												  withFormatName:ImageFormatNameAlbumThumbnailMedium
 												 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
-			// check if this cell hasn't been reused for a different album
-			if (album == self.album) {
-				if (image) {
-					self.albumImage.image = image;
-				} else {
-					self.albumImage.image = [PASResources albumThumbnailPlaceholder];
-				}
-			}
-		}];
+													 // check if this cell hasn't been reused for a different album
+													 if (album == self.album) {
+														 self.albumImage.image = image ?: [PASResources albumThumbnailPlaceholder];
+													 }
+												 }];
+		
 		self.releaseDateLabel.text = album.releaseDate;
 	}
 }

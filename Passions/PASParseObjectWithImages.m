@@ -26,12 +26,13 @@
 
 - (NSURL *)sourceImageURL
 {
-	if (!_sourceImageURL && self.images.count != 0) {
+	if (!_sourceImageURL) {
 		NSString *url;
-		if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-			url = [self.images lastObject];
+		if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || self.images.count < 4) {
+			url = [self.images firstObject];
 		} else {
-			url = self.images[self.images.count -2];
+			// we have 4 or more images, the second image should suffice for iPhone
+			url = self.images[1];
 		}
 		_sourceImageURL = [NSURL URLWithString:url];
 	}

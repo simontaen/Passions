@@ -24,6 +24,7 @@
 		F476F0EB19B8D8EA00185544 /* PASArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0EA19B8D8EA00185544 /* PASArtist.m */; };
 		F476F0EE19B8D9A100185544 /* PASResources.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0ED19B8D9A100185544 /* PASResources.m */; };
 		F476F0F119B8FFA700185544 /* PASAddFromSamplesTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0F019B8FFA700185544 /* PASAddFromSamplesTVC.m */; };
+		F48FD13F19F28F6700F072A0 /* PASArtistInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F48FD13E19F28F6700F072A0 /* PASArtistInfo.m */; };
 		F49137F119B7137900E4FC0D /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F019B7137900E4FC0D /* Accounts.framework */; };
 		F49137F319B7142300E4FC0D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F219B7142300E4FC0D /* Social.framework */; };
 		F49137F519B714A200E4FC0D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F419B714A200E4FC0D /* QuartzCore.framework */; };
@@ -77,6 +78,8 @@
 		F476F0ED19B8D9A100185544 /* PASResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASResources.m; sourceTree = "<group>"; };
 		F476F0EF19B8FFA700185544 /* PASAddFromSamplesTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddFromSamplesTVC.h; sourceTree = "<group>"; };
 		F476F0F019B8FFA700185544 /* PASAddFromSamplesTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAddFromSamplesTVC.m; sourceTree = "<group>"; };
+		F48FD13D19F28F6700F072A0 /* PASArtistInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASArtistInfo.h; sourceTree = "<group>"; };
+		F48FD13E19F28F6700F072A0 /* PASArtistInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASArtistInfo.m; sourceTree = "<group>"; };
 		F49137F019B7137900E4FC0D /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		F49137F219B7142300E4FC0D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		F49137F419B714A200E4FC0D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -171,6 +174,8 @@
 				F4D6C4B019BFAB8800465781 /* PASArtistTVCell.h */,
 				F4D6C4B119BFAB8800465781 /* PASArtistTVCell.m */,
 				F4D6C4B219BFAB8800465781 /* PASArtistTVCell.xib */,
+				F48FD13D19F28F6700F072A0 /* PASArtistInfo.h */,
+				F48FD13E19F28F6700F072A0 /* PASArtistInfo.m */,
 			);
 			name = "Favorite Artists";
 			sourceTree = "<group>";
@@ -477,6 +482,7 @@
 				F4D284D019E0AE26008A3913 /* PASParseObjectWithImages.m in Sources */,
 				F4A779881793113E00C770B9 /* PASAppDelegate.m in Sources */,
 				F4D284CD19E087D0008A3913 /* PASAlbum.m in Sources */,
+				F48FD13F19F28F6700F072A0 /* PASArtistInfo.m in Sources */,
 				F461C8E119EB006C0081B445 /* PASExtendedNavContainer.m in Sources */,
 				F476F0F119B8FFA700185544 /* PASAddFromSamplesTVC.m in Sources */,
 				F476F0EE19B8D9A100185544 /* PASResources.m in Sources */,

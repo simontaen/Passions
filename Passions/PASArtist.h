@@ -12,6 +12,8 @@
 extern NSString *const ImageFormatFamilyArtistThumbnails;
 extern NSString *const ImageFormatNameArtistThumbnailSmall;
 extern CGSize const ImageFormatImageSizeArtistThumbnailSmall;
+extern NSString *const ImageFormatNameArtistThumbnailLarge;
+extern CGSize const ImageFormatImageSizeArtistThumbnailLarge;
 
 @interface PASArtist : PASParseObjectWithImages <PFSubclassing>
 
@@ -30,6 +32,10 @@ extern CGSize const ImageFormatImageSizeArtistThumbnailSmall;
 #pragma mark - Queries
 
 + (PFQuery *)favArtistsForCurrentUser;
+
+#pragma mark - Compound properties
+
+- (NSString *)availableAlbums;
 
 #pragma mark - adding / creating
 

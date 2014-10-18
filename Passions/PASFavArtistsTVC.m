@@ -11,6 +11,7 @@
 #import "PASArtist.h"
 #import "PASMyPVC.h"
 #import "FICImageCache.h"
+#import "PASArtistInfo.h"
 
 NSString * const kPASSetFavArtists = @"kPASSetFavArtists";
 NSString * const kPASDidEditFavArtists = @"kPASDidEditFavArtists";
@@ -89,9 +90,6 @@ NSString * const kPASDidEditFavArtists = @"kPASDidEditFavArtists";
 				});
 			}
 		}];
-		
-	} else if (editingStyle == UITableViewCellEditingStyleInsert) {
-		// Create a new instance of the appropriate class, and save it to Parse
 	}
 	[tableView endUpdates];
 }
@@ -173,6 +171,16 @@ NSString * const kPASDidEditFavArtists = @"kPASDidEditFavArtists";
 															  userInfo:@{ kPASSetFavArtists : artists }];
 		}
 	}
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	PASArtist *artist = [self _artistAtIndexPath:indexPath];
+	
+	PASArtistInfo *vc = (PASArtistInfo *)[self.storyboard instantiateViewControllerWithIdentifier:@"PASArtistInfo"];
+	vc.artist = artist;
+	
+	[self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

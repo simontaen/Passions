@@ -13,6 +13,8 @@
 NSString *const ImageFormatFamilyArtistThumbnails = @"ImageFormatFamilyArtistThumbnails";
 NSString *const ImageFormatNameArtistThumbnailSmall = @"ImageFormatNameArtistThumbnailSmall";
 CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
+NSString *const ImageFormatNameArtistThumbnailLarge = @"ImageFormatNameArtistThumbnailLarge";
+CGSize const ImageFormatImageSizeArtistThumbnailLarge = {320, 320};
 
 @implementation PASArtist
 
@@ -52,6 +54,19 @@ CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
 	PFQuery *query = [PASArtist query];
 	[query whereKey:@"name" equalTo:name];
 	return query;
+}
+
+#pragma mark - Compound properties
+
+- (NSString *)availableAlbums
+{
+	if (!self.totalAlbums) {
+		return @"Processing on Server...";
+	} else if (self.totalAlbums.longValue == 1) {
+		return [NSString stringWithFormat:@"%lu Album available", self.totalAlbums.longValue];
+	} else {
+		return [NSString stringWithFormat:@"%lu Albums available", self.totalAlbums.longValue];
+	}
 }
 
 #pragma mark - adding / creating

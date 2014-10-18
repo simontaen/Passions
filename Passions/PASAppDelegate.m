@@ -80,9 +80,16 @@
 																		maximumCount:200
 																			 devices:FICImageFormatDevicePhone
 																	  protectionMode:FICImageFormatProtectionModeNone];
+	FICImageFormat *largeArtistThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameArtistThumbnailLarge
+																			  family:ImageFormatFamilyArtistThumbnails
+																		   imageSize:ImageFormatImageSizeArtistThumbnailLarge
+																			   style:FICImageFormatStyle32BitBGR
+																		maximumCount:50
+																			 devices:FICImageFormatDevicePhone
+																	  protectionMode:FICImageFormatProtectionModeNone];
 	FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
 	sharedImageCache.delegate = self;
-	sharedImageCache.formats = @[mediumAlbumThumbnailImageFormat, smallArtistThumbnailImageFormat];
+	sharedImageCache.formats = @[mediumAlbumThumbnailImageFormat, smallArtistThumbnailImageFormat, largeArtistThumbnailImageFormat];
 	
 	return YES;
 }
@@ -112,7 +119,7 @@
 
 - (BOOL)imageCache:(FICImageCache *)imageCache shouldProcessAllFormatsInFamily:(NSString *)formatFamily forEntity:(id<FICEntity>)entity
 {
-	return NO;
+	return YES;
 }
 
 - (void)imageCache:(FICImageCache *)imageCache errorDidOccurWithMessage:(NSString *)errorMessage
