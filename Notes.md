@@ -47,11 +47,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 	* send over the parseAlbum objectId
 * Silent push after fav'ing an Artist (Status Processing) to update UI automatically
 
-* Album Info screen
-
-* Artist Info screen (this could be reused on adding artists, but the cell needs to be a bit different then)
-	* also user thinks is goes to timeline
-
 * Parse seems to just take a default date of today for the Albums sometimes (check Bruce and Beatles)
 	* actually Spotify delivers shit data! (Track of my Years from Bryan Adams for example!)
 
@@ -74,6 +69,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Use Apple Example to hide Hairline
 * Another point on the PageController to show that there is something more
 * Hide status bar on timeline, it scrolls under it.
+* tapping on a fav artists, the user might think it goes to the timeline (but it could just be b/c it did NOT go to ArtistInfo at that point)
 
 # 2.0
 

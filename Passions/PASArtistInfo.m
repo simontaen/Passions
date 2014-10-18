@@ -43,6 +43,13 @@
 	self.artist ? [self _refreshUiWithArtist:self.artist] : [self _refreshUiWithAlbum:self.album];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	// Configure navigationController
+	self.navigationController.navigationBarHidden = NO;
+}
+
 #pragma mark - Navigation
 
 - (void)_refreshUiWithArtist:(PASArtist *)artist

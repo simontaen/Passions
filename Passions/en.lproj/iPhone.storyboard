@@ -36,7 +36,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G6R-0w-a0i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1283" y="-848"/>
+            <point key="canvasLocation" x="-1304" y="-848"/>
         </scene>
         <!--Artist Info-->
         <scene sceneID="8VM-tf-Mx8">
@@ -86,7 +86,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O0U-Cq-Zsu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-892" y="-848"/>
+            <point key="canvasLocation" x="-905" y="-178"/>
         </scene>
         <!--MyPVC-->
         <scene sceneID="xzA-43-z2o">
@@ -129,7 +129,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wzR-ZF-1FM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-902" y="-178"/>
+            <point key="canvasLocation" x="-497" y="-848"/>
         </scene>
         <!--RootVC-->
         <scene sceneID="39e-Dv-tP6">
@@ -196,7 +196,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="PASTimelineCVC" id="Oif-7i-ECo" customClass="PASTimelineCVC" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="X85-wy-sXV">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="kY8-yg-xNx">
                             <size key="itemSize" width="160" height="160"/>
@@ -237,10 +237,11 @@
                         </connections>
                     </collectionView>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="b54-Uz-SLC"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pJo-t6-ltZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1703" y="-178"/>
+            <point key="canvasLocation" x="-1304" y="-178"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8Rl-lo-BUx">
@@ -258,7 +259,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4ak-kt-S9Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1283" y="-178"/>
+            <point key="canvasLocation" x="-905" y="-848"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="SUR-iY-a72">
+            <objects>
+                <navigationController storyboardIdentifier="TimelineNav" automaticallyAdjustsScrollViewInsets="NO" id="pcv-TF-eoW" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="59j-FK-eu6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Oif-7i-ECo" kind="relationship" relationship="rootViewController" id="8SB-J2-rSv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5ly-XP-9vc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1703" y="-178"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

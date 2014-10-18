@@ -34,7 +34,7 @@
 
 - (PASTimelineCVC *)_timelineCVC
 {
-	return [self.storyboard instantiateViewControllerWithIdentifier:@"PASTimelineCVC"];
+	return [self.storyboard instantiateViewControllerWithIdentifier:@"TimelineNav"];
 }
 
 @end

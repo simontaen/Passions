@@ -23,9 +23,12 @@
 {
 	self = [super initWithCoder:aDecoder];
 	if (!self) return nil;
+	
+	// Configure Parse Query
 	self.paginationEnabled = YES;
 	self.objectsPerPage = 500;
 	self.loadingViewEnabled = NO;
+	
 	return self;
 }
 
@@ -34,6 +37,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
+	
+	// Configure navigationController
+	self.navigationController.navigationBarHidden = YES;
+
 	if (!self.isLoading) {
 		self.isRefreshing = YES;
 		[self loadObjects];
@@ -85,7 +92,7 @@
 	PASArtistInfo *vc = (PASArtistInfo *)[self.storyboard instantiateViewControllerWithIdentifier:@"PASArtistInfo"];
 	vc.album = album;
 	
-	// TODO: show it
+	[self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
