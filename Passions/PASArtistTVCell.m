@@ -87,9 +87,9 @@
 - (NSString *)_stringForPlaycount:(NSUInteger)playcount
 {
 	if (playcount == 1) {
-		return [NSString stringWithFormat:@"%u Play", playcount];
+		return [NSString stringWithFormat:@"%lu Play", (unsigned long)playcount];
 	} else {
-		return [NSString stringWithFormat:@"%u Plays", playcount];
+		return [NSString stringWithFormat:@"%lu Plays", (unsigned long)playcount];
 	}
 }
 
