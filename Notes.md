@@ -79,11 +79,11 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Already favorited Artists passing in PASFavArtistsTVC (artistNames)
 	* It could be improved by checking if self.objects actually did change
 	* only then create a new artistNames array
-* segmented control on Timeline, in NavBar which hide on swipe.
+* segmented control on Timeline, in NavBar which hides on swipe (this would also solve the status bar problem)
 	* to filter results based on release date? Where do I get info on pre-releases?
 	* to filter results and show all or only missing albums (this is the most interesting!)
 	* change ordering: by release date, by artist.
-* search for not in library artists to add (but consider all resources!)
+* search for not in library artists to add (but consider all resources!) - number one feature request!
 
 # Data communication with Parse
 
