@@ -8,11 +8,13 @@
 
 @import UIKit;
 #import "PASArtist.h"
+#import "PASAlbum.h"
 
 @interface PASArtistInfo : UIViewController
 
 @property (nonatomic, strong) PASArtist *artist;
+@property (nonatomic, strong) PASAlbum *album;
 
-@property (weak, nonatomic) IBOutlet UIImageView *artistImage;
+@property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @end

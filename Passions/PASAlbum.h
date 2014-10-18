@@ -12,6 +12,8 @@
 extern NSString *const ImageFormatFamilyAlbumThumbnails;
 extern NSString *const ImageFormatNameAlbumThumbnailMedium;
 extern CGSize const ImageFormatImageSizeAlbumThumbnailMedium;
+extern NSString *const ImageFormatNameAlbumThumbnailLarge;
+extern CGSize const ImageFormatImageSizeAlbumThumbnailLarge;
 
 @interface PASAlbum : PASParseObjectWithImages <PFSubclassing>
 

@@ -73,6 +73,13 @@
 																		maximumCount:800
 																			 devices:FICImageFormatDevicePhone
 																	  protectionMode:FICImageFormatProtectionModeNone];
+	FICImageFormat *largeAlbumThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameAlbumThumbnailLarge
+																			  family:ImageFormatFamilyAlbumThumbnails
+																		   imageSize:ImageFormatImageSizeAlbumThumbnailLarge
+																			   style:FICImageFormatStyle32BitBGR
+																		maximumCount:100
+																			 devices:FICImageFormatDevicePhone
+																	  protectionMode:FICImageFormatProtectionModeNone];
 	FICImageFormat *smallArtistThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameArtistThumbnailSmall
 																			  family:ImageFormatFamilyArtistThumbnails
 																		   imageSize:ImageFormatImageSizeArtistThumbnailSmall
@@ -89,7 +96,7 @@
 																	  protectionMode:FICImageFormatProtectionModeNone];
 	FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
 	sharedImageCache.delegate = self;
-	sharedImageCache.formats = @[mediumAlbumThumbnailImageFormat, smallArtistThumbnailImageFormat, largeArtistThumbnailImageFormat];
+	sharedImageCache.formats = @[mediumAlbumThumbnailImageFormat, largeAlbumThumbnailImageFormat, smallArtistThumbnailImageFormat, largeArtistThumbnailImageFormat];
 	
 	return YES;
 }

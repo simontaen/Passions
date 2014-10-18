@@ -8,6 +8,7 @@
 
 #import "PASTimelineCVC.h"
 #import "PASAlbumCVCell.h"
+#import "PASArtistInfo.h"
 #import "PASAlbum.h"
 
 @interface PASTimelineCVC ()
@@ -41,6 +42,11 @@
 
 #pragma mark - CPFQueryCollectionViewController
 
+- (PASAlbum *)_albumAtIndexPath:(NSIndexPath *)indexPath
+{
+	return (PASAlbum *)[self objectAtIndexPath:indexPath];
+}
+
 - (PFQuery *)queryForCollection
 {
 	return [PASAlbum albumsOfCurrentUsersFavoriteArtists];
@@ -68,6 +74,18 @@
 	// also the PageViewController probably needs updates too
 	// this should be ok in the meantime
 	return UIStatusBarStyleDefault;
+}
+
+#pragma mark - Navigation
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+	PASAlbum *album = [self _albumAtIndexPath:indexPath];
+	
+	PASArtistInfo *vc = (PASArtistInfo *)[self.storyboard instantiateViewControllerWithIdentifier:@"PASArtistInfo"];
+	vc.album = album;
+	
+	// TODO: show it
 }
 
 @end

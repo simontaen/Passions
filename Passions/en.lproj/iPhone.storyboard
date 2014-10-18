@@ -58,7 +58,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="320" id="lzz-UU-SkG"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qRW-K6-BfA">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qRW-K6-BfA">
                                 <rect key="frame" x="16" y="348" width="288" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="2Oz-v0-LND"/>
@@ -80,8 +80,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="artistImage" destination="IYd-fl-c6s" id="mKE-Io-8Hj"/>
-                        <outlet property="name" destination="qRW-K6-BfA" id="u8S-ES-ArR"/>
+                        <outlet property="image" destination="IYd-fl-c6s" id="Oix-cu-bKE"/>
+                        <outlet property="name" destination="qRW-K6-BfA" id="IZt-Uz-2EH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O0U-Cq-Zsu" userLabel="First Responder" sceneMemberID="firstResponder"/>

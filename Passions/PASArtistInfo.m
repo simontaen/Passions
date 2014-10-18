@@ -22,7 +22,16 @@
 	if (_artist != artist) {
 		_artist = artist;
 		self.title = artist.name;
-		[self _refreshUI:artist];
+		[self _refreshUiWithArtist:artist];
+	}
+}
+
+-(void)setAlbum:(PASAlbum *)album
+{
+	if (_album != album) {
+		_album = album;
+		self.title = album.name;
+		[self _refreshUiWithAlbum:album];
 	}
 }
 
@@ -31,23 +40,35 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	[self _refreshUI:self.artist];
+	self.artist ? [self _refreshUiWithArtist:self.artist] : [self _refreshUiWithAlbum:self.album];
 }
 
 #pragma mark - Navigation
 
-- (void)_refreshUI:(PASArtist *)artist
+- (void)_refreshUiWithArtist:(PASArtist *)artist
 {
 	[[FICImageCache sharedImageCache] retrieveImageForEntity:artist
 											  withFormatName:ImageFormatNameArtistThumbnailLarge
 											 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
 												 // check if this image view hasn't been reused for a different artist
 												 if (artist == self.artist) {
-													 self.artistImage.image = image ?: [PASResources artistThumbnailPlaceholder];
+													 self.image.image = image ?: [PASResources artistThumbnailPlaceholder];
 												 }
 											 }];
-
 	self.name.text = [artist availableAlbums];
+}
+
+- (void)_refreshUiWithAlbum:(PASAlbum *)album
+{
+	[[FICImageCache sharedImageCache] retrieveImageForEntity:album
+											  withFormatName:ImageFormatNameAlbumThumbnailLarge
+											 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+												 // check if this image view hasn't been reused for a different album
+												 if (album == self.album) {
+													 self.image.image = image ?: [PASResources albumThumbnailPlaceholder];
+												 }
+											 }];
+	self.name.text = album.name;
 }
 
 

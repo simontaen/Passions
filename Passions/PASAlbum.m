@@ -11,7 +11,9 @@
 
 NSString *const ImageFormatFamilyAlbumThumbnails = @"ImageFormatFamilyAlbumThumbnails";
 NSString *const ImageFormatNameAlbumThumbnailMedium = @"ImageFormatNameAlbumThumbnailMedium";
-CGSize const ImageFormatImageSizeAlbumThumbnailMedium = {154, 154};
+CGSize const ImageFormatImageSizeAlbumThumbnailMedium = {160, 160};
+NSString *const ImageFormatNameAlbumThumbnailLarge = @"ImageFormatNameAlbumThumbnailLarge";
+CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 
 @implementation PASAlbum
 
