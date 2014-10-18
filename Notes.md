@@ -48,11 +48,16 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Silent push after fav'ing an Artist (Status Processing) to update UI automatically
 
 * Album Info screen
+
 * Artist Info screen (this could be reused on adding artists, but the cell needs to be a bit different then)
+	* also user thinks is goes to timeline
 
 * Parse seems to just take a default date of today for the Albums sometimes (check Bruce and Beatles)
 	* actually Spotify delivers shit data! (Track of my Years from Bryan Adams for example!)
 
+* Tapping the Status Bar should scroll to top.
+
+* Check the release date sorting on timeline after adding an artits
 
 ## UI
 
@@ -65,7 +70,11 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * hairlines below extended nav bars and table view headers
 * flickering when the transition gets aborted
 * extended nav bar color when transitioning
-* ReleaseDateView on Timeline
+* ReleaseDateView on Timeline (see examples)
+* Either Transculency OR NavBar hiding. Both doesn't make sense. Hiding seems to be the better solution.
+* Use Apple Example to hide Hairline
+* Another point on the PageController to show that there is something more
+* Hide status bar on timeline, it scrolls under it.
 
 # 2.0
 
