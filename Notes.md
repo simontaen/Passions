@@ -55,7 +55,8 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Parse seems to just take a default date of today for the Albums sometimes (check Bruce and Beatles)
 	* actually Spotify delivers shit data! (Track of my Years from Bryan Adams for example!)
 
-* Check the release date sorting on timeline after adding an artists
+* Switch Release Date to a real Date on Parse: https://www.parse.com/docs/js_guide#objects-types
+	* https://www.parse.com/questions/javascript-query-using-greaterthan-createdat
 
 ## UI
 

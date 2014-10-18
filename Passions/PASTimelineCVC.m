@@ -24,6 +24,7 @@
 	if (!self) return nil;
 	self.paginationEnabled = YES;
 	self.objectsPerPage = 500;
+	self.loadingViewEnabled = NO;
 	return self;
 }
 
