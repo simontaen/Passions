@@ -32,7 +32,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	[self loadObjects];
+	if (!self.isLoading) {
+		self.isRefreshing = YES;
+		[self loadObjects];
+	}
 }
 
 #pragma mark - CPFQueryCollectionViewController

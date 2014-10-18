@@ -214,7 +214,7 @@
     //if the scrollView has reached the bottom fetch the next page of objects
     float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
     if (bottomEdge >= scrollView.contentSize.height && [self hasMoreObjects]) {
-        [self setIsRefreshing:NO];
+        _isRefreshing = NO;
         [self performQuery];
     }
 }
