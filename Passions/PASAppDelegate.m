@@ -63,7 +63,8 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	// Register for remote notifications
 	UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge |
 																						 UIUserNotificationTypeAlert |
-																						 UIUserNotificationTypeSound)
+																						 UIUserNotificationTypeSound |
+																						 UIUserNotificationTypeNone)
 																			 categories:nil];
 	[[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 	[[UIApplication sharedApplication] registerForRemoteNotifications];
