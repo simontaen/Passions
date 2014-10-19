@@ -20,6 +20,8 @@
 
 @implementation PASAppDelegate
 
+static NSString * const kAlbumIdPushKey = @"a";
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Setup LastFmFetchr
@@ -41,15 +43,15 @@
 	[PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
 	
 	if (application.applicationState != UIApplicationStateBackground) {
-		// Track an app open here if we launch with a push, unless
-		// "content_available" was used to trigger a background push (introduced
-		// in iOS 7). In that case, we skip tracking here to avoid double
-		// counting the app-open.
-		BOOL preBackgroundPush = ![application respondsToSelector:@selector(backgroundRefreshStatus)];
-		BOOL oldPushHandlerOnly = ![self respondsToSelector:@selector(application:didReceiveRemoteNotification:fetchCompletionHandler:)];
-		BOOL noPushPayload = ![launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-		if (preBackgroundPush || oldPushHandlerOnly || noPushPayload) {
-			//[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+		// Track an app open here if NOT from push,
+		// else you would track it twice
+		
+		NSDictionary *userInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+		
+		if (!userInfo) {
+			[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+		} else {
+			NSLog(@"UserInfo didFinishLaunchingWithOptions %@", userInfo);
 		}
 	}
 	
@@ -131,7 +133,10 @@
 
 - (void)imageCache:(FICImageCache *)imageCache errorDidOccurWithMessage:(NSString *)errorMessage
 {
-	NSLog(@"%@", errorMessage);
+	// TODO: handle this differently
+	if (![errorMessage containsString:@"nil source image URL for image format"]) {
+		NSLog(@"%@", errorMessage);
+	}
 }
 
 #pragma mark - Notifications
@@ -157,18 +162,29 @@
 	}
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-{
-	[PFPush handlePush:userInfo];
-	
-	if (application.applicationState == UIApplicationStateInactive) {
-		[PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
-	}
-}
-
+/// Process incoming remote notifications when running or (foreground) launching from a notification
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-	[PFPush handlePush:userInfo];
+	NSLog(@"UserInfo didReceiveRemoteNotification %@", userInfo);
+	NSString *objectId = userInfo[kAlbumIdPushKey];
+	
+	if (objectId) {
+		PASAlbum *album = [PASAlbum objectWithoutDataWithObjectId:userInfo[kAlbumIdPushKey]];
+		
+		[album fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+			if (error) {
+				completionHandler(UIBackgroundFetchResultFailed);
+			} else if (!object) {
+				completionHandler(UIBackgroundFetchResultNoData);
+			} else {
+				NSLog(@"New Album %@", object);
+				completionHandler(UIBackgroundFetchResultNewData);
+			}
+		}];
+		
+	} else {
+		completionHandler(UIBackgroundFetchResultFailed);
+	}
 	
 	if (application.applicationState == UIApplicationStateInactive) {
 		[PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
