@@ -84,6 +84,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 	* to filter results and show all or only missing albums (this is the most interesting!)
 	* change ordering: by release date, by artist.
 * search for not in library artists to add (but consider all resources!) - number one feature request!
+* Background fetch for a new Album
 
 # Data communication with Parse
 
