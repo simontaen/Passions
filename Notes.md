@@ -161,7 +161,7 @@ curl -X POST \
 -H "X-Parse-Application-Id: nLPKoK0wdW9csg2mTwwPkiGEDBh4AlU3f6il9qqQ" \
 -H "X-Parse-Master-Key: Mx6FjfJ4FYW6fi9Ra1G23AEcQuDgtm2xBH1yRhS7" \
 -H "Content-Type: application/json" \
--d '{"i":"myTestInstallationId"}' \
+-d '{"i":"T1y1GybQNl"}' \
 https://api.parse.com/1/jobs/fetchFullAlbums
 
 int middle = (int)(self.images.count / 2 - ((self.images.count % 2) / 2));

@@ -21,6 +21,7 @@
 @implementation PASAppDelegate
 
 static NSString * const kAlbumIdPushKey = @"a";
+static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -100,6 +101,9 @@ static NSString * const kAlbumIdPushKey = @"a";
 	sharedImageCache.delegate = self;
 	sharedImageCache.formats = @[mediumAlbumThumbnailImageFormat, largeAlbumThumbnailImageFormat, smallArtistThumbnailImageFormat, largeArtistThumbnailImageFormat];
 	
+	// DEBUG
+	NSLog(@"%@", [PFInstallation currentInstallation].objectId);
+	
 	return YES;
 }
 
@@ -167,10 +171,14 @@ static NSString * const kAlbumIdPushKey = @"a";
 {
 	NSLog(@"UserInfo didReceiveRemoteNotification %@", userInfo);
 	NSString *albumId = userInfo[kAlbumIdPushKey];
+	NSString *refreshFlag = userInfo[kFavArtistsRefreshPushKey];
 	
 	if (albumId) {
 		[self _pushHandlerNewAlbum:albumId fetchCompletionHandler:completionHandler];
 		
+	} else if (refreshFlag) {
+		[self _pushHandlerRefreshFavArtistsWithFetchCompletionHandler:completionHandler];
+	
 	} else {
 		completionHandler(UIBackgroundFetchResultFailed);
 	}
@@ -178,6 +186,12 @@ static NSString * const kAlbumIdPushKey = @"a";
 	if (application.applicationState == UIApplicationStateInactive) {
 		[PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
 	}
+}
+
+- (void)_pushHandlerRefreshFavArtistsWithFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+	NSLog(@"Refresh FavArtists");
+	completionHandler(UIBackgroundFetchResultNewData);
 }
 
 - (void)_pushHandlerNewAlbum:(NSString *)objectId fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
