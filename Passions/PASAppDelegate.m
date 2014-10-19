@@ -166,21 +166,10 @@ static NSString * const kAlbumIdPushKey = @"a";
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	NSLog(@"UserInfo didReceiveRemoteNotification %@", userInfo);
-	NSString *objectId = userInfo[kAlbumIdPushKey];
+	NSString *albumId = userInfo[kAlbumIdPushKey];
 	
-	if (objectId) {
-		PASAlbum *album = [PASAlbum objectWithoutDataWithObjectId:userInfo[kAlbumIdPushKey]];
-		
-		[album fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-			if (error) {
-				completionHandler(UIBackgroundFetchResultFailed);
-			} else if (!object) {
-				completionHandler(UIBackgroundFetchResultNoData);
-			} else {
-				NSLog(@"New Album %@", object);
-				completionHandler(UIBackgroundFetchResultNewData);
-			}
-		}];
+	if (albumId) {
+		[self _pushHandlerNewAlbum:albumId fetchCompletionHandler:completionHandler];
 		
 	} else {
 		completionHandler(UIBackgroundFetchResultFailed);
@@ -189,6 +178,22 @@ static NSString * const kAlbumIdPushKey = @"a";
 	if (application.applicationState == UIApplicationStateInactive) {
 		[PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
 	}
+}
+
+- (void)_pushHandlerNewAlbum:(NSString *)objectId fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+	PASAlbum *album = [PASAlbum objectWithoutDataWithObjectId:objectId];
+	
+	[album fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+		if (error) {
+			completionHandler(UIBackgroundFetchResultFailed);
+		} else if (!object) {
+			completionHandler(UIBackgroundFetchResultNoData);
+		} else {
+			NSLog(@"New Album %@", object);
+			completionHandler(UIBackgroundFetchResultNewData);
+		}
+	}];
 }
 
 #pragma mark - Application Lifecycle
