@@ -8,6 +8,12 @@
 
 @import UIKit;
 
+// Constants
+extern NSString * const kPASLastFmApiKey;
+extern NSString * const kPASParseAppId;
+extern NSString * const kPASParseClientKey;
+extern NSString * const kPASParseMasterKey;
+
 @interface PASResources : NSObject
 
 + (UIImage *) artistThumbnailPlaceholder;

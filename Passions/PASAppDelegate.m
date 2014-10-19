@@ -29,11 +29,11 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Setup LastFmFetchr
-	[LastFmFetchr fetchrWithApiKey:@"aed3367b0133ab707cb4e5b6b04da3e7"];
+	[LastFmFetchr fetchrWithApiKey:kPASLastFmApiKey];
 	
 	// Setup Parse
-	[Parse setApplicationId:@"nLPKoK0wdW9csg2mTwwPkiGEDBh4AlU3f6il9qqQ"
-				  clientKey:@"jxhd6vVmIttc1EVfre4Lcza9uwlKzDrCzqZJGSI9"];
+	[Parse setApplicationId:kPASParseAppId
+				  clientKey:kPASParseClientKey];
 	
 	[PFUser enableAutomaticUser];
 	// the app will crash if currentUser is a new user!

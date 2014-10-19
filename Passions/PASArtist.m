@@ -132,8 +132,31 @@ CGSize const ImageFormatImageSizeArtistThumbnailLarge = {320, 320};
 	[newArtist setACL:artistACL];
 	
 	[newArtist saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-		succeeded && !error ? completion(newArtist, nil) : completion(nil, error);
+		if (succeeded && !error) {
+			[PASArtist _triggerAlbumFetching];
+			completion(newArtist, nil);
+		} else {
+			completion(nil, error);
+		}
 	}];
+}
+
++ (void)_triggerAlbumFetching
+{
+	NSURL *url = [NSURL URLWithString:@"https://api.parse.com/1/jobs/fetchFullAlbums"];
+	NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
+	req.HTTPMethod = @"POST";
+	
+	NSData *body = [NSJSONSerialization dataWithJSONObject:@{ @"i" : [PFInstallation currentInstallation].objectId }
+												   options:NSJSONWritingPrettyPrinted error:nil];
+
+	[req setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+	[req setValue:[NSString stringWithFormat:@"%d", [body length]] forHTTPHeaderField:@"Content-Length"];
+	[req setValue:kPASParseAppId forHTTPHeaderField:@"X-Parse-Application-Id"];
+	[req setValue:kPASParseMasterKey forHTTPHeaderField:@"X-Parse-Master-Key"];
+	req.HTTPBody = body;
+	
+	[NSURLConnection sendAsynchronousRequest:req queue:[NSOperationQueue mainQueue] completionHandler:nil];
 }
 
 - (void)_addCurrentUserAsFavoriteWithCompletion:(void (^)(PASArtist *artist, NSError *error))completion

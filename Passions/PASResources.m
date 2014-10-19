@@ -8,6 +8,11 @@
 
 #import "PASResources.h"
 
+NSString * const kPASLastFmApiKey = @"aed3367b0133ab707cb4e5b6b04da3e7";
+NSString * const kPASParseAppId = @"nLPKoK0wdW9csg2mTwwPkiGEDBh4AlU3f6il9qqQ";
+NSString * const kPASParseClientKey = @"jxhd6vVmIttc1EVfre4Lcza9uwlKzDrCzqZJGSI9";
+NSString * const kPASParseMasterKey = @"Mx6FjfJ4FYW6fi9Ra1G23AEcQuDgtm2xBH1yRhS7";
+
 @implementation PASResources
 
 + (UIImage *) artistThumbnailPlaceholder
