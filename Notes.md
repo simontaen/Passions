@@ -85,6 +85,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 	* change ordering: by release date, by artist.
 * search for not in library artists to add (but consider all resources!) - number one feature request!
 * Background fetch for a new Album
+* You might run into performance problems with _triggerAlbumFetching and fetchFullAlbums. If too many requests come in at the same time, I'll run out of background jobs. The job won't run, the user won't get a push when loading is done, and more importantly it could take until the next scheduled album fetch until the artist get its albums. We'll have to see how it turns out.
 
 # Data communication with Parse
 
