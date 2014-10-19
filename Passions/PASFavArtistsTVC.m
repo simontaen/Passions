@@ -123,7 +123,8 @@ NSString * const kPASDidEditFavArtists = @"kPASDidEditFavArtists";
 		// this must be a new user
 		// create the assosiation for push notifications
 		PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-		[currentInstallation setObject:[UIDevice currentDevice].model forKey:@"deviceModel"];
+		NSString *deviceModel = [NSString stringWithFormat:@"%@ (%@)", [UIDevice currentDevice].model, [UIDevice currentDevice].systemVersion];
+		[currentInstallation setObject:deviceModel forKey:@"deviceModel"];
 		[currentInstallation save];
 		[[PFUser currentUser] setObject:currentInstallation.objectId forKey:@"installation"];
 		// save it or else the query will crash
