@@ -17,12 +17,15 @@
 /// The container view controller delegate receiving the protocol callbacks.
 @property (nonatomic, weak) id<PASPageViewControllerDelegate>delegate;
 
-/// setting this will move the page!
-@property (nonatomic, assign) int selectedViewControllerIndex;
+/// the index of the currently displaying view controller
+@property (nonatomic, assign, readonly) int selectedViewControllerIndex;
 /// the currently displaying view controller
 @property (nonatomic, weak, readonly) UIViewController *selectedViewController;
 /// all the view controllers this container displays
 @property (nonatomic, strong) NSArray *viewControllers;
+
+/// Transition to the view controller at the specified index
+- (void)transitionToViewControllerAtIndex:(int)index interactive:(BOOL)interactive;
 
 /// let the delegate assign gesture recogizers for an interactive transition
 - (void)addGestureRecognizerToContainerView:(UIGestureRecognizer *)recognizer;

@@ -42,7 +42,10 @@
 #pragma mark - PASPageViewController
 
 @interface PASPageViewController ()
+@property (nonatomic, assign, readwrite) int selectedViewControllerIndex;
 @property (nonatomic, weak, readwrite) UIViewController *selectedViewController;
+@property (nonatomic, assign) BOOL interactive;
+
 @property (nonatomic, weak) IBOutlet UIPageControl *pageControlView;
 @property (nonatomic, strong) PASInteractiveTransition *bla;
 @end
@@ -78,7 +81,7 @@
 	self.pageControlView.layer.cornerRadius = 7.5;
 	self.pageControlView.layer.masksToBounds = YES;
 	
-	[self setupDelegateForTransitionsBetweenViewControllers:self.viewControllers];
+	[self _setupDelegateForTransitionsBetweenViewControllers:self.viewControllers];
 	
 	// call the setter to make sure the view is swapped
 	self.selectedViewController = (self.selectedViewController ?: [self.viewControllers firstObject]);
@@ -117,7 +120,7 @@
 	[self.selectedViewController removeFromParentViewController];
 	
 	if ([self isViewLoaded]) {
-		[self setupDelegateForTransitionsBetweenViewControllers:viewControllers];
+		[self _setupDelegateForTransitionsBetweenViewControllers:viewControllers];
 	}
 	
 	_viewControllers = viewControllers;
@@ -125,7 +128,7 @@
 	self.selectedViewController = [_viewControllers firstObject];
 }
 
-- (void)setupDelegateForTransitionsBetweenViewControllers:(NSArray *)viewControllers
+- (void)_setupDelegateForTransitionsBetweenViewControllers:(NSArray *)viewControllers
 {
 	BOOL delegateConforms = [self.delegate respondsToSelector:@selector(pageViewController:setupInteractionControllerForTransitionFromViewController:toViewController:)];
 	NSUInteger nrOfVcs = viewControllers.count;
@@ -194,12 +197,20 @@
 	}];
 }
 
+#pragma mark - Public Methods
+
+- (void)transitionToViewControllerAtIndex:(int)index interactive:(BOOL)interactive
+{
+	self.interactive = interactive;
+	self.selectedViewControllerIndex = index;
+}
+
 #pragma mark - PASPageControlView Target-Action
 
 - (IBAction)didChangeCurrentPage:(UIPageControl *)sender
 {
 	if(sender.currentPage != self.selectedViewControllerIndex) {
-		self.selectedViewControllerIndex = (int)sender.currentPage;
+		[self transitionToViewControllerAtIndex:(int)sender.currentPage interactive:NO];
 	}
 }
 
@@ -273,10 +284,8 @@
 	NSUInteger toIndex = [self.viewControllers indexOfObject:toVc];
 	PASPrivateTransitionContext *transitionContext = [[PASPrivateTransitionContext alloc] initWithFromViewController:fromVc toViewController:toVc goingRight:toIndex > fromIndex];
 	
-	BOOL triggeredByControl = [self.pageControlView currentPage] != self.selectedViewControllerIndex;
-	
 	transitionContext.animated = YES;
-	transitionContext.interactive = !triggeredByControl && (interactiveTransitionDelegate != nil);
+	transitionContext.interactive = self.interactive && interactiveTransitionDelegate != nil;
 	transitionContext.completionBlock = ^(BOOL didComplete) {
 		if (didComplete) {
 			[fromVc.view removeFromSuperview];

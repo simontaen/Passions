@@ -59,10 +59,10 @@
 		
 		if (!self.leftToRight && selectedVcIdx != self.pageViewController.viewControllers.count - 1) {
 			// transition right
-			self.pageViewController.selectedViewControllerIndex = ++selectedVcIdx;
+			[self.pageViewController transitionToViewControllerAtIndex:++selectedVcIdx interactive:YES];
 		} else if (self.leftToRight && selectedVcIdx > 0) {
 			// transition left
-			self.pageViewController.selectedViewControllerIndex = --selectedVcIdx;
+			[self.pageViewController transitionToViewControllerAtIndex:--selectedVcIdx interactive:YES];
 		}
 		
 	} else if (recognizer.state == UIGestureRecognizerStateChanged) {
