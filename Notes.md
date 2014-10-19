@@ -138,31 +138,31 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 curl -X POST \
 -H "X-Parse-Application-Id: nLPKoK0wdW9csg2mTwwPkiGEDBh4AlU3f6il9qqQ" \
--H "X-Parse-REST-API-Key: gsJjdh7QYmQri2oZMiFJgbFiKYnPJY2kDolqfo3T" \
+-H "X-Parse-REST-API-Key: Mx6FjfJ4FYW6fi9Ra1G23AEcQuDgtm2xBH1yRhS7" \
 -H "Content-Type: application/json" \
 -d '{ "where": { "channels": "global" }, "data": { "alert": "Hello World on global!" }}' \
 https://api.parse.com/1/push
 
 curl -X POST \
 -H "X-Parse-Application-Id: nLPKoK0wdW9csg2mTwwPkiGEDBh4AlU3f6il9qqQ" \
--H "X-Parse-REST-API-Key: gsJjdh7QYmQri2oZMiFJgbFiKYnPJY2kDolqfo3T" \
+-H "X-Parse-REST-API-Key: Mx6FjfJ4FYW6fi9Ra1G23AEcQuDgtm2xBH1yRhS7" \
 -H "Content-Type: application/json" \
 -d '{ "where": { "channels": "allFavArtists" }, "data": { "alert": "Hello for all favorite Artists!" }}' \
 https://api.parse.com/1/push
 
 curl -X POST \
 -H "X-Parse-Application-Id: nLPKoK0wdW9csg2mTwwPkiGEDBh4AlU3f6il9qqQ" \
--H "X-Parse-Master-Key: gsJjdh7QYmQri2oZMiFJgbFiKYnPJY2kDolqfo3T" \
+-H "X-Parse-Master-Key: Mx6FjfJ4FYW6fi9Ra1G23AEcQuDgtm2xBH1yRhS7" \
 -H "Content-Type: application/json" \
 -d '{"plan":"paid"}' \
 https://api.parse.com/1/jobs/findNewAlbums
 
 curl -X POST \
 -H "X-Parse-Application-Id: nLPKoK0wdW9csg2mTwwPkiGEDBh4AlU3f6il9qqQ" \
--H "X-Parse-Master-Key: gsJjdh7QYmQri2oZMiFJgbFiKYnPJY2kDolqfo3T" \
+-H "X-Parse-Master-Key: Mx6FjfJ4FYW6fi9Ra1G23AEcQuDgtm2xBH1yRhS7" \
 -H "Content-Type: application/json" \
--d '{}' \
-https://api.parse.com/1/jobs/fetchSimplifiedAlbums
+-d '{"i":"myTestInstallationId"}' \
+https://api.parse.com/1/jobs/fetchFullAlbums
 
 int middle = (int)(self.images.count / 2 - ((self.images.count % 2) / 2));
 
