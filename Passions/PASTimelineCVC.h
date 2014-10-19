@@ -9,6 +9,9 @@
 @import UIKit;
 #import "CPFQueryCollectionViewController.h"
 
+// Notification received when album details should be shown for the passed Album
+extern NSString * const kPASShowAlbumDetails;
+
 @interface PASTimelineCVC : CPFQueryCollectionViewController
 
 @end

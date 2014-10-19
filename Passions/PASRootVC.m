@@ -20,8 +20,14 @@
 - (void)awakeFromNib
 {
 	[super awakeFromNib];
+	// register to get notified when an album should be shown
+	[[NSNotificationCenter defaultCenter] addObserverForName:kPASShowAlbumDetails
+													  object:nil queue:nil
+												  usingBlock:^(NSNotification *note) {
+													  [self transitionToViewControllerAtIndex:1 interactive:NO];
+												  }];
 	// init and add the page view controllers view controllers
-	self.viewControllers = @[[self _favArtistsNavController], [self _timelineCVC]];
+	self.viewControllers = @[[self _favArtistsNavController], [self _timelineNavController]];
 }
 
 #pragma mark - View Lifecycle
@@ -32,7 +38,7 @@
 	return [self.storyboard instantiateViewControllerWithIdentifier:@"FavArtistsNav"];
 }
 
-- (PASTimelineCVC *)_timelineCVC
+- (UINavigationController *)_timelineNavController
 {
 	return [self.storyboard instantiateViewControllerWithIdentifier:@"TimelineNav"];
 }

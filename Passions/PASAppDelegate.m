@@ -14,6 +14,7 @@
 #import "PASAlbum.h"
 #import "PASArtist.h"
 #import "PASFavArtistsTVC.h"
+#import "PASTimelineCVC.h"
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
@@ -202,15 +203,18 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)_pushHandlerNewAlbum:(NSString *)objectId fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-	PASAlbum *album = [PASAlbum objectWithoutDataWithObjectId:objectId];
+	PASAlbum *albumSkeleton = [PASAlbum objectWithoutDataWithObjectId:objectId];
 	
-	[album fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+	[albumSkeleton fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+		PASAlbum *album = (PASAlbum *)object;
 		if (error) {
 			completionHandler(UIBackgroundFetchResultFailed);
-		} else if (!object) {
+		} else if (!album) {
 			completionHandler(UIBackgroundFetchResultNoData);
 		} else {
-			NSLog(@"New Album %@", object);
+			[[NSNotificationCenter defaultCenter] postNotificationName:kPASShowAlbumDetails
+																object:self
+															  userInfo:@{ kPASShowAlbumDetails : album }];
 			completionHandler(UIBackgroundFetchResultNewData);
 		}
 	}];

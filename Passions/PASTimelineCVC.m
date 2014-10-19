@@ -11,6 +11,8 @@
 #import "PASArtistInfo.h"
 #import "PASAlbum.h"
 
+NSString * const kPASShowAlbumDetails = @"kPASShowAlbumDetails";
+
 @interface PASTimelineCVC ()
 
 @end
@@ -29,6 +31,14 @@
 	self.objectsPerPage = 500;
 	self.loadingViewEnabled = NO;
 	
+	// register to get notified when an album should be shown
+	[[NSNotificationCenter defaultCenter] addObserverForName:kPASShowAlbumDetails
+													  object:nil queue:nil
+												  usingBlock:^(NSNotification *note) {
+													  id obj = note.userInfo[kPASShowAlbumDetails];
+													  NSAssert([obj isKindOfClass:[PASAlbum class]], @"kPASShowAlbumDetails must carry a PASAlbum");
+													  [self _showAlbum:obj animated:NO];
+												  }];
 	return self;
 }
 
@@ -87,12 +97,15 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-	PASAlbum *album = [self _albumAtIndexPath:indexPath];
-	
+	[self _showAlbum:[self _albumAtIndexPath:indexPath] animated:YES];
+}
+
+- (void)_showAlbum:(PASAlbum *)album animated:(BOOL)animated
+{
 	PASArtistInfo *vc = (PASArtistInfo *)[self.storyboard instantiateViewControllerWithIdentifier:@"PASArtistInfo"];
 	vc.album = album;
 	
-	[self.navigationController pushViewController:vc animated:YES];
+	[self.navigationController pushViewController:vc animated:animated];
 }
 
 @end
