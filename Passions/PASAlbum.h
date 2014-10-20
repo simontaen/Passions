@@ -19,12 +19,12 @@ extern CGSize const ImageFormatImageSizeAlbumThumbnailLarge;
 
 @property (nonatomic, strong) NSString* objectId;
 @property (nonatomic, strong) NSString* name;
-@property (nonatomic, strong) NSString* spotifyId;
-@property (nonatomic, strong) NSString* href;
+@property (nonatomic, strong) NSString* iTunesId;
+@property (nonatomic, strong) NSString* iTunesLink;
 @property (nonatomic, strong) NSString* artistId; // PASArtist.objectId
-@property (nonatomic, strong) NSString* releaseDate;
-@property (nonatomic, strong) NSString* releaseDatePrecision;
-@property (nonatomic, strong) NSNumber* utc;
+@property (nonatomic, strong) NSDate* releaseDate;
+@property (nonatomic, strong) NSString* spotifyId;
+@property (nonatomic, strong) NSString* spotifyLink;
 @property (nonatomic, strong) NSDate* createdAt;
 @property (nonatomic, strong) NSDate* updatedAt;
 
