@@ -31,7 +31,31 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	// Setup LastFmFetchr
 	[LastFmFetchr fetchrWithApiKey:kPASLastFmApiKey];
 	
-	// Setup Parse
+	[self _setupPushNotificaiton];
+	[self _setupImageCache];
+	
+	if (application.applicationState != UIApplicationStateBackground) {
+		// Track an app open here if NOT from push,
+		// else you would track it twice
+		NSDictionary *userInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+		
+		if (!userInfo) {
+			[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+		} else {
+			NSLog(@"UserInfo didFinishLaunchingWithOptions %@", userInfo);
+		}
+	}
+	
+	// DEBUG
+	NSLog(@"%@", [PFInstallation currentInstallation].objectId);
+	
+	return YES;
+}
+
+#pragma mark - Parse
+
+- (void)_setupParse
+{
 	[Parse setApplicationId:kPASParseAppId
 				  clientKey:kPASParseClientKey];
 	
@@ -45,34 +69,12 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	[defaultACL setPublicReadAccess:YES];
 	
 	[PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
-	
-	if (application.applicationState != UIApplicationStateBackground) {
-		// Track an app open here if NOT from push,
-		// else you would track it twice
-		
-		NSDictionary *userInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-		
-		if (!userInfo) {
-			[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-		} else {
-			NSLog(@"UserInfo didFinishLaunchingWithOptions %@", userInfo);
-		}
-	}
-	
-	// TODO: handle this later in the app
-	// this gives you a chance to load all data from the current users favorite artists
-	// freeze the background view while presenting a modal to explain why notifications are needed
-	// after dismissing the modal reload the table
-	// Register for remote notifications
-	UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge |
-																						 UIUserNotificationTypeAlert |
-																						 UIUserNotificationTypeSound |
-																						 UIUserNotificationTypeNone)
-																			 categories:nil];
-	[[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-	[[UIApplication sharedApplication] registerForRemoteNotifications];
-	
-	// Setup Image Cache
+}
+
+#pragma mark - FICImageCacheDelegate
+
+- (void)_setupImageCache
+{
 	FICImageFormat *mediumAlbumThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameAlbumThumbnailMedium
 																			  family:ImageFormatFamilyAlbumThumbnails
 																		   imageSize:ImageFormatImageSizeAlbumThumbnailMedium
@@ -81,12 +83,12 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 																			 devices:FICImageFormatDevicePhone
 																	  protectionMode:FICImageFormatProtectionModeNone];
 	FICImageFormat *largeAlbumThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameAlbumThumbnailLarge
-																			  family:ImageFormatFamilyAlbumThumbnails
-																		   imageSize:ImageFormatImageSizeAlbumThumbnailLarge
-																			   style:FICImageFormatStyle32BitBGR
-																		maximumCount:100
-																			 devices:FICImageFormatDevicePhone
-																	  protectionMode:FICImageFormatProtectionModeNone];
+																			 family:ImageFormatFamilyAlbumThumbnails
+																		  imageSize:ImageFormatImageSizeAlbumThumbnailLarge
+																			  style:FICImageFormatStyle32BitBGR
+																	   maximumCount:100
+																			devices:FICImageFormatDevicePhone
+																	 protectionMode:FICImageFormatProtectionModeNone];
 	FICImageFormat *smallArtistThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameArtistThumbnailSmall
 																			  family:ImageFormatFamilyArtistThumbnails
 																		   imageSize:ImageFormatImageSizeArtistThumbnailSmall
@@ -104,14 +106,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
 	sharedImageCache.delegate = self;
 	sharedImageCache.formats = @[mediumAlbumThumbnailImageFormat, largeAlbumThumbnailImageFormat, smallArtistThumbnailImageFormat, largeArtistThumbnailImageFormat];
-	
-	// DEBUG
-	NSLog(@"%@", [PFInstallation currentInstallation].objectId);
-	
-	return YES;
 }
-
-#pragma mark - FICImageCacheDelegate
 
 - (void)imageCache:(FICImageCache *)imageCache wantsSourceImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName completionBlock:(FICImageRequestCompletionBlock)completionBlock
 {
@@ -148,6 +143,22 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 }
 
 #pragma mark - Notifications
+
+- (void)_setupPushNotificaiton
+{
+	// TODO: handle this later in the app
+	// this gives you a chance to load all data from the current users favorite artists
+	// freeze the background view while presenting a modal to explain why notifications are needed
+	// after dismissing the modal reload the table
+	// Register for remote notifications
+	UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge |
+																						 UIUserNotificationTypeAlert |
+																						 UIUserNotificationTypeSound |
+																						 UIUserNotificationTypeNone)
+																			 categories:nil];
+	[[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+	[[UIApplication sharedApplication] registerForRemoteNotifications];
+}
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
