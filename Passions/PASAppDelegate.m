@@ -31,6 +31,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	// Setup LastFmFetchr
 	[LastFmFetchr fetchrWithApiKey:kPASLastFmApiKey];
 	
+	[self _setupParse];
 	[self _setupPushNotificaiton];
 	[self _setupImageCache];
 	
@@ -252,6 +253,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+	// TODO: this could be a good place to track device stats
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 	if (currentInstallation.badge != 0) {
 		currentInstallation.badge = 0;
