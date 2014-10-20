@@ -80,6 +80,9 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	for (PASArtist *artist in favArtists) {
 		[_favArtistNames addObject:artist.name];
 	}
+	
+	// refresh table view
+	[self.tableView reloadData];
 }
 
 - (NSArray *)sampleArtists
