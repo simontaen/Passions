@@ -21,6 +21,9 @@ CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 @dynamic name;
 @dynamic iTunesId;
 @dynamic iTunesUrl;
+@dynamic explicitness;
+@dynamic trackCount;
+@dynamic iTunesGenreName;
 @dynamic artistId; // PASArtist.objectId
 @dynamic releaseDate;
 @dynamic spotifyId;

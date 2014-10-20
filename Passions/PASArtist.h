@@ -19,11 +19,16 @@ extern CGSize const ImageFormatImageSizeArtistThumbnailLarge;
 
 @property (nonatomic, strong) NSString* objectId;
 @property (nonatomic, strong) NSString* name;
-@property (nonatomic, strong) NSString* iTunesId;
+@property (nonatomic, strong) NSNumber* iTunesId;
 @property (nonatomic, strong) NSString* iTunesUrl;
+@property (nonatomic, strong) NSString* iTunesGenreName;
+@property (nonatomic, strong) NSNumber* iTunesGenreId;
+@property (nonatomic, strong) NSString* iTunesRadioUrl;
+@property (nonatomic, strong) NSNumber* amgId;
 @property (nonatomic, strong) NSNumber* totalAlbums;
 @property (nonatomic, strong) NSArray* favByUsers; // of NSString PFUser.objectId
 @property (nonatomic, strong) NSString* spotifyId;
+@property (nonatomic, strong) NSString* spotifyUrl;
 @property (nonatomic, strong) NSDate* createdAt;
 @property (nonatomic, strong) NSDate* updatedAt;
 
