@@ -8,6 +8,7 @@
 
 #import "PASAlbumCVCell.h"
 #import "FICImageCache.h"
+#import "MHPrettyDate.h"
 
 @implementation PASAlbumCVCell
 
@@ -29,8 +30,7 @@
 														 self.albumImage.image = image ?: [PASResources albumThumbnailPlaceholder];
 													 }
 												 }];
-		
-		self.releaseDateLabel.text = album.releaseDate;
+		self.releaseDateLabel.text = [MHPrettyDate prettyDateFromDate:album.releaseDate withFormat:MHPrettyDateFormatNoTime];
 	}
 }
 
