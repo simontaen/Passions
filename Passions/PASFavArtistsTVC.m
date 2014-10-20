@@ -12,6 +12,7 @@
 #import "PASMyPVC.h"
 #import "FICImageCache.h"
 #import "PASArtistInfo.h"
+#import "UIDevice-Hardware.h"
 
 NSString * const kPASSetFavArtists = @"kPASSetFavArtists";
 NSString * const kPASDidEditFavArtists = @"kPASDidEditFavArtists";
@@ -121,8 +122,10 @@ NSString * const kPASDidEditFavArtists = @"kPASDidEditFavArtists";
 		// this must be a new user
 		// create the assosiation for push notifications
 		PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-		NSString *deviceModel = [NSString stringWithFormat:@"%@ (%@)", [UIDevice currentDevice].model, [UIDevice currentDevice].systemVersion];
-		[currentInstallation setObject:deviceModel forKey:@"deviceModel"];
+		[currentInstallation setObject:[UIDevice currentDevice].modelName forKey:@"modelName"];
+		[currentInstallation setObject:[UIDevice currentDevice].modelIdentifier forKey:@"modelIdentifier"];
+		[currentInstallation setObject:[UIDevice currentDevice].systemVersion forKey:@"systemVersion"];
+		
 		[currentInstallation save];
 		[[PFUser currentUser] setObject:currentInstallation.objectId forKey:@"installation"];
 		// save it or else the query will crash
