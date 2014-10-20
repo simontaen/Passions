@@ -165,12 +165,9 @@ NSString * const kPASDidEditFavArtists = @"kPASDidEditFavArtists";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	if ([segue.identifier isEqualToString:kPASSetFavArtists]) {
-		NSMutableArray *artists = [self.objects mutableCopy];
-		if (artists.count > 0) {
-			[[NSNotificationCenter defaultCenter] postNotificationName:kPASSetFavArtists
-																object:self
-															  userInfo:@{ kPASSetFavArtists : artists }];
-		}
+		[[NSNotificationCenter defaultCenter] postNotificationName:kPASSetFavArtists
+															object:self
+														  userInfo:@{ kPASSetFavArtists : [self.objects mutableCopy] }];
 	}
 }
 
