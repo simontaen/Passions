@@ -173,7 +173,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 /// Process incoming remote notifications when running or (foreground) launching from a notification
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-	NSLog(@"UserInfo didReceiveRemoteNotification %@", userInfo);
+	NSLog(@"didReceiveRemoteNotification with UserInfo %@", userInfo);
 	NSString *albumId = userInfo[kAlbumIdPushKey];
 	NSString *refreshFlag = userInfo[kFavArtistsRefreshPushKey];
 	
