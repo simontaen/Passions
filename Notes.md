@@ -168,6 +168,10 @@ https://api.parse.com/1/jobs/fetchFullAlbums
 
 int middle = (int)(self.images.count / 2 - ((self.images.count % 2) / 2));
 
+// http://bendodson.com/code/itunes-artwork-finder/index.html
+curl -X GET \
+-H "Accept: application/json" \
+"http://playground.bendodson.com/itunes-artwork-finder/?query=Back+In+Black&entity=album&country=us"
 
 # Regarding UITableViewCell's imageView
 
