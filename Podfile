@@ -1,7 +1,6 @@
-#pod 'NSDate+Helper', '~> 0.0'
+source 'https://github.com/CocoaPods/Specs'
+
 pod 'AWPercentDrivenInteractiveTransition'
 pod 'FastImageCache'
-pod 'MHPrettyDate'
+pod 'SORelativeDateTransformer'
 pod 'LastFmFetchr', :path => '/Users/simon/Documents/code/ObjC/iOS/LastFmFetchr/'
-# debugging
-pod 'DebugView'

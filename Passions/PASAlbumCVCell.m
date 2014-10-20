@@ -8,7 +8,7 @@
 
 #import "PASAlbumCVCell.h"
 #import "FICImageCache.h"
-#import "MHPrettyDate.h"
+#import "SORelativeDateTransformer.h"
 
 @implementation PASAlbumCVCell
 
@@ -30,7 +30,7 @@
 														 self.albumImage.image = image ?: [PASResources albumThumbnailPlaceholder];
 													 }
 												 }];
-		self.releaseDateLabel.text = [MHPrettyDate prettyDateFromDate:album.releaseDate withFormat:MHPrettyDateFormatNoTime];
+		self.releaseDateLabel.text = [[SORelativeDateTransformer registeredTransformer] transformedValue:album.releaseDate];
 	}
 }
 
