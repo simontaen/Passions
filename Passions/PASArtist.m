@@ -21,7 +21,7 @@ CGSize const ImageFormatImageSizeArtistThumbnailLarge = {320, 320};
 @dynamic objectId;
 @dynamic name;
 @dynamic iTunesId;
-@dynamic iTunesLink;
+@dynamic iTunesUrl;
 @dynamic totalAlbums;
 @dynamic favByUsers; // of NSString PFUser.objectId
 @dynamic spotifyId;
