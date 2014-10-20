@@ -61,8 +61,6 @@ NSString * const kPASDidEditFavArtists = @"kPASDidEditFavArtists";
 													  if (didEditArtists) {
 														  [self _refreshUI];
 													  }
-													  // Go back to the previous view
-													  [self dismissViewControllerAnimated:YES completion:nil];
 												  }];
 }
 

@@ -100,6 +100,8 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditFavArtists
 														object:self
 													  userInfo:@{ kPASDidEditFavArtists : [NSNumber numberWithBool:didEditArtists] }];
+	// Go back to the previous view
+	[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
