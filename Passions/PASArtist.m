@@ -78,10 +78,14 @@ CGSize const ImageFormatImageSizeArtistThumbnailLarge = {320, 320};
 	NSParameterAssert(artistName);
 	
 	void (^favingBlock)(PASArtist*, NSError*) = ^void(PASArtist *favingArtist, NSError *error) {
-		// create the relationsship with the user
-		[favingArtist _addCurrentUserAsFavoriteWithCompletion:^(PASArtist *blockArtist, NSError *error) {
-			blockArtist && !error ? completion(blockArtist, nil) : completion(nil, error);
-		}];
+		if (favingArtist && !error) {
+			// create the relationsship with the user
+			[favingArtist _addCurrentUserAsFavoriteWithCompletion:^(PASArtist *blockArtist, NSError *error) {
+				blockArtist && !error ? completion(blockArtist, nil) : completion(nil, error);
+			}];
+		} else {
+			completion(nil, error);
+		}
 	};
 	
 	if (needsCorrection) {
