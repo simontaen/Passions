@@ -12,7 +12,6 @@
 #import "PASMyPVC.h"
 #import "FICImageCache.h"
 #import "PASArtistInfo.h"
-#import "UIDevice-Hardware.h"
 
 @interface PASFavArtistsTVC()
 
@@ -108,36 +107,18 @@
 // all objects ordered by createdAt descending.
 - (PFQuery *)queryForTable
 {
-	//	PFUser *user = [PFUser currentUser];
-	//	NSLog(@"isDataAvailable = %@", ([user isDataAvailable] ? @"YES" : @"NO"));
-	//	NSLog(@"isDirty = %@", ([user isDirty] ? @"YES" : @"NO"));
-	//	NSLog(@"isNew = %@", ([user isNew] ? @"YES" : @"NO"));
-	//	NSLog(@"isDirtyForKey = %@", ([user isDirtyForKey:@"objectId"] ? @"YES" : @"NO"));
-	
-	if ([[PFUser currentUser] isDirty]) {
-		// TODO: this is where we create the user, make sure you set an ACL
-		// this must be a new user
-		// create the assosiation for push notifications
-		PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-		[currentInstallation setObject:[UIDevice currentDevice].modelName forKey:@"modelName"];
-		[currentInstallation setObject:[UIDevice currentDevice].modelIdentifier forKey:@"modelIdentifier"];
-		[currentInstallation setObject:[UIDevice currentDevice].systemVersion forKey:@"systemVersion"];
+	if ([PFUser currentUser].objectId) {
+		PFQuery *query = [PASArtist favArtistsForCurrentUser];
 		
-		[currentInstallation save];
-		[[PFUser currentUser] setObject:currentInstallation.objectId forKey:@"installation"];
-		// save it or else the query will crash
-		[[PFUser currentUser] save];
+		// If no objects are loaded in memory, we look to the cache first to fill the table
+		// and then subsequently do a query against the network.
+		if (self.objects.count == 0) {
+			query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+		}
+		return query;
 	}
-	
-	PFQuery *query = [PASArtist favArtistsForCurrentUser];
-	
-	// If no objects are loaded in memory, we look to the cache first to fill the table
-	// and then subsequently do a query against the network.
-	if (self.objects.count == 0) {
-		query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-	}
-	
-	return query;
+	NSLog(@"CurrentUser not ready for FavArtists");
+	return nil; // shows loading spinner
 }
 
 // Override to customize the look of a cell representing an object. The default is to display

@@ -50,8 +50,7 @@
 	self.navigationController.navigationBarHidden = YES;
 
 	if (!self.isLoading) {
-		self.isRefreshing = YES;
-		[self loadObjects];
+		[self _refreshUI];
 	}
 }
 
@@ -64,7 +63,11 @@
 
 - (PFQuery *)queryForCollection
 {
-	return [PASAlbum albumsOfCurrentUsersFavoriteArtists];
+	if ([PFUser currentUser].objectId) {
+		return [PASAlbum albumsOfCurrentUsersFavoriteArtists];
+	}
+	NSLog(@"CurrentUser not ready for Timeline");
+	return nil; // shows loading spinner
 }
 
 #pragma mark - CPFQueryCollectionViewController required
@@ -104,6 +107,14 @@
 	vc.album = album;
 	
 	[self.navigationController pushViewController:vc animated:animated];
+}
+
+#pragma mark - Private Methods
+
+- (void)_refreshUI
+{
+	self.isRefreshing = YES;
+	[self loadObjects];
 }
 
 @end

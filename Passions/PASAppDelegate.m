@@ -12,6 +12,8 @@
 #import "FICImageCache.h"
 #import "PASSourceImage.h"
 #import "PASAlbum.h"
+#import "GBVersiontracking.h"
+#import "UIDevice-Hardware.h"
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
@@ -28,8 +30,10 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	// Setup LastFmFetchr
 	[LastFmFetchr fetchrWithApiKey:kPASLastFmApiKey];
 	
+	// Setup GBVersionTracking
+	[GBVersionTracking track];
+	
 	[self _setupParse];
-	[self _setupPushNotificaiton];
 	[self _setupImageCache];
 	
 	if (application.applicationState != UIApplicationStateBackground) {
@@ -43,9 +47,6 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 			NSLog(@"UserInfo didFinishLaunchingWithOptions %@", userInfo);
 		}
 	}
-	
-	// DEBUG
-	NSLog(@"%@", [PFInstallation currentInstallation].objectId);
 	
 	return YES;
 }
@@ -65,8 +66,67 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	
 	// If you would like all objects to be private by default, remove this line.
 	[defaultACL setPublicReadAccess:YES];
-	
 	[PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
+	
+	// TODO: What about ACL here?
+	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+	PFUser *currentUser = [PFUser currentUser];
+	
+	// setup install and user on first launch
+	// TODO: does this work when the first time launch crapped?
+	if ([GBVersionTracking isFirstLaunchEver] || ![PFUser currentUser].objectId) {
+		[self _updateDeviceInfos:currentInstallation];
+		[currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+			if (succeeded && !error) {
+				NSLog(@"Current Installtion initialized: %@", currentInstallation.objectId);
+				// create the assosiation for push notifications
+				[currentUser setObject:currentInstallation.objectId forKey:@"installation"];
+				[currentUser setObject:@0 forKey:@"runCount"];
+				[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+					if (succeeded && !error) {
+						NSLog(@"Current User initialized: %@", currentUser.objectId);
+						// TODO: we are ready to fav artists
+						NSLog(@"we are ready to fav artists");
+						// When done send a didEditArtists notification
+					}
+				}];
+			}
+		}];
+		
+	} else {
+		// on first build launch, update the device specs
+		if ([GBVersionTracking isFirstLaunchForBuild]) {
+			[self _updateDeviceInfos:currentInstallation];
+			[currentInstallation saveInBackground];
+		}
+		
+		// and on all other launches, just refresh the user
+		[currentUser incrementKey:@"runCount"];
+		[currentUser saveInBackground];
+	}
+	
+	[self _logUsersStuff:currentUser];
+}
+
+- (void)_updateDeviceInfos:(PFInstallation *)installation
+{
+	[installation setObject:[UIDevice currentDevice].modelName forKey:@"modelName"];
+	[installation setObject:[UIDevice currentDevice].modelIdentifier forKey:@"modelIdentifier"];
+	[installation setObject:[UIDevice currentDevice].systemVersion forKey:@"systemVersion"];
+}
+
+- (void)_logUsersStuff:(PFUser *)user
+{
+	NSLog(@"isFirstLaunchForBuild = %@", ([GBVersionTracking isFirstLaunchForBuild] ? @"YES" : @"NO"));
+	NSLog(@"isFirstLaunchForVersion = %@", ([GBVersionTracking isFirstLaunchForVersion] ? @"YES" : @"NO"));
+	NSLog(@"isFirstLaunchEver = %@", ([GBVersionTracking isFirstLaunchEver] ? @"YES" : @"NO"));
+	
+	// TODO: what propertiy shows that the user is not ready?
+	NSLog(@"isAuthenticated = %@", ([user isAuthenticated] ? @"YES" : @"NO"));
+	NSLog(@"isDataAvailable = %@", ([user isDataAvailable] ? @"YES" : @"NO"));
+	NSLog(@"isDirty = %@", ([user isDirty] ? @"YES" : @"NO"));
+	NSLog(@"isNew = %@", ([user isNew] ? @"YES" : @"NO"));
+	NSLog(@"isDirtyForKey objectId = %@", ([user isDirtyForKey:@"objectId"] ? @"YES" : @"NO"));
 }
 
 #pragma mark - FICImageCacheDelegate
@@ -103,7 +163,10 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 																	  protectionMode:FICImageFormatProtectionModeNone];
 	FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
 	sharedImageCache.delegate = self;
-	sharedImageCache.formats = @[mediumAlbumThumbnailImageFormat, largeAlbumThumbnailImageFormat, smallArtistThumbnailImageFormat, largeArtistThumbnailImageFormat];
+	sharedImageCache.formats = @[mediumAlbumThumbnailImageFormat,
+								 largeAlbumThumbnailImageFormat,
+								 smallArtistThumbnailImageFormat,
+								 largeArtistThumbnailImageFormat];
 }
 
 - (void)imageCache:(FICImageCache *)imageCache wantsSourceImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName completionBlock:(FICImageRequestCompletionBlock)completionBlock
@@ -142,30 +205,13 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 #pragma mark - Notifications
 
-- (void)_setupPushNotificaiton
-{
-	// TODO: handle this later in the app
-	// this gives you a chance to load all data from the current users favorite artists
-	// freeze the background view while presenting a modal to explain why notifications are needed
-	// after dismissing the modal reload the table
-	// Register for remote notifications
-	UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge |
-																						 UIUserNotificationTypeAlert |
-																						 UIUserNotificationTypeSound |
-																						 UIUserNotificationTypeNone)
-																			 categories:nil];
-	[[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-	[[UIApplication sharedApplication] registerForRemoteNotifications];
-}
-
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-	// TODO: can we check if we are subscribed already?
-	// TODO: this is where we create the installation, make sure you set an ACL
 	// Store the deviceToken in the current installation and save it to Parse.
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 	[currentInstallation setDeviceTokenFromData:deviceToken];
 	currentInstallation.channels = @[@"global", @"allFavArtists"];
+	[self _updateDeviceInfos:currentInstallation];
 	[currentInstallation saveInBackground];
 }
 
@@ -254,7 +300,8 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 	if (currentInstallation.badge != 0) {
 		currentInstallation.badge = 0;
-		[currentInstallation saveEventually];
+		[self _updateDeviceInfos:currentInstallation];
+		[currentInstallation saveInBackground];
 	}
 	// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
