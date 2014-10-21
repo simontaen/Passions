@@ -180,6 +180,22 @@
 	return [self.favArtistNames containsObject:resolvedName] || [self.justFavArtistNames containsObject:resolvedName];
 }
 
+- (void)addInitialFavArtists
+{
+	// TODO: find top artists from MPMediaQuery
+	NSArray *artistsToFavorite = @[@"AC/DC", @"Mark Knopfler"];
+	
+	// this is called from the app delegate, make sure you're properly set up
+	if (!self.originalFavArtists) {
+		[self passFavArtists:@[]];
+	}
+	
+	for (NSString *artistName in artistsToFavorite) {
+		[self didSelectArtistWithName:artistName cleanup:nil reload:nil errorHandler:nil];
+	}
+	
+}
+
 #pragma mark - Private Methods
 
 - (NSString *)_resolveArtistName:(NSString *)name

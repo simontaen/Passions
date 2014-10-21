@@ -23,6 +23,8 @@
 
 - (BOOL)isFavoriteArtist:(NSString *)artistName;
 
+- (void)addInitialFavArtists;
+
 - (void)writeToDisk;
 
 @end

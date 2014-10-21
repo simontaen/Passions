@@ -14,6 +14,7 @@
 #import "PASAlbum.h"
 #import "GBVersiontracking.h"
 #import "UIDevice-Hardware.h"
+#import "PASManageArtists.h"
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
@@ -85,9 +86,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 				[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 					if (succeeded && !error) {
 						NSLog(@"Current User initialized: %@", currentUser.objectId);
-						// TODO: we are ready to fav artists
-						NSLog(@"we are ready to fav artists");
-						// When done send a didEditArtists notification
+						[[PASManageArtists sharedMngr] addInitialFavArtists];
 					}
 				}];
 			}

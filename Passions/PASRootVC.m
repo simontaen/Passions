@@ -9,6 +9,7 @@
 #import "PASRootVC.h"
 #import "PASTimelineCVC.h"
 #import "PASInteractiveTransition.h"
+#import "GBVersionTracking.h"
 
 @interface PASRootVC ()
 @end
@@ -46,13 +47,13 @@
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-//	if ([GBVersionTracking isFirstLaunchEver]) {
+	if ([GBVersionTracking isFirstLaunchEver]) {
 		// TODO: if first run!
 		[self _onboard];
-//	} else {
-//		// no need to onboard, just setup notifications directly
-//		[self _setupPushNotificaiton];
-//	}
+	} else {
+		// no need to onboard, just setup notifications directly
+		[self _setupPushNotificaiton];
+	}
 }
 
 #pragma mark - Onboarding
@@ -68,6 +69,10 @@
 														  handler:^(UIAlertAction * action) {
 															  [self dismissViewControllerAnimated:YES completion:nil];
 															  [weakSelf _setupPushNotificaiton];
+															  // TODO: This feels like cheating
+															  UINavigationController *navVc = (UINavigationController *)self.selectedViewController;
+															  PASTimelineCVC *vc = (PASTimelineCVC *)navVc.topViewController;
+															  [vc loadObjects];
 														  }];
 	[alert addAction:defaultAction];
 	

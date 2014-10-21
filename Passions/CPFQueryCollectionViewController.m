@@ -96,36 +96,37 @@
 - (void)performQuery
 {
     PFQuery *query = self.queryForCollection;
-    
-    if (_paginationEnabled) {
-        [query setLimit:_objectsPerPage];
-        //fetching the next page of objects
-        if (!_isRefreshing) {
-            [query setSkip:self.objects.count];
-        }
-    }
-    
-    [self objectsWillLoad];
-    
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        self.isLoading = NO;
-        if (error)
-            self.objects = [NSArray new];
-        else {
-            if (_paginationEnabled && !_isRefreshing) {
-                //add a new page of objects
-                NSMutableArray *mutableObjects = [NSMutableArray arrayWithArray:self.objects];
-                [mutableObjects addObjectsFromArray:objects];
-                self.objects = [NSArray arrayWithArray:mutableObjects];
-            }
-            else {
-                self.objects = objects;
-            }
-        }
-            
-       
-        [self objectsDidLoad:error];
-    }];
+	
+	if (query) {
+		if (_paginationEnabled) {
+			[query setLimit:_objectsPerPage];
+			//fetching the next page of objects
+			if (!_isRefreshing) {
+				[query setSkip:self.objects.count];
+			}
+		}
+		
+		[self objectsWillLoad];
+		
+		[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+			self.isLoading = NO;
+			if (error)
+				self.objects = [NSArray new];
+			else {
+				if (_paginationEnabled && !_isRefreshing) {
+					//add a new page of objects
+					NSMutableArray *mutableObjects = [NSMutableArray arrayWithArray:self.objects];
+					[mutableObjects addObjectsFromArray:objects];
+					self.objects = [NSArray arrayWithArray:mutableObjects];
+				}
+				else {
+					self.objects = objects;
+				}
+			}
+			
+			[self objectsDidLoad:error];
+		}];
+	}
 }
 
 - (void)loadObjects
@@ -137,7 +138,7 @@
 {
     // Enter the loading state
     self.isLoading = YES;
-    
+	
     // Display the loading thingy
     if (self.loadingViewEnabled)
     {
