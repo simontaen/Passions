@@ -9,9 +9,20 @@
 #import "PASResources.h"
 
 NSString * const kPASLastFmApiKey = @"aed3367b0133ab707cb4e5b6b04da3e7";
+
+//For archive build, use "Passions"
+#ifndef DEBUG
+NSString * const kPASParseAppId = @"ymoWy7LcvcSg1tEGehR46hgLAEGP2mR3wyePOsQd";
+NSString * const kPASParseClientKey = @"Lp7MQjIGpM5O9Zp3CFyI8FU6NNmUBfa9xySu1Mgx";
+NSString * const kPASParseMasterKey = @"3ZYFrBWkSWjbxkN7korFuRp1JqvdPzroDzjFp2E5";
+#endif
+
+//For developer build, use "PassionsDev"
+#ifdef DEBUG
 NSString * const kPASParseAppId = @"nLPKoK0wdW9csg2mTwwPkiGEDBh4AlU3f6il9qqQ";
 NSString * const kPASParseClientKey = @"jxhd6vVmIttc1EVfre4Lcza9uwlKzDrCzqZJGSI9";
 NSString * const kPASParseMasterKey = @"Mx6FjfJ4FYW6fi9Ra1G23AEcQuDgtm2xBH1yRhS7";
+#endif
 
 @implementation PASResources
 
