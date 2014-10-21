@@ -50,6 +50,8 @@
 	if ([GBVersionTracking isFirstLaunchEver]) {
 		// TODO: if first run!
 		[self _onboard];
+		// TODO: this is probably bad
+		[GBVersionTracking track];
 	} else {
 		// no need to onboard, just setup notifications directly
 		[self _setupPushNotificaiton];
