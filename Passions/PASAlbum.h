@@ -9,12 +9,6 @@
 #import <Parse/Parse.h>
 #import "PASParseObjectWithImages.h"
 
-extern NSString *const ImageFormatFamilyAlbumThumbnails;
-extern NSString *const ImageFormatNameAlbumThumbnailMedium;
-extern CGSize const ImageFormatImageSizeAlbumThumbnailMedium;
-extern NSString *const ImageFormatNameAlbumThumbnailLarge;
-extern CGSize const ImageFormatImageSizeAlbumThumbnailLarge;
-
 @interface PASAlbum : PASParseObjectWithImages <PFSubclassing>
 
 @property (nonatomic, strong) NSString* objectId;

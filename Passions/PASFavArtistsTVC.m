@@ -14,9 +14,6 @@
 #import "PASArtistInfo.h"
 #import "UIDevice-Hardware.h"
 
-NSString * const kPASSetFavArtists = @"kPASSetFavArtists";
-NSString * const kPASDidEditFavArtists = @"kPASDidEditFavArtists";
-
 @interface PASFavArtistsTVC()
 
 @end

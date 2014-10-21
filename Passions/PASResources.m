@@ -24,6 +24,23 @@ NSString * const kPASParseClientKey = @"jxhd6vVmIttc1EVfre4Lcza9uwlKzDrCzqZJGSI9
 NSString * const kPASParseMasterKey = @"Mx6FjfJ4FYW6fi9Ra1G23AEcQuDgtm2xBH1yRhS7";
 #endif
 
+NSString * const kPASSetFavArtists = @"kPASSetFavArtists";
+NSString * const kPASDidEditFavArtists = @"kPASDidEditFavArtists";
+
+NSString * const kPASShowAlbumDetails = @"kPASShowAlbumDetails";
+
+NSString *const ImageFormatFamilyArtistThumbnails = @"ImageFormatFamilyArtistThumbnails";
+NSString *const ImageFormatNameArtistThumbnailSmall = @"ImageFormatNameArtistThumbnailSmall";
+CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
+NSString *const ImageFormatNameArtistThumbnailLarge = @"ImageFormatNameArtistThumbnailLarge";
+CGSize const ImageFormatImageSizeArtistThumbnailLarge = {320, 320};
+
+NSString *const ImageFormatFamilyAlbumThumbnails = @"ImageFormatFamilyAlbumThumbnails";
+NSString *const ImageFormatNameAlbumThumbnailMedium = @"ImageFormatNameAlbumThumbnailMedium";
+CGSize const ImageFormatImageSizeAlbumThumbnailMedium = {160, 160};
+NSString *const ImageFormatNameAlbumThumbnailLarge = @"ImageFormatNameAlbumThumbnailLarge";
+CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
+
 @implementation PASResources
 
 + (UIImage *) artistThumbnailPlaceholder

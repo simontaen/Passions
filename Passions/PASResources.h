@@ -14,6 +14,28 @@ extern NSString * const kPASParseAppId;
 extern NSString * const kPASParseClientKey;
 extern NSString * const kPASParseMasterKey;
 
+// Notification sent to pass the already favorited Artists
+extern NSString * const kPASSetFavArtists;
+// Notification received when favorite Artists have been edited
+extern NSString * const kPASDidEditFavArtists;
+
+// Notification received when album details should be shown for the passed Album
+extern NSString * const kPASShowAlbumDetails;
+
+// Constant for Artist Artwork
+extern NSString *const ImageFormatFamilyArtistThumbnails;
+extern NSString *const ImageFormatNameArtistThumbnailSmall;
+extern CGSize const ImageFormatImageSizeArtistThumbnailSmall;
+extern NSString *const ImageFormatNameArtistThumbnailLarge;
+extern CGSize const ImageFormatImageSizeArtistThumbnailLarge;
+
+// Constant for Album Artwork
+extern NSString *const ImageFormatFamilyAlbumThumbnails;
+extern NSString *const ImageFormatNameAlbumThumbnailMedium;
+extern CGSize const ImageFormatImageSizeAlbumThumbnailMedium;
+extern NSString *const ImageFormatNameAlbumThumbnailLarge;
+extern CGSize const ImageFormatImageSizeAlbumThumbnailLarge;
+
 @interface PASResources : NSObject
 
 + (UIImage *) artistThumbnailPlaceholder;

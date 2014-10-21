@@ -12,9 +12,6 @@
 #import "FICImageCache.h"
 #import "PASSourceImage.h"
 #import "PASAlbum.h"
-#import "PASArtist.h"
-#import "PASFavArtistsTVC.h"
-#import "PASTimelineCVC.h"
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>

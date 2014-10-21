@@ -9,12 +9,6 @@
 #import "PASAlbum.h"
 #import <Parse/PFObject+Subclass.h>
 
-NSString *const ImageFormatFamilyAlbumThumbnails = @"ImageFormatFamilyAlbumThumbnails";
-NSString *const ImageFormatNameAlbumThumbnailMedium = @"ImageFormatNameAlbumThumbnailMedium";
-CGSize const ImageFormatImageSizeAlbumThumbnailMedium = {160, 160};
-NSString *const ImageFormatNameAlbumThumbnailLarge = @"ImageFormatNameAlbumThumbnailLarge";
-CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
-
 @implementation PASAlbum
 
 @dynamic objectId;

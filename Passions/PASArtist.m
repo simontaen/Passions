@@ -10,12 +10,6 @@
 #import <Parse/PFObject+Subclass.h>
 #import "LastFmFetchr.h"
 
-NSString *const ImageFormatFamilyArtistThumbnails = @"ImageFormatFamilyArtistThumbnails";
-NSString *const ImageFormatNameArtistThumbnailSmall = @"ImageFormatNameArtistThumbnailSmall";
-CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};
-NSString *const ImageFormatNameArtistThumbnailLarge = @"ImageFormatNameArtistThumbnailLarge";
-CGSize const ImageFormatImageSizeArtistThumbnailLarge = {320, 320};
-
 @implementation PASArtist
 
 @dynamic objectId;

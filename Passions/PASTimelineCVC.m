@@ -11,8 +11,6 @@
 #import "PASArtistInfo.h"
 #import "PASAlbum.h"
 
-NSString * const kPASShowAlbumDetails = @"kPASShowAlbumDetails";
-
 @interface PASTimelineCVC ()
 
 @end
