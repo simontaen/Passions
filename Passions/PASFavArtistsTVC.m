@@ -146,7 +146,7 @@
 	if ([segue.identifier isEqualToString:kPASSetFavArtists]) {
 		[[NSNotificationCenter defaultCenter] postNotificationName:kPASSetFavArtists
 															object:self
-														  userInfo:@{ kPASSetFavArtists : [self.objects mutableCopy] }];
+														  userInfo:@{ kPASSetFavArtists : self.objects }];
 	}
 }
 

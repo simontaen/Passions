@@ -12,6 +12,7 @@
 #import "PASArtistTVCell.h"
 #import "FICImageCache.h"
 #import "PASSourceImage.h"
+#import "PASManageArtists.h"
 
 typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 	PASAddArtistsSortOrderAlphabetical,
@@ -39,24 +40,6 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 // cache of artists, unordered (The Model of this class)
 @property (nonatomic, strong) NSArray *sampleArtists; // NSString
 
-#pragma mark - Faving Artists
-// worker Q http://stackoverflow.com/a/5511403 / http://stackoverflow.com/a/13705529
-@property (nonatomic, strong) dispatch_queue_t favoritesQ;
-
-// passed by the segue, LFM Corrected!
-@property (nonatomic, strong, readonly) NSArray* originalFavArtists; // PASArtist, never changed
-// these contain current changes
-@property (nonatomic, strong) NSMutableArray* favArtists; // PASArtist
-@property (nonatomic, strong, readonly) NSMutableArray* favArtistNames; // NSString, built based on favArtists
-
-// for newly favorited artists
-@property (nonatomic, strong) NSMutableArray* justFavArtists; // PASArtist
-@property (nonatomic, strong) NSMutableArray* justFavArtistNames; // NSString, LFM corrected!
-
-#pragma mark - Corrections
-@property (nonatomic, strong) NSMutableDictionary* artistNameCorrections; // NSString (display) -> NSString (internal on Favorite Artists TVC, LFM corrected)
-@property (nonatomic, strong) dispatch_queue_t correctionsQ;
-
 @end
 
 @implementation PASAddFromSamplesTVC
@@ -64,25 +47,33 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 static NSString * const kPASPlaycountSectionIndex = @"playcount";
 static CGFloat const kPASSectionHeaderHeight = 28;
 
+#pragma mark - Init
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+	if (!self) return nil;
+	
+	// register to receive already favorited artists
+	[[NSNotificationCenter defaultCenter] addObserverForName:kPASSetFavArtists
+													  object:nil queue:nil
+												  usingBlock:^(NSNotification *note) {
+													  // get fav artists from the notification
+													  id obj = note.userInfo[kPASSetFavArtists];
+													  NSAssert([obj isKindOfClass:[NSArray class]], @"kPASSetFavArtists must carry a NSArray");
+													  [self _receiveFavArtists:(NSArray *)obj];
+												  }];
+	// Prepare the Manager
+	[PASManageArtists sharedMngr];
+	
+	return self;
+}
+
 #pragma mark - Accessors
 
 - (NSString *)title
 {
 	return @"Samples";
-}
-
-- (void)setFavArtists:(NSMutableArray *)favArtists
-{
-	_favArtists = favArtists ? favArtists : [NSMutableArray array];
-	_originalFavArtists = [NSArray arrayWithArray:favArtists];
-	_favArtistNames = [[NSMutableArray alloc] initWithCapacity:favArtists.count];
-	
-	for (PASArtist *artist in favArtists) {
-		[_favArtistNames addObject:artist.name];
-	}
-	
-	// refresh table view
-	[self.tableView reloadData];
 }
 
 - (NSArray *)sampleArtists
@@ -231,7 +222,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (BOOL)didEditArtists
 {
-	return self.justFavArtistNames.count != 0 || self.favArtists.count != self.originalFavArtists.count;
+	return [[PASManageArtists sharedMngr] didEditArtists];
 }
 
 - (NSString *)nameForArtist:(id)artist
@@ -258,67 +249,25 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	
 	// default is alphabetical
 	self.selectedSortOrder = PASAddArtistsSortOrderAlphabetical;
-	
-	// register to receive already favorited artists
-	[[NSNotificationCenter defaultCenter] addObserverForName:kPASSetFavArtists
-													  object:nil queue:nil
-												  usingBlock:^(NSNotification *note) {
-													  // get fav artists from the notification
-													  id obj = note.userInfo[kPASSetFavArtists];
-													  NSAssert([obj isKindOfClass:[NSMutableArray class]], @"kPASSetFavArtists must carry a NSMutableArray");
-													  self.favArtists = (NSMutableArray *)obj;
-												  }];
+}
+
+- (void)_receiveFavArtists:(NSArray *)favArtists
+{
+	[[PASManageArtists sharedMngr] passFavArtists:favArtists];
+	// refresh table view
+	[self.tableView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
 	
-	// perpare for user favoriting artists
-	self.favoritesQ = dispatch_queue_create("favoritesQ", DISPATCH_QUEUE_CONCURRENT);
-	self.justFavArtistNames = [[NSMutableArray alloc] initWithCapacity:(int)(self.artists.count / 4)];
-	self.justFavArtists = [[NSMutableArray alloc] initWithCapacity:(int)(self.artists.count / 4)];
-	
-	// load name corrections
-	self.correctionsQ = dispatch_queue_create("correctionsQ", DISPATCH_QUEUE_CONCURRENT);
-	dispatch_async(self.correctionsQ, ^{
-		NSURL *cacheFile = [[[[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory
-																	inDomains:NSUserDomainMask] firstObject]
-							URLByAppendingPathComponent:NSStringFromClass([self class])];
-		self.artistNameCorrections = [NSMutableDictionary dictionaryWithContentsOfURL:cacheFile];
-		
-		if (!self.artistNameCorrections) {
-			self.artistNameCorrections = [[NSMutableDictionary alloc] initWithCapacity:self.artists.count];
-		}
-	});
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
-	
-	// save name corrections
-	dispatch_barrier_async(self.correctionsQ, ^{
-		NSFileManager *mng = [NSFileManager defaultManager];
-		NSURL *cacheDir = [[mng URLsForDirectory:NSApplicationSupportDirectory
-									   inDomains:NSUserDomainMask] firstObject];
-		NSURL *cacheFile = [cacheDir URLByAppendingPathComponent:NSStringFromClass([self class])];
-		
-		// make sure the cacheDir exists
-		if (![mng fileExistsAtPath:[cacheDir path]
-					   isDirectory:nil]) {
-			NSError *err = nil;
-			BOOL success = [mng createDirectoryAtURL:cacheDir
-						 withIntermediateDirectories:YES
-										  attributes:nil
-											   error:&err];
-			if (!success) {
-				NSLog(@"Cannot create cache dir (%@)", [err localizedDescription]);
-			}
-		}
-		
-		[self.artistNameCorrections writeToURL:cacheFile atomically:NO];
-	});
+	[[PASManageArtists sharedMngr] writeToDisk];
 }
 
 #pragma mark - UITableViewDataSource required
@@ -336,7 +285,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	NSString *artistName = [self nameForArtist:artist];
 	
 	[cell showArtist:artist withName:artistName
-		  isFavorite:[self _isFavoriteArtist:artistName]
+		  isFavorite:[[PASManageArtists sharedMngr] isFavoriteArtist:artistName]
 		   playcount:[self playcountForArtist:artist]];
 	
 	return cell;
@@ -407,75 +356,17 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	cell.userInteractionEnabled = NO;
 	[cell.activityIndicator startAnimating];
 	
-	NSString *artistName = [self nameForArtist:[self _artistForIndexPath:indexPath]];
-	NSString *resolvedName = [self _resolveArtistName:artistName];
-	
-	void (^cleanup)() = ^{
-		[cell.activityIndicator stopAnimating];
-		cell.userInteractionEnabled = YES;
-	};
-	
-	if ([self _isFavoriteArtist:artistName]) {
-		PASArtist *artist = [self _artistForResolvedName:resolvedName];
-		// The artist is favorited, a correctedName MUST exists
-		NSAssert([self _correctedArtistName:artistName], @"The current Artist \"%@\" (%@) is favorited but has no corrected Name.", artistName, artist.objectId);
-		
-		[artist removeCurrentUserAsFavoriteWithCompletion:^(BOOL succeeded, NSError *error) {
-			if (succeeded && !error) {
-				dispatch_barrier_async(self.favoritesQ, ^{
-					if ([self.favArtistNames containsObject:resolvedName]) {
-						[self.favArtists removeObjectAtIndex:[self.favArtistNames indexOfObject:resolvedName]];
-						[self.favArtistNames removeObject:resolvedName];
-					} else {
-						[self.justFavArtists removeObjectAtIndex:[self.justFavArtistNames indexOfObject:resolvedName]];
-						[self.justFavArtistNames removeObject:resolvedName];
-					}
-					
-					dispatch_async(dispatch_get_main_queue(), ^{
-						cleanup();
-						[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-					});
-				});
-				
-			} else {
-				dispatch_async(dispatch_get_main_queue(), ^{
-					cleanup();
-					[self _handleError:error];
-				});
-			}
-		}];
-		
-	} else {
-		[PASArtist favoriteArtistByCurrentUser:resolvedName
-							   needsCorrection:![self _correctedArtistName:artistName]
-									completion:^(PASArtist *artist, NSError *error) {
-			if (artist && !error) {
-				// get the finalized name on parse
-				NSString *parseArtistName = artist.name;
-				
-				dispatch_barrier_async(self.correctionsQ, ^{
-					// cache the mapping userDisplayed -> corrected
-					[self.artistNameCorrections setObject:parseArtistName forKey:artistName];
-				});
-				
-				dispatch_barrier_async(self.favoritesQ, ^{
-					[self.justFavArtistNames addObject:parseArtistName];
-					[self.justFavArtists addObject:artist];
-					
-					dispatch_async(dispatch_get_main_queue(), ^{
-						cleanup();
-						[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-					});
-				});
-				
-			} else {
-				dispatch_async(dispatch_get_main_queue(), ^{
-					cleanup();
-					[self _handleError:error];
-				});
-			}
-		}];
-	}
+	// TODO: this is just plain ugly
+	[[PASManageArtists sharedMngr] didSelectArtistWithName:[self nameForArtist:[self _artistForIndexPath:indexPath]]
+												   cleanup:^{
+													   [cell.activityIndicator stopAnimating];
+													   cell.userInteractionEnabled = YES;
+												   } reload:^{
+													   [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+												   }
+											  errorHandler:^(NSError *error) {
+												  [self _handleError:error];
+											  }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -542,37 +433,6 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 - (void)_refreshUI
 {
 	[self.tableView reloadData];
-}
-
-- (BOOL)_isFavoriteArtist:(NSString *)artistName
-{
-	NSString *resolvedName = [self _resolveArtistName:artistName];
-	
-	return [self.favArtistNames containsObject:resolvedName] || [self.justFavArtistNames containsObject:resolvedName];
-}
-
-- (NSString *)_resolveArtistName:(NSString *)name
-{
-	NSString *correctedName = [self _correctedArtistName:name];
-	// this is mandatory as self.artistNameCorrections is initially empty
-	return correctedName ? correctedName : name;
-}
-
-- (NSString *)_correctedArtistName:(NSString *)name
-{
-	// get corrected name
-	// this might get a problem when artistNameCorrections is really big and loading from disk
-	// takes a long time -> could result in artistNameCorrections being nil here!
-	return [self.artistNameCorrections objectForKey:name];
-}
-
-- (PASArtist *)_artistForResolvedName:(NSString *)resolvedName
-{
-	if ([self.favArtistNames containsObject:resolvedName]) {
-		return [self.favArtists objectAtIndex:[self.favArtistNames indexOfObject:resolvedName]];
-	} else {
-		return [self.justFavArtists objectAtIndex:[self.justFavArtistNames indexOfObject:resolvedName]];
-	}
 }
 
 @end
