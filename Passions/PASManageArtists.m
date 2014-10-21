@@ -33,8 +33,6 @@
 
 @implementation PASManageArtists
 
-static NSUInteger const kPASExpectedNameCorrections = 40;
-
 #pragma mark - Init
 
 + (instancetype) sharedMngr
@@ -62,7 +60,7 @@ static NSUInteger const kPASExpectedNameCorrections = 40;
 	self.artistNameCorrections = [NSMutableDictionary dictionaryWithContentsOfURL:cacheFile];
 	
 	if (!self.artistNameCorrections) {
-		self.artistNameCorrections = [[NSMutableDictionary alloc] initWithCapacity:kPASExpectedNameCorrections];
+		self.artistNameCorrections = [NSMutableDictionary dictionary];
 	}
 
 	return self;
@@ -72,8 +70,8 @@ static NSUInteger const kPASExpectedNameCorrections = 40;
 
 - (void)passFavArtists:(NSArray *)favArtists
 {
-	self.justFavArtists = [[NSMutableArray alloc] initWithCapacity:(kPASExpectedNameCorrections / 4)];
-	self.justFavArtistNames = [[NSMutableArray alloc] initWithCapacity:(kPASExpectedNameCorrections / 4)];
+	self.justFavArtists = [NSMutableArray array];
+	self.justFavArtistNames = [NSMutableArray array];
 	
 	self.favArtists = favArtists ? [NSMutableArray arrayWithArray:favArtists] : [NSMutableArray array];
 	_originalFavArtists = [NSArray arrayWithArray:favArtists];
