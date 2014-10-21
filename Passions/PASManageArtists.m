@@ -110,15 +110,23 @@
 					}
 					
 					dispatch_async(dispatch_get_main_queue(), ^{
-						cleanup();
-						reload();
+						if (cleanup) {
+							cleanup();
+						}
+						if (reload) {
+							reload();
+						}
 					});
 				});
 				
 			} else {
 				dispatch_async(dispatch_get_main_queue(), ^{
-					cleanup();
-					errorHandler(error);
+					if (cleanup) {
+						cleanup();
+					}
+					if (errorHandler) {
+						errorHandler(error);
+					}
 				});
 			}
 		}];
@@ -142,15 +150,23 @@
 												[self.justFavArtists addObject:artist];
 												
 												dispatch_async(dispatch_get_main_queue(), ^{
-													cleanup();
-													reload();
+													if (cleanup) {
+														cleanup();
+													}
+													if (reload) {
+														reload();
+													}
 												});
 											});
 											
 										} else {
 											dispatch_async(dispatch_get_main_queue(), ^{
-												cleanup();
-												errorHandler(error);
+												if (cleanup) {
+													cleanup();
+												}
+												if (errorHandler) {
+													errorHandler(error);
+												}
 											});
 										}
 									}];
