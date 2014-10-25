@@ -9,6 +9,7 @@
 @import MediaPlayer;
 #import "PASAddFromMusicTVC.h"
 #import "MPMediaQuery+Passions.h"
+#import "MPMediaItem+Passions.h"
 
 @interface PASAddFromMusicTVC ()
 @property (nonatomic, strong) NSArray* myArtists; // of MPMediaItem
@@ -52,14 +53,13 @@
 - (NSString *)nameForArtist:(id)artist
 {
 	NSAssert([artist isKindOfClass:[MPMediaItem class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
-	return [artist valueForProperty:MPMediaItemPropertyArtist];
+	return [artist PAS_artistName];
 }
 
 - (NSUInteger)playcountForArtist:(id)artist
 {
 	NSAssert([artist isKindOfClass:[MPMediaItem class]], @"%@ cannot get playcount for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
-	NSNumber *playCount = (NSNumber *) [artist valueForProperty:MPMediaItemPropertyPlayCount];
-	return [playCount unsignedIntegerValue];
+	return [artist PAS_artistPlaycount];
 }
 
 @end
