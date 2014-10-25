@@ -21,7 +21,7 @@ static void *UUIDKey;
 - (UIImage *)sourceImageWithFormatName:(NSString *)formatName;
 {
 	NSAssert([formatName isEqualToString:ImageFormatNameArtistThumbnailSmall], @"Unsupported format Name: %@", formatName);
-	return [[self valueForProperty:MPMediaItemPropertyArtwork] imageWithSize:ImageFormatImageSizeArtistThumbnailLarge];
+	return [[[self representativeItem] valueForProperty:MPMediaItemPropertyArtwork] imageWithSize:ImageFormatImageSizeArtistThumbnailLarge];
 }
 
 #pragma mark - FICEntity
