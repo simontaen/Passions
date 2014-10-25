@@ -53,7 +53,7 @@
 		F4EC62C019E66ADF009C5EF5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4EC62BF19E66ADF009C5EF5 /* Images.xcassets */; };
 		F4EED87719F8470700A0B3F3 /* MPMediaQuery+Passions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EED87619F8470700A0B3F3 /* MPMediaQuery+Passions.m */; };
 		F4FA316819B8B867000337A0 /* UIImage+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FA316719B8B867000337A0 /* UIImage+Utils.m */; };
-		F4FEC99A19E3072100935B1E /* MPMediaItem+SourceImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FEC99919E3072100935B1E /* MPMediaItem+SourceImage.m */; };
+		F4FEC99A19E3072100935B1E /* MPMediaItemCollection+SourceImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FEC99919E3072100935B1E /* MPMediaItemCollection+SourceImage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -132,8 +132,8 @@
 		F4EED87619F8470700A0B3F3 /* MPMediaQuery+Passions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MPMediaQuery+Passions.m"; sourceTree = "<group>"; };
 		F4FA316619B8B867000337A0 /* UIImage+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Utils.h"; sourceTree = "<group>"; };
 		F4FA316719B8B867000337A0 /* UIImage+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Utils.m"; sourceTree = "<group>"; };
-		F4FEC99819E3072100935B1E /* MPMediaItem+SourceImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MPMediaItem+SourceImage.h"; sourceTree = "<group>"; };
-		F4FEC99919E3072100935B1E /* MPMediaItem+SourceImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MPMediaItem+SourceImage.m"; sourceTree = "<group>"; };
+		F4FEC99819E3072100935B1E /* MPMediaItemCollection+SourceImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MPMediaItemCollection+SourceImage.h"; sourceTree = "<group>"; };
+		F4FEC99919E3072100935B1E /* MPMediaItemCollection+SourceImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MPMediaItemCollection+SourceImage.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,8 +344,8 @@
 				F4A814B619E2056B003879B0 /* PASSourceImage.h */,
 				F4A814B719E20CBD003879B0 /* NSString+SourceImage.h */,
 				F4A814B819E20CBD003879B0 /* NSString+SourceImage.m */,
-				F4FEC99819E3072100935B1E /* MPMediaItem+SourceImage.h */,
-				F4FEC99919E3072100935B1E /* MPMediaItem+SourceImage.m */,
+				F4FEC99819E3072100935B1E /* MPMediaItemCollection+SourceImage.h */,
+				F4FEC99919E3072100935B1E /* MPMediaItemCollection+SourceImage.m */,
 			);
 			name = "Image Cache";
 			sourceTree = "<group>";
@@ -504,7 +504,7 @@
 				F4B8B0B619E039EE00E1064D /* PASAlbumCVCell.m in Sources */,
 				F450FCE719F7044D00DF2D38 /* PASManageArtists.m in Sources */,
 				F4D9E94F19C39D6200B762A7 /* PASRootVC.m in Sources */,
-				F4FEC99A19E3072100935B1E /* MPMediaItem+SourceImage.m in Sources */,
+				F4FEC99A19E3072100935B1E /* MPMediaItemCollection+SourceImage.m in Sources */,
 				F4D284D019E0AE26008A3913 /* PASParseObjectWithImages.m in Sources */,
 				F4A779881793113E00C770B9 /* PASAppDelegate.m in Sources */,
 				F4D284CD19E087D0008A3913 /* PASAlbum.m in Sources */,
