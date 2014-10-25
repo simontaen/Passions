@@ -40,10 +40,12 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Artist fetch could fail and the iTunes Id would be empty then.
 
 ## General Functionality
-* Fall back to Spotify if Music App does not seem to be used.
 * don't allow dismissing the faving screen while faving is in process
-* Add Spotify as a Source (lot's of people don't use Music anymore)
 * Playcount is taken from the representative Item, you need to calculate it manually.
+
+### Spotify Integration
+* Fall back to Spotify if Music App does not seem to be used.
+* Add Spotify as a Source (lot's of people don't use Music anymore)
 
 ## PageViewController Container
 * Try a TabBarController with a hidden tabBar replaced by a pageControl
