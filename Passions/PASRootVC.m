@@ -74,7 +74,7 @@
 - (void)_onboard
 {
 	UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Hi!"
-																   message:@"Passions lets you track you favorite Aritst and sends you Notifications when one of them releases a new Album. To enable these Notification please allow \"Push Notification\"."
+																   message:@"Passions lets you track your favorite Aritsts and sends you Notifications when one of them releases a new Album. To enable these Notification please allow \"Push Notification\"."
 															preferredStyle:UIAlertControllerStyleAlert];
 	__weak typeof(self) weakSelf = self;
 	UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Let's go!"
