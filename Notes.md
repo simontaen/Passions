@@ -20,7 +20,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 	* Tap to (un-)favorite
 	* Mark already favorited Artists consistently between different sources
 	* Search for an Artist
-	* Allow settings to change ordering
+	* Allow settings to change ordering (Alphabetical, Playcount)
 
 * Show a collection view of your favorite artists albums, ordered by release date
 	* overlay a color coded release date bubble
@@ -36,45 +36,53 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 # NewStuff.todo
 
-## Functionality
+## Parse
+* Artist fetch could fail and the iTunes Id would be empty then.
 
-* First launch experience
-	* favorite 3 most played
-		* this could get tricky with the artistNameCorrections
-	* setup User/Installation
+## General Functionality
+* Fall back to Spotify if Music App does not seem to be used.
+* don't allow dismissing the faving screen while faving is in process
+* Add Spotify as a Source (lot's of people don't use Music anymore)
+* Playcount is taken from the representative Item, you need to calculate it manually.
 
-* show the album after a push notification arrives
-	* send over the parseAlbum objectId
-* Silent push after fav'ing an Artist (Status Processing) to update UI automatically
-
-* Parse seems to just take a default date of today for the Albums sometimes (check Bruce and Beatles)
-	* actually Spotify delivers shit data! (Track of my Years from Bryan Adams for example!)
-
-* Switch Release Date to a real Date on Parse: https://www.parse.com/docs/js_guide#objects-types
-	* https://www.parse.com/questions/javascript-query-using-greaterthan-createdat
-
-## UI
-
+## PageViewController Container
 * Try a TabBarController with a hidden tabBar replaced by a pageControl
+* Faster transition (see homescreen)
+* flickering when the transition gets aborted
+* Another point on the PageController to show that there is something more
+* Rethink/Rework the pageControl look
+	* black border and nearly clear background
+
+## Cells
 * redesign FavArtist cell, maybe add Playcount?
 * add a fancy control to (un-)fav the artist
-* A guy rocking out when refreshing on pull-to-refresh
-* Faster transition (see homescreen)
-* segmented control and navbar hiding, as on AppStore Top Charts, hide when slide
-* hairlines below extended nav bars and table view headers
-* flickering when the transition gets aborted
-* extended nav bar color when transitioning
+
+## Adding
+* Toolbar Color does not seem to match the NavBar
+* The scrubber seems to blocks the pan gesture
+* Either Transculency OR NavBar hiding. Both doesn't make sense. Hiding seems to be the better solution, as on AppStore Top Charts, hide when slide.
+* Use Apple Example to hide Hairline (as it shows during transitioning)
+* Non-Artists show up like Apple or Siracusa
+
+## Fav Artists
+* Improve the delete gesture recognition on the TableViewCell
+
+## Timeline
 * ReleaseDateView on Timeline (see examples)
-* Either Transculency OR NavBar hiding. Both doesn't make sense. Hiding seems to be the better solution.
-* Use Apple Example to hide Hairline
-* Another point on the PageController to show that there is something more
 * Hide status bar on timeline, it scrolls under it.
 	* ideally the status bar should be hidden but it "snaps" back on the FavAritstsTVC, which is ugly will have to check again when using a TabBarController also the PageViewController probably needs updates too
-* tapping on a fav artists, the user might think it goes to the timeline (but it could just be b/c it did NOT go to ArtistInfo at that point)
-* The scrubber seems to blocks the pan gesture
-* Improve the delete gesture recognition on the TableViewCell
+* Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
+
+## Artist and Album Info
+* Design the Screens
+	* iTunes Buy link
+	* Couple of infos
+	* Show Album Art in Big
+	* "Show All Albums" Button from Artist Info show this Artists Albums in a Timeline
+* Use a modal view, there is too much left-right if you use a NavController
+* Opening App several times from a Push stacks the new Album Info views on top of each other.
 * Use UIVisualEffectView for Album and Artist Info
-* Rethink/Rework the pageControl look
+
 
 # 2.0
 
@@ -91,6 +99,9 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * search for not in library artists to add (but consider all resources!) - number one feature request!
 * Background fetch for a new Album
 * You might run into performance problems with _triggerAlbumFetching and fetchFullAlbums. If too many requests come in at the same time, I'll run out of background jobs. The job won't run, the user won't get a push when loading is done, and more importantly it could take until the next scheduled album fetch until the artist get its albums. We'll have to see how it turns out.
+	* Faving Artists fast leads to "processing" for ever (no Jobs available), how to resolve?
+* A guy rocking out when refreshing on pull-to-refresh
+* Some Artist might not have Albums, like Jennifer Rostock (store region) or Garth Brooks (won't sell them on iTunes). Fall back to Spotify in that case.
 
 # Data communication with Parse
 
