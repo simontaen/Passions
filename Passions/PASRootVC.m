@@ -12,6 +12,8 @@
 #import "GBVersionTracking.h"
 
 @interface PASRootVC ()
+@property (nonatomic, assign) BOOL didOnboard;
+@property (nonatomic, assign) BOOL didSetupPushNotificaiton;
 @end
 
 @implementation PASRootVC
@@ -58,12 +60,10 @@
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	if ([GBVersionTracking isFirstLaunchEver]) {
-		// TODO: if first run!
+	if (!self.didOnboard && [GBVersionTracking isFirstLaunchEver]) {
+		// _onboard will setup push notifications
 		[self _onboard];
-		// TODO: this is probably bad
-		[GBVersionTracking track];
-	} else {
+	} else if (!self.didSetupPushNotificaiton) {
 		// no need to onboard, just setup notifications directly
 		[self _setupPushNotificaiton];
 	}
@@ -81,6 +81,7 @@
 															style:UIAlertActionStyleDefault
 														  handler:^(UIAlertAction * action) {
 															  [self dismissViewControllerAnimated:YES completion:nil];
+															  self.didOnboard = YES;
 															  [weakSelf _setupPushNotificaiton];
 														  }];
 	[alert addAction:defaultAction];
@@ -100,6 +101,7 @@
 																			 categories:nil];
 	[[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 	[[UIApplication sharedApplication] registerForRemoteNotifications];
+	self.didSetupPushNotificaiton = YES;
 }
 
 @end

@@ -73,9 +73,8 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 	PFUser *currentUser = [PFUser currentUser];
 	
-	// setup install and user on first launch
-	// TODO: does this work when the first time launch crapped?
 	if ([GBVersionTracking isFirstLaunchEver] || ![PFUser currentUser].objectId) {
+		// setup install and user on first launch
 		[self _updateDeviceInfos:currentInstallation];
 		[currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 			if (succeeded && !error) {
@@ -92,19 +91,11 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 			}
 		}];
 		
-	} else {
+	} else if ([GBVersionTracking isFirstLaunchForBuild]) {
 		// on first build launch, update the device specs
-		if ([GBVersionTracking isFirstLaunchForBuild]) {
-			[self _updateDeviceInfos:currentInstallation];
-			[currentInstallation saveInBackground];
-		}
-		
-		// and on all other launches, just refresh the user
-		[currentUser incrementKey:@"runCount"];
-		[currentUser saveInBackground];
+		[self _updateDeviceInfos:currentInstallation];
+		[currentInstallation saveInBackground];
 	}
-	
-	[self _logUsersStuff:currentUser];
 }
 
 - (void)_updateDeviceInfos:(PFInstallation *)installation
@@ -112,20 +103,6 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	[installation setObject:[UIDevice currentDevice].modelName forKey:@"modelName"];
 	[installation setObject:[UIDevice currentDevice].modelIdentifier forKey:@"modelIdentifier"];
 	[installation setObject:[UIDevice currentDevice].systemVersion forKey:@"systemVersion"];
-}
-
-- (void)_logUsersStuff:(PFUser *)user
-{
-	NSLog(@"isFirstLaunchForBuild = %@", ([GBVersionTracking isFirstLaunchForBuild] ? @"YES" : @"NO"));
-	NSLog(@"isFirstLaunchForVersion = %@", ([GBVersionTracking isFirstLaunchForVersion] ? @"YES" : @"NO"));
-	NSLog(@"isFirstLaunchEver = %@", ([GBVersionTracking isFirstLaunchEver] ? @"YES" : @"NO"));
-	
-	// TODO: what propertiy shows that the user is not ready?
-	NSLog(@"isAuthenticated = %@", ([user isAuthenticated] ? @"YES" : @"NO"));
-	NSLog(@"isDataAvailable = %@", ([user isDataAvailable] ? @"YES" : @"NO"));
-	NSLog(@"isDirty = %@", ([user isDirty] ? @"YES" : @"NO"));
-	NSLog(@"isNew = %@", ([user isNew] ? @"YES" : @"NO"));
-	NSLog(@"isDirtyForKey objectId = %@", ([user isDirtyForKey:@"objectId"] ? @"YES" : @"NO"));
 }
 
 #pragma mark - FICImageCacheDelegate
@@ -196,7 +173,6 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)imageCache:(FICImageCache *)imageCache errorDidOccurWithMessage:(NSString *)errorMessage
 {
-	// TODO: handle this differently
 	if (![errorMessage containsString:@"nil source image URL for image format"]) {
 		NSLog(@"%@", errorMessage);
 	}
