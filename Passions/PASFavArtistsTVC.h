@@ -8,6 +8,7 @@
 
 #import <Parse/Parse.h>
 
+/// Listens to kPASDidEditFavArtists
 @interface PASFavArtistsTVC : PFQueryTableViewController
 
 @end

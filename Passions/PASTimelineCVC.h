@@ -9,6 +9,7 @@
 @import UIKit;
 #import "CPFQueryCollectionViewController.h"
 
+/// Listens to kPASDidEditFavArtists and kPASShowAlbumDetails
 @interface PASTimelineCVC : CPFQueryCollectionViewController
 
 @end

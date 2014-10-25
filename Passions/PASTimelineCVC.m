@@ -37,6 +37,18 @@
 													  NSAssert([obj isKindOfClass:[PASAlbum class]], @"kPASShowAlbumDetails must carry a PASAlbum");
 													  [self _showAlbum:obj animated:NO];
 												  }];
+	// register to get notified if fav artists have been edited
+	[[NSNotificationCenter defaultCenter] addObserverForName:kPASDidEditFavArtists
+													  object:nil queue:nil
+												  usingBlock:^(NSNotification *note) {
+													  // get didEditArtists from the notification
+													  id obj = note.userInfo[kPASDidEditFavArtists];
+													  NSAssert([obj isKindOfClass:[NSNumber class]], @"kPASDidEditFavArtists must carry a NSNumber");
+													  BOOL didEditArtists = [((NSNumber *)obj) boolValue];
+													  if (didEditArtists) {
+														  [self _refreshUI];
+													  }
+												  }];
 	return self;
 }
 
