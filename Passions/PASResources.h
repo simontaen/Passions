@@ -22,6 +22,9 @@ extern NSString * const kPASDidEditFavArtists;
 // Notification received when album details should be shown for the passed Album
 extern NSString * const kPASShowAlbumDetails;
 
+// Notification sent when the initial Artists have been favorited.
+extern NSString * const kPASDidFavoriteInitialArtists;
+
 // Constant for Artist Artwork
 extern NSString *const ImageFormatFamilyArtistThumbnails;
 extern NSString *const ImageFormatNameArtistThumbnailSmall;

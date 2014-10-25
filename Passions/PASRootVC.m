@@ -27,6 +27,17 @@
 												  usingBlock:^(NSNotification *note) {
 													  [self transitionToViewControllerAtIndex:1 interactive:NO];
 												  }];
+	[[NSNotificationCenter defaultCenter] addObserverForName:kPASDidFavoriteInitialArtists
+													  object:nil queue:nil
+												  usingBlock:^(NSNotification *note) {
+													  UINavigationController *navVc = (UINavigationController *)self.selectedViewController;
+													  PASTimelineCVC *vc = (PASTimelineCVC *)navVc.topViewController;
+													  [vc loadObjects];
+													  // this is a one time only thing
+													  [[NSNotificationCenter defaultCenter] removeObserver:nil
+																									  name:kPASDidFavoriteInitialArtists
+																									object:self];
+												  }];
 	// init and add the page view controllers view controllers
 	self.viewControllers = @[[self _timelineNavController], [self _favArtistsNavController]];
 }
@@ -71,10 +82,6 @@
 														  handler:^(UIAlertAction * action) {
 															  [self dismissViewControllerAnimated:YES completion:nil];
 															  [weakSelf _setupPushNotificaiton];
-															  // TODO: This feels like cheating
-															  UINavigationController *navVc = (UINavigationController *)self.selectedViewController;
-															  PASTimelineCVC *vc = (PASTimelineCVC *)navVc.topViewController;
-															  [vc loadObjects];
 														  }];
 	[alert addAction:defaultAction];
 	

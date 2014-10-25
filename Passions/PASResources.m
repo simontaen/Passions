@@ -29,6 +29,8 @@ NSString * const kPASDidEditFavArtists = @"kPASDidEditFavArtists";
 
 NSString * const kPASShowAlbumDetails = @"kPASShowAlbumDetails";
 
+NSString * const kPASDidFavoriteInitialArtists = @"kPASDidFavoriteInitialArtists";
+
 NSString *const ImageFormatFamilyArtistThumbnails = @"ImageFormatFamilyArtistThumbnails";
 NSString *const ImageFormatNameArtistThumbnailSmall = @"ImageFormatNameArtistThumbnailSmall";
 CGSize const ImageFormatImageSizeArtistThumbnailSmall = {43, 43};

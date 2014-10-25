@@ -8,6 +8,8 @@
 
 #import "PASManageArtists.h"
 #import "PASArtist.h"
+#import "MPMediaQuery+Passions.h"
+#import "MPMediaItem+Passions.h"
 
 @interface PASManageArtists()
 
@@ -182,18 +184,30 @@
 
 - (void)addInitialFavArtists
 {
-	// TODO: find top artists from MPMediaQuery
-	NSArray *artistsToFavorite = @[@"AC/DC", @"Mark Knopfler"];
+	NSArray *topArtists = [MPMediaQuery PAS_orderedArtistsByPlaycount:[MPMediaQuery PAS_artistsQuery]];
 	
 	// this is called from the app delegate, make sure you're properly set up
 	if (!self.originalFavArtists) {
 		[self passFavArtists:@[]];
 	}
 	
-	for (NSString *artistName in artistsToFavorite) {
-		[self didSelectArtistWithName:artistName cleanup:nil reload:nil errorHandler:nil];
+	if (topArtists.count < 5 && [[topArtists firstObject] PAS_artistPlaycount] < 7) {
+		NSLog(@"The user doesn't seem to use the Music App");
 	}
 	
+	if (topArtists.count > 2) {
+		int __block doneCounter = 0;
+		
+		for (int i = 0; i < 3; i++) {
+			[self didSelectArtistWithName:[topArtists[i] PAS_artistName] cleanup:nil reload:^{
+				doneCounter++;
+				if (doneCounter == 3) {
+					[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists object:nil];
+				}
+				
+			} errorHandler:nil];
+		}
+	}
 }
 
 #pragma mark - Private Methods
