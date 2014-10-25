@@ -8,6 +8,7 @@
 
 @import MediaPlayer;
 #import "PASAddFromMusicTVC.h"
+#import "MPMediaQuery+Passions.h"
 
 @interface PASAddFromMusicTVC ()
 @property (nonatomic, strong) NSArray* myArtists; // of MPMediaItem
@@ -31,38 +32,21 @@
 - (NSArray *)myArtists
 {
 	if (!_myArtists) {
-		MPMediaQuery *everything = [[MPMediaQuery alloc] init];
-		[everything setGroupingType: MPMediaGroupingAlbumArtist];
-		
-		NSArray *collections = [everything collections];
-		
-		NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:collections.count];
-		for (MPMediaItemCollection *itemCollection in collections) {
-			[items addObject:[itemCollection representativeItem]];
-		}
-		_myArtists = items;
+		_myArtists = [MPMediaQuery PAS_artistsQuery];
 	};
 	return _myArtists;
 }
 
 #pragma mark - Subclassing
 
-// will be implemented by subclass
 - (NSArray *)artistsOrderedByName
 {
-	NSSortDescriptor *artistNameSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:MPMediaItemPropertyArtist
-																			   ascending:YES
-																				selector:@selector(localizedCaseInsensitiveCompare:)];
-	return [self.myArtists sortedArrayUsingDescriptors:@[artistNameSortDescriptor]];
+	return [MPMediaQuery PAS_orderedArtistsByName:self.myArtists];
 }
 
-// will be implemented by subclass
 - (NSArray *)artistsOrderedByPlaycout
 {
-	NSSortDescriptor *playCountSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:MPMediaItemPropertyPlayCount
-																			  ascending:NO
-																			   selector:@selector(compare:)];
-	return [self.myArtists sortedArrayUsingDescriptors:@[playCountSortDescriptor]];
+	return [MPMediaQuery PAS_orderedArtistsByPlaycount:self.myArtists];
 }
 
 - (NSString *)nameForArtist:(id)artist
