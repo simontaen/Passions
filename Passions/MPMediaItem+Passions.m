@@ -15,7 +15,7 @@
 	return [self valueForProperty:MPMediaItemPropertyArtist];
 }
 
-- (NSUInteger)PAS_artistPlaycount
+- (NSUInteger)PAS_playcount
 {
 	return [(NSNumber *)[self valueForProperty:MPMediaItemPropertyPlayCount] unsignedIntegerValue];
 }

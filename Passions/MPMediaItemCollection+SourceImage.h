@@ -11,4 +11,10 @@
 
 @interface MPMediaItemCollection (SourceImage) <PASSourceImage>
 
++ (NSArray *)PAS_artistsOrderedByName; // of MPMediaItemCollection
++ (NSArray *)PAS_artistsOrderedByPlaycount; // of MPMediaItemCollection
++ (NSUInteger)PAS_playcountForArtistWithName:(NSString *)artistName;
+
+- (NSString *)PAS_artistName;
+
 @end

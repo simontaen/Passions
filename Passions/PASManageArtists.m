@@ -8,8 +8,8 @@
 
 #import "PASManageArtists.h"
 #import "PASArtist.h"
-#import "MPMediaQuery+Passions.h"
 #import "MPMediaItem+Passions.h"
+#import "MPMediaItemCollection+SourceImage.h"
 
 @interface PASManageArtists()
 
@@ -184,14 +184,15 @@
 
 - (void)addInitialFavArtists
 {
-	NSArray *topArtists = [MPMediaQuery PAS_orderedArtistsByPlaycount:[MPMediaQuery PAS_artistsQuery]];
+	// TODO: artistsByPlaycount on MPMediaQuery with Caching!
+	NSArray *topArtists = [MPMediaItemCollection PAS_artistsOrderedByPlaycount];
 	
 	// this is called from the app delegate, make sure you're properly set up
 	if (!self.originalFavArtists) {
 		[self passFavArtists:@[]];
 	}
 	
-	if (topArtists.count < 5 && [[topArtists firstObject] PAS_artistPlaycount] < 7) {
+	if (topArtists.count < 5 && [[topArtists firstObject] PAS_playcount] < 7) {
 		NSLog(@"The user doesn't seem to use the Music App");
 	}
 	

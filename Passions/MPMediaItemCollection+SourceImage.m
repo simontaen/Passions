@@ -11,10 +11,94 @@
 #import "UIImage+Utils.h"
 #import <objc/runtime.h>
 #import "PASArtist.h"
+#import "MPMediaItem+Passions.h"
 
+// http://oleb.net/blog/2011/05/faking-ivars-in-objc-categories-with-associative-references/
+static void *artistsOrderedByNameKey;
+static void *artistsOrderedByPlaycountKey;
+static void *artistPlaycountsKey; // of NSString -> NSNumber (ArtistName -> ArtistPlaycount)
 static void *UUIDKey;
 
 @implementation MPMediaItemCollection (SourceImage)
+
+#pragma mark - Passions
+
++ (NSArray *)PAS_artistsOrderedByName
+{
+	id obj = objc_getAssociatedObject(self, artistsOrderedByNameKey);
+	if (!obj) {
+		MPMediaQuery *query = [[MPMediaQuery alloc] init];
+		[query setGroupingType: MPMediaGroupingAlbumArtist];
+		NSArray *collections = [query collections];
+		objc_setAssociatedObject(self, artistsOrderedByNameKey, collections, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+		return collections;
+	}
+	return obj;
+}
+
++ (NSArray *)PAS_artistsOrderedByPlaycount
+{
+	id obj = objc_getAssociatedObject(self, artistsOrderedByPlaycountKey);
+	if (!obj) {
+		[MPMediaItemCollection _setupForPlaycountAccess];
+		return objc_getAssociatedObject(self, artistsOrderedByPlaycountKey);
+	}
+	return obj;
+}
+
++ (NSUInteger)PAS_playcountForArtistWithName:(NSString *)artistName
+{
+	id obj = objc_getAssociatedObject(self, artistPlaycountsKey);
+	if (!obj) {
+		[MPMediaItemCollection _setupForPlaycountAccess];
+		obj = objc_getAssociatedObject(self, artistPlaycountsKey);
+	}
+	return [(NSNumber *)obj[artistName] unsignedIntegerValue];
+}
+
++ (void)_setupForPlaycountAccess
+{
+	NSArray *artistsByName = [MPMediaItemCollection PAS_artistsOrderedByName];
+	NSMutableDictionary* artistPlaycounts = [[NSMutableDictionary alloc] initWithCapacity:artistsByName.count];
+	
+	NSArray *artistsByPlaycount = [artistsByName sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+		NSString *obj1Name = [obj1 PAS_artistName];
+		if (!artistPlaycounts[obj1Name]) {
+			artistPlaycounts[obj1Name] = [self _playcountOfCollection:obj1];
+		}
+		
+		NSString *obj2Name = [obj2 PAS_artistName];
+		if (!artistPlaycounts[obj2Name]) {
+			artistPlaycounts[obj2Name] = [self _playcountOfCollection:obj2];
+		}
+		
+		NSInteger result = [(NSNumber *)artistPlaycounts[obj1Name] unsignedIntegerValue] - [(NSNumber *)artistPlaycounts[obj2Name] unsignedIntegerValue];
+		
+		if (result > 0) {
+			return NSOrderedAscending;
+		} else if (result < 0) {
+			return NSOrderedDescending;
+		}
+		return NSOrderedSame;
+	}];
+	
+	objc_setAssociatedObject(self, artistsOrderedByPlaycountKey, artistsByPlaycount, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+	objc_setAssociatedObject(self, artistPlaycountsKey, artistPlaycounts, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
++ (NSNumber *)_playcountOfCollection:(MPMediaItemCollection *)collection
+{
+	NSUInteger playcount = 0;
+	for (MPMediaItem *item in [collection items]) {
+		playcount += [item PAS_playcount];
+	}
+	return [NSNumber numberWithInteger:playcount];
+}
+
+- (NSString *)PAS_artistName
+{
+	return [[self representativeItem] PAS_artistName];
+}
 
 #pragma mark - PASSourceImage
 
@@ -30,7 +114,6 @@ static void *UUIDKey;
 
 - (NSString *)UUID
 {
-	// http://oleb.net/blog/2011/05/faking-ivars-in-objc-categories-with-associative-references/
 	id obj = objc_getAssociatedObject(self, UUIDKey);
 	if (!obj) {
 		NSNumber *persistentId = [self valueForProperty:MPMediaItemPropertyPersistentID];
