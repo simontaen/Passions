@@ -40,7 +40,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Artist fetch could fail and the iTunes Id would be empty then.
 
 ## General Functionality
-* don't allow dismissing the faving screen while faving is in process
 * Playcount is taken from the representative Item, you need to calculate it manually.
 
 ### Spotify Integration

@@ -353,12 +353,17 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	PASArtistTVCell *cell = (PASArtistTVCell *)[tableView cellForRowAtIndexPath:indexPath];
 	cell.userInteractionEnabled = NO;
 	[cell.activityIndicator startAnimating];
+	self.parentViewController.parentViewController.navigationItem.rightBarButtonItem.enabled = NO;
+	self.parentViewController.parentViewController.navigationItem.leftBarButtonItem.enabled = NO;
+	
 	
 	// TODO: this is just plain ugly
 	[[PASManageArtists sharedMngr] didSelectArtistWithName:[self nameForArtist:[self _artistForIndexPath:indexPath]]
 												   cleanup:^{
 													   [cell.activityIndicator stopAnimating];
 													   cell.userInteractionEnabled = YES;
+													   self.parentViewController.parentViewController.navigationItem.rightBarButtonItem.enabled = YES;
+													   self.parentViewController.parentViewController.navigationItem.leftBarButtonItem.enabled = YES;
 												   } reload:^{
 													   [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 												   }
