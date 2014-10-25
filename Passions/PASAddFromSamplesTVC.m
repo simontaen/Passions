@@ -170,8 +170,6 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (NSDictionary *)sections
 {
-	// TODO: rethink the A-Z scrubber, should it always show the complete alphabet?
-	// TODO: the scrubber seems to blocks the pan gesture
 	switch (self.selectedSortOrder) {
 		case PASAddArtistsSortOrderAlphabetical:
 			if (!self.cachedAlphabeticalSections) {

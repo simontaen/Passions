@@ -98,11 +98,6 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-	// TODO: ideally the status bar should be hidden
-	// but it "snaps" back on the FavAritstsTVC, which is ugly
-	// will have to check again when using a TabBarController
-	// also the PageViewController probably needs updates too
-	// this should be ok in the meantime
 	return UIStatusBarStyleDefault;
 }
 

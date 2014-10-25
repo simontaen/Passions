@@ -74,7 +74,6 @@
 	self.pageControlView.numberOfPages = self.viewControllers.count;
 	
 	// add rounded edgeds
-	// TODO: maybe add blur using UIVisualEffectView (iOS 8 only)?
 	self.pageControlView.backgroundColor = [UIColor lightGrayColor];
 	self.pageControlView.opaque = NO;
 	self.pageControlView.alpha = 0.8f;
@@ -91,7 +90,6 @@
 {
 	[super viewDidLayoutSubviews];
 	
-	// TODO: rework the pageControl look
 	// custom layout for pageControlView
 	CGRect newFrame = self.pageControlView.frame;
 	CGFloat heightAdj = (int)(newFrame.size.height * 0.189);

@@ -69,7 +69,12 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Use Apple Example to hide Hairline
 * Another point on the PageController to show that there is something more
 * Hide status bar on timeline, it scrolls under it.
+	* ideally the status bar should be hidden but it "snaps" back on the FavAritstsTVC, which is ugly will have to check again when using a TabBarController also the PageViewController probably needs updates too
 * tapping on a fav artists, the user might think it goes to the timeline (but it could just be b/c it did NOT go to ArtistInfo at that point)
+* The scrubber seems to blocks the pan gesture
+* Improve the delete gesture recognition on the TableViewCell
+* Use UIVisualEffectView for Album and Artist Info
+* Rethink/Rework the pageControl look
 
 # 2.0
 

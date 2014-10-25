@@ -69,7 +69,6 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	[defaultACL setPublicReadAccess:YES];
 	[PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
 	
-	// TODO: What about ACL here?
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 	PFUser *currentUser = [PFUser currentUser];
 	
@@ -271,7 +270,6 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-	// TODO: this could be a good place to track device stats
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 	if (currentInstallation.badge != 0) {
 		currentInstallation.badge = 0;
