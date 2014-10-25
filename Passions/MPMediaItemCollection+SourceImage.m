@@ -1,12 +1,12 @@
 //
-//  MPMediaItem+SourceImage.m
+//  MPMediaItemCollection+SourceImage.m
 //  Passions
 //
 //  Created by Simon Tännler on 06/10/14.
 //  Copyright (c) 2014 edgeguard. All rights reserved.
 //
 
-#import "MPMediaItem+SourceImage.h"
+#import "MPMediaItemCollection+SourceImage.h"
 #import "FICUtilities.h"
 #import "UIImage+Utils.h"
 #import <objc/runtime.h>
@@ -14,7 +14,7 @@
 
 static void *UUIDKey;
 
-@implementation MPMediaItem (SourceImage)
+@implementation MPMediaItemCollection (SourceImage)
 
 #pragma mark - PASSourceImage
 

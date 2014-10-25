@@ -1,5 +1,5 @@
 //
-//  MPMediaItem+SourceImage.h
+//  MPMediaItemCollection+SourceImage.h
 //  Passions
 //
 //  Created by Simon Tännler on 06/10/14.
@@ -9,6 +9,6 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "PASSourceImage.h"
 
-@interface MPMediaItem (SourceImage) <PASSourceImage>
+@interface MPMediaItemCollection (SourceImage) <PASSourceImage>
 
 @end

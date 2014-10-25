@@ -11,7 +11,7 @@
 // technically the imports don't need to happen, as the runtime attaches them to each instance
 // but I still like to do them for clarity
 #import "NSString+SourceImage.h"
-#import "MPMediaItem+SourceImage.h"
+#import "MPMediaItemCollection+SourceImage.h"
 
 @interface PASArtistTVCell()
 @property (nonatomic, strong) id<FICEntity> entity;
