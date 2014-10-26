@@ -44,6 +44,9 @@ extern CGSize const ImageFormatImageSizeAlbumThumbnailLarge;
 + (UIImage *) artistThumbnailPlaceholder;
 + (UIImage *) albumThumbnailPlaceholder;
 
++ (UIImage *)outlinedStar;
++ (UIImage *)favoritedStar;
+
 + (void)printViewControllerLayoutStack:(UIViewController *)viewController;
 + (void)printViewLayoutStack:(UIViewController *)vc;
 + (void)printSubviews:(UIView *)vw;

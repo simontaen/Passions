@@ -45,7 +45,7 @@ CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 
 @implementation PASResources
 
-+ (UIImage *) artistThumbnailPlaceholder
++ (UIImage *)artistThumbnailPlaceholder
 {
 	static UIImage *artistThumbnailPlaceholder;
 	static dispatch_once_t onceToken;
@@ -55,9 +55,24 @@ CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 	return artistThumbnailPlaceholder;
 }
 
-+ (UIImage *) albumThumbnailPlaceholder
++ (UIImage *)albumThumbnailPlaceholder
 {
 	return [self artistThumbnailPlaceholder];
+}
+
++ (UIImage *)outlinedStar
+{
+	static UIImage *outlinedStar;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		outlinedStar = [UIImage imageNamed: @"star"];
+	});
+	return outlinedStar;
+}
+
++ (UIImage *)favoritedStar
+{
+	return [self outlinedStar];
 }
 
 + (void)printViewControllerLayoutStack:(UIViewController *)viewController
