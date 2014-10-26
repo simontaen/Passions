@@ -347,12 +347,13 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	}
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - Star Button
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)starTapped:(UIButton *)sender atIndexPath:(NSIndexPath *)indexPath
 {
-	PASArtistTVCell *cell = (PASArtistTVCell *)[tableView cellForRowAtIndexPath:indexPath];
+	PASArtistTVCell *cell = (PASArtistTVCell *)[self.tableView cellForRowAtIndexPath:indexPath];
 	cell.userInteractionEnabled = NO;
+	cell.starButton.hidden = YES;
 	[cell.activityIndicator startAnimating];
 	self.parentViewController.parentViewController.navigationItem.rightBarButtonItem.enabled = NO;
 	self.parentViewController.parentViewController.navigationItem.leftBarButtonItem.enabled = NO;
@@ -362,6 +363,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	[[PASManageArtists sharedMngr] didSelectArtistWithName:[self nameForArtist:[self _artistForIndexPath:indexPath]]
 												   cleanup:^{
 													   [cell.activityIndicator stopAnimating];
+													   cell.starButton.hidden = NO;
 													   cell.userInteractionEnabled = YES;
 													   self.parentViewController.parentViewController.navigationItem.rightBarButtonItem.enabled = YES;
 													   self.parentViewController.parentViewController.navigationItem.leftBarButtonItem.enabled = YES;
@@ -373,10 +375,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 											  }];
 }
 
-- (void)starTapped:(UIButton *)sender atIndexPath:(NSIndexPath *)indexPath
-{
-	NSLog(@"Button in row %d tapped", [indexPath row]);
-}
+#pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
