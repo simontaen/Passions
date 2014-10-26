@@ -45,10 +45,10 @@
 	self.view.backgroundColor = [UIColor whiteColor];
 
 	// Setup navigationBar Items
-	UIBarButtonItem *lbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
-																		  target:self
-																		  action:@selector(doneButtonTapped:)];
-	self.navigationItem.leftBarButtonItem = lbbi;
+//	UIBarButtonItem *lbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
+//																		  target:self
+//																		  action:@selector(doneButtonTapped:)];
+//	self.navigationItem.leftBarButtonItem = lbbi;
 	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																		  target:self
 																		  action:@selector(doneButtonTapped:)];
