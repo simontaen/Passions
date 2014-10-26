@@ -47,11 +47,11 @@
 	// Setup navigationBar Items
 	UIBarButtonItem *lbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
 																		  target:self
-																		  action:@selector(doneButtonHandler:)];
+																		  action:@selector(doneButtonTapped:)];
 	self.navigationItem.leftBarButtonItem = lbbi;
 	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																		  target:self
-																		  action:@selector(doneButtonHandler:)];
+																		  action:@selector(doneButtonTapped:)];
 	self.navigationItem.rightBarButtonItem = rbbi;
 
 	// find the hairline below the navigationBar
@@ -94,7 +94,7 @@
 
 #pragma mark - Navigation
 
-- (IBAction)doneButtonHandler:(UIBarButtonItem *)sender
+- (IBAction)doneButtonTapped:(UIBarButtonItem *)sender
 {
 	BOOL didEditArtists = [((PASExtendedNavContainer*) self.selectedViewController).addTvc didEditArtists];
 	[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditFavArtists
