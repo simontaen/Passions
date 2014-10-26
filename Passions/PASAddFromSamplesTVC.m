@@ -33,7 +33,7 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 @property (nonatomic, strong) NSArray *cachedAlphabeticalSectionIndex;
 @property (nonatomic, strong) NSDictionary *cachedAlphabeticalSections;
 
-@property (nonatomic, strong) NSArray *cachedArtistsOrderedByPlaycout;
+@property (nonatomic, strong) NSArray *cachedArtistsOrderedByPlaycount;
 @property (nonatomic, strong) NSArray *cachedPlaycountSectionIndex;
 @property (nonatomic, strong) NSDictionary *cachedPlaycountSections;
 
@@ -103,10 +103,10 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 			}
 			return self.cachedArtistsOrderedByName;
 		default:
-			if (!self.cachedArtistsOrderedByPlaycout) {
-				self.cachedArtistsOrderedByPlaycout = [self artistsOrderedByPlaycout];
+			if (!self.cachedArtistsOrderedByPlaycount) {
+				self.cachedArtistsOrderedByPlaycount = [self artistsOrderedByPlaycount];
 			}
-			return self.cachedArtistsOrderedByPlaycout;
+			return self.cachedArtistsOrderedByPlaycount;
 	}
 }
 
@@ -117,7 +117,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 }
 
 // will be implemented by subclass
-- (NSArray *)artistsOrderedByPlaycout
+- (NSArray *)artistsOrderedByPlaycount
 {
 	return [self.sampleArtists sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
 		NSInteger result = [self playcountForArtist:obj1 withName:obj1] - [self playcountForArtist:obj2 withName:obj2];

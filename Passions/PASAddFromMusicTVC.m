@@ -30,7 +30,7 @@
 	return [MPMediaItemCollection PAS_artistsOrderedByName];
 }
 
-- (NSArray *)artistsOrderedByPlaycout
+- (NSArray *)artistsOrderedByPlaycount
 {
 	return [MPMediaItemCollection PAS_artistsOrderedByPlaycount];
 }
