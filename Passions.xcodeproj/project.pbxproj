@@ -22,6 +22,7 @@
 		F4589D3D19C240D500E17D49 /* PASPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4589D3C19C240D500E17D49 /* PASPageViewController.m */; };
 		F461C8E119EB006C0081B445 /* PASExtendedNavContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = F461C8DF19EB006C0081B445 /* PASExtendedNavContainer.m */; };
 		F4694D6419B74ABB00D12576 /* PASFavArtistsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */; };
+		F4768C7A19FD3F11003682BD /* STKTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4768C7919FD3F11003682BD /* STKTableViewCell.m */; };
 		F476F0EB19B8D8EA00185544 /* PASArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0EA19B8D8EA00185544 /* PASArtist.m */; };
 		F476F0EE19B8D9A100185544 /* PASResources.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0ED19B8D9A100185544 /* PASResources.m */; };
 		F476F0F119B8FFA700185544 /* PASAddFromSamplesTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0F019B8FFA700185544 /* PASAddFromSamplesTVC.m */; };
@@ -77,6 +78,8 @@
 		F461C8DF19EB006C0081B445 /* PASExtendedNavContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASExtendedNavContainer.m; sourceTree = "<group>"; };
 		F4694D6219B74ABB00D12576 /* PASFavArtistsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASFavArtistsTVC.h; sourceTree = "<group>"; };
 		F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASFavArtistsTVC.m; sourceTree = "<group>"; };
+		F4768C7819FD3F11003682BD /* STKTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKTableViewCell.h; sourceTree = "<group>"; };
+		F4768C7919FD3F11003682BD /* STKTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKTableViewCell.m; sourceTree = "<group>"; };
 		F476F0E919B8D8EA00185544 /* PASArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASArtist.h; sourceTree = "<group>"; };
 		F476F0EA19B8D8EA00185544 /* PASArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASArtist.m; sourceTree = "<group>"; };
 		F476F0EC19B8D9A100185544 /* PASResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASResources.h; sourceTree = "<group>"; };
@@ -312,10 +315,12 @@
 		F4FA316519B8B7F2000337A0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				F4B8B0B719E060AD00E1064D /* CPFQueryCollectionViewController.h */,
-				F4B8B0B819E060AD00E1064D /* CPFQueryCollectionViewController.m */,
 				F476F0EC19B8D9A100185544 /* PASResources.h */,
 				F476F0ED19B8D9A100185544 /* PASResources.m */,
+				F4B8B0B719E060AD00E1064D /* CPFQueryCollectionViewController.h */,
+				F4B8B0B819E060AD00E1064D /* CPFQueryCollectionViewController.m */,
+				F4768C7819FD3F11003682BD /* STKTableViewCell.h */,
+				F4768C7919FD3F11003682BD /* STKTableViewCell.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -487,6 +492,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4768C7A19FD3F11003682BD /* STKTableViewCell.m in Sources */,
 				F42422A519CD8FCA0097C0F1 /* PASInteractiveTransition.m in Sources */,
 				F4589D3D19C240D500E17D49 /* PASPageViewController.m in Sources */,
 				F4BB585E19E9F23600221912 /* PASMyPVC.m in Sources */,

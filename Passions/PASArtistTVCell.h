@@ -9,8 +9,9 @@
 @import UIKit;
 #import "PASArtist.h"
 #import "PASSourceImage.h"
+#import "STKTableViewCell.h"
 
-@interface PASArtistTVCell : UITableViewCell
+@interface PASArtistTVCell : STKTableViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel *artistName;
 @property (nonatomic, weak) IBOutlet UILabel *detailText;
@@ -19,6 +20,8 @@
 
 - (void)showArtist:(PASArtist *)artist;
 - (void)showArtist:(id<PASSourceImage>)artist withName:(NSString *)name isFavorite:(BOOL)isFav playcount:(NSUInteger)playcount;
+
+- (IBAction)starTapped:(id)sender;
 
 + (NSString *)reuseIdentifier;
 

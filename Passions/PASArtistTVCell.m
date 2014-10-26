@@ -50,6 +50,12 @@
 	self.detailText.text = isFav ? [NSString stringWithFormat:@"%@ - Favorite!", [self _stringForPlaycount:playcount]] : [self _stringForPlaycount:playcount];
 }
 
+#pragma mark - IBActions
+
+- (IBAction)starTapped:(id)sender
+{
+	ROUTE(sender);
+}
 
 #pragma mark - Private Methods
 
