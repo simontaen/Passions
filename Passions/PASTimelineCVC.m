@@ -12,7 +12,7 @@
 #import "PASAlbum.h"
 
 @interface PASTimelineCVC ()
-
+@property (strong, nonatomic) UIVisualEffectView *effectView;
 @end
 
 @implementation PASTimelineCVC
@@ -53,6 +53,22 @@
 }
 
 #pragma mark - View Lifecycle
+
+- (void)viewDidLoad
+{
+	[super viewDidLoad];
+	self.effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+}
+
+- (void)viewDidLayoutSubviews
+{
+	[super viewDidLayoutSubviews];
+	
+	// Configure contentInset and Effect View
+	self.collectionView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0, 0, 0);
+	self.effectView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.topLayoutGuide.length);
+	[self.view addSubview:self.effectView];
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {

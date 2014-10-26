@@ -69,8 +69,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## Timeline
 * ReleaseDateView on Timeline (see examples)
-* Hide status bar on timeline, it scrolls under it.
-	* ideally the status bar should be hidden but it "snaps" back on the FavAritstsTVC, which is ugly will have to check again when using a TabBarController also the PageViewController probably needs updates too
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
 
 ## Artist and Album Info

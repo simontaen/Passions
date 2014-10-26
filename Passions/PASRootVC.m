@@ -52,7 +52,7 @@
 
 - (UINavigationController *)_timelineNavController
 {
-	return [self.storyboard instantiateViewControllerWithIdentifier:@"TimelineNav"];
+	return [self.storyboard instantiateViewControllerWithIdentifier:@"PASTimelineCVC"];
 }
 
 #pragma mark - View Lifecycle
