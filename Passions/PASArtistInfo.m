@@ -41,6 +41,11 @@
 {
 	[super viewDidLoad];
 	self.artist ? [self _refreshUiWithArtist:self.artist] : [self _refreshUiWithAlbum:self.album];
+
+	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+																		  target:self
+																		  action:@selector(doneButtonTapped:)];
+	self.navigationItem.rightBarButtonItem = rbbi;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -78,5 +83,9 @@
 	self.name.text = album.name;
 }
 
+- (IBAction)doneButtonTapped:(UIBarButtonItem *)sender
+{
+	[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end

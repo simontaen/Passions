@@ -113,7 +113,8 @@
 	PASArtistInfo *vc = (PASArtistInfo *)[self.storyboard instantiateViewControllerWithIdentifier:@"PASArtistInfo"];
 	vc.album = album;
 	
-	[self.navigationController pushViewController:vc animated:animated];
+	UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:vc];
+	[self presentViewController:navVc animated:YES completion:nil];
 }
 
 #pragma mark - Private Methods

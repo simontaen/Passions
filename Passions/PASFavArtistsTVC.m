@@ -157,7 +157,8 @@
 	PASArtistInfo *vc = (PASArtistInfo *)[self.storyboard instantiateViewControllerWithIdentifier:@"PASArtistInfo"];
 	vc.artist = artist;
 	
-	[self.navigationController pushViewController:vc animated:YES];
+	UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:vc];
+	[self presentViewController:navVc animated:YES completion:nil];
 }
 
 @end
