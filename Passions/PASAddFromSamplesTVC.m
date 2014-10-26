@@ -245,6 +245,9 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil]
 		 forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];
 	
+	// TableView Properties
+	self.tableView.allowsSelection = NO;
+	
 	// default is alphabetical
 	self.selectedSortOrder = PASAddArtistsSortOrderAlphabetical;
 }
@@ -281,7 +284,6 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	
 	id artist = [self _artistForIndexPath:indexPath];
 	NSString *artistName = [self nameForArtist:artist];
-	cell.starButton.hidden = NO;
 	
 	[cell showArtist:artist withName:artistName
 		  isFavorite:[[PASManageArtists sharedMngr] isFavoriteArtist:artistName]

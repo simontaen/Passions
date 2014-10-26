@@ -43,11 +43,16 @@
 		self.entity = artist;
 		
 		[self _loadThumbnailImageForArtist:artist];
+		self.starButton.hidden = NO;
 		self.artistName.text = name;
+		self.detailText.text = [self _stringForPlaycount:playcount];
 	}
 	
-	// the artist could have been unfavorited, updated this in every case
-	self.detailText.text = isFav ? [NSString stringWithFormat:@"%@ - Favorite!", [self _stringForPlaycount:playcount]] : [self _stringForPlaycount:playcount];
+	// Update the button image
+	UIImage *img = isFav ? [PASResources favoritedStar] : [PASResources outlinedStar];
+	[self.starButton setImage:img forState:UIControlStateNormal];
+	[self.starButton setImage:img forState:UIControlStateHighlighted];
+	[self.starButton setImage:img forState:UIControlStateSelected];
 }
 
 #pragma mark - IBActions
