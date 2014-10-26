@@ -21,7 +21,7 @@
 
 // called during cell config
 - (NSString *)nameForArtist:(id)artist;
-- (NSUInteger)playcountForArtist:(id)artist;
+- (NSUInteger)playcountForArtist:(id)artist withName:(NSString *)name;
 
 // UISegmentedControl Action
 - (IBAction)segmentChanged:(UISegmentedControl *)sender;

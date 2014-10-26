@@ -120,7 +120,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 - (NSArray *)artistsOrderedByPlaycout
 {
 	return [self.sampleArtists sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-		NSInteger result = [self playcountForArtist:obj1] - [self playcountForArtist:obj2];
+		NSInteger result = [self playcountForArtist:obj1 withName:obj1] - [self playcountForArtist:obj2 withName:obj2];
 		
 		if (result > 0) {
 			// The left operand is greater than the right operand.
@@ -229,10 +229,10 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	return artist;
 }
 
-- (NSUInteger)playcountForArtist:(id)artist
+- (NSUInteger)playcountForArtist:(id)artist withName:(NSString *)name
 {
 	NSAssert([artist isKindOfClass:[NSString class]], @"%@ cannot get playcount for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
-	return ((NSString *)artist).length;
+	return name.length;
 }
 
 #pragma mark - View Lifecycle
@@ -284,7 +284,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	
 	[cell showArtist:artist withName:artistName
 		  isFavorite:[[PASManageArtists sharedMngr] isFavoriteArtist:artistName]
-		   playcount:[self playcountForArtist:artist]];
+		   playcount:[self playcountForArtist:artist withName:artistName]];
 	
 	return cell;
 }

@@ -41,10 +41,10 @@
 	return [artist PAS_artistName];
 }
 
-- (NSUInteger)playcountForArtist:(id)artist
+- (NSUInteger)playcountForArtist:(id)artist withName:(NSString *)name
 {
 	NSAssert([artist isKindOfClass:[MPMediaItemCollection class]], @"%@ cannot get playcount for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
-	return [MPMediaItemCollection PAS_playcountForArtistWithName:[self nameForArtist:artist]];
+	return [MPMediaItemCollection PAS_playcountForArtistWithName:name];
 }
 
 @end
