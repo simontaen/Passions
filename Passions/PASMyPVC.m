@@ -53,15 +53,8 @@
 																		  target:self
 																		  action:@selector(doneButtonTapped:)];
 	self.navigationItem.rightBarButtonItem = rbbi;
-	
-	// For the extended navigation bar effect to work, a few changes
-	// must be made to the actual navigation bar.  Some of these changes could
-	// be applied in the storyboard but are made in code for clarity.
-	
-	// Translucency of the navigation bar is disabled so that it matches with
-	// the non-translucent background of the extension view.
-	[self.navigationController.navigationBar setTranslucent:NO];
-	
+
+	// https://developer.apple.com/library/ios/samplecode/NavBar/Introduction/Intro.html#//apple_ref/doc/uid/DTS40007418-Intro-DontLinkElementID_2
 	// The navigation bar's shadowImage is set to a transparent image.  In
 	// conjunction with providing a custom background image, this removes
 	// the grey hairline at the bottom of the navigation bar.  The
