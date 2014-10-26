@@ -68,7 +68,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Improve the delete gesture recognition on the TableViewCell
 
 ## Timeline
-* ReleaseDateView on Timeline (see examples)
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
 
 ## Artist and Album Info
