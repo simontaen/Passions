@@ -28,16 +28,16 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m9l-Y3-fks">
-                        <rect key="frame" x="257" y="1" width="48" height="48"/>
-                        <state key="normal" title="Button">
+                        <rect key="frame" x="247" y="1" width="48" height="48"/>
+                        <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
                             <action selector="starTapped:" destination="g9v-1O-Kt9" eventType="touchUpInside" id="aPQ-GM-R1l"/>
                         </connections>
                     </button>
-                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="WBk-a0-NFh">
-                        <rect key="frame" x="263" y="6" width="37" height="37"/>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="WBk-a0-NFh">
+                        <rect key="frame" x="261" y="15" width="20" height="20"/>
                         <color key="color" cocoaTouchSystemColor="darkTextColor"/>
                     </activityIndicatorView>
                 </subviews>
