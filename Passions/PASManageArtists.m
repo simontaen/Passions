@@ -98,7 +98,7 @@
 	if ([self isFavoriteArtist:artistName]) {
 		PASArtist *artist = [self _artistForResolvedName:resolvedName];
 		// The artist is favorited, a correctedName MUST exists
-		NSAssert([self _correctedArtistName:artistName], @"The current Artist \"%@\" (%@) is favorited but has no corrected Name.", artistName, artist.objectId);
+		//NSAssert([self _correctedArtistName:artistName], @"The current Artist \"%@\" (%@) is favorited but has no corrected Name.", artistName, artist.objectId);
 		
 		[artist removeCurrentUserAsFavoriteWithCompletion:^(BOOL succeeded, NSError *error) {
 			if (succeeded && !error) {
