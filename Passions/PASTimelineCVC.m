@@ -74,9 +74,6 @@
 {
 	[super viewWillAppear:animated];
 	
-	// Configure navigationController
-	self.navigationController.navigationBarHidden = YES;
-
 	if (!self.isLoading) {
 		[self _refreshUI];
 	}
