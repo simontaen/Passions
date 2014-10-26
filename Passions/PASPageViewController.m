@@ -46,6 +46,7 @@
 @property (nonatomic, weak, readwrite) UIViewController *selectedViewController;
 @property (nonatomic, assign) BOOL interactive;
 
+@property (strong, nonatomic) IBOutlet UIVisualEffectView *blurView;
 @property (nonatomic, weak) IBOutlet UIPageControl *pageControlView;
 @property (nonatomic, strong) PASInteractiveTransition *bla;
 @end
@@ -70,15 +71,19 @@
 	
 	// hook up the page control
 	[self.pageControlView addTarget:self action:@selector(didChangeCurrentPage:) forControlEvents:UIControlEventValueChanged];
+	
 	// update the page control
 	self.pageControlView.numberOfPages = self.viewControllers.count;
+	self.pageControlView.backgroundColor = [UIColor clearColor];
+	self.pageControlView.currentPageIndicatorTintColor = [UIColor whiteColor];
+	self.pageControlView.pageIndicatorTintColor = [UIColor lightGrayColor];
 	
 	// add rounded edgeds
-	self.pageControlView.backgroundColor = [UIColor lightGrayColor];
-	self.pageControlView.opaque = NO;
-	self.pageControlView.alpha = 0.8f;
-	self.pageControlView.layer.cornerRadius = 7.5;
-	self.pageControlView.layer.masksToBounds = YES;
+	//self.pageControlView.opaque = YES;
+	//self.pageControlView.alpha = 0.8f;
+	self.blurView.layer.cornerRadius = 7.5;
+	self.blurView.layer.masksToBounds = YES;
+	
 	
 	[self _setupDelegateForTransitionsBetweenViewControllers:self.viewControllers];
 	
@@ -91,16 +96,16 @@
 	[super viewDidLayoutSubviews];
 	
 	// custom layout for pageControlView
-	CGRect newFrame = self.pageControlView.frame;
-	CGFloat heightAdj = (int)(newFrame.size.height * 0.189);
-	CGFloat widthAdj = (int)(newFrame.size.width);
-	
-	newFrame.size.width += widthAdj;
-	newFrame.size.height -= heightAdj;
-	
-	newFrame.origin.x -= (widthAdj/2);
-	newFrame.origin.y += (heightAdj/2);
-	self.pageControlView.frame = newFrame;
+//	CGRect newFrame = self.pageControlView.frame;
+//	CGFloat heightAdj = (int)(newFrame.size.height * 0.189);
+//	CGFloat widthAdj = (int)(newFrame.size.width);
+//	
+//	newFrame.size.width += widthAdj;
+//	newFrame.size.height -= heightAdj;
+//	
+//	newFrame.origin.x -= (widthAdj/2);
+//	newFrame.origin.y += (heightAdj/2);
+//	self.pageControlView.frame = newFrame;
 }
 
 #pragma mark - Accessors
