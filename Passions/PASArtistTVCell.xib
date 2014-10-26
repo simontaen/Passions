@@ -13,10 +13,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="WBk-a0-NFh">
-                        <rect key="frame" x="263" y="6" width="37" height="37"/>
-                        <color key="color" cocoaTouchSystemColor="darkTextColor"/>
-                    </activityIndicatorView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="egK-L2-nvz">
                         <rect key="frame" x="1" y="1" width="48" height="48"/>
                     </imageView>
@@ -31,6 +27,19 @@
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m9l-Y3-fks">
+                        <rect key="frame" x="257" y="1" width="48" height="48"/>
+                        <state key="normal" title="Button">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="starTapped:" destination="g9v-1O-Kt9" eventType="touchUpInside" id="aPQ-GM-R1l"/>
+                        </connections>
+                    </button>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="WBk-a0-NFh">
+                        <rect key="frame" x="263" y="6" width="37" height="37"/>
+                        <color key="color" cocoaTouchSystemColor="darkTextColor"/>
+                    </activityIndicatorView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -38,6 +47,7 @@
                 <outlet property="artistImage" destination="egK-L2-nvz" id="hBl-Dq-Tb3"/>
                 <outlet property="artistName" destination="d9b-P4-EVE" id="2Ll-KZ-SDg"/>
                 <outlet property="detailText" destination="uHQ-Ph-zX4" id="d9c-fB-4aU"/>
+                <outlet property="starButton" destination="m9l-Y3-fks" id="fAd-ri-s5t"/>
             </connections>
         </tableViewCell>
     </objects>

@@ -277,10 +277,11 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	PASArtistTVCell *cell = [tableView dequeueReusableCellWithIdentifier:[PASArtistTVCell reuseIdentifier] forIndexPath:indexPath];
+	PASArtistTVCell *cell = [PASArtistTVCell cellForTableView:tableView target:self];
 	
 	id artist = [self _artistForIndexPath:indexPath];
 	NSString *artistName = [self nameForArtist:artist];
+	cell.starButton.hidden = NO;
 	
 	[cell showArtist:artist withName:artistName
 		  isFavorite:[[PASManageArtists sharedMngr] isFavoriteArtist:artistName]
@@ -370,6 +371,11 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 											  errorHandler:^(NSError *error) {
 												  [self _handleError:error];
 											  }];
+}
+
+- (void)starTapped:(UIButton *)sender atIndexPath:(NSIndexPath *)indexPath
+{
+	NSLog(@"Button in row %d tapped", [indexPath row]);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
