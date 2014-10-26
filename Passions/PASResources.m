@@ -65,14 +65,19 @@ CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 	static UIImage *outlinedStar;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		outlinedStar = [UIImage imageNamed: @"star"];
+		outlinedStar = [UIImage imageNamed: @"outlinedStar"];
 	});
 	return outlinedStar;
 }
 
 + (UIImage *)favoritedStar
 {
-	return [self outlinedStar];
+	static UIImage *favoritedStar;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		favoritedStar = [UIImage imageNamed: @"favoritedStar"];
+	});
+	return favoritedStar;
 }
 
 + (void)printViewControllerLayoutStack:(UIViewController *)viewController

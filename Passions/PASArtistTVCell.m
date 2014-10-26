@@ -53,6 +53,7 @@
 	[self.starButton setImage:img forState:UIControlStateNormal];
 	[self.starButton setImage:img forState:UIControlStateHighlighted];
 	[self.starButton setImage:img forState:UIControlStateSelected];
+	self.starButton.tintColor = [UIColor yellowColor];
 }
 
 #pragma mark - IBActions
