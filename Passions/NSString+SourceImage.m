@@ -11,8 +11,6 @@
 #import "UIImage+Utils.h"
 #import <objc/runtime.h>
 
-static void *UUIDKey;
-
 @implementation NSString (SourceImage)
 
 #pragma mark - PASSourceImage
@@ -29,11 +27,11 @@ static void *UUIDKey;
 - (NSString *)UUID
 {
     // http://oleb.net/blog/2011/05/faking-ivars-in-objc-categories-with-associative-references/
-	id obj = objc_getAssociatedObject(self, UUIDKey);
+	id obj = objc_getAssociatedObject(self, @selector(UUID));
 	if (!obj) {
 		CFUUIDBytes UUIDBytes = FICUUIDBytesFromMD5HashOfString(self);
 		NSString *uuid = FICStringWithUUIDBytes(UUIDBytes);
-		objc_setAssociatedObject(self, UUIDKey, uuid, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+		objc_setAssociatedObject(self, @selector(UUID), uuid, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 		return uuid;
 	}
 	return obj;

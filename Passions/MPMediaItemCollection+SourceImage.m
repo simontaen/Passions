@@ -14,10 +14,7 @@
 #import "MPMediaItem+Passions.h"
 
 // http://oleb.net/blog/2011/05/faking-ivars-in-objc-categories-with-associative-references/
-static void *artistsOrderedByNameKey;
-static void *artistsOrderedByPlaycountKey;
-static void *artistPlaycountsKey; // of NSString -> NSNumber (ArtistName -> ArtistPlaycount)
-static void *UUIDKey;
+// http://nshipster.com/associated-objects/
 
 @implementation MPMediaItemCollection (SourceImage)
 
@@ -25,12 +22,12 @@ static void *UUIDKey;
 
 + (NSArray *)PAS_artistsOrderedByName
 {
-	id obj = objc_getAssociatedObject(self, artistsOrderedByNameKey);
+	id obj = objc_getAssociatedObject(self, @selector(PAS_artistsOrderedByName));
 	if (!obj) {
 		MPMediaQuery *query = [[MPMediaQuery alloc] init];
 		[query setGroupingType: MPMediaGroupingAlbumArtist];
 		NSArray *collections = [query collections];
-		objc_setAssociatedObject(self, artistsOrderedByNameKey, collections, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+		objc_setAssociatedObject(self, @selector(PAS_artistsOrderedByName), collections, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 		return collections;
 	}
 	return obj;
@@ -38,22 +35,23 @@ static void *UUIDKey;
 
 + (NSArray *)PAS_artistsOrderedByPlaycount
 {
-	id obj = objc_getAssociatedObject(self, artistsOrderedByPlaycountKey);
+	id obj = objc_getAssociatedObject(self, @selector(PAS_artistsOrderedByPlaycount));
 	if (!obj) {
 		[MPMediaItemCollection _setupForPlaycountAccess];
-		return objc_getAssociatedObject(self, artistsOrderedByPlaycountKey);
+		return objc_getAssociatedObject(self, @selector(PAS_artistsOrderedByPlaycount));
 	}
 	return obj;
 }
 
 + (NSUInteger)PAS_playcountForArtistWithName:(NSString *)artistName
 {
-	id obj = objc_getAssociatedObject(self, artistPlaycountsKey);
+	id obj = objc_getAssociatedObject(self, @selector(PAS_playcountForArtistWithName:));
 	if (!obj) {
 		[MPMediaItemCollection _setupForPlaycountAccess];
-		obj = objc_getAssociatedObject(self, artistPlaycountsKey);
+		obj = objc_getAssociatedObject(self, @selector(PAS_playcountForArtistWithName:));
 	}
-	return [(NSNumber *)obj[artistName] unsignedIntegerValue];
+	NSNumber *playcount = ((NSDictionary *)obj)[artistName];
+	return [playcount unsignedIntegerValue];
 }
 
 + (void)_setupForPlaycountAccess
@@ -82,8 +80,8 @@ static void *UUIDKey;
 		return NSOrderedSame;
 	}];
 	
-	objc_setAssociatedObject(self, artistsOrderedByPlaycountKey, artistsByPlaycount, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-	objc_setAssociatedObject(self, artistPlaycountsKey, artistPlaycounts, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+	objc_setAssociatedObject(self, @selector(PAS_artistsOrderedByPlaycount), artistsByPlaycount, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+	objc_setAssociatedObject(self, @selector(PAS_playcountForArtistWithName:), artistPlaycounts, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 + (NSNumber *)_playcountOfCollection:(MPMediaItemCollection *)collection
@@ -114,12 +112,12 @@ static void *UUIDKey;
 
 - (NSString *)UUID
 {
-	id obj = objc_getAssociatedObject(self, UUIDKey);
+	id obj = objc_getAssociatedObject(self, @selector(UUID));
 	if (!obj) {
 		NSNumber *persistentId = [self valueForProperty:MPMediaItemPropertyPersistentID];
 		CFUUIDBytes UUIDBytes = FICUUIDBytesFromMD5HashOfString([persistentId stringValue]);
 		NSString *uuid = FICStringWithUUIDBytes(UUIDBytes);
-		objc_setAssociatedObject(self, UUIDKey, uuid, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+		objc_setAssociatedObject(self, @selector(UUID), uuid, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 		return uuid;
 	}
 	return obj;
