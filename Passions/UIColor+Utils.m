@@ -45,7 +45,7 @@
 	static UIColor *starTintColor;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		starTintColor = [UIColor yellowColor];
+		starTintColor = [UIColor orangeColor];
 	});
 	return starTintColor;
 }
