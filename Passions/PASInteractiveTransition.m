@@ -36,7 +36,7 @@
 		self.panRecognizer = [[UIPanGestureRecognizer alloc]
 							  initWithTarget:self
 							  action:@selector(pan:)];
-		//panRecognizer.delegate = self;
+		self.panRecognizer.delegate = self;
 		[pageViewController addGestureRecognizerToContainerView:self.panRecognizer];
 	}
 }
@@ -82,18 +82,16 @@
 
 #pragma mark - UIGestureRecognizerDelegate
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-	return YES;
-}
-
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-	BOOL result = NO;
-	if (([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) && [otherGestureRecognizer.view isDescendantOfView:gestureRecognizer.view]) {
-		result = YES;
+	if (gestureRecognizer == self.panRecognizer &&
+		![otherGestureRecognizer.view isKindOfClass:[UICollectionView class]] && // don't interfere when on Timeline
+		![otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]] && // not sure what this guy is for
+		![otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] // handles scrolling
+		) {
+		return YES;
 	}
-	return result;
+	return NO;
 }
 
 @end

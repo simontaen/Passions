@@ -58,7 +58,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Non-Artists show up like Apple or Siracusa
 
 ## Fav Artists
-* Improve the delete gesture recognition on the TableViewCell
 
 ## Timeline
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
