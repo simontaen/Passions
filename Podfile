@@ -11,4 +11,4 @@ pod 'UIDevice-Hardware' # Hardware properties for analytics
 # https://github.com/lmirosevic/GBVersionTracking
 pod 'GBVersionTracking' # Version and launch tracking
 # 
-pod 'LastFmFetchr', :path => '/Users/simon/Documents/code/ObjC/iOS/LastFmFetchr/'
+pod 'LastFmFetchr', :path => '/Users/simon/Documents/code/iOS/LastFmFetchr/'
