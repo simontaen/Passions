@@ -61,7 +61,7 @@
 	// ExtendedNavBarView will draw its own hairline.
 	[self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
 	// "Pixel" is a solid white 1x1 image.
-	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Pixel"] forBarMetrics:UIBarMetricsDefault];	
+	[self.navigationController.navigationBar setBackgroundImage:[PASResources whitePixel] forBarMetrics:UIBarMetricsDefault];
 
 	// find the hairline below the navigationBar
 //	if (!self.navHairline) {

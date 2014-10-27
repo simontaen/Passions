@@ -80,6 +80,16 @@ CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 	return favoritedStar;
 }
 
++ (UIImage *)whitePixel
+{
+	static UIImage *whitePixel;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		whitePixel = [UIImage imageNamed: @"Pixel"];
+	});
+	return whitePixel;
+}
+
 + (void)printViewControllerLayoutStack:(UIViewController *)viewController
 {
 	NSLog(@"---- ViewController Stack ----");
