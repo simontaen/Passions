@@ -184,7 +184,6 @@
 
 - (void)addInitialFavArtists
 {
-	// TODO: artistsByPlaycount on MPMediaQuery with Caching!
 	NSArray *topArtists = [MPMediaItemCollection PAS_artistsOrderedByPlaycount];
 	
 	// this is called from the app delegate, make sure you're properly set up
