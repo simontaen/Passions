@@ -17,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <toolbar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CpJ-gA-Cs9" customClass="PASExtendedNavToolbar">
+                <toolbar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CpJ-gA-Cs9">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <items>
                         <barButtonItem style="plain" id="Qhp-Ay-muV">

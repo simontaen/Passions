@@ -53,15 +53,6 @@
 																		  action:@selector(doneButtonTapped:)];
 	self.navigationItem.rightBarButtonItem = rbbi;
 
-	// https://developer.apple.com/library/ios/samplecode/NavBar/Introduction/Intro.html#//apple_ref/doc/uid/DTS40007418-Intro-DontLinkElementID_2
-	// The navigation bar's shadowImage is set to a transparent image.  In
-	// conjunction with providing a custom background image, this removes
-	// the grey hairline at the bottom of the navigation bar.  The
-	// ExtendedNavBarView will draw its own hairline.
-	[self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-	// "Pixel" is a solid white 1x1 image.
-	[self.navigationController.navigationBar setBackgroundImage:[PASResources whitePixel] forBarMetrics:UIBarMetricsDefault];
-
 	// find the hairline below the navigationBar
 //	if (!self.navHairline) {
 //		for (UIView *aView in self.navigationController.navigationBar.subviews) {
