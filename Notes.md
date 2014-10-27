@@ -49,19 +49,12 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Try a TabBarController with a hidden tabBar replaced by a pageControl
 * Faster transition (see homescreen)
 * flickering when the transition gets aborted
-* Another point on the PageController to show that there is something more
-* Rethink/Rework the pageControl look
-	* black border and nearly clear background
 
 ## Cells
-* redesign FavArtist cell, maybe add Playcount?
-* add a fancy control to (un-)fav the artist
 
 ## Adding
-* Toolbar Color does not seem to match the NavBar
 * The scrubber seems to blocks the pan gesture
 * Either Transculency OR NavBar hiding. Both doesn't make sense. Hiding seems to be the better solution, as on AppStore Top Charts, hide when slide.
-* Use Apple Example to hide Hairline (as it shows during transitioning)
 * Non-Artists show up like Apple or Siracusa
 
 ## Fav Artists
