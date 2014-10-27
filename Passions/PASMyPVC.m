@@ -54,29 +54,29 @@
 	self.navigationItem.rightBarButtonItem = rbbi;
 
 	// find the hairline below the navigationBar
-//	if (!self.navHairline) {
-//		for (UIView *aView in self.navigationController.navigationBar.subviews) {
-//			for (UIView *bView in aView.subviews) {
-//				if ([bView isKindOfClass:[UIImageView class]] &&
-//					bView.bounds.size.width == self.navigationController.navigationBar.frame.size.width &&
-//					bView.bounds.size.height < 2) {
-//					self.navHairline = (UIImageView *)bView;
-//				}
-//			}
-//		}
-//	}
+	if (!self.navHairline) {
+		for (UIView *aView in self.navigationController.navigationBar.subviews) {
+			for (UIView *bView in aView.subviews) {
+				if ([bView isKindOfClass:[UIImageView class]] &&
+					bView.bounds.size.width == self.navigationController.navigationBar.frame.size.width &&
+					bView.bounds.size.height < 2) {
+					self.navHairline = (UIImageView *)bView;
+				}
+			}
+		}
+	}
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-//	[self _moveHairline:YES];
+	[self _moveHairline:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
-//	[self _moveHairline:NO];
+	[self _moveHairline:NO];
 }
 
 - (void)_moveHairline:(BOOL)appearing
