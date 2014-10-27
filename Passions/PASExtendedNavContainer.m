@@ -8,14 +8,13 @@
 
 #import "PASExtendedNavContainer.h"
 #import "PASAddFromMusicTVC.h"
-#import "PASExtendedNavToolbar.h"
 
 CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 
 @interface PASExtendedNavContainer ()
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
-@property (weak, nonatomic) IBOutlet PASExtendedNavToolbar *segmentBar;
+@property (weak, nonatomic) IBOutlet UIToolbar *segmentBar;
 @end
 
 @implementation PASExtendedNavContainer

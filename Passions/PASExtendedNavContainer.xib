@@ -7,7 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PASExtendedNavContainer">
             <connections>
                 <outlet property="containerView" destination="nSI-c9-TSz" id="k3S-c4-5ra"/>
-                <outlet property="segmentBar" destination="CpJ-gA-Cs9" id="qui-DP-lIH"/>
+                <outlet property="segmentBar" destination="CpJ-gA-Cs9" id="evs-t4-g1q"/>
                 <outlet property="segmentedControl" destination="MzE-ND-Zy3" id="ZvV-4L-06L"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
