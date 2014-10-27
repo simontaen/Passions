@@ -32,8 +32,7 @@
 	[[NSNotificationCenter defaultCenter] addObserverForName:kPASDidFavoriteInitialArtists
 													  object:nil queue:nil
 												  usingBlock:^(NSNotification *note) {
-													  UINavigationController *navVc = (UINavigationController *)self.selectedViewController;
-													  PASTimelineCVC *vc = (PASTimelineCVC *)navVc.topViewController;
+													  PASTimelineCVC *vc = (PASTimelineCVC *)self.selectedViewController;
 													  [vc loadObjects];
 													  // this is a one time only thing
 													  [[NSNotificationCenter defaultCenter] removeObserver:nil
@@ -41,7 +40,7 @@
 																									object:self];
 												  }];
 	// init and add the page view controllers view controllers
-	self.viewControllers = @[[self _timelineNavController], [self _favArtistsNavController]];
+	self.viewControllers = @[[self _timelineCVC], [self _favArtistsNavController]];
 }
 
 - (UINavigationController *)_favArtistsNavController
@@ -50,7 +49,7 @@
 	return [self.storyboard instantiateViewControllerWithIdentifier:@"FavArtistsNav"];
 }
 
-- (UINavigationController *)_timelineNavController
+- (UINavigationController *)_timelineCVC
 {
 	return [self.storyboard instantiateViewControllerWithIdentifier:@"PASTimelineCVC"];
 }
