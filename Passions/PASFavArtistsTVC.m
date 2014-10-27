@@ -61,6 +61,13 @@
 														  [self _refreshUI];
 													  }
 												  }];
+#ifdef DEBUG
+	// Image Cache Reset
+	UIBarButtonItem *lbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
+																		  target:self
+																		  action:@selector(resetFastimageCache:)];
+	self.navigationItem.leftBarButtonItem = lbbi;
+#endif
 }
 
 - (IBAction)resetFastimageCache:(UIBarButtonItem *)sender
