@@ -9,6 +9,7 @@
 #import "PASMyPVC.h"
 #import "PASExtendedNavContainer.h"
 #import "PASFavArtistsTVC.h"
+#import "UIColor+Utils.h"
 
 @interface PASMyPVC ()
 @property (weak, nonatomic) UIImageView *navHairline;
@@ -43,7 +44,9 @@
 {
 	[super viewDidLoad];
 
-	// Setup navigationBar Items
+	// Setup navigationBar
+	self.navigationController.navigationBar.barTintColor = [UIColor defaultNavBarTintColor];
+
 //	UIBarButtonItem *lbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
 //																		  target:self
 //																		  action:@selector(doneButtonTapped:)];

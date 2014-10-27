@@ -8,6 +8,7 @@
 
 #import "PASExtendedNavContainer.h"
 #import "PASAddFromMusicTVC.h"
+#import "UIColor+Utils.h"
 
 CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 
@@ -79,7 +80,7 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	self.segmentBar.barTintColor = [UIColor whiteColor];
+	self.segmentBar.barTintColor = [UIColor defaultNavBarTintColor];
 	self.segmentBar.clipsToBounds = YES;
 	
 	// Setup segmentedControl
