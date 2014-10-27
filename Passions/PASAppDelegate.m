@@ -77,7 +77,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		[self _updateDeviceInfos:currentInstallation];
 		[currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 			if (succeeded && !error) {
-				NSLog(@"Current Installtion initialized: %@", currentInstallation.objectId);
+				NSLog(@"Current Installation initialized: %@", currentInstallation.objectId);
 				// create the assosiation for push notifications
 				[currentUser setObject:currentInstallation.objectId forKey:@"installation"];
 				[currentUser setObject:@0 forKey:@"runCount"];
