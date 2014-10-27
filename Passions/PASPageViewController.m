@@ -192,9 +192,15 @@
 	
 	[self _transitionToChildViewController:newVc completion:^(BOOL didTransition) {
 		if (didTransition) {
+//			for (UIGestureRecognizer *gr in _selectedViewController.view.gestureRecognizers) {
+//				[self removeGestureRecognizerFromContainerView:gr];
+//			}
 			_selectedViewController = newVc;
 			self.title = newVc.title;
 			[self setNeedsStatusBarAppearanceUpdate];
+//			for (UIGestureRecognizer *gr in newVc.view.gestureRecognizers) {
+//				[self addGestureRecognizerToContainerView:gr];
+//			}
 			self.pageControlView.currentPage = self.selectedViewControllerIndex;
 		}
 	}];

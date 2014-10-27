@@ -37,6 +37,7 @@
 							  initWithTarget:self
 							  action:@selector(pan:)];
 		self.panRecognizer.delegate = self;
+		self.panRecognizer.delaysTouchesBegan = YES; // set to YES so we don't always see the selected TVC
 		[pageViewController addGestureRecognizerToContainerView:self.panRecognizer];
 	}
 }
@@ -82,16 +83,20 @@
 
 #pragma mark - UIGestureRecognizerDelegate
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
+	BOOL result = NO;
+	//NSLog(@"%@ on %@", NSStringFromClass([otherGestureRecognizer class]), NSStringFromClass([otherGestureRecognizer.view class]));
 	if (gestureRecognizer == self.panRecognizer &&
-		![otherGestureRecognizer.view isKindOfClass:[UICollectionView class]] && // don't interfere when on Timeline
-		![otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]] && // not sure what this guy is for
-		![otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] // handles scrolling
+		[otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] && // handles scrolling (one for horizontal and one for vertical)
+		![otherGestureRecognizer.view isKindOfClass:[UITableView class]] && // handles vertical scrolling
+		[NSStringFromClass([otherGestureRecognizer.view class]) containsString:@"rapper"] && // horizontal pan in cell
+		![otherGestureRecognizer.view isKindOfClass:[UICollectionView class]] // don't interfere when on Timeline
 		) {
-		return YES;
+		result = YES;
 	}
-	return NO;
+	//NSLog(@"%hhd", result);
+	return result;
 }
 
 @end
