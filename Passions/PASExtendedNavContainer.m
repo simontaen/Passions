@@ -79,6 +79,7 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+	self.segmentBar.barTintColor = [UIColor whiteColor];
 	
 	// Setup segmentedControl
 	self.segmentedControl.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
