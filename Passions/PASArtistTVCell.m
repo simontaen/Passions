@@ -12,6 +12,7 @@
 // but I still like to do them for clarity
 #import "NSString+SourceImage.h"
 #import "MPMediaItemCollection+SourceImage.h"
+#import "UIColor+Utils.h"
 
 @interface PASArtistTVCell()
 @property (nonatomic, strong) id<FICEntity> entity;
@@ -53,7 +54,7 @@
 	[self.starButton setImage:img forState:UIControlStateNormal];
 	[self.starButton setImage:img forState:UIControlStateHighlighted];
 	[self.starButton setImage:img forState:UIControlStateSelected];
-	self.starButton.tintColor = [UIColor yellowColor];
+	self.starButton.tintColor = [UIColor starTintColor];
 }
 
 #pragma mark - IBActions

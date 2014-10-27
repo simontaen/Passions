@@ -12,4 +12,5 @@
 + (UIColor *)defaultNavBarTintColor;
 + (UIColor *)musicNavBarTintColor;
 + (UIColor *)spotifyNavBarTintColor;
++ (UIColor *)starTintColor;
 @end

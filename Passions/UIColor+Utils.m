@@ -9,6 +9,7 @@
 #import "UIColor+Utils.h"
 
 @implementation UIColor (Utils)
+
 + (UIColor *)defaultNavBarTintColor
 {
 	static UIColor *defaultNavBarTintColor;
