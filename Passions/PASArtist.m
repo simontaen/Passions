@@ -94,6 +94,7 @@
 			// now get the corrected name
 			BOOL isValidName = !error && data && data.name && ![data.name isEqualToString:@""];
 			NSString *resolvedName = isValidName ? data.name : artistName;
+			NSLog(@"Resolved Name after Correction to %@", resolvedName);
 			
 			[PASArtist _createOrFindArtist:resolvedName completion:favingBlock];
 		}];
