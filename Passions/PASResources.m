@@ -80,6 +80,16 @@ CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 	return favoritedStar;
 }
 
++ (UIImage *)swipeLeft
+{
+	static UIImage *swipeLeft;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		swipeLeft = [UIImage imageNamed: @"swipeLeft"];
+	});
+	return swipeLeft;
+}
+
 + (void)printViewControllerLayoutStack:(UIViewController *)viewController
 {
 	NSLog(@"---- ViewController Stack ----");
