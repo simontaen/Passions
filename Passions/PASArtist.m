@@ -169,12 +169,25 @@
 {
 	// add artist to the users favorites
 	PFUser *currentUser = [PFUser currentUser];
-	NSLog(@"Faving \"%@\" for User \"%@\"", self.name,  currentUser.objectId);
-
-	[currentUser addObject:self.objectId forKey:@"favArtists"];
-	[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-		succeeded && !error ? completion(self, nil) : completion(nil, error);
-	}];
+	NSArray *alreadyFavArtists = [currentUser objectForKey:@"favArtists"];
+	
+	if (alreadyFavArtists && [alreadyFavArtists containsObject:self.objectId]) {
+		// this usually only happens if you are trying to fav a misspelled Artists
+		// which you already faved with the correct name
+		// AC/DC is fav but we could add ACDC
+		// There are more problems in this case when removing, but lets not code for exceptions
+		NSLog(@"User \"%@\" has \"%@\" already favorited", currentUser.objectId, self.name);
+		[PFAnalytics trackEvent:@"The ACDC Problem" dimensions:@{ @"artistName" : self.name}];
+		completion(self, nil);
+		
+	} else {
+		NSLog(@"Faving \"%@\" for User \"%@\"", self.name,  currentUser.objectId);
+		
+		[currentUser addObject:self.objectId forKey:@"favArtists"];
+		[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+			succeeded && !error ? completion(self, nil) : completion(nil, error);
+		}];
+	}
 }
 
 #pragma mark - removing / deleting
