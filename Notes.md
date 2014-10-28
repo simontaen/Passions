@@ -59,7 +59,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * The scrubber seems to blocks the pan gesture
 * Either Transculency OR NavBar hiding. Both doesn't make sense. Hiding seems to be the better solution, as on AppStore Top Charts, hide when slide.
 * Non-Artists show up like Apple or Siracusa
-* Say "Your Music", it's better than "iPod Library"
 * Use the "Theme" Color (Red for Music, Green for Spotify), as the tint Color. Not in the Navbar.
 * Timeout when faving - app stays in processing but then works again after quitting but does not update the ui correctly.
 * Caching of Images (especially from Music) seems broken
