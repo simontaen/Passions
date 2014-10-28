@@ -193,6 +193,8 @@
 	
 	if (topArtists.count < 5 && [[topArtists firstObject] PAS_playcount] < 7) {
 		NSLog(@"The user doesn't seem to use the Music App");
+		// still send the notification
+		[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists object:nil];
 	}
 	
 	if (topArtists.count > 2) {
