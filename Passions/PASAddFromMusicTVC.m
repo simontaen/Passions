@@ -20,7 +20,7 @@
 
 - (NSString *)title
 {
-	return @"iPod Artists";
+	return @"Your Music";
 }
 
 #pragma mark - Subclassing

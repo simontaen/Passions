@@ -73,7 +73,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (NSString *)title
 {
-	return @"Samples";
+	return @"Suggestions";
 }
 
 - (NSArray *)sampleArtists
