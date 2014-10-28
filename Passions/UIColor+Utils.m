@@ -25,7 +25,7 @@
 	static UIColor *musicTintColor;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		musicTintColor = [UIColor orangeColor];
+		musicTintColor = [UIColor colorWithRed:249/255.0 green:86/255.0 blue:72/255.0 alpha:1];
 	});
 	return musicTintColor;
 }
@@ -35,7 +35,7 @@
 	static UIColor *spotifyTintColor;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		spotifyTintColor = [UIColor greenColor];
+		spotifyTintColor = [UIColor colorWithRed:99/255.0 green:142/255.0 blue:0/255.0 alpha:1];
 	});
 	return spotifyTintColor;
 }
@@ -45,7 +45,7 @@
 	static UIColor *starTintColor;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		starTintColor = [UIColor orangeColor];
+		starTintColor = [UIColor colorWithRed:237/255.0 green:240/255.0 blue:43/255.0 alpha:1];
 	});
 	return starTintColor;
 }
