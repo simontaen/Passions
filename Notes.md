@@ -47,7 +47,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ### Spotify Integration
 * Fall back to Spotify if Music App does not seem to be used.
 * Add Spotify as a Source (lot's of people don't use Music anymore)
-* Use the "Theme" Color (Red for Music, Green for Spotify), as the tint Color. Not in the Navbar.
 
 ## PageViewController Container
 * Faster transition (see homescreen)
