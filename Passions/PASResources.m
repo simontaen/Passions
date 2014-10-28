@@ -57,7 +57,12 @@ CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 
 + (UIImage *)albumThumbnailPlaceholder
 {
-	return [self artistThumbnailPlaceholder];
+	static UIImage *albumThumbnailPlaceholder;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		albumThumbnailPlaceholder = [UIImage imageNamed: @"albumPlaceholder"];
+	});
+	return albumThumbnailPlaceholder;
 }
 
 + (UIImage *)outlinedStar
