@@ -40,6 +40,10 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Artist fetch could fail and the iTunes Id would be empty then.
 
 ## General Functionality
+* Create Production Certificates for Push
+* How to I get logs from Test Devices (aka Remote Logging)
+* First launch, if empty list switch to fav artists
+* Simulate new album notification (for testing)
 
 ### Spotify Integration
 * Fall back to Spotify if Music App does not seem to be used.
@@ -56,11 +60,20 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * The scrubber seems to blocks the pan gesture
 * Either Transculency OR NavBar hiding. Both doesn't make sense. Hiding seems to be the better solution, as on AppStore Top Charts, hide when slide.
 * Non-Artists show up like Apple or Siracusa
+* Say "Your Music", it's better than "iPod Library"
+* Use the "Theme" Color (Red for Music, Green for Spotify), as the tint Color. Not in the Navbar.
+* Timeout when faving - app stays in processing but then works again after quitting but does not update the ui correctly.
+* Caching of Images (especially from Music) seems broken
+* What if we add a misnamed artist that we already have favorited (AC/DC is fav but we could add ACDC)
+* What if a user has absolutely NOTHING in their Music Library (probably crash on Adding)
 
 ## Fav Artists
+* Duplicates in Artist views
 
 ## Timeline
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
+* Dont refresh collection view when dismissing the modal album info, could lead to loosing the position
+* The ReleaseDate View flickers when scrolling. This must be an Apple Bug. You could try to capture an image or replicate it using "Album Colors" and a 60% opaque background
 
 ## Artist and Album Info
 * Design the Screens
@@ -91,6 +104,8 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 	* Faving Artists fast leads to "processing" for ever (no Jobs available), how to resolve?
 * A guy rocking out when refreshing on pull-to-refresh
 * Some Artist might not have Albums, like Jennifer Rostock (store region) or Garth Brooks (won't sell them on iTunes). Fall back to Spotify in that case.
+* Albums "duplicate" check, more like "find different editions", when adding on Parse. This might work with a Stemmer (fix at the root problem) or hashing the image (fix the symptom).
+	* Also this requires a data model change since you need to make a relation between Albums
 
 # Data communication with Parse
 
