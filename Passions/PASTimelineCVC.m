@@ -13,6 +13,7 @@
 
 @interface PASTimelineCVC ()
 @property (strong, nonatomic) UIVisualEffectView *effectView;
+@property (nonatomic, weak) IBOutlet UIButton *swipeLeftHint;
 @end
 
 @implementation PASTimelineCVC
@@ -98,19 +99,24 @@
 - (void)objectsDidLoad:(NSError *)error
 {
 	[super objectsDidLoad:error];
-	if (self.objects.count == 0) {
+	if (self.objects.count == 0 && !self.swipeLeftHint) {
 		UIImage *img = [PASResources swipeLeft];
 		CGFloat imgWidth = img.size.width;
 		CGFloat imgHeight = img.size.height;
 		
 		CGRect myFrame = CGRectMake(self.view.frame.size.width / 2 - imgWidth / 1.75, self.view.frame.size.height / 2 - imgHeight / 2, imgWidth, imgHeight);
 		UIButton *btn = [[UIButton alloc] initWithFrame:myFrame];
+		self.swipeLeftHint = btn;
 
 		[btn setImage:img forState:UIControlStateNormal];
 		btn.tintColor = [UIColor whiteColor];
 		btn.userInteractionEnabled = NO;
 		
 		[self.view addSubview:btn];
+		
+	} else if (self.objects.count > 0 && self.swipeLeftHint) {
+		[self.swipeLeftHint removeFromSuperview];
+		self.swipeLeftHint = nil;
 	}
 }
 
