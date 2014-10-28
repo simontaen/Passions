@@ -63,7 +63,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## Timeline
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
-* Dont refresh collection view when dismissing the modal album info, could lead to loosing the position
 
 ## Artist and Album Info
 * Design the Screens

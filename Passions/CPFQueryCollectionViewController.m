@@ -77,19 +77,6 @@
     [self performQuery];
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
-	if (_paginationEnabled) {
-		// we need to know how many objects there are to prevent
-		// constant refreshing without getting new objects
-		PFQuery *query = self.queryForCollection;
-		[query countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
-			_expectedObjects = number;
-		}];
-	}
-}
-
 #pragma mark - Parse.com logic
 
 // Private method, called when a query should be performed
@@ -99,6 +86,17 @@
 	
 	if (query) {
 		if (_paginationEnabled) {
+			// we need to know how many objects there are to prevent
+			// constant refreshing when scrolling past the end of the view
+			// without getting new objects
+			PFQuery *countingQuery = self.queryForCollection;
+			if (countingQuery) {
+				// using a new query just in case
+				[countingQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
+					_expectedObjects = number;
+				}];
+			}
+			
 			[query setLimit:_objectsPerPage];
 			//fetching the next page of objects
 			if (!_isRefreshing) {

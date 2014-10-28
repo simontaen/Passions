@@ -46,7 +46,7 @@
 													  id obj = note.userInfo[kPASDidEditFavArtists];
 													  NSAssert([obj isKindOfClass:[NSNumber class]], @"kPASDidEditFavArtists must carry a NSNumber");
 													  BOOL didEditArtists = [((NSNumber *)obj) boolValue];
-													  if (didEditArtists) {
+													  if (didEditArtists && !self.isLoading) {
 														  [self _refreshUI];
 													  }
 												  }];
@@ -69,15 +69,6 @@
 	self.collectionView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0, 0, 0);
 	self.effectView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.topLayoutGuide.length);
 	[self.view addSubview:self.effectView];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
-	
-	if (!self.isLoading) {
-		[self _refreshUI];
-	}
 }
 
 #pragma mark - CPFQueryCollectionViewController
