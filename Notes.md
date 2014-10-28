@@ -63,7 +63,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Timeout when faving - app stays in processing but then works again after quitting but does not update the ui correctly.
 * Caching of Images (especially from Music) seems broken
 * What if we add a misnamed artist that we already have favorited (AC/DC is fav but we could add ACDC)
-* What if a user has absolutely NOTHING in their Music Library (probably crash on Adding)
 
 ## Fav Artists
 * Duplicates in Artist views

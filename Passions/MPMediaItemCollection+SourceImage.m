@@ -27,6 +27,10 @@
 		MPMediaQuery *query = [[MPMediaQuery alloc] init];
 		[query setGroupingType: MPMediaGroupingAlbumArtist];
 		NSArray *collections = [query collections];
+		if (!collections) {
+			// preventing a potential crash
+			collections = [NSArray array];
+		}
 		objc_setAssociatedObject(self, @selector(PAS_artistsOrderedByName), collections, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 		return collections;
 	}
