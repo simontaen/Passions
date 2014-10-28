@@ -24,13 +24,22 @@
 {
 	id obj = objc_getAssociatedObject(self, @selector(PAS_artistsOrderedByName));
 	if (!obj) {
-		MPMediaQuery *query = [[MPMediaQuery alloc] init];
+		NSMutableSet *filterPredicates = [[NSMutableSet alloc] initWithCapacity:1];
+		
+		MPMediaPropertyPredicate *mediaType = [MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithInteger:MPMediaTypeMusic|MPMediaTypeMusicVideo]
+																					forProperty:MPMediaItemPropertyMediaType
+																				 comparisonType:MPMediaPredicateComparisonEqualTo];
+		[filterPredicates addObject:mediaType];
+		
+		MPMediaQuery *query = [[MPMediaQuery alloc] initWithFilterPredicates:filterPredicates];
 		query.groupingType = MPMediaGroupingArtist;
+		
 		NSArray *collections = [query collections];
 		if (!collections) {
 			// preventing a potential crash
 			collections = [NSArray array];
 		}
+		
 		objc_setAssociatedObject(self, @selector(PAS_artistsOrderedByName), collections, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 		return collections;
 	}
