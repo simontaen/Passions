@@ -16,8 +16,9 @@
 
 // for subclassing, called once
 // cacheing of these results is handled by this class
-- (NSArray *) artistsOrderedByName; // of the appropriate object
-- (NSArray *) artistsOrderedByPlaycount; // of the appropriate object
+- (NSArray *)artistsOrderedByName; // of the appropriate object
+- (NSArray *)artistsOrderedByPlaycount; // of the appropriate object
+- (UIColor *)chosenTintColor;
 
 // called during cell config
 - (NSString *)nameForArtist:(id)artist;

@@ -10,6 +10,7 @@
 #import "PASAddFromMusicTVC.h"
 #import "MPMediaItemCollection+SourceImage.h"
 #import "MPMediaItem+Passions.h"
+#import "UIColor+Utils.h"
 
 @interface PASAddFromMusicTVC ()
 @end
@@ -24,6 +25,11 @@
 }
 
 #pragma mark - Subclassing
+
+- (UIColor *)chosenTintColor
+{
+	return [UIColor musicTintColor];
+}
 
 - (NSArray *)artistsOrderedByName
 {

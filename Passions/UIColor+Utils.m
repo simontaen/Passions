@@ -20,24 +20,24 @@
 	return defaultNavBarTintColor;
 }
 
-+ (UIColor *)musicNavBarTintColor
++ (UIColor *)musicTintColor
 {
-	static UIColor *musicNavBarTintColor;
+	static UIColor *musicTintColor;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		musicNavBarTintColor = [UIColor orangeColor];
+		musicTintColor = [UIColor orangeColor];
 	});
-	return musicNavBarTintColor;
+	return musicTintColor;
 }
 
-+ (UIColor *)spotifyNavBarTintColor
++ (UIColor *)spotifyTintColor
 {
-	static UIColor *spotifyNavBarTintColor;
+	static UIColor *spotifyTintColor;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		spotifyNavBarTintColor = [UIColor greenColor];
+		spotifyTintColor = [UIColor greenColor];
 	});
-	return spotifyNavBarTintColor;
+	return spotifyTintColor;
 }
 
 + (UIColor *)starTintColor
@@ -48,6 +48,17 @@
 		starTintColor = [UIColor orangeColor];
 	});
 	return starTintColor;
+}
+
++ (UIColor*)defaultTintColor;
+{
+	static UIColor* defaultTintColor;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		UIView* view = [[UIView alloc] init];
+		defaultTintColor = view.tintColor;
+	});
+	return defaultTintColor;
 }
 
 @end

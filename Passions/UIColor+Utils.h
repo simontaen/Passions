@@ -10,7 +10,8 @@
 
 @interface UIColor (Utils)
 + (UIColor *)defaultNavBarTintColor;
-+ (UIColor *)musicNavBarTintColor;
-+ (UIColor *)spotifyNavBarTintColor;
++ (UIColor *)musicTintColor;
++ (UIColor *)spotifyTintColor;
 + (UIColor *)starTintColor;
++ (UIColor *)defaultTintColor;
 @end

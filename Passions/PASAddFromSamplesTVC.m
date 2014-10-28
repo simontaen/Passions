@@ -13,6 +13,7 @@
 #import "FICImageCache.h"
 #import "PASSourceImage.h"
 #import "PASManageArtists.h"
+#import "UIColor+Utils.h"
 
 typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 	PASAddArtistsSortOrderAlphabetical,
@@ -233,6 +234,11 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 {
 	NSAssert([artist isKindOfClass:[NSString class]], @"%@ cannot get playcount for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
 	return name.length;
+}
+
+- (UIColor *)chosenTintColor
+{
+	return [UIColor defaultTintColor];
 }
 
 #pragma mark - View Lifecycle
