@@ -47,9 +47,9 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ### Spotify Integration
 * Fall back to Spotify if Music App does not seem to be used.
 * Add Spotify as a Source (lot's of people don't use Music anymore)
+* Use the "Theme" Color (Red for Music, Green for Spotify), as the tint Color. Not in the Navbar.
 
 ## PageViewController Container
-* Try a TabBarController with a hidden tabBar replaced by a pageControl
 * Faster transition (see homescreen)
 * flickering when the transition gets aborted
 
@@ -58,7 +58,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Adding
 * Either Transculency OR NavBar hiding. Both doesn't make sense. Hiding seems to be the better solution, as on AppStore Top Charts, hide when slide.
 * Non-Artists show up like Apple or Siracusa
-* Use the "Theme" Color (Red for Music, Green for Spotify), as the tint Color. Not in the Navbar.
 * Timeout when faving - app stays in processing but then works again after quitting but does not update the ui correctly.
 * Caching of Images (especially from Music) seems broken
 * What if we add a misnamed artist that we already have favorited (AC/DC is fav but we could add ACDC)
@@ -69,7 +68,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Timeline
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
 * Dont refresh collection view when dismissing the modal album info, could lead to loosing the position
-* The ReleaseDate View flickers when scrolling. This must be an Apple Bug. You could try to capture an image or replicate it using "Album Colors" and a 60% opaque background
 
 ## Artist and Album Info
 * Design the Screens
@@ -84,6 +82,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 # 2.0
 
+* Try a TabBarController with a hidden tabBar replaced by a pageControl
 * Ask User for matching when unclear, but don't code for exceptions
 	* "I did my best but I still need your help to identify your favorite Artist"
 * Animate the cell when an Artist has been favorited.
@@ -102,6 +101,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Some Artist might not have Albums, like Jennifer Rostock (store region) or Garth Brooks (won't sell them on iTunes). Fall back to Spotify in that case.
 * Albums "duplicate" check, more like "find different editions", when adding on Parse. This might work with a Stemmer (fix at the root problem) or hashing the image (fix the symptom).
 	* Also this requires a data model change since you need to make a relation between Albums
+* The ReleaseDate View flickers when scrolling. This must be an Apple Bug. You could try to capture an image or replicate it using "Album Colors" and a 60% opaque background
 
 # Data communication with Parse
 
