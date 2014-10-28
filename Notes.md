@@ -56,7 +56,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Cells
 
 ## Adding
-* The scrubber seems to blocks the pan gesture
 * Either Transculency OR NavBar hiding. Both doesn't make sense. Hiding seems to be the better solution, as on AppStore Top Charts, hide when slide.
 * Non-Artists show up like Apple or Siracusa
 * Use the "Theme" Color (Red for Music, Green for Spotify), as the tint Color. Not in the Navbar.
