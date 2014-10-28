@@ -41,7 +41,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## General Functionality
 * Create Production Certificates for Push
-* How to I get logs from Test Devices (aka Remote Logging)
+* How to I get logs from Test Devices (aka Remote Logging), PFAnalytics?
 * Simulate new album notification (for testing)
 
 ### Spotify Integration
