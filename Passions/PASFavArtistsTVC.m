@@ -89,9 +89,9 @@
 		// De-favorite the user from the artist and reload the table view
 		[artist removeCurrentUserAsFavoriteWithCompletion:^(BOOL succeeded, NSError *error) {
 			if (succeeded && !error) {
-				dispatch_async(dispatch_get_main_queue(), ^{
-					[self loadObjects];
-				});
+				[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditFavArtists
+																	object:self
+																  userInfo:@{ kPASDidEditFavArtists : [NSNumber numberWithBool:YES] }];
 			}
 		}];
 	}
