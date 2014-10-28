@@ -63,7 +63,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * What if we add a misnamed artist that we already have favorited (AC/DC is fav but we could add ACDC)
 
 ## Fav Artists
-* Duplicates in Artist views
 
 ## Timeline
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)

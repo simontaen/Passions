@@ -25,7 +25,7 @@
 	id obj = objc_getAssociatedObject(self, @selector(PAS_artistsOrderedByName));
 	if (!obj) {
 		MPMediaQuery *query = [[MPMediaQuery alloc] init];
-		[query setGroupingType: MPMediaGroupingAlbumArtist];
+		query.groupingType = MPMediaGroupingArtist;
 		NSArray *collections = [query collections];
 		if (!collections) {
 			// preventing a potential crash
