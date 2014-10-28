@@ -94,6 +94,8 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		// on first build launch, update the device specs
 		[self _updateDeviceInfos:currentInstallation];
 		[currentInstallation saveInBackground];
+		// DEBUG (since I'm changing artwork quite often
+		[[FICImageCache sharedImageCache] reset];
 	}
 }
 
