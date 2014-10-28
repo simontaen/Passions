@@ -57,7 +57,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Adding
 * Either Transculency OR NavBar hiding. Both doesn't make sense. Hiding seems to be the better solution, as on AppStore Top Charts, hide when slide.
 * Timeout when faving - app stays in processing but then works again after quitting but does not update the ui correctly.
-* Caching of Images (especially from Music) seems broken
 * What if we add a misnamed artist that we already have favorited (AC/DC is fav but we could add ACDC)
 
 ## Fav Artists
