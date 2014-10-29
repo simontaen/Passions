@@ -95,6 +95,7 @@
 					 completion:(void (^)(NSError *error))completion;
 {
 	NSParameterAssert(artistName);
+	NSDate *start = [NSDate date];
 	NSString *resolvedName = [self _resolveArtistName:artistName];
 	
 	if ([self isFavoriteArtist:artistName]) {
@@ -102,6 +103,7 @@
 		// The artist is favorited, a correctedName MUST exists. BUT a NSAssert might be too much.
 		
 		[artist removeCurrentUserAsFavoriteWithCompletion:^(BOOL succeeded, NSError *error) {
+			[self _logStats:start artistName:artistName success:(succeeded && !error)];
 			if (succeeded && !error) {
 				dispatch_barrier_async(self.favoritesQ, ^{
 					if ([self.favArtistNames containsObject:resolvedName]) {
@@ -129,6 +131,7 @@
 		[PASArtist favoriteArtistByCurrentUser:resolvedName
 							   needsCorrection:![self _correctedArtistName:artistName]
 									completion:^(PASArtist *artist, NSError *error) {
+										[self _logStats:start artistName:artistName success:(artist && !error)];
 										if (artist && !error) {
 											// get the finalized name on parse
 											NSString *parseArtistName = artist.name;
@@ -153,6 +156,18 @@
 											}
 										}
 									}];
+	}
+}
+
+-(void)_logStats:(NSDate *)start artistName:(NSString *)artistName success:(BOOL)success
+{
+	NSString *duration = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSinceDate:start]];
+	[PFAnalytics trackEvent:@"favTime" dimensions:@{ @"time": duration }];
+	
+	if (success) {
+		NSLog(@"Took %@ seconds to favorite Aritst \"%@\" for User \"%@\"", duration, artistName, [PFUser currentUser].objectId);
+	} else {
+		NSLog(@"Took %@ seconds and failed to favorite Aritst \"%@\" for User \"%@\"", duration, artistName, [PFUser currentUser].objectId);
 	}
 }
 

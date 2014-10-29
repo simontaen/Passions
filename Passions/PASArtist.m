@@ -197,7 +197,7 @@
 	NSAssert(self.objectId, @"The passed artist does not have a valid objectId. Maybe save the artist first.");
 	// remove the relation
 	PFUser *currentUser = [PFUser currentUser];
-	NSLog(@"Removing \"%@\" from User \"%@\"", self.name,  currentUser.objectId);
+	NSLog(@"Removing \"%@\" from User \"%@\"", self.name, currentUser.objectId);
 
 	[currentUser removeObject:self.objectId forKey:@"favArtists"];
 	[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
