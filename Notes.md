@@ -41,15 +41,21 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## General Functionality
 * Create Production Certificates for Push
-* How to I get logs from Test Devices (aka Remote Logging), PFAnalytics?
 * Simulate new album notification (for testing)
+* Wording: MY Music, MY Favorites
+	* Spotify
+	* LastFm
+	* Suggested Artists
 
 ### Spotify Integration
 * Fall back to Spotify if Music App does not seem to be used.
 * Add Spotify as a Source (lot's of people don't use Music anymore)
 
+### Suggestions
+* Get Suggestions based on my Favorite Artists
+* Maybe LastFm or even iTunes
+
 ## PageViewController Container
-* Faster transition (see homescreen)
 * flickering when the transition gets aborted
 
 ## Cells
@@ -57,6 +63,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Adding
 * Either Transculency OR NavBar hiding. Both doesn't make sense. Hiding seems to be the better solution, as on AppStore Top Charts, hide when slide.
 * Timeout when faving - app stays in processing but then works again after quitting but does not update the ui correctly.
+* Faving takes very long on the Device
 
 ## Fav Artists
 
@@ -96,6 +103,9 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Albums "duplicate" check, more like "find different editions", when adding on Parse. This might work with a Stemmer (fix at the root problem) or hashing the image (fix the symptom).
 	* Also this requires a data model change since you need to make a relation between Albums
 * The ReleaseDate View flickers when scrolling. This must be an Apple Bug. You could try to capture an image or replicate it using "Album Colors" and a 60% opaque background
+* Get Concerts and Events from your Fav. Artists
+* How to I get logs from Test Devices (aka Remote Logging), PFAnalytics?
+* Add LastFm as a Source
 
 # Data communication with Parse
 
