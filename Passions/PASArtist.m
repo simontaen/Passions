@@ -77,11 +77,13 @@
 						 completion:(void (^)(PASArtist *artist, NSError *error))completion;
 {
 	NSParameterAssert(artistName);
+	NSDate *start = [NSDate date];
 	
 	void (^favingBlock)(PASArtist*, NSError*) = ^void(PASArtist *favingArtist, NSError *error) {
 		if (favingArtist && !error) {
 			// create the relationsship with the user
 			[favingArtist _addCurrentUserAsFavoriteWithCompletion:^(PASArtist *blockArtist, NSError *error) {
+				[PASArtist _logStats:start artistName:blockArtist.name success:(blockArtist && !error) add:YES];
 				blockArtist && !error ? completion(blockArtist, nil) : completion(nil, error);
 			}];
 		} else {
@@ -197,12 +199,31 @@
 	NSAssert(self.objectId, @"The passed artist does not have a valid objectId. Maybe save the artist first.");
 	// remove the relation
 	PFUser *currentUser = [PFUser currentUser];
-	NSLog(@"Removing \"%@\" from User \"%@\"", self.name, currentUser.objectId);
-
 	[currentUser removeObject:self.objectId forKey:@"favArtists"];
+
+	NSLog(@"Removing \"%@\" from User \"%@\"", self.name, currentUser.objectId);
+	
+	NSDate *start = [NSDate date];
 	[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+		[PASArtist _logStats:start artistName:self.name success:(succeeded && !error) add:NO];
 		completion(succeeded, error);
 	}];
+}
+
+#pragma mark - Private Methods
+
++ (void)_logStats:(NSDate *)start artistName:(NSString *)artistName success:(BOOL)success add:(BOOL)add
+{
+	NSString *duration = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSinceDate:start]];
+	NSString *faving = add ? @"favorite" : @"unfavorite";
+	
+	[PFAnalytics trackEvent:faving dimensions:@{ @"time": duration }];
+	
+	if (success) {
+		NSLog(@"Took %@ seconds to %@ Aritst \"%@\" for User \"%@\"", duration, faving, artistName, [PFUser currentUser].objectId);
+	} else {
+		NSLog(@"Took %@ seconds and failed to %@ Aritst \"%@\" for User \"%@\"", duration, faving, artistName, [PFUser currentUser].objectId);
+	}
 }
 
 @end
