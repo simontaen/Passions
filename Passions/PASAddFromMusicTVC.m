@@ -21,7 +21,7 @@
 
 - (NSString *)title
 {
-	return @"Your Music";
+	return @"My Music";
 }
 
 #pragma mark - Subclassing

@@ -27,7 +27,7 @@
 	self = [super initWithCoder:aDecoder];
 	if (!self) return nil;
 	self.parseClassName = [PASArtist parseClassName];
-	self.title = @"Your Favorites";
+	self.title = @"My Favorite Artists";
 	self.pullToRefreshEnabled = YES;
 	// no paging, I don't expect >200 fav artists
 	self.paginationEnabled = NO;
