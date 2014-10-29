@@ -58,8 +58,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## Adding
 * Either Transculency OR NavBar hiding. Both doesn't make sense. Hiding seems to be the better solution, as on AppStore Top Charts, hide when slide.
-* Timeout when faving - app stays in processing but then works again after quitting but does not update the ui correctly.
-* Faving takes very long on the Device
 
 ## Fav Artists
 

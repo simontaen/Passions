@@ -16,10 +16,9 @@
 
 - (BOOL)didEditArtists;
 
+/// completion called NOT on the main thread
 - (void)didSelectArtistWithName:(NSString *)artistName
-						cleanup:(void (^)())cleanup
-						 reload:(void (^)())reload
-				   errorHandler:(void (^)(NSError *error))errorHandler;
+					 completion:(void (^)(NSError *error))completion;
 
 - (BOOL)isFavoriteArtist:(NSString *)artistName;
 

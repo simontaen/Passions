@@ -366,21 +366,22 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	self.parentViewController.parentViewController.navigationItem.rightBarButtonItem.enabled = NO;
 	self.parentViewController.parentViewController.navigationItem.leftBarButtonItem.enabled = NO;
 	
-	
-	// TODO: this is just plain ugly
 	[[PASManageArtists sharedMngr] didSelectArtistWithName:[self nameForArtist:[self _artistForIndexPath:indexPath]]
-												   cleanup:^{
-													   [cell.activityIndicator stopAnimating];
-													   cell.starButton.hidden = NO;
-													   cell.userInteractionEnabled = YES;
-													   self.parentViewController.parentViewController.navigationItem.rightBarButtonItem.enabled = YES;
-													   self.parentViewController.parentViewController.navigationItem.leftBarButtonItem.enabled = YES;
-												   } reload:^{
-													   [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-												   }
-											  errorHandler:^(NSError *error) {
-												  [self _handleError:error];
-											  }];
+												completion:^(NSError *error) {
+													dispatch_async(dispatch_get_main_queue(), ^{
+														[cell.activityIndicator stopAnimating];
+														cell.starButton.hidden = NO;
+														cell.userInteractionEnabled = YES;
+														self.parentViewController.parentViewController.navigationItem.rightBarButtonItem.enabled = YES;
+														self.parentViewController.parentViewController.navigationItem.leftBarButtonItem.enabled = YES;
+														
+														if (error) {
+															[self _handleError:error];
+														} else {
+															[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+														}
+													});
+												}];
 }
 
 #pragma mark - UITableViewDelegate

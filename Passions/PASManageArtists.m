@@ -91,14 +91,15 @@
 
 #pragma mark - Faving an Artist
 
-- (void)didSelectArtistWithName:(NSString *)artistName cleanup:(void (^)())cleanup reload:(void (^)())reload errorHandler:(void (^)(NSError *error))errorHandler
+- (void)didSelectArtistWithName:(NSString *)artistName
+					 completion:(void (^)(NSError *error))completion;
 {
+	NSParameterAssert(artistName);
 	NSString *resolvedName = [self _resolveArtistName:artistName];
 	
 	if ([self isFavoriteArtist:artistName]) {
 		PASArtist *artist = [self _artistForResolvedName:resolvedName];
-		// The artist is favorited, a correctedName MUST exists
-		//NSAssert([self _correctedArtistName:artistName], @"The current Artist \"%@\" (%@) is favorited but has no corrected Name.", artistName, artist.objectId);
+		// The artist is favorited, a correctedName MUST exists. BUT a NSAssert might be too much.
 		
 		[artist removeCurrentUserAsFavoriteWithCompletion:^(BOOL succeeded, NSError *error) {
 			if (succeeded && !error) {
@@ -111,25 +112,15 @@
 						[self.justFavArtistNames removeObject:resolvedName];
 					}
 					
-					dispatch_async(dispatch_get_main_queue(), ^{
-						if (cleanup) {
-							cleanup();
-						}
-						if (reload) {
-							reload();
-						}
-					});
+					if (completion) {
+						completion(nil);
+					}
 				});
 				
 			} else {
-				dispatch_async(dispatch_get_main_queue(), ^{
-					if (cleanup) {
-						cleanup();
-					}
-					if (errorHandler) {
-						errorHandler(error);
-					}
-				});
+				if (completion) {
+					completion(error);
+				}
 			}
 		}];
 		
@@ -151,25 +142,15 @@
 												[self.justFavArtistNames addObject:parseArtistName];
 												[self.justFavArtists addObject:artist];
 												
-												dispatch_async(dispatch_get_main_queue(), ^{
-													if (cleanup) {
-														cleanup();
-													}
-													if (reload) {
-														reload();
-													}
-												});
+												if (completion) {
+													completion(nil);
+												}
 											});
 											
 										} else {
-											dispatch_async(dispatch_get_main_queue(), ^{
-												if (cleanup) {
-													cleanup();
-												}
-												if (errorHandler) {
-													errorHandler(error);
-												}
-											});
+											if (completion) {
+												completion(error);
+											}
 										}
 									}];
 	}
@@ -201,13 +182,13 @@
 		int __block doneCounter = 0;
 		
 		for (int i = 0; i < 3; i++) {
-			[self didSelectArtistWithName:[topArtists[i] PAS_artistName] cleanup:nil reload:^{
+			[self didSelectArtistWithName:[topArtists[i] PAS_artistName] completion:^(NSError *error) {
 				doneCounter++;
 				if (doneCounter == 3) {
-					[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists object:nil];
+					[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists
+																		object:nil];
 				}
-				
-			} errorHandler:nil];
+			}];
 		}
 	}
 }
@@ -226,7 +207,11 @@
 	// get corrected name
 	// this might get a problem when artistNameCorrections is really big and loading from disk
 	// takes a long time -> could result in artistNameCorrections being nil here!
-	return [self.artistNameCorrections objectForKey:name];
+	NSString __block *result;
+	dispatch_barrier_sync(self.favoritesQ, ^{
+		result = [self.artistNameCorrections objectForKey:name];
+	});
+	return result;
 }
 
 - (PASArtist *)_artistForResolvedName:(NSString *)resolvedName
