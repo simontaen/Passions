@@ -95,6 +95,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * How to I get logs from Test Devices (aka Remote Logging), PFAnalytics?
 * Add LastFm as a Source
 * Get Suggestions based on my Favorite Artists (Maybe LastFm or even iTunes)
+* Dynamic Row height for bigger devices (5 and up, 6 and up)
 
 # Data communication with Parse
 

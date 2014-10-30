@@ -45,6 +45,9 @@
 	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9 alpha:1.0];
 	self.navigationController.navigationBar.barTintColor = [UIColor defaultNavBarTintColor];
 	
+	// TableView Properties
+	self.tableView.separatorInset = UIEdgeInsetsMake(0, kPASSizeArtistThumbnailSmall + 4, 0, 0);
+
 	// register the custom cell
 	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil]
 		 forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];

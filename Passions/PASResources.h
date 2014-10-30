@@ -26,6 +26,7 @@ extern NSString * const kPASShowAlbumDetails;
 extern NSString * const kPASDidFavoriteInitialArtists;
 
 // Constant for Artist Artwork
+extern CGFloat const kPASSizeArtistThumbnailSmall;
 extern NSString *const ImageFormatFamilyArtistThumbnails;
 extern NSString *const ImageFormatNameArtistThumbnailSmall;
 extern CGSize const ImageFormatImageSizeArtistThumbnailSmall;

@@ -253,6 +253,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	
 	// TableView Properties
 	self.tableView.allowsSelection = NO;
+	self.tableView.separatorInset = UIEdgeInsetsMake(0, kPASSizeArtistThumbnailSmall + 4, 0, 0);
 	
 	// default is alphabetical
 	self.selectedSortOrder = PASAddArtistsSortOrderAlphabetical;
