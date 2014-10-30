@@ -58,6 +58,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## Adding
 * Header line hairlines
+* Second Adding View is below segementBar
 
 ## Fav Artists
 

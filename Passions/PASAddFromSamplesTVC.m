@@ -258,11 +258,8 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	self.selectedSortOrder = PASAddArtistsSortOrderAlphabetical;
 	
 	// Configure contentInset to show up below segmentBar
-	// navBar y + height = 64
-	// segmentBar height = 44
-	// 64 need to be added only on selectedViewControllerIndex > 0 View controllers
-	// probably a fault of my PASPageViewController
-	self.tableView.contentInset = UIEdgeInsetsMake(64 + 44, 0, 0, 0);
+	// Magic Number: is the UIToolbar height
+	self.tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
 }
 
 - (void)_receiveFavArtists:(NSArray *)favArtists
