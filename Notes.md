@@ -51,7 +51,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Cells
 
 ## Adding
-* Header line hairlines
 
 ## Fav Artists
 
