@@ -45,6 +45,7 @@
 		F4B8B0B619E039EE00E1064D /* PASAlbumCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B8B0B519E039EE00E1064D /* PASAlbumCVCell.m */; };
 		F4B8B0B919E060AD00E1064D /* CPFQueryCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B8B0B819E060AD00E1064D /* CPFQueryCollectionViewController.m */; };
 		F4BB585E19E9F23600221912 /* PASMyPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BB585D19E9F23600221912 /* PASMyPVC.m */; };
+		F4C275461A02CFBF00814837 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4C275451A02CFBF00814837 /* Spotify.framework */; };
 		F4D284CD19E087D0008A3913 /* PASAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D284CC19E087D0008A3913 /* PASAlbum.m */; };
 		F4D284D019E0AE26008A3913 /* PASParseObjectWithImages.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D284CF19E0AE26008A3913 /* PASParseObjectWithImages.m */; };
 		F4D6C4B319BFAB8800465781 /* PASArtistTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D6C4B119BFAB8800465781 /* PASArtistTVCell.m */; };
@@ -120,6 +121,7 @@
 		F4B8B0B819E060AD00E1064D /* CPFQueryCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPFQueryCollectionViewController.m; sourceTree = "<group>"; };
 		F4BB585C19E9F23600221912 /* PASMyPVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASMyPVC.h; sourceTree = "<group>"; };
 		F4BB585D19E9F23600221912 /* PASMyPVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASMyPVC.m; sourceTree = "<group>"; };
+		F4C275451A02CFBF00814837 /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
 		F4D284CB19E087D0008A3913 /* PASAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAlbum.h; sourceTree = "<group>"; };
 		F4D284CC19E087D0008A3913 /* PASAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAlbum.m; sourceTree = "<group>"; };
 		F4D284CE19E0AE26008A3913 /* PASParseObjectWithImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASParseObjectWithImages.h; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */,
 				F49137F919B716A500E4FC0D /* Parse.framework in Frameworks */,
 				F424EE3419B656FA0010B3E1 /* libz.dylib in Frameworks */,
+				F4C275461A02CFBF00814837 /* Spotify.framework in Frameworks */,
 				F4A7797C1793113E00C770B9 /* CoreGraphics.framework in Frameworks */,
 				F424EE3019B656DD0010B3E1 /* CFNetwork.framework in Frameworks */,
 				F424EE2E19B656D40010B3E1 /* AudioToolbox.framework in Frameworks */,
@@ -239,6 +242,7 @@
 		F4A779761793113E00C770B9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F4C275451A02CFBF00814837 /* Spotify.framework */,
 				F49137F019B7137900E4FC0D /* Accounts.framework */,
 				F424EE2D19B656D40010B3E1 /* AudioToolbox.framework */,
 				F49137F619B716A500E4FC0D /* Bolts.framework */,
