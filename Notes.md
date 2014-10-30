@@ -45,10 +45,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Fall back to Spotify if Music App does not seem to be used.
 * Add Spotify as a Source (lot's of people don't use Music anymore)
 
-### Suggestions
-* Get Suggestions based on my Favorite Artists
-* Maybe LastFm or even iTunes
-
 ## PageViewController Container
 * flickering when the transition gets aborted
 
@@ -98,6 +94,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Get Concerts and Events from your Fav. Artists
 * How to I get logs from Test Devices (aka Remote Logging), PFAnalytics?
 * Add LastFm as a Source
+* Get Suggestions based on my Favorite Artists (Maybe LastFm or even iTunes)
 
 # Data communication with Parse
 
