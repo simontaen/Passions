@@ -24,6 +24,16 @@
 	return @"My Music";
 }
 
+#pragma mark - View Lifecycle
+
+- (void)viewDidLoad
+{
+	[super viewDidLoad];
+	// if selectedViewControllerIndex == 0 a contentInset of 64 already gets set (from the NavBar)
+	// probably a fault of my PASPageViewController
+	self.tableView.contentInset = UIEdgeInsetsMake(self.tableView.contentInset.top - 64, 0, 0, 0);
+}
+
 #pragma mark - Subclassing
 
 - (UIColor *)chosenTintColor
