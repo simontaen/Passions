@@ -26,7 +26,7 @@ NSString * const kPASLastFmApiKey = @"aed3367b0133ab707cb4e5b6b04da3e7";
 
 NSString * const kPASSpotifyClientId = @"e3e0a8c3a7c14f488c166528b08d095e";
 NSString * const kPASSpotifyClientSecret = @"300bdc62cd66467b9d57fc408099459b";
-NSString * const kPASSpotifyCallbackUri = @"passionsapp://callback";
+NSString * const kPASSpotifyCallbackUri = @"passionsapp://";
 
 NSString * const kPASSetFavArtists = @"kPASSetFavArtists";
 NSString * const kPASDidEditFavArtists = @"kPASDidEditFavArtists";
