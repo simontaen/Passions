@@ -55,9 +55,9 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+	self.segmentBar.barTintColor = [UIColor defaultNavBarTintColor];
 	self.segmentBar.clipsToBounds = YES;
 	self.segmentBar.tintColor = [self.addTvc chosenTintColor];
-	self.segmentBar.translucent = YES;
 	
 	// Setup segmentedControl
 	self.segmentedControl.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
@@ -73,13 +73,6 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 	[self.containerView addSubview:self.addTvc.view];
 	
 	[self.addTvc didMoveToParentViewController:self];
-}
-
-- (void)viewDidLayoutSubviews
-{
-	[super viewDidLayoutSubviews];
-	// make sure the segmentBar shows up right below the NavBar
-	self.segmentBar.frame = CGRectMake(0, self.topLayoutGuide.length, self.view.frame.size.width, self.segmentBar.frame.size.height);
 }
 
 @end
