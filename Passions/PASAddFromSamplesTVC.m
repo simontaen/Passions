@@ -269,12 +269,6 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	[self.tableView reloadData];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
-	
-}
-
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];

@@ -52,31 +52,6 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 
 #pragma mark - View Lifecycle
 
-//- (void)loadView
-//{
-//	[super loadView];
-//	
-//	self.view = [[UIView alloc] initWithFrame:UIScreen.mainScreen.bounds];
-//	
-//	CGFloat myX = self.view.bounds.origin.x;
-//	CGFloat myY = self.view.bounds.origin.y;
-//	CGFloat myWith = self.view.bounds.size.width;
-//	CGFloat myHeight = self.view.bounds.size.height;
-//	
-//	UIToolbar *myBar = [[UIToolbar alloc] initWithFrame:CGRectMake(myX, myY, myWith, kPASSegmentBarHeight)];
-//	self.segmentBar = myBar;
-//	[self.view addSubview:myBar];
-//	
-//	UISegmentedControl *mySegCont = [[UISegmentedControl alloc] initWithItems:@[@"alphabetical", @"by playcount"]];
-//	self.segmentedControl.frame = CGRectMake(16, 8, myWith - 32, kPASSegmentBarHeight - 14);
-//	self.segmentedControl = mySegCont;
-//	[self.segmentBar addSubview:mySegCont];
-//	
-//	UIView *myTable = [[UIView alloc] initWithFrame:CGRectMake(myX, kPASSegmentBarHeight, myWith, myHeight - kPASSegmentBarHeight)];
-//	self.containerView = myTable;
-//	[self.view addSubview:myTable];
-//}
-
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
