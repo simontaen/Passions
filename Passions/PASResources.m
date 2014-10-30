@@ -8,8 +8,6 @@
 
 #import "PASResources.h"
 
-NSString * const kPASLastFmApiKey = @"aed3367b0133ab707cb4e5b6b04da3e7";
-
 //For archive build, use "Passions"
 #ifndef DEBUG
 NSString * const kPASParseAppId = @"ymoWy7LcvcSg1tEGehR46hgLAEGP2mR3wyePOsQd";
@@ -23,6 +21,12 @@ NSString * const kPASParseAppId = @"nLPKoK0wdW9csg2mTwwPkiGEDBh4AlU3f6il9qqQ";
 NSString * const kPASParseClientKey = @"jxhd6vVmIttc1EVfre4Lcza9uwlKzDrCzqZJGSI9";
 NSString * const kPASParseMasterKey = @"Mx6FjfJ4FYW6fi9Ra1G23AEcQuDgtm2xBH1yRhS7";
 #endif
+
+NSString * const kPASLastFmApiKey = @"aed3367b0133ab707cb4e5b6b04da3e7";
+
+NSString * const kPASSpotifyClientId = @"e3e0a8c3a7c14f488c166528b08d095e";
+NSString * const kPASSpotifyClientSecret = @"300bdc62cd66467b9d57fc408099459b";
+NSString * const kPASSpotifyCallbackUri = @"passionsapp://callback";
 
 NSString * const kPASSetFavArtists = @"kPASSetFavArtists";
 NSString * const kPASDidEditFavArtists = @"kPASDidEditFavArtists";

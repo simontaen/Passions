@@ -9,10 +9,15 @@
 @import UIKit;
 
 // Constants
-extern NSString * const kPASLastFmApiKey;
 extern NSString * const kPASParseAppId;
 extern NSString * const kPASParseClientKey;
 extern NSString * const kPASParseMasterKey;
+
+extern NSString * const kPASLastFmApiKey;
+
+extern NSString * const kPASSpotifyClientId;
+extern NSString * const kPASSpotifyClientSecret;
+extern NSString * const kPASSpotifyCallbackUri;
 
 // Notification sent to pass the already favorited Artists
 extern NSString * const kPASSetFavArtists;
