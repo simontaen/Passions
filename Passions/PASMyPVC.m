@@ -43,9 +43,9 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-
+	
 	// Setup navigationBar
-	self.navigationController.navigationBar.barTintColor = [UIColor defaultNavBarTintColor];
+	self.navigationController.navigationBar.translucent = YES;
 
 //	UIBarButtonItem *lbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
 //																		  target:self

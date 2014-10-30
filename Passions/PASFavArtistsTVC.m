@@ -41,9 +41,8 @@
 	[super viewDidLoad];
 
 	// layout and look
-	self.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
 	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9 alpha:1.0];
-	self.navigationController.navigationBar.barTintColor = [UIColor defaultNavBarTintColor];
+	self.navigationController.navigationBar.translucent = YES;
 	
 	// register the custom cell
 	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil]

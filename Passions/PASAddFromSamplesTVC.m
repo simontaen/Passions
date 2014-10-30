@@ -256,6 +256,10 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	
 	// default is alphabetical
 	self.selectedSortOrder = PASAddArtistsSortOrderAlphabetical;
+	
+	// Configure contentInset to show up below segmentBar
+	// Magic Number: is the UIToolbar height
+	self.tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
 }
 
 - (void)_receiveFavArtists:(NSArray *)favArtists
