@@ -47,6 +47,7 @@
 	
 	// TableView Properties
 	self.tableView.separatorInset = UIEdgeInsetsMake(0, kPASSizeArtistThumbnailSmall + 4, 0, 0);
+	self.tableView.separatorColor = [UIColor tableViewSeparatorColor];
 
 	// register the custom cell
 	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil]

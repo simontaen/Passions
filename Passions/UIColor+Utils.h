@@ -14,4 +14,5 @@
 + (UIColor *)spotifyTintColor;
 + (UIColor *)starTintColor;
 + (UIColor *)defaultTintColor;
++ (UIColor *)tableViewSeparatorColor;
 @end

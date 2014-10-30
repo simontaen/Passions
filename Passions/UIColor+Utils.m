@@ -50,7 +50,7 @@
 	return starTintColor;
 }
 
-+ (UIColor*)defaultTintColor;
++ (UIColor*)defaultTintColor
 {
 	static UIColor* defaultTintColor;
 	static dispatch_once_t onceToken;
@@ -59,6 +59,16 @@
 		defaultTintColor = view.tintColor;
 	});
 	return defaultTintColor;
+}
+
++ (UIColor *)tableViewSeparatorColor
+{
+	static UIColor* tableViewSeparatorColor;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		tableViewSeparatorColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.4];
+	});
+	return tableViewSeparatorColor;
 }
 
 @end
