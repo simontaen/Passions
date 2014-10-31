@@ -12,3 +12,4 @@ pod 'UIDevice-Hardware' # Hardware properties for analytics
 pod 'GBVersionTracking' # Version and launch tracking
 # 
 pod 'LastFmFetchr', :path => '/Users/simon/Documents/code/iOS/LastFmFetchr/'
+pod 'SpotifySDK', :path => '/Users/simon/Documents/code/iOS/Github/ios-sdk'
