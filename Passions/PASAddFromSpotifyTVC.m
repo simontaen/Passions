@@ -15,6 +15,7 @@
 
 @interface PASAddFromSpotifyTVC ()
 @property (nonatomic, strong) SPTSession *session;
+@property (nonatomic, weak) IBOutlet UIButton *spotifyLoginButton;
 @end
 
 @implementation PASAddFromSpotifyTVC
@@ -37,20 +38,40 @@
 			NSLog(@"%@", error);
 			
 		} else {
+			// We are authenticated, fetch new data
+			self.spotifyLoginButton.hidden = YES;
+			[self fetchSpotifyArtists];
+
 			// Persist the new session
 			self.session = session;
 			NSData *sessionData = [NSKeyedArchiver archivedDataWithRootObject:self.session];
 			[UICKeyChainStore setData:sessionData forKey:NSStringFromClass([self class])];
 		}
 	};
-
+	
 	if (!self.session) {
-		// No valid session found, show login button
+		// No valid session found, first register for nofications when done
+		[[NSNotificationCenter defaultCenter] addObserverForName:kPASSpotifyClientId
+														  object:nil queue:nil
+													  usingBlock:^(NSNotification *note) {
+														  id obj = note.userInfo[kPASSpotifyClientId];
+														  NSAssert([obj isKindOfClass:[NSURL class]], @"kPASSpotifyClientId must carry a NSURL");
+														  [[SPTAuth defaultInstance] handleAuthCallbackWithTriggeredAuthURL:(NSURL *)obj
+																							  tokenSwapServiceEndpointAtURL:[PASResources spotifyTokenSwap]
+																												   callback:authCallback];
+														  // this is a one time only thing
+														  [[NSNotificationCenter defaultCenter] removeObserver:nil
+																										  name:kPASSpotifyClientId
+																										object:self];
+													  }];
+		// show login button
 		[self showLoginWithSpotify];
 		
 	} else if (![self.session isValid]) {
 		// Renew the session
 		[[SPTAuth defaultInstance] renewSession:self.session withServiceEndpointAtURL:[PASResources spotifyTokenRefresh] callback:authCallback];
+	} else {
+		[self fetchSpotifyArtists];
 	}
 }
 
@@ -91,11 +112,37 @@
 	return [MPMediaItemCollection PAS_playcountForArtistWithName:name];
 }
 
+#pragma mark - Spotify Data Fetching
+
+-(void)fetchSpotifyArtists
+{
+	NSLog(@"Authentication successfull, loading data");
+}
+
 #pragma mark - Spotify Auth
 
 - (void)showLoginWithSpotify
 {
+	UIImage *img = [PASResources spotifyLogin];
+	CGFloat imgWidth = img.size.width;
+	CGFloat imgHeight = img.size.height;
 	
+	CGRect myFrame = CGRectMake(self.view.frame.size.width / 2 - imgWidth / 2, self.view.frame.size.height / 2 - imgHeight / 2, imgWidth, imgHeight);
+	UIButton *btn = [[UIButton alloc] initWithFrame:myFrame];
+	self.spotifyLoginButton = btn;
+	
+	[btn setImage:img forState:UIControlStateNormal];
+	[btn addTarget:self action:@selector(loginWithSpotify:) forControlEvents:UIControlEventTouchUpInside];
+	
+	[self.view addSubview:btn];
+}
+
+-(IBAction)loginWithSpotify:(UIButton *)sender
+{
+	self.spotifyLoginButton.userInteractionEnabled = NO;
+	NSURL *loginPageURL = [[SPTAuth defaultInstance] loginURLForClientId:kPASSpotifyClientId
+													 declaredRedirectURL:[PASResources	spotifyCallbackUri]];
+	[[UIApplication sharedApplication] openURL:loginPageURL];
 }
 
 @end

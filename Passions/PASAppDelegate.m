@@ -15,6 +15,7 @@
 #import "GBVersiontracking.h"
 #import "UIDevice-Hardware.h"
 #import "PASManageArtists.h"
+#import <Spotify/Spotify.h>
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
@@ -249,6 +250,18 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 			completionHandler(UIBackgroundFetchResultNewData);
 		}
 	}];
+}
+
+#pragma mark - Spotify Auth Callback
+
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+	if ([[SPTAuth defaultInstance] canHandleURL:url withDeclaredRedirectURL:[PASResources spotifyCallbackUri]]) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:kPASSpotifyClientId
+															object:self
+														  userInfo:@{ kPASSpotifyClientId : url }];
+		return YES;
+	}
+	return NO;
 }
 
 #pragma mark - Application Lifecycle
