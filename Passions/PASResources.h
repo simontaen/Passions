@@ -46,6 +46,8 @@ extern CGSize const ImageFormatImageSizeAlbumThumbnailLarge;
 @interface PASResources : NSObject
 
 + (NSURL *)spotifyCallbackUri;
++ (NSURL *)spotifyTokenSwap;
++ (NSURL *)spotifyTokenRefresh;
 
 + (UIImage *) artistThumbnailPlaceholder;
 + (UIImage *) albumThumbnailPlaceholder;

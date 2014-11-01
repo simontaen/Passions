@@ -10,6 +10,8 @@ pod 'SORelativeDateTransformer' # Date formatter for the Timeline View
 pod 'UIDevice-Hardware' # Hardware properties for analytics
 # https://github.com/lmirosevic/GBVersionTracking
 pod 'GBVersionTracking' # Version and launch tracking
+# https://github.com/kishikawakatsumi/UICKeyChainStore
+pod 'UICKeyChainStore' # Easy Keychain Access
 # 
 pod 'LastFmFetchr', :path => '/Users/simon/Documents/code/iOS/LastFmFetchr/'
 pod 'SpotifySDK', :path => '/Users/simon/Documents/code/iOS/Github/ios-sdk'

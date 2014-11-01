@@ -59,6 +59,26 @@ CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 	return spotifyCallbackUri;
 }
 
++ (NSURL *)spotifyTokenSwap
+{
+	static NSURL *spotifyTokenSwap;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		spotifyTokenSwap = [NSURL URLWithString:@"https://shrieking-grave-7597.herokuapp.com/swap"];
+	});
+	return spotifyTokenSwap;
+}
+
++ (NSURL *)spotifyTokenRefresh
+{
+	static NSURL *spotifyTokenRefresh;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		spotifyTokenRefresh = [NSURL URLWithString:@"https://shrieking-grave-7597.herokuapp.com/refresh"];
+	});
+	return spotifyTokenRefresh;
+}
+
 + (UIImage *)artistThumbnailPlaceholder
 {
 	static UIImage *artistThumbnailPlaceholder;
