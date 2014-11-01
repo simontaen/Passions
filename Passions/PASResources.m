@@ -79,6 +79,16 @@ CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 	return spotifyTokenRefresh;
 }
 
++ (UIImage *)spotifyLogin
+{
+	static UIImage *spotifyLogin;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		spotifyLogin = [UIImage imageNamed: @"spotifyLogin"];
+	});
+	return spotifyLogin;
+}
+
 + (UIImage *)artistThumbnailPlaceholder
 {
 	static UIImage *artistThumbnailPlaceholder;

@@ -48,6 +48,7 @@ extern CGSize const ImageFormatImageSizeAlbumThumbnailLarge;
 + (NSURL *)spotifyCallbackUri;
 + (NSURL *)spotifyTokenSwap;
 + (NSURL *)spotifyTokenRefresh;
++ (UIImage *)spotifyLogin;
 
 + (UIImage *) artistThumbnailPlaceholder;
 + (UIImage *) albumThumbnailPlaceholder;
