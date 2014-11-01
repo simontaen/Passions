@@ -8,6 +8,7 @@
 
 #import "PASExtendedNavContainer.h"
 #import "PASAddFromMusicTVC.h"
+#import "PASAddFromSpotifyTVC.h"
 #import "UIColor+Utils.h"
 
 CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
@@ -34,11 +35,22 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 {
 	BOOL isSimulator = [[UIDevice currentDevice].model containsString:@"Simulator"];
 	
-	if ((isSimulator && index == 0) ||
-		(!isSimulator && index > 0)) {
-		return [[PASAddFromSamplesTVC alloc] initWithNibName:nil bundle:nil];
-	} else {
-		return [[PASAddFromMusicTVC alloc] initWithNibName:nil bundle:nil];
+	switch (index) {
+		case 0:
+			if (isSimulator) {
+				return [[PASAddFromSamplesTVC alloc] initWithNibName:nil bundle:nil];
+			} else {
+				return [[PASAddFromMusicTVC alloc] initWithNibName:nil bundle:nil];
+			}
+		case 2:
+			return [[PASAddFromSpotifyTVC alloc] initWithNibName:nil bundle:nil];
+			
+		default:
+			if (isSimulator) {
+				return [[PASAddFromMusicTVC alloc] initWithNibName:nil bundle:nil];
+			} else {
+				return [[PASAddFromSamplesTVC alloc] initWithNibName:nil bundle:nil];
+			}
 	}
 }
 

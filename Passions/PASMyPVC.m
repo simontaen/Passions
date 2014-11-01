@@ -23,13 +23,13 @@
 {
 	[super awakeFromNib];
 	// init and add the page view controllers view controllers
-	self.viewControllers = @[[self _viewControllerAtIndex:0], [self _viewControllerAtIndex:1]];
+	self.viewControllers = @[[self _viewControllerAtIndex:0], [self _viewControllerAtIndex:1], [self _viewControllerAtIndex:2]];
 }
 
 - (PASExtendedNavContainer *)_viewControllerAtIndex:(NSUInteger)index
 {
 	static NSMutableArray *viewControllers;
-	if (!viewControllers) viewControllers = [NSMutableArray arrayWithCapacity:2];
+	if (!viewControllers) viewControllers = [NSMutableArray arrayWithCapacity:3];
 	
 	if (index >= viewControllers.count) {
 		viewControllers[index] = [[PASExtendedNavContainer alloc] initWithIndex:index];

@@ -20,6 +20,7 @@
 		F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */; };
 		F44E4BB619FE4FB900764532 /* UIColor+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = F44E4BB519FE4FB900764532 /* UIColor+Utils.m */; };
 		F450FCE719F7044D00DF2D38 /* PASManageArtists.m in Sources */ = {isa = PBXBuildFile; fileRef = F450FCE619F7044D00DF2D38 /* PASManageArtists.m */; };
+		F45586551A0506C2000D5893 /* PASAddFromSpotifyTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F45586541A0506C2000D5893 /* PASAddFromSpotifyTVC.m */; };
 		F4589D3D19C240D500E17D49 /* PASPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4589D3C19C240D500E17D49 /* PASPageViewController.m */; };
 		F461C8E119EB006C0081B445 /* PASExtendedNavContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = F461C8DF19EB006C0081B445 /* PASExtendedNavContainer.m */; };
 		F4694D6419B74ABB00D12576 /* PASFavArtistsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */; };
@@ -75,6 +76,8 @@
 		F44E4BB519FE4FB900764532 /* UIColor+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Utils.m"; sourceTree = "<group>"; };
 		F450FCE519F7044D00DF2D38 /* PASManageArtists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASManageArtists.h; sourceTree = "<group>"; };
 		F450FCE619F7044D00DF2D38 /* PASManageArtists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASManageArtists.m; sourceTree = "<group>"; };
+		F45586531A0506C2000D5893 /* PASAddFromSpotifyTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddFromSpotifyTVC.h; sourceTree = "<group>"; };
+		F45586541A0506C2000D5893 /* PASAddFromSpotifyTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAddFromSpotifyTVC.m; sourceTree = "<group>"; };
 		F4589D3B19C240D500E17D49 /* PASPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASPageViewController.h; sourceTree = "<group>"; };
 		F4589D3C19C240D500E17D49 /* PASPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASPageViewController.m; sourceTree = "<group>"; };
 		F461C8DE19EB006C0081B445 /* PASExtendedNavContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASExtendedNavContainer.h; sourceTree = "<group>"; };
@@ -214,6 +217,8 @@
 				F476F0F019B8FFA700185544 /* PASAddFromSamplesTVC.m */,
 				F40BBA6918538DAD00877D60 /* PASAddFromMusicTVC.h */,
 				F40BBA6A18538DAD00877D60 /* PASAddFromMusicTVC.m */,
+				F45586531A0506C2000D5893 /* PASAddFromSpotifyTVC.h */,
+				F45586541A0506C2000D5893 /* PASAddFromSpotifyTVC.m */,
 			);
 			name = "Add Artists";
 			sourceTree = "<group>";
@@ -521,6 +526,7 @@
 				F4FEC99A19E3072100935B1E /* MPMediaItemCollection+SourceImage.m in Sources */,
 				F4D284D019E0AE26008A3913 /* PASParseObjectWithImages.m in Sources */,
 				F4A779881793113E00C770B9 /* PASAppDelegate.m in Sources */,
+				F45586551A0506C2000D5893 /* PASAddFromSpotifyTVC.m in Sources */,
 				F4D284CD19E087D0008A3913 /* PASAlbum.m in Sources */,
 				F48FD13F19F28F6700F072A0 /* PASArtistInfo.m in Sources */,
 				F461C8E119EB006C0081B445 /* PASExtendedNavContainer.m in Sources */,

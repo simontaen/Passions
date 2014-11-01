@@ -35,7 +35,8 @@
 	static UIColor *spotifyTintColor;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		spotifyTintColor = [UIColor colorWithRed:99/255.0 green:142/255.0 blue:0/255.0 alpha:1];
+		// #659213
+		spotifyTintColor = [UIColor colorWithRed:101/255.0 green:146/255.0 blue:19/255.0 alpha:1];
 	});
 	return spotifyTintColor;
 }
