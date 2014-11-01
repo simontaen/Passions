@@ -26,6 +26,10 @@
 {
 	[super viewDidLoad];
 	
+	// TableView Setup
+	self.refreshControl = [[UIRefreshControl alloc] init];
+	[self.refreshControl addTarget:self action:@selector(fetchSpotifyArtists) forControlEvents:UIControlEventValueChanged];
+	
 	// Try to get a stored Seesion
 	NSData *sessionData = [UICKeyChainStore dataForKey:NSStringFromClass([self class])];
 	self.session = [NSKeyedUnarchiver unarchiveObjectWithData:sessionData];
@@ -116,7 +120,9 @@
 
 -(void)fetchSpotifyArtists
 {
+	[self.refreshControl beginRefreshing];
 	NSLog(@"Authentication successfull, loading data");
+	[self.refreshControl endRefreshing];
 }
 
 #pragma mark - Spotify Auth
