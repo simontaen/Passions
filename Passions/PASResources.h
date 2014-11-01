@@ -16,8 +16,6 @@ extern NSString * const kPASParseMasterKey;
 extern NSString * const kPASLastFmApiKey;
 
 extern NSString * const kPASSpotifyClientId;
-extern NSString * const kPASSpotifyClientSecret;
-extern NSString * const kPASSpotifyCallbackUri;
 
 // Notification sent to pass the already favorited Artists
 extern NSString * const kPASSetFavArtists;
@@ -46,6 +44,8 @@ extern NSString *const ImageFormatNameAlbumThumbnailLarge;
 extern CGSize const ImageFormatImageSizeAlbumThumbnailLarge;
 
 @interface PASResources : NSObject
+
++ (NSURL *)spotifyCallbackUri;
 
 + (UIImage *) artistThumbnailPlaceholder;
 + (UIImage *) albumThumbnailPlaceholder;

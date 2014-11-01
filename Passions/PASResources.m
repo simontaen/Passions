@@ -25,8 +25,6 @@ NSString * const kPASParseMasterKey = @"Mx6FjfJ4FYW6fi9Ra1G23AEcQuDgtm2xBH1yRhS7
 NSString * const kPASLastFmApiKey = @"aed3367b0133ab707cb4e5b6b04da3e7";
 
 NSString * const kPASSpotifyClientId = @"e3e0a8c3a7c14f488c166528b08d095e";
-NSString * const kPASSpotifyClientSecret = @"300bdc62cd66467b9d57fc408099459b";
-NSString * const kPASSpotifyCallbackUri = @"passionsapp://";
 
 NSString * const kPASSetFavArtists = @"kPASSetFavArtists";
 NSString * const kPASDidEditFavArtists = @"kPASDidEditFavArtists";
@@ -50,6 +48,16 @@ NSString *const ImageFormatNameAlbumThumbnailLarge = @"ImageFormatNameAlbumThumb
 CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 
 @implementation PASResources
+
++ (NSURL *)spotifyCallbackUri
+{
+	static NSURL *spotifyCallbackUri;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		spotifyCallbackUri = [NSURL URLWithString:@"passionsapp://"];
+	});
+	return spotifyCallbackUri;
+}
 
 + (UIImage *)artistThumbnailPlaceholder
 {
