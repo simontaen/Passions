@@ -7,16 +7,20 @@
 //
 
 #import "PASAddFromSpotifyTVC.h"
-#import "MPMediaItemCollection+SourceImage.h"
-#import "MPMediaItem+Passions.h"
 #import "UIColor+Utils.h"
 #import <Spotify/Spotify.h>
 #import "UICKeyChainStore.h"
 
 @interface PASAddFromSpotifyTVC ()
-@property (nonatomic, strong) SPTSession *session;
 @property (nonatomic, weak) IBOutlet UIButton *spotifyLoginButton;
+@property (nonatomic, strong) SPTSession *session;
+
 @property (nonatomic, copy) void (^savedTracksForUserCallback)(NSError *error, id object);
+@property (nonatomic, strong) NSMutableDictionary *artists; // of NSString -> SPTPartialArtist (ArtistName -> Object)
+
+@property (nonatomic, strong) dispatch_queue_t artistsQ;
+@property (nonatomic, strong) NSMutableArray *artistsInProgress;
+@property (nonatomic, assign) BOOL fetchedAllArtists;
 @end
 
 @implementation PASAddFromSpotifyTVC
@@ -26,6 +30,10 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+	
+	// perpare for caching artists
+	self.artistsQ = dispatch_queue_create("artistsQ", DISPATCH_QUEUE_CONCURRENT);
+	self.artistsInProgress = [NSMutableArray array];
 	
 	// TableView Setup
 	self.refreshControl = [[UIRefreshControl alloc] init];
@@ -99,37 +107,90 @@
 
 - (NSArray *)artistsOrderedByName
 {
-	return [NSArray array];
+	NSArray *sortedKeys = [[self.artists allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+	NSMutableArray *sortedArtists = [NSMutableArray arrayWithCapacity:sortedKeys.count];
+	
+	for (NSString *key in sortedKeys) {
+		[sortedArtists addObject:self.artists[key]];
+	}
+	
+	return sortedArtists;
 }
 
 - (NSArray *)artistsOrderedByPlaycount
 {
-	return [NSArray array];
+	return [self artistsOrderedByName];
 }
 
 - (NSString *)nameForArtist:(id)artist
 {
-	NSAssert([artist isKindOfClass:[MPMediaItemCollection class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
-	return [artist PAS_artistName];
+	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
+	return ((SPTArtist *)artist).name;
 }
 
 - (NSUInteger)playcountForArtist:(id)artist withName:(NSString *)name
 {
-	NSAssert([artist isKindOfClass:[MPMediaItemCollection class]], @"%@ cannot get playcount for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
-	return [MPMediaItemCollection PAS_playcountForArtistWithName:name];
+	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
+	return ((SPTArtist *)artist).name.length;
 }
 
 #pragma mark - Spotify Data Fetching
+
+- (void)cacheArtistsFromArray:(NSArray *)artists
+{
+	for (SPTPartialArtist *artist in artists) {
+		NSString *artistName = artist.name;
+		
+		BOOL __block inProgress = YES;
+		dispatch_barrier_sync(self.artistsQ, ^{
+			inProgress = [self.artistsInProgress containsObject:artistName];
+		});
+		
+		BOOL __block cachedAlready = YES;
+		if (!inProgress) {
+			dispatch_barrier_sync(self.artistsQ, ^{
+				cachedAlready = !!self.artists[artistName];
+			});
+		}
+		
+		if (!cachedAlready) {
+			dispatch_barrier_async(self.artistsQ, ^{
+				[self.artistsInProgress addObject:artistName];
+			});
+			
+			// Need to promote to Full Artist
+			[SPTRequest requestItemFromPartialObject:artist withSession:self.session callback:^(NSError *error, id object) {
+				if (!error && object) {
+					dispatch_barrier_async(self.artistsQ, ^{
+						self.artists[artistName] = object;
+					});
+				}
+				
+				dispatch_barrier_sync(self.artistsQ, ^{
+					[self.artistsInProgress removeObject:artistName];
+				});
+				
+				if (self.artistsInProgress.count == 0 && self.fetchedAllArtists) {
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[self.tableView reloadData];
+						[self.refreshControl endRefreshing];
+					});
+				}
+			}];
+		}
+	}
+}
 
 -(void)fetchSpotifyArtists
 {
 	[self.refreshControl beginRefreshing];
 	NSLog(@"Authentication successfull, loading data");
+	self.artists = [NSMutableDictionary dictionary];
 	
 	void (^trackListPageProcessor)(SPTListPage *list) = ^void(SPTListPage *list) {
 		
 		for (SPTSavedTrack *track in [list items]) {
-			NSLog(@"Artist %@ for Track %@", ((SPTPartialArtist *)track.artists[0]).name, track.name);
+			[self cacheArtistsFromArray:track.artists];
 		}
 	
 	};
@@ -142,11 +203,10 @@
 			SPTListPage *list = (SPTListPage *)object;
 			
 			if ([list hasNextPage]) {
+				weakSelf.fetchedAllArtists = NO;
 				[list requestNextPageWithSession:weakSelf.session callback:weakSelf.savedTracksForUserCallback];
 			} else {
-				dispatch_async(dispatch_get_main_queue(), ^{
-					[weakSelf.refreshControl endRefreshing];
-				});
+				weakSelf.fetchedAllArtists = YES;
 			}
 			
 			trackListPageProcessor(list);
