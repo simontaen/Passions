@@ -89,6 +89,17 @@
 	} else {
 		[self fetchSpotifyArtists];
 	}
+	
+	// Detail Text Formatting
+	__weak typeof(self) weakSelf = self;
+	self.detailTextBlock = ^NSString *(id<FICEntity> artist, NSString *name) {
+		NSUInteger trackcount = [weakSelf _trackcountForArtist:artist withName:name];
+		if (trackcount == 1) {
+			return [NSString stringWithFormat:@"%lu Track", (unsigned long)trackcount];
+		} else {
+			return [NSString stringWithFormat:@"%lu Tracks", (unsigned long)trackcount];
+		}
+	};
 }
 
 
@@ -147,12 +158,6 @@
 {
 	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
 	return ((SPTArtist *)artist).name;
-}
-
-- (NSUInteger)playcountForArtist:(id)artist withName:(NSString *)name
-{
-	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
-	return [self.artistsTracks[name] count];
 }
 
 #pragma mark - Spotify Data Fetching
@@ -247,6 +252,14 @@
 
 	self.fetchedAllArtists = NO;
 	[SPTRequest savedTracksForUserInSession:self.session callback:self.savedTracksForUserCallback];
+}
+
+#pragma mark - Private Methods
+
+- (NSUInteger)_trackcountForArtist:(id)artist withName:(NSString *)name
+{
+	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
+	return [self.artistsTracks[name] count];
 }
 
 #pragma mark - Spotify Auth

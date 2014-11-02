@@ -12,7 +12,14 @@
 // Listens for kPASSetFavArtists Notifications to receive already favorited Artists
 @interface PASAddFromSamplesTVC : UITableViewController
 
+// Formatting Blocks
+@property (nonatomic, copy) NSString * (^detailTextBlock)(id<FICEntity> artist, NSString *name);
+
+// When returning to the presenting Vc
 - (BOOL)didEditArtists;
+
+// UISegmentedControl Action
+- (IBAction)segmentChanged:(UISegmentedControl *)sender;
 
 // for subclassing, called once
 // cacheing of these results is handled by this class
@@ -23,8 +30,5 @@
 // called during cell config
 - (NSString *)nameForArtist:(id)artist;
 - (NSUInteger)playcountForArtist:(id)artist withName:(NSString *)name;
-
-// UISegmentedControl Action
-- (IBAction)segmentChanged:(UISegmentedControl *)sender;
 
 @end

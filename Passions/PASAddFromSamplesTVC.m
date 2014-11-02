@@ -258,6 +258,17 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	
 	// default is alphabetical
 	self.selectedSortOrder = PASAddArtistsSortOrderAlphabetical;
+	
+	// Detail Text Formatting
+	__weak typeof(self) weakSelf = self;
+	self.detailTextBlock = ^NSString *(id<FICEntity> artist, NSString *name) {
+		NSUInteger playcount = [weakSelf playcountForArtist:artist withName:name];
+		if (playcount == 1) {
+			return [NSString stringWithFormat:@"%lu Play", (unsigned long)playcount];
+		} else {
+			return [NSString stringWithFormat:@"%lu Plays", (unsigned long)playcount];
+		}
+	};
 }
 
 - (void)_receiveFavArtists:(NSArray *)favArtists
@@ -286,11 +297,8 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	
 	id artist = [self _artistForIndexPath:indexPath];
 	NSString *artistName = [self nameForArtist:artist];
-	
-	[cell showArtist:artist withName:artistName
-		  isFavorite:[[PASManageArtists sharedMngr] isFavoriteArtist:artistName]
-		   playcount:[self playcountForArtist:artist withName:artistName]];
-	
+
+	[cell showArtist:artist withName:artistName andDetailTextBlock:self.detailTextBlock];
 	return cell;
 }
 
