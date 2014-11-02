@@ -205,14 +205,13 @@
 				
 				dispatch_barrier_sync(self.artistsQ, ^{
 					[self.artistsInProgress removeObject:artistName];
+					if (self.artistsInProgress.count == 0 && self.fetchedAllArtists) {
+						dispatch_async(dispatch_get_main_queue(), ^{
+							[self.tableView reloadData];
+							[self.refreshControl endRefreshing];
+						});
+					}
 				});
-				
-				if (self.artistsInProgress.count == 0 && self.fetchedAllArtists) {
-					dispatch_async(dispatch_get_main_queue(), ^{
-						[self.tableView reloadData];
-						[self.refreshControl endRefreshing];
-					});
-				}
 			}];
 		}
 	}
