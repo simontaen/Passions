@@ -16,6 +16,7 @@
 @interface PASAddFromSpotifyTVC ()
 @property (nonatomic, strong) SPTSession *session;
 @property (nonatomic, weak) IBOutlet UIButton *spotifyLoginButton;
+@property (nonatomic, copy) void (^savedTracksForUserCallback)(NSError *error, id object);
 @end
 
 @implementation PASAddFromSpotifyTVC
@@ -35,7 +36,6 @@
 	if (sessionData) {
 		self.session = [NSKeyedUnarchiver unarchiveObjectWithData:sessionData];
 	}
-	
 	
 	// This is the callback that'll be triggered when auth is completed (or fails).
 	SPTAuthCallback authCallback = ^(NSError *error, SPTSession *session) {
@@ -126,13 +126,37 @@
 	[self.refreshControl beginRefreshing];
 	NSLog(@"Authentication successfull, loading data");
 	
-	[SPTRequest savedTracksForUserInSession:self.session callback:^(NSError *error, id object) {
-		NSLog(@"ERROR %@", error);
-		NSLog(@"OBJECT %@", object);
-	}];
+	void (^trackListPageProcessor)(SPTListPage *list) = ^void(SPTListPage *list) {
+		
+		for (SPTSavedTrack *track in [list items]) {
+			NSLog(@"Artist %@ for Track %@", ((SPTPartialArtist *)track.artists[0]).name, track.name);
+		}
 	
+	};
 	
-	[self.refreshControl endRefreshing];
+	__weak typeof(self) weakSelf = self;
+	
+	// the block to recursivly fetch all tracks
+	self.savedTracksForUserCallback = ^void(NSError *error, id object) {
+		if (!error && object) {
+			SPTListPage *list = (SPTListPage *)object;
+			
+			if ([list hasNextPage]) {
+				[list requestNextPageWithSession:weakSelf.session callback:weakSelf.savedTracksForUserCallback];
+			} else {
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[weakSelf.refreshControl endRefreshing];
+				});
+			}
+			
+			trackListPageProcessor(list);
+			
+		} else {
+			NSLog(@"%@", error);
+		}
+	};
+
+	[SPTRequest savedTracksForUserInSession:self.session callback:self.savedTracksForUserCallback];
 }
 
 #pragma mark - Spotify Auth
