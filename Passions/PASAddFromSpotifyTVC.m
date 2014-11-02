@@ -39,17 +39,20 @@
 	
 	// This is the callback that'll be triggered when auth is completed (or fails).
 	SPTAuthCallback authCallback = ^(NSError *error, SPTSession *session) {
-		
 		if (error != nil) {
 			NSLog(@"%@", error);
+			// allow more attempts
+			self.spotifyLoginButton.userInteractionEnabled = YES;
+			self.spotifyLoginButton.hidden = NO;
 			
 		} else {
-			// We are authenticated, fetch new data
-			self.spotifyLoginButton.hidden = YES;
-			[self fetchSpotifyArtists];
-
-			// Persist the new session
+			// We are authenticated, cleanup
+			[[NSNotificationCenter defaultCenter] removeObserver:nil
+															name:kPASSpotifyClientId
+														  object:self];
+			// Persist the new session and fetch new data
 			self.session = session;
+			[self fetchSpotifyArtists];
 			NSData *sessionData = [NSKeyedArchiver archivedDataWithRootObject:self.session];
 			[UICKeyChainStore setData:sessionData forKey:NSStringFromClass([self class])];
 		}
@@ -62,13 +65,11 @@
 													  usingBlock:^(NSNotification *note) {
 														  id obj = note.userInfo[kPASSpotifyClientId];
 														  NSAssert([obj isKindOfClass:[NSURL class]], @"kPASSpotifyClientId must carry a NSURL");
+														  self.spotifyLoginButton.hidden = YES;
+														  // The user finished the authentication in Safari, handle it
 														  [[SPTAuth defaultInstance] handleAuthCallbackWithTriggeredAuthURL:(NSURL *)obj
 																							  tokenSwapServiceEndpointAtURL:[PASResources spotifyTokenSwap]
 																												   callback:authCallback];
-														  // this is a one time only thing
-														  [[NSNotificationCenter defaultCenter] removeObserver:nil
-																										  name:kPASSpotifyClientId
-																										object:self];
 													  }];
 		// show login button
 		[self showLoginWithSpotify];
@@ -98,12 +99,12 @@
 
 - (NSArray *)artistsOrderedByName
 {
-	return [MPMediaItemCollection PAS_artistsOrderedByName];
+	return [NSArray array];
 }
 
 - (NSArray *)artistsOrderedByPlaycount
 {
-	return [MPMediaItemCollection PAS_artistsOrderedByPlaycount];
+	return [NSArray array];
 }
 
 - (NSString *)nameForArtist:(id)artist
@@ -124,6 +125,13 @@
 {
 	[self.refreshControl beginRefreshing];
 	NSLog(@"Authentication successfull, loading data");
+	
+	[SPTRequest savedTracksForUserInSession:self.session callback:^(NSError *error, id object) {
+		NSLog(@"ERROR %@", error);
+		NSLog(@"OBJECT %@", object);
+	}];
+	
+	
 	[self.refreshControl endRefreshing];
 }
 
