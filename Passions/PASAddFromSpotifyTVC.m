@@ -32,7 +32,9 @@
 	
 	// Try to get a stored Seesion
 	NSData *sessionData = [UICKeyChainStore dataForKey:NSStringFromClass([self class])];
-	self.session = [NSKeyedUnarchiver unarchiveObjectWithData:sessionData];
+	if (sessionData) {
+		self.session = [NSKeyedUnarchiver unarchiveObjectWithData:sessionData];
+	}
 	
 	
 	// This is the callback that'll be triggered when auth is completed (or fails).
