@@ -12,6 +12,7 @@
 // but I still like to do them for clarity
 #import "NSString+SourceImage.h"
 #import "MPMediaItemCollection+SourceImage.h"
+#import "SPTArtist+FICEntity.h"
 #import "UIColor+Utils.h"
 
 @interface PASArtistTVCell()
@@ -35,9 +36,9 @@
 
 #pragma mark - Other setters
 
-- (void)showArtist:(id<PASSourceImage>)artist withName:(NSString *)name isFavorite:(BOOL)isFav playcount:(NSUInteger)playcount
+- (void)showArtist:(id<FICEntity>)artist withName:(NSString *)name isFavorite:(BOOL)isFav playcount:(NSUInteger)playcount
 {
-	NSAssert([artist conformsToProtocol:@protocol(PASSourceImage)], @"%@ cannot handle artists of class %@, must conform to %@", NSStringFromClass([self class]), NSStringFromClass([artist class]), NSStringFromProtocol(@protocol(PASSourceImage)));
+	NSAssert([artist conformsToProtocol:@protocol(FICEntity)], @"%@ cannot handle artists of class %@, must conform to %@", NSStringFromClass([self class]), NSStringFromClass([artist class]), NSStringFromProtocol(@protocol(FICEntity)));
 	
 	if (artist != self.entity) {
 		// only update cell if entity has actually changed
