@@ -243,7 +243,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 		case PASAddArtistsSortOrderAlphabetical:
 			return @"alphabetical";
 		default:
-			return @"by playcount";
+			return @"by name lenght ;)";
 	}
 }
 
@@ -268,11 +268,11 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	// Detail Text Formatting
 	__weak typeof(self) weakSelf = self;
 	self.detailTextBlock = ^NSString *(id<FICEntity> artist, NSString *name) {
-		NSUInteger playcount = [weakSelf playcountForArtist:artist withName:name];
-		if (playcount == 1) {
-			return [NSString stringWithFormat:@"%lu Play", (unsigned long)playcount];
+		NSUInteger charcount = [weakSelf playcountForArtist:artist withName:name];
+		if (charcount == 1) {
+			return [NSString stringWithFormat:@"%lu Character", (unsigned long)charcount];
 		} else {
-			return [NSString stringWithFormat:@"%lu Plays", (unsigned long)playcount];
+			return [NSString stringWithFormat:@"%lu Characters", (unsigned long)charcount];
 		}
 	};
 }
