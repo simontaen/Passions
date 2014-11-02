@@ -189,7 +189,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 {
 	NSArray *index = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M",
 					   @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", @"#"];
-	NSMutableDictionary *mutableSections = [[NSMutableDictionary alloc] initWithCapacity:index.count];
+	NSMutableDictionary *mutableSections = [NSMutableDictionary dictionaryWithCapacity:index.count];
 	
 	for (id artist in self.artists) {
 		NSString *name = [self nameForArtist:artist];

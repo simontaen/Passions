@@ -70,7 +70,7 @@
 + (void)_setupForPlaycountAccess
 {
 	NSArray *artistsByName = [MPMediaItemCollection PAS_artistsOrderedByName];
-	NSMutableDictionary* artistPlaycounts = [[NSMutableDictionary alloc] initWithCapacity:artistsByName.count];
+	NSMutableDictionary* artistPlaycounts = [NSMutableDictionary dictionaryWithCapacity:artistsByName.count];
 	
 	NSArray *artistsByPlaycount = [artistsByName sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
 		NSString *obj1Name = [obj1 PAS_artistName];

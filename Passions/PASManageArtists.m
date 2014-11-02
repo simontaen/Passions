@@ -78,7 +78,7 @@
 	self.favArtists = favArtists ? [NSMutableArray arrayWithArray:favArtists] : [NSMutableArray array];
 	_originalFavArtists = [NSArray arrayWithArray:favArtists];
 	
-	self.favArtistNames = [[NSMutableArray alloc] initWithCapacity:favArtists.count];
+	self.favArtistNames = [NSMutableArray arrayWithCapacity:favArtists.count];
 	for (PASArtist *artist in favArtists) {
 		[self.favArtistNames addObject:artist.name];
 	}
