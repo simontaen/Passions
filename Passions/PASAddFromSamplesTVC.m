@@ -26,9 +26,9 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 @property (nonatomic, assign) PASAddArtistsSortOrder selectedSortOrder;
 
 // Accessors that know which sort order is used and cache the results
-@property (nonatomic, strong, readonly) NSArray *artists; // of the appropriate object
-@property (nonatomic, strong, readonly) NSArray *sectionIndex; // NSString
-@property (nonatomic, strong, readonly) NSDictionary *sections; // NSString -> NSMutableArray ( "C" -> @["Artist1", "Artist2"] )
+@property (nonatomic, strong, readonly) NSArray *_artistsShorthand; // of the appropriate object
+@property (nonatomic, strong, readonly) NSArray *_sectionIndexShorthand; // NSString
+@property (nonatomic, strong, readonly) NSDictionary *_sectionsShorthand; // NSString -> NSMutableArray ( "C" -> @["Artist1", "Artist2"] )
 
 @property (nonatomic, strong) NSArray *cachedArtistsOrderedByName;
 @property (nonatomic, strong) NSArray *cachedAlphabeticalSectionIndex;
@@ -95,16 +95,16 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	return _sampleArtists;
 }
 
-- (NSArray *)artists
+- (NSArray *)_artistsShorthand
 {
 	switch (self.selectedSortOrder) {
 		case PASAddArtistsSortOrderAlphabetical:
-			if (!self.cachedArtistsOrderedByName) {
+			if (!self.cachedArtistsOrderedByName || self.cachedArtistsOrderedByName.count == 0) {
 				self.cachedArtistsOrderedByName = [self artistsOrderedByName];
 			}
 			return self.cachedArtistsOrderedByName;
 		default:
-			if (!self.cachedArtistsOrderedByPlaycount) {
+			if (!self.cachedArtistsOrderedByPlaycount || self.cachedArtistsOrderedByPlaycount.count == 0) {
 				self.cachedArtistsOrderedByPlaycount = [self artistsOrderedByPlaycount];
 			}
 			return self.cachedArtistsOrderedByPlaycount;
@@ -134,16 +134,16 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	}];
 }
 
-- (NSArray *)sectionIndex
+- (NSArray *)_sectionIndexShorthand
 {
 	switch (self.selectedSortOrder) {
 		case PASAddArtistsSortOrderAlphabetical:
-			if (!self.cachedAlphabeticalSectionIndex) {
+			if (!self.cachedAlphabeticalSectionIndex || self.cachedAlphabeticalSectionIndex.count == 0) {
 				self.cachedAlphabeticalSectionIndex = [self _alphabeticalSectionIndex];
 			}
 			return self.cachedAlphabeticalSectionIndex;
 		default:
-			if (!self.cachedPlaycountSectionIndex) {
+			if (!self.cachedPlaycountSectionIndex || self.cachedPlaycountSectionIndex.count == 0) {
 				self.cachedPlaycountSectionIndex = [self _playcountSectionIndex];
 			}
 			return self.cachedPlaycountSectionIndex;
@@ -152,7 +152,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (NSArray *)_alphabeticalSectionIndex
 {
-	NSMutableArray *array = [[self.sections allKeys] mutableCopy];
+	NSMutableArray *array = [[self._sectionsShorthand allKeys] mutableCopy];
 	BOOL containsNonAlphabetic = [array containsObject:@"#"];
 	if (containsNonAlphabetic) {
 		[array removeObject:@"#"];
@@ -169,16 +169,16 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	return @[kPASPlaycountSectionIndex];
 }
 
-- (NSDictionary *)sections
+- (NSDictionary *)_sectionsShorthand
 {
 	switch (self.selectedSortOrder) {
 		case PASAddArtistsSortOrderAlphabetical:
-			if (!self.cachedAlphabeticalSections) {
+			if (!self.cachedAlphabeticalSections || self.cachedAlphabeticalSections.count == 0) {
 				self.cachedAlphabeticalSections = [self _alphabeticalSections];
 			}
 			return self.cachedAlphabeticalSections;
 		default:
-			if (!self.cachedPlaycountSections) {
+			if (!self.cachedPlaycountSections || self.cachedPlaycountSections.count == 0) {
 				self.cachedPlaycountSections = [self _playcountSections];
 			}
 			return self.cachedPlaycountSections;
@@ -191,7 +191,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 					   @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", @"#"];
 	NSMutableDictionary *mutableSections = [NSMutableDictionary dictionaryWithCapacity:index.count];
 	
-	for (id artist in self.artists) {
+	for (id artist in self._artistsShorthand) {
 		NSString *name = [self nameForArtist:artist];
 		NSString *firstChar = [[name substringToIndex:1] uppercaseString];
 		
@@ -213,8 +213,8 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (NSDictionary *)_playcountSections
 {
-	NSAssert(self.artists, @"Can't have nil artists");
-	return @{ kPASPlaycountSectionIndex : self.artists };
+	NSAssert(self._artistsShorthand, @"Can't have nil artists");
+	return @{ kPASPlaycountSectionIndex : self._artistsShorthand };
 }
 
 #pragma mark - Subclassing
@@ -277,7 +277,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.sections[self.sectionIndex[section]] count];
+    return [self._sectionsShorthand[self._sectionIndexShorthand[section]] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -298,14 +298,14 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return self.sectionIndex.count;
+	return self._sectionIndexShorthand.count;
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
 	switch (self.selectedSortOrder) {
 		case PASAddArtistsSortOrderAlphabetical:
-			return self.sectionIndex;
+			return self._sectionIndexShorthand;
 		default:
 			return nil;
 	}
@@ -334,7 +334,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	view.backgroundColor = [UIColor whiteColor];
  
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width, kPASSectionHeaderHeight)];
-	label.text = self.sectionIndex[section];
+	label.text = self._sectionIndexShorthand[section];
 	label.textColor = [UIColor darkTextColor];
 	[view addSubview:label];
  
@@ -439,7 +439,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (id)_artistForIndexPath:(NSIndexPath *)indexPath
 {
-	return self.sections[self.sectionIndex[indexPath.section]][indexPath.row];
+	return self._sectionsShorthand[self._sectionIndexShorthand[indexPath.section]][indexPath.row];
 }
 
 - (void)_refreshUI
