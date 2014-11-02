@@ -147,7 +147,8 @@
 {
 	self.spotifyLoginButton.userInteractionEnabled = NO;
 	NSURL *loginPageURL = [[SPTAuth defaultInstance] loginURLForClientId:kPASSpotifyClientId
-													 declaredRedirectURL:[PASResources	spotifyCallbackUri]];
+													 declaredRedirectURL:[PASResources	spotifyCallbackUri]
+																  scopes:@[SPTAuthUserLibraryRead]];
 	[[UIApplication sharedApplication] openURL:loginPageURL];
 }
 
