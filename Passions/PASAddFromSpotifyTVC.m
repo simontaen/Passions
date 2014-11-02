@@ -16,7 +16,8 @@
 @property (nonatomic, strong) SPTSession *session;
 
 @property (nonatomic, copy) void (^savedTracksForUserCallback)(NSError *error, id object);
-@property (nonatomic, strong) NSMutableDictionary *artists; // of NSString -> SPTPartialArtist (ArtistName -> Object)
+@property (nonatomic, strong) NSMutableDictionary *artists; // of NSString (artistName) -> SPTPartialArtist
+@property (nonatomic, strong) NSMutableDictionary *artistsTracks; // of NSString (artistName) -> NSMutableArray of SPTSavedTrack
 
 @property (nonatomic, strong) dispatch_queue_t artistsQ;
 @property (nonatomic, strong) NSMutableArray *artistsInProgress;
@@ -107,10 +108,10 @@
 
 - (NSArray *)artistsOrderedByName
 {
-	NSArray *sortedKeys = [[self.artists allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-	NSMutableArray *sortedArtists = [NSMutableArray arrayWithCapacity:sortedKeys.count];
+	NSArray *nameSortedKeys = [[self.artists allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+	NSMutableArray *sortedArtists = [NSMutableArray arrayWithCapacity:nameSortedKeys.count];
 	
-	for (NSString *key in sortedKeys) {
+	for (NSString *key in nameSortedKeys) {
 		[sortedArtists addObject:self.artists[key]];
 	}
 	
@@ -119,7 +120,27 @@
 
 - (NSArray *)artistsOrderedByPlaycount
 {
-	return [self artistsOrderedByName];
+	NSArray *trackcountSortedKeys = [[self.artistsTracks allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+		NSMutableArray *obj1Tracks = self.artistsTracks[obj1];
+		NSMutableArray *obj2Tracks = self.artistsTracks[obj2];
+		
+		NSInteger result = obj1Tracks.count - obj2Tracks.count;
+		
+		if (result > 0) {
+			return NSOrderedAscending;
+		} else if (result < 0) {
+			return NSOrderedDescending;
+		}
+		return NSOrderedSame;
+	}];
+	
+	NSMutableArray *sortedArtists = [NSMutableArray arrayWithCapacity:trackcountSortedKeys.count];
+	
+	for (NSString *key in trackcountSortedKeys) {
+		[sortedArtists addObject:self.artists[key]];
+	}
+	
+	return sortedArtists;
 }
 
 - (NSString *)nameForArtist:(id)artist
@@ -131,10 +152,26 @@
 - (NSUInteger)playcountForArtist:(id)artist withName:(NSString *)name
 {
 	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
-	return ((SPTArtist *)artist).name.length;
+	return [self.artistsTracks[name] count];
 }
 
 #pragma mark - Spotify Data Fetching
+
+- (void)cacheTrack:(SPTSavedTrack *)track forArtists:(NSArray *)artists
+{
+	for (SPTPartialArtist *artist in artists) {
+		NSString *artistName = artist.name;
+		
+		NSMutableArray *tracks = self.artistsTracks[artistName];
+		
+		if (!tracks) {
+			self.artistsTracks[artistName] = [NSMutableArray array];
+			tracks = self.artistsTracks[artistName];
+		}
+		
+		[tracks addObject:track];
+	}
+}
 
 - (void)cacheArtistsFromArray:(NSArray *)artists
 {
@@ -184,17 +221,8 @@
 -(void)fetchSpotifyArtists
 {
 	[self.refreshControl beginRefreshing];
-	NSLog(@"Authentication successfull, loading data");
 	self.artists = [NSMutableDictionary dictionary];
-	
-	void (^trackListPageProcessor)(SPTListPage *list) = ^void(SPTListPage *list) {
-		
-		for (SPTSavedTrack *track in [list items]) {
-			[self cacheArtistsFromArray:track.artists];
-		}
-	
-	};
-	
+	self.artistsTracks = [NSMutableDictionary dictionary];
 	__weak typeof(self) weakSelf = self;
 	
 	// the block to recursivly fetch all tracks
@@ -203,19 +231,22 @@
 			SPTListPage *list = (SPTListPage *)object;
 			
 			if ([list hasNextPage]) {
-				weakSelf.fetchedAllArtists = NO;
 				[list requestNextPageWithSession:weakSelf.session callback:weakSelf.savedTracksForUserCallback];
 			} else {
 				weakSelf.fetchedAllArtists = YES;
 			}
 			
-			trackListPageProcessor(list);
+			for (SPTSavedTrack *track in [list items]) {
+				[weakSelf cacheArtistsFromArray:track.artists];
+				[weakSelf cacheTrack:track forArtists:track.artists];
+			}
 			
 		} else {
 			NSLog(@"%@", error);
 		}
 	};
 
+	self.fetchedAllArtists = NO;
 	[SPTRequest savedTracksForUserInSession:self.session callback:self.savedTracksForUserCallback];
 }
 
