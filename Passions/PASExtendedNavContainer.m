@@ -74,6 +74,9 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 	self.segmentedControl.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
 	self.segmentedControl.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
 	[self.segmentedControl addTarget:self.addTvc action:@selector(segmentChanged:) forControlEvents:UIControlEventValueChanged];
+	for (int i = 0; i < [self.segmentedControl numberOfSegments]; i++) {
+		[self.segmentedControl setTitle:[self.addTvc sortOrderDescription:[self.addTvc sortOrderForIndex:i]] forSegmentAtIndex:i];
+	}
 	
 	// add the child view controller
 	[self.addTvc.tableView setTranslatesAutoresizingMaskIntoConstraints:YES];

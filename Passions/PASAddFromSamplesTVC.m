@@ -15,14 +15,10 @@
 #import "PASManageArtists.h"
 #import "UIColor+Utils.h"
 
-typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
-	PASAddArtistsSortOrderAlphabetical,
-	PASAddArtistsSortOrderByPlaycount
-};
-
 @interface PASAddFromSamplesTVC ()
 
 #pragma mark - Sections
+// Current Sort order
 @property (nonatomic, assign) PASAddArtistsSortOrder selectedSortOrder;
 
 // Accessors that know which sort order is used and cache the results
@@ -241,6 +237,16 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	return [UIColor defaultTintColor];
 }
 
+- (NSString *)sortOrderDescription:(PASAddArtistsSortOrder)sortOrder
+{
+	switch (sortOrder) {
+		case PASAddArtistsSortOrderAlphabetical:
+			return @"alphabetical";
+		default:
+			return @"by playcount";
+	}
+}
+
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
@@ -397,16 +403,19 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 #pragma mark - Ordering, UISegmentedControl Action
 
-- (IBAction)segmentChanged:(UISegmentedControl *)sender
+- (PASAddArtistsSortOrder)sortOrderForIndex:(NSInteger)idx
 {
-	switch ([sender selectedSegmentIndex]) {
+	switch (idx) {
 		case 0:
-			self.selectedSortOrder = PASAddArtistsSortOrderAlphabetical;
-			break;
+			return PASAddArtistsSortOrderAlphabetical;
 		default:
-			self.selectedSortOrder = PASAddArtistsSortOrderByPlaycount;
-			break;
+			 return PASAddArtistsSortOrderByPlaycount;
 	}
+}
+
+- (IBAction)segmentChanged:(UISegmentedControl *)segmentedControl
+{
+	self.selectedSortOrder = [self sortOrderForIndex:[segmentedControl selectedSegmentIndex]];
 	
 	[self _refreshUI];
 }

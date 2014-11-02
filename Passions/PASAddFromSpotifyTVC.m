@@ -160,6 +160,16 @@
 	return ((SPTArtist *)artist).name;
 }
 
+- (NSString *)sortOrderDescription:(PASAddArtistsSortOrder)sortOrder
+{
+	switch (sortOrder) {
+		case PASAddArtistsSortOrderByPlaycount:
+			return @"by trackcount";
+		default:
+			return [super sortOrderDescription:sortOrder];
+	}
+}
+
 #pragma mark - Spotify Data Fetching
 
 - (void)cacheTrack:(SPTSavedTrack *)track forArtists:(NSArray *)artists

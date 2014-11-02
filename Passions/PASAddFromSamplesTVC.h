@@ -9,11 +9,20 @@
 @import UIKit;
 #import "PASArtistTVCell.h"
 
+typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
+	PASAddArtistsSortOrderAlphabetical,
+	PASAddArtistsSortOrderByPlaycount
+};
+
 // Listens for kPASSetFavArtists Notifications to receive already favorited Artists
 @interface PASAddFromSamplesTVC : UITableViewController
 
 // Formatting Blocks
 @property (nonatomic, copy) NSString * (^detailTextBlock)(id<FICEntity> artist, NSString *name);
+
+
+// Mapping an index, usually from a UISegmentedControl, to a sort order.
+- (PASAddArtistsSortOrder)sortOrderForIndex:(NSInteger)idx;
 
 // When returning to the presenting Vc
 - (BOOL)didEditArtists;
@@ -26,6 +35,7 @@
 - (NSArray *)artistsOrderedByName; // of the appropriate object
 - (NSArray *)artistsOrderedByPlaycount; // of the appropriate object
 - (UIColor *)chosenTintColor;
+- (NSString *)sortOrderDescription:(PASAddArtistsSortOrder)sortOrder;
 
 // called during cell config
 - (NSString *)nameForArtist:(id)artist;
