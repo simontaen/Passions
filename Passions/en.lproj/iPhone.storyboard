@@ -18,16 +18,7 @@
                             <outlet property="delegate" destination="E2G-RX-2YE" id="9Lj-5q-aF3"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="vNY-MB-Kos">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="twI-2l-I0I">
-                            <connections>
-                                <segue destination="cma-Wh-Sq8" kind="modal" identifier="kPASSetFavArtists" modalTransitionStyle="coverVertical" id="rsj-DE-e4c"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="5PX-as-Gq4">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </refreshControl>
+                    <navigationItem key="navigationItem" id="vNY-MB-Kos"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G6R-0w-a0i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -224,7 +215,7 @@
         <!--Navigation Controller-->
         <scene sceneID="8Rl-lo-BUx">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cma-Wh-Sq8" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MyPVCNavVc" automaticallyAdjustsScrollViewInsets="NO" id="cma-Wh-Sq8" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tEk-Wc-Xd7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

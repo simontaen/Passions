@@ -15,7 +15,7 @@
 #import "UIColor+Utils.h"
 
 @interface PASFavArtistsTVC()
-
+@property (nonatomic, strong) UIViewController *addVcContainer;
 @end
 
 @implementation PASFavArtistsTVC
@@ -45,6 +45,14 @@
 	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9 alpha:1.0];
 	self.navigationController.navigationBar.barTintColor = [UIColor defaultNavBarTintColor];
 	
+	// Setup navigationBar
+	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+																		  target:self
+																		  action:@selector(addButtonTapped:)];
+	self.navigationItem.rightBarButtonItem = rbbi;
+	
+	self.addVcContainer = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPVCNavVc"];
+
 	// TableView Properties
 	self.tableView.separatorInset = UIEdgeInsetsMake(0, kPASSizeArtistThumbnailSmall + 4, 0, 0);
 	self.tableView.separatorColor = [UIColor tableViewSeparatorColor];
@@ -153,14 +161,12 @@
 	[self loadObjects];
 }
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (IBAction)addButtonTapped:(UIBarButtonItem *)sender
 {
-	if ([segue.identifier isEqualToString:kPASSetFavArtists]) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:kPASSetFavArtists
-															object:self
-														  userInfo:@{ kPASSetFavArtists : self.objects }];
-	}
+	[[NSNotificationCenter defaultCenter] postNotificationName:kPASSetFavArtists
+														object:self
+													  userInfo:@{ kPASSetFavArtists : self.objects }];
+	[self presentViewController:self.addVcContainer animated:YES completion:nil];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
