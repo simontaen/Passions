@@ -156,7 +156,7 @@
 
 - (NSString *)nameForArtist:(id)artist
 {
-	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
+	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([PASAddFromSpotifyTVC class]), NSStringFromClass([artist class]));
 	return ((SPTArtist *)artist).name;
 }
 
@@ -268,7 +268,7 @@
 
 - (NSUInteger)_trackcountForArtist:(id)artist withName:(NSString *)name
 {
-	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
+	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([PASAddFromSpotifyTVC class]), NSStringFromClass([artist class]));
 	return [self.artistsTracks[name] count];
 }
 

@@ -222,13 +222,13 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (NSString *)nameForArtist:(id)artist
 {
-	NSAssert([artist isKindOfClass:[NSString class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
+	NSAssert([artist isKindOfClass:[NSString class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([PASAddFromSamplesTVC class]), NSStringFromClass([artist class]));
 	return artist;
 }
 
 - (NSUInteger)playcountForArtist:(id)artist withName:(NSString *)name
 {
-	NSAssert([artist isKindOfClass:[NSString class]], @"%@ cannot get playcount for artists of class %@", NSStringFromClass([self class]), NSStringFromClass([artist class]));
+	NSAssert([artist isKindOfClass:[NSString class]], @"%@ cannot get playcount for artists of class %@", NSStringFromClass([PASAddFromSamplesTVC class]), NSStringFromClass([artist class]));
 	return name.length;
 }
 

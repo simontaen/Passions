@@ -26,7 +26,7 @@
 
 - (void)showArtist:(id<FICEntity>)artist withName:(NSString *)name andDetailTextBlock:(NSString * (^)(id<FICEntity> artist, NSString *name))block
 {
-	NSAssert([artist conformsToProtocol:@protocol(FICEntity)], @"%@ cannot handle artists of class %@, must conform to %@", NSStringFromClass([self class]), NSStringFromClass([artist class]), NSStringFromProtocol(@protocol(FICEntity)));
+	NSAssert([artist conformsToProtocol:@protocol(FICEntity)], @"%@ cannot handle artists of class %@, must conform to %@", NSStringFromClass([PASArtistTVCell class]), NSStringFromClass([artist class]), NSStringFromProtocol(@protocol(FICEntity)));
 	
 	if (artist != self.entity) {
 		// only update cell if entity has actually changed
