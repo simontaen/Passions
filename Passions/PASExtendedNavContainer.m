@@ -10,6 +10,7 @@
 #import "PASAddFromMusicTVC.h"
 #import "PASAddFromSpotifyTVC.h"
 #import "UIColor+Utils.h"
+#import "MPMediaItemCollection+SourceImage.h"
 
 CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 
@@ -35,19 +36,23 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 {
 	BOOL isSimulator = [[UIDevice currentDevice].model containsString:@"Simulator"];
 	
+	if (![MPMediaItemCollection PAS_usesMusicApp] || isSimulator) {
+		switch (index) {
+			case 0:
+				return [[PASAddFromSpotifyTVC alloc] initWithNibName:nil bundle:nil];
+			case 1:
+				return [[PASAddFromSamplesTVC alloc] initWithNibName:nil bundle:nil];
+			default:
+				return [[PASAddFromMusicTVC alloc] initWithNibName:nil bundle:nil];
+		}
+	}
+	
 	switch (index) {
 		case 0:
-			if (isSimulator) {
-				return [[PASAddFromSpotifyTVC alloc] initWithNibName:nil bundle:nil];
-			} else {
-				return [[PASAddFromMusicTVC alloc] initWithNibName:nil bundle:nil];
-			}
+			// switch here
+			return [[PASAddFromMusicTVC alloc] initWithNibName:nil bundle:nil];
 		case 1:
-			if (isSimulator) {
-				return [[PASAddFromMusicTVC alloc] initWithNibName:nil bundle:nil];
-			} else {
-				return [[PASAddFromSpotifyTVC alloc] initWithNibName:nil bundle:nil];
-			}
+			return [[PASAddFromSpotifyTVC alloc] initWithNibName:nil bundle:nil];
 		default:
 			return [[PASAddFromSamplesTVC alloc] initWithNibName:nil bundle:nil];
 	}

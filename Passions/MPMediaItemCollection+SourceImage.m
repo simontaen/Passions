@@ -21,6 +21,17 @@
 
 #pragma mark - Passions
 
++ (BOOL)PAS_usesMusicApp
+{
+	NSArray *artists = [self PAS_artistsOrderedByPlaycount];
+	
+	if (artists.count < 5 && [[artists firstObject] PAS_playcount] < 7) {
+		return NO;
+	} else {
+		return YES;
+	}
+}
+
 + (NSArray *)PAS_artistsOrderedByName
 {
 	id obj = objc_getAssociatedObject(self, @selector(PAS_artistsOrderedByName));

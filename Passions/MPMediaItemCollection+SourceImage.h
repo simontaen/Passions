@@ -13,6 +13,7 @@
 // it's a lote more than just SourceImage
 @interface MPMediaItemCollection (SourceImage) <PASSourceImage>
 
++ (BOOL)PAS_usesMusicApp;
 + (NSArray *)PAS_artistsOrderedByName; // of MPMediaItemCollection
 + (NSArray *)PAS_artistsOrderedByPlaycount; // of MPMediaItemCollection
 + (NSUInteger)PAS_playcountForArtistWithName:(NSString *)artistName;

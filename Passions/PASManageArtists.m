@@ -8,7 +8,6 @@
 
 #import "PASManageArtists.h"
 #import "PASArtist.h"
-#import "MPMediaItem+Passions.h"
 #import "MPMediaItemCollection+SourceImage.h"
 
 @interface PASManageArtists()
@@ -172,7 +171,7 @@
 		[self passFavArtists:@[]];
 	}
 	
-	if (topArtists.count < 5 && [[topArtists firstObject] PAS_playcount] < 7) {
+	if (![MPMediaItemCollection PAS_usesMusicApp]) {
 		NSLog(@"The user doesn't seem to use the Music App");
 		// still send the notification
 		[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists object:nil];
