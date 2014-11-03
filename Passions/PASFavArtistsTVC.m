@@ -51,6 +51,7 @@
 																		  action:@selector(addButtonTapped:)];
 	self.navigationItem.rightBarButtonItem = rbbi;
 	
+	// instantiate the container so it can prepare caches
 	self.addVcContainer = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPVCNavVc"];
 
 	// TableView Properties
