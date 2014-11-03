@@ -48,6 +48,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## PageViewController Container
 * flickering when the transition gets aborted
+* Tapping the pageControl does NOT result in walking through the pages in a circle
 
 ## Cells
 
