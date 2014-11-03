@@ -28,6 +28,7 @@
 
 - (PASExtendedNavContainer *)_viewControllerAtIndex:(NSUInteger)index
 {
+	// TODO: don't make this static, it does not need to be now as PASMyPVC is retained by it's presenter!
 	static NSMutableArray *viewControllers;
 	if (!viewControllers) viewControllers = [NSMutableArray arrayWithCapacity:3];
 	

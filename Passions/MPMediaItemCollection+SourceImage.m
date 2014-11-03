@@ -15,6 +15,7 @@
 
 // http://oleb.net/blog/2011/05/faking-ivars-in-objc-categories-with-associative-references/
 // http://nshipster.com/associated-objects/
+// TODO: techically the Artists Ordered By Name or playcount don't need to be an associative reference!
 
 @implementation MPMediaItemCollection (SourceImage)
 
