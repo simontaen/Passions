@@ -243,7 +243,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 		case PASAddArtistsSortOrderAlphabetical:
 			return @"alphabetical";
 		default:
-			return @"by name lenght ;)";
+			return @"by name length ;)";
 	}
 }
 
