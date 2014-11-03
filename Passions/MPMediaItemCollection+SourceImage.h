@@ -9,6 +9,8 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "PASSourceImage.h"
 
+// TODO: this should get renamed and probably be split up
+// it's a lote more than just SourceImage
 @interface MPMediaItemCollection (SourceImage) <PASSourceImage>
 
 + (NSArray *)PAS_artistsOrderedByName; // of MPMediaItemCollection
