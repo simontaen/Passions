@@ -57,3 +57,10 @@
 - (void)pageViewController:(PASPageViewController *)pageViewController setupInteractionControllerForTransitionFromViewController:(UIViewController *)fromViewController
 		  toViewController:(UIViewController *)toViewController;
 @end
+
+@protocol PASPageViewControllerChildDelegate <NSObject>
+// Allows dynamic configuration of the PageViewController based on the currently selected child
+// By convention this is to be implemented by the Child View Controllers
+@optional
+- (UIColor *)PAS_currentPageIndicatorTintColor;
+@end

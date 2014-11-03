@@ -89,4 +89,11 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 	[self.addTvc didMoveToParentViewController:self];
 }
 
+#pragma mark - PASPageViewControllerChildDelegate
+
+- (UIColor *)PAS_currentPageIndicatorTintColor
+{
+	return [self.addTvc chosenTintColor];
+}
+
 @end

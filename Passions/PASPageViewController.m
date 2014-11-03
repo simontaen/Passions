@@ -201,6 +201,11 @@
 //			for (UIGestureRecognizer *gr in newVc.view.gestureRecognizers) {
 //				[self addGestureRecognizerToContainerView:gr];
 //			}
+			if ([newVc conformsToProtocol:@protocol(PASPageViewControllerChildDelegate)]) {
+				if ([newVc respondsToSelector:@selector(PAS_currentPageIndicatorTintColor)]) {
+					self.pageControlView.currentPageIndicatorTintColor = [(id<PASPageViewControllerChildDelegate>)newVc PAS_currentPageIndicatorTintColor];
+				}
+			}
 			self.pageControlView.currentPage = self.selectedViewControllerIndex;
 		}
 	}];

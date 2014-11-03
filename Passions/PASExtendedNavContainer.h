@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "PASAddFromSamplesTVC.h"
+#import "PASPageViewController.h"
 
 extern CGFloat const kPASSegmentBarHeight;
 
-@interface PASExtendedNavContainer : UIViewController
+@interface PASExtendedNavContainer : UIViewController <PASPageViewControllerChildDelegate>
 
 // the contained view controller
 @property (nonatomic, strong) PASAddFromSamplesTVC *addTvc;
