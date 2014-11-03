@@ -113,27 +113,23 @@
                                         </pageControl>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="Hqp-c6-UbU" secondAttribute="bottom" id="48t-ph-ZU2"/>
-                                        <constraint firstItem="Hqp-c6-UbU" firstAttribute="leading" secondItem="sNZ-x9-1vr" secondAttribute="leading" id="LXl-ce-Vzu"/>
-                                        <constraint firstItem="Hqp-c6-UbU" firstAttribute="top" secondItem="sNZ-x9-1vr" secondAttribute="top" id="eer-9O-Fyk"/>
-                                        <constraint firstAttribute="trailing" secondItem="Hqp-c6-UbU" secondAttribute="trailing" id="gCu-5g-LLJ"/>
+                                        <constraint firstAttribute="bottom" secondItem="Hqp-c6-UbU" secondAttribute="bottom" id="GFs-cD-bsR"/>
+                                        <constraint firstAttribute="trailing" secondItem="Hqp-c6-UbU" secondAttribute="trailing" id="S2K-T6-jNi"/>
+                                        <constraint firstItem="Hqp-c6-UbU" firstAttribute="top" secondItem="sNZ-x9-1vr" secondAttribute="top" id="VMR-Dl-NXY"/>
+                                        <constraint firstItem="Hqp-c6-UbU" firstAttribute="leading" secondItem="sNZ-x9-1vr" secondAttribute="leading" id="y3O-hQ-nk4"/>
                                     </constraints>
                                 </view>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="39" id="6z4-5M-58Y"/>
-                                    <constraint firstAttribute="height" constant="37" id="TJJ-qW-7iG"/>
-                                </constraints>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="nV8-be-jlz" firstAttribute="bottom" secondItem="F0Z-Rn-fQT" secondAttribute="top" id="1ZE-km-N39"/>
+                            <constraint firstAttribute="centerX" secondItem="DuD-2Q-3uf" secondAttribute="centerX" id="21p-yr-35f"/>
                             <constraint firstAttribute="trailing" secondItem="nV8-be-jlz" secondAttribute="trailing" id="2bd-a0-IdK"/>
                             <constraint firstAttribute="bottom" secondItem="DuD-2Q-3uf" secondAttribute="bottom" constant="20" symbolic="YES" id="BQ9-aB-6Bj"/>
                             <constraint firstItem="nV8-be-jlz" firstAttribute="top" secondItem="BmN-Sr-kUY" secondAttribute="top" id="Fyi-3U-cYr"/>
                             <constraint firstItem="nV8-be-jlz" firstAttribute="leading" secondItem="BmN-Sr-kUY" secondAttribute="leading" id="YQ8-eA-8Cr"/>
-                            <constraint firstItem="DuD-2Q-3uf" firstAttribute="centerX" secondItem="nV8-be-jlz" secondAttribute="centerX" id="eV4-2j-eO8"/>
                         </constraints>
                     </view>
                     <connections>
@@ -279,10 +275,6 @@
                                         <constraint firstAttribute="bottom" secondItem="h33-et-a6p" secondAttribute="bottom" id="xpu-Xd-GD1"/>
                                     </constraints>
                                 </view>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="39" id="CEb-5r-9dL"/>
-                                    <constraint firstAttribute="height" constant="37" id="Hvt-LO-h36"/>
-                                </constraints>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                         </subviews>
@@ -290,8 +282,8 @@
                         <constraints>
                             <constraint firstItem="NHS-fa-06s" firstAttribute="leading" secondItem="2qx-rw-YzV" secondAttribute="leading" id="2ye-H1-i2L"/>
                             <constraint firstItem="NHS-fa-06s" firstAttribute="top" secondItem="2qx-rw-YzV" secondAttribute="top" constant="64" id="9QC-uu-8vv"/>
-                            <constraint firstItem="dZm-sb-76a" firstAttribute="centerX" secondItem="NHS-fa-06s" secondAttribute="centerX" id="Npb-0s-2Mg"/>
                             <constraint firstAttribute="bottom" secondItem="dZm-sb-76a" secondAttribute="bottom" constant="20" symbolic="YES" id="NtZ-Lq-WfO"/>
+                            <constraint firstAttribute="centerX" secondItem="dZm-sb-76a" secondAttribute="centerX" id="Uc9-UH-Ajf"/>
                             <constraint firstAttribute="trailing" secondItem="NHS-fa-06s" secondAttribute="trailing" id="UdA-Cx-YYr"/>
                             <constraint firstItem="NHS-fa-06s" firstAttribute="bottom" secondItem="ej5-tW-wMl" secondAttribute="top" id="Y3y-EM-NPa"/>
                         </constraints>

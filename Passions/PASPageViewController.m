@@ -84,28 +84,21 @@
 	self.blurView.layer.cornerRadius = 7.5;
 	self.blurView.layer.masksToBounds = YES;
 	
+	// resize to fit number of pages
+	NSLayoutConstraint *cn = [NSLayoutConstraint constraintWithItem:self.blurView
+														  attribute:NSLayoutAttributeWidth
+														  relatedBy:NSLayoutRelationEqual
+															 toItem:nil
+														  attribute:NSLayoutAttributeNotAnAttribute
+														 multiplier:1
+														   constant:([self.pageControlView sizeForNumberOfPages:self.viewControllers.count].width + 16)];
+	[self.blurView addConstraint:cn];
+	
 	
 	[self _setupDelegateForTransitionsBetweenViewControllers:self.viewControllers];
 	
 	// call the setter to make sure the view is swapped
 	self.selectedViewController = (self.selectedViewController ?: [self.viewControllers firstObject]);
-}
-
-- (void)viewDidLayoutSubviews
-{
-	[super viewDidLayoutSubviews];
-	
-	// custom layout for pageControlView
-//	CGRect newFrame = self.pageControlView.frame;
-//	CGFloat heightAdj = (int)(newFrame.size.height * 0.189);
-//	CGFloat widthAdj = (int)(newFrame.size.width);
-//	
-//	newFrame.size.width += widthAdj;
-//	newFrame.size.height -= heightAdj;
-//	
-//	newFrame.origin.x -= (widthAdj/2);
-//	newFrame.origin.y += (heightAdj/2);
-//	self.pageControlView.frame = newFrame;
 }
 
 #pragma mark - Accessors
