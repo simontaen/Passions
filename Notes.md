@@ -54,11 +54,9 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## Adding
 * Faving an artist in spotify only shows the faved artist in music after dismissing and showing music again
-* Order depending on how they use the Music app
 * No refresh control on spotify (make sure the refresh is solid).
 
 ## Fav Artists
-* Initialize the MPMediaQuery earlier (in Fav Artists), it takes too long when pressing on the + sign (actually for all other ones)
 
 ## Timeline
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
