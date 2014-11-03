@@ -40,10 +40,11 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Artist fetch could fail and the iTunes Id would be empty then.
 
 ## General Functionality
+* Assertion failures when using the PVC (see crash logs)
+* Show an [MPProgressHUD](https://github.com/jdg/MBProgressHUD) when waiting is expected and unavoidable (think about earlier caching if you must)
 
 ### Spotify Integration
-* Fall back to Spotify if Music App does not seem to be used.
-* Add Spotify as a Source (lot's of people don't use Music anymore)
+* Fall back to Spotify if Music App does not seem to be used. But to what Artists? Current Top Artists?
 
 ## PageViewController Container
 * flickering when the transition gets aborted
@@ -51,8 +52,12 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Cells
 
 ## Adding
+* Faving an artist in spotify only shows the faved artist in music after dismissing and showing music again
+* Order depending on how they use the Music app
+* No refresh control on spotify (make sure the refresh is solid).
 
 ## Fav Artists
+* Initialize the MPMediaQuery earlier (in Fav Artists), it takes too long when pressing on the + sign (actually for all other ones)
 
 ## Timeline
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
