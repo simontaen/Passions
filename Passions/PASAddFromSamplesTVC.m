@@ -265,6 +265,9 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	// default is alphabetical
 	self.selectedSortOrder = PASAddArtistsSortOrderAlphabetical;
 	
+	// kick off the caches
+	[self prepareCaches];
+	
 	// Detail Text Formatting
 	__weak typeof(self) weakSelf = self;
 	self.detailTextBlock = ^NSString *(id<FICEntity> artist, NSString *name) {
@@ -275,6 +278,15 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 			return [NSString stringWithFormat:@"%lu Characters", (unsigned long)charcount];
 		}
 	};
+}
+
+- (void)prepareCaches
+{
+	// Accessing both section indizes will setup everything
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+		[self _alphabeticalSectionIndex];
+		[self _playcountSectionIndex];
+	});
 }
 
 - (void)_receiveFavArtists:(NSArray *)favArtists

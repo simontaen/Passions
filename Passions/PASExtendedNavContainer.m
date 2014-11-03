@@ -34,28 +34,38 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 
 - (PASAddFromSamplesTVC *)_viewControllerAtIndex:(NSUInteger)index
 {
+	PASAddFromSamplesTVC *result;
 	BOOL isSimulator = [[UIDevice currentDevice].model containsString:@"Simulator"];
 	
 	if (![MPMediaItemCollection PAS_usesMusicApp] || isSimulator) {
 		switch (index) {
 			case 0:
-				return [[PASAddFromSpotifyTVC alloc] initWithNibName:nil bundle:nil];
+				result = [[PASAddFromSpotifyTVC alloc] initWithNibName:nil bundle:nil];
+				break;
 			case 1:
-				return [[PASAddFromSamplesTVC alloc] initWithNibName:nil bundle:nil];
+				result = [[PASAddFromSamplesTVC alloc] initWithNibName:nil bundle:nil];
+				break;
 			default:
-				return [[PASAddFromMusicTVC alloc] initWithNibName:nil bundle:nil];
+				result = [[PASAddFromMusicTVC alloc] initWithNibName:nil bundle:nil];
+		}
+	} else {
+		switch (index) {
+			case 0:
+				// switch here
+				result = [[PASAddFromMusicTVC alloc] initWithNibName:nil bundle:nil];
+				break;
+			case 1:
+				result = [[PASAddFromSpotifyTVC alloc] initWithNibName:nil bundle:nil];
+				break;
+			default:
+				result = [[PASAddFromSamplesTVC alloc] initWithNibName:nil bundle:nil];
 		}
 	}
 	
-	switch (index) {
-		case 0:
-			// switch here
-			return [[PASAddFromMusicTVC alloc] initWithNibName:nil bundle:nil];
-		case 1:
-			return [[PASAddFromSpotifyTVC alloc] initWithNibName:nil bundle:nil];
-		default:
-			return [[PASAddFromSamplesTVC alloc] initWithNibName:nil bundle:nil];
+	if (index == 1) {
+		[result prepareCaches];
 	}
+	return result;
 }
 
 #pragma mark - Accessors
