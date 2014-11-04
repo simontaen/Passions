@@ -8,7 +8,8 @@
 
 #import "PASManageArtists.h"
 #import "PASArtist.h"
-#import "MPMediaItemCollection+SourceImage.h"
+#import "PASMediaQueryAccessor.h"
+#import "MPMediaItemCollection+Passions.h"
 
 @interface PASManageArtists()
 
@@ -164,14 +165,14 @@
 
 - (void)addInitialFavArtists
 {
-	NSArray *topArtists = [MPMediaItemCollection PAS_artistsOrderedByPlaycount];
+	NSArray *topArtists = [PASMediaQueryAccessor sharedMngr].artistCollectionsOrderedByPlaycount;
 	
 	// this is called from the app delegate, make sure you're properly set up
 	if (!self.originalFavArtists) {
 		[self passFavArtists:@[]];
 	}
 	
-	if (![MPMediaItemCollection PAS_usesMusicApp]) {
+	if (![PASMediaQueryAccessor sharedMngr].usesMusicApp) {
 		NSLog(@"The user doesn't seem to use the Music App");
 		// still send the notification
 		[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists object:nil];

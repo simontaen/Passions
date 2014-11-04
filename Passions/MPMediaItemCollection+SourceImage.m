@@ -10,7 +10,6 @@
 #import "FICUtilities.h"
 #import "UIImage+Utils.h"
 #import <objc/runtime.h>
-#import "MPMediaItem+Passions.h"
 
 @implementation MPMediaItemCollection (SourceImage)
 
@@ -56,13 +55,6 @@
 - (FICEntityImageDrawingBlock)drawingBlockForImage:(UIImage *)image withFormatName:(NSString *)formatName
 {
 	return [UIImage drawingBlockForImage:image withFormatName:formatName];
-}
-
-#pragma mark - Passions
-
-- (NSString *)PAS_artistName
-{
-	return [[self representativeItem] PAS_artistName];
 }
 
 @end

@@ -7,6 +7,18 @@
 //
 
 #import "PASMediaQueryAccessor.h"
+#import <MediaPlayer/MediaPlayer.h>
+#import "MPMediaItem+Passions.h"
+#import "MPMediaItemCollection+Passions.h"
+
+@interface PASMediaQueryAccessor()
+@property (nonatomic, strong, readwrite) NSArray *artistCollectionsOrderedByName; // of MPMediaItemCollection
+@property (nonatomic, strong, readwrite) NSArray *artistCollectionsOrderedByPlaycount; // of MPMediaItemCollection
+
+@property (nonatomic, strong) NSDictionary *artistPlaycounts; // NSString (artistName) -> NSNumber (Playcount)
+@property (nonatomic, strong) NSNumber *usesMusicAppNumber;
+
+@end
 
 @implementation PASMediaQueryAccessor
 
@@ -31,21 +43,24 @@
 
 #pragma mark - Public Methods
 
-+ (BOOL)PAS_usesMusicApp
+- (BOOL)usesMusicApp
 {
-	NSArray *artists = [self PAS_artistsOrderedByPlaycount];
-	
-	if (artists.count < 5 && [[artists firstObject] PAS_playcount] < 7) {
-		return NO;
-	} else {
-		return YES;
+	if (!self.usesMusicAppNumber) {
+		NSArray *artistCollections = [self artistCollectionsOrderedByPlaycount];
+		NSNumber *highestPlaycount = self.artistPlaycounts[[[artistCollections firstObject] PAS_artistName]];
+		
+		if (artistCollections.count < 5 && [highestPlaycount integerValue] < 7) {
+			self.usesMusicAppNumber = @NO;
+		} else {
+			self.usesMusicAppNumber = @YES;
+		}
 	}
+	return [self.usesMusicAppNumber boolValue];
 }
 
-+ (NSArray *)PAS_artistsOrderedByName
+- (NSArray *)artistCollectionsOrderedByName
 {
-	id obj = objc_getAssociatedObject(self, @selector(PAS_artistsOrderedByName));
-	if (!obj) {
+	if (!_artistCollectionsOrderedByName) {
 		NSMutableSet *filterPredicates = [[NSMutableSet alloc] initWithCapacity:1];
 		
 		MPMediaPropertyPredicate *mediaType = [MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithInteger:MPMediaTypeMusic|MPMediaTypeMusicVideo]
@@ -61,48 +76,41 @@
 			// preventing a potential crash
 			collections = [NSArray array];
 		}
-		
-		objc_setAssociatedObject(self, @selector(PAS_artistsOrderedByName), collections, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-		return collections;
+		_artistCollectionsOrderedByName = collections;
 	}
-	return obj;
+	return _artistCollectionsOrderedByName;
 }
 
-+ (NSArray *)PAS_artistsOrderedByPlaycount
+- (NSArray *)artistCollectionsOrderedByPlaycount
 {
-	id obj = objc_getAssociatedObject(self, @selector(PAS_artistsOrderedByPlaycount));
-	if (!obj) {
-		[MPMediaItemCollection _setupForPlaycountAccess];
-		return objc_getAssociatedObject(self, @selector(PAS_artistsOrderedByPlaycount));
+	if (_artistCollectionsOrderedByPlaycount) {
+		[self prepareCaches];
 	}
-	return obj;
+	return _artistCollectionsOrderedByPlaycount;
 }
 
-+ (NSUInteger)PAS_playcountForArtistWithName:(NSString *)artistName
+- (NSUInteger)playcountForArtistWithName:(NSString *)artistName
 {
-	id obj = objc_getAssociatedObject(self, @selector(PAS_playcountForArtistWithName:));
-	if (!obj) {
-		[MPMediaItemCollection _setupForPlaycountAccess];
-		obj = objc_getAssociatedObject(self, @selector(PAS_playcountForArtistWithName:));
+	if (!self.artistPlaycounts) {
+		[self prepareCaches];
 	}
-	NSNumber *playcount = ((NSDictionary *)obj)[artistName];
+	NSNumber *playcount = self.artistPlaycounts[artistName];
 	return [playcount unsignedIntegerValue];
 }
 
-+ (void)_setupForPlaycountAccess
+- (void)prepareCaches
 {
-	NSArray *artistsByName = [MPMediaItemCollection PAS_artistsOrderedByName];
-	NSMutableDictionary* artistPlaycounts = [NSMutableDictionary dictionaryWithCapacity:artistsByName.count];
+	NSMutableDictionary* artistPlaycounts = [NSMutableDictionary dictionaryWithCapacity:self.artistCollectionsOrderedByName.count];
 	
-	NSArray *artistsByPlaycount = [artistsByName sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+	self.artistCollectionsOrderedByPlaycount = [self.artistCollectionsOrderedByName sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
 		NSString *obj1Name = [obj1 PAS_artistName];
 		if (!artistPlaycounts[obj1Name]) {
-			artistPlaycounts[obj1Name] = [self _playcountOfCollection:obj1];
+			artistPlaycounts[obj1Name] = [PASMediaQueryAccessor _playcountOfArtistCollection:obj1];
 		}
 		
 		NSString *obj2Name = [obj2 PAS_artistName];
 		if (!artistPlaycounts[obj2Name]) {
-			artistPlaycounts[obj2Name] = [self _playcountOfCollection:obj2];
+			artistPlaycounts[obj2Name] = [PASMediaQueryAccessor _playcountOfArtistCollection:obj2];
 		}
 		
 		NSInteger result = [(NSNumber *)artistPlaycounts[obj1Name] unsignedIntegerValue] - [(NSNumber *)artistPlaycounts[obj2Name] unsignedIntegerValue];
@@ -115,11 +123,13 @@
 		return NSOrderedSame;
 	}];
 	
-	objc_setAssociatedObject(self, @selector(PAS_artistsOrderedByPlaycount), artistsByPlaycount, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-	objc_setAssociatedObject(self, @selector(PAS_playcountForArtistWithName:), artistPlaycounts, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+	self.artistPlaycounts = [NSDictionary dictionaryWithDictionary:artistPlaycounts];
 }
 
-+ (NSNumber *)_playcountOfCollection:(MPMediaItemCollection *)collection
+#pragma mark - Private Static Helpers
+
+// This is only intended to be used once per Collection
++ (NSNumber *)_playcountOfArtistCollection:(MPMediaItemCollection *)collection
 {
 	NSUInteger playcount = 0;
 	for (MPMediaItem *item in [collection items]) {
@@ -127,9 +137,5 @@
 	}
 	return [NSNumber numberWithInteger:playcount];
 }
-
-
-
-
 
 @end

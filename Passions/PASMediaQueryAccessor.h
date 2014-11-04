@@ -12,9 +12,11 @@
 
 + (instancetype) sharedMngr;
 
-- (BOOL)PAS_usesMusicApp;
-- (NSArray *)artistsOrderedByName; // of MPMediaItemCollection
-- (NSArray *)artistsOrderedByPlaycount; // of MPMediaItemCollection
+@property (nonatomic, strong, readonly) NSArray *artistCollectionsOrderedByName; // of MPMediaItemCollection
+@property (nonatomic, strong, readonly) NSArray *artistCollectionsOrderedByPlaycount; // of MPMediaItemCollection
+@property (nonatomic, assign, readonly) BOOL usesMusicApp;
+
 - (NSUInteger)playcountForArtistWithName:(NSString *)artistName;
+- (void)prepareCaches;
 
 @end

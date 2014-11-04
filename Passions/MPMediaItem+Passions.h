@@ -10,7 +10,7 @@
 
 @interface MPMediaItem (Passions)
 
-- (NSString *)PAS_artistName;
+- (NSString *)PAS_artistItemName;
 - (NSUInteger)PAS_playcount;
 
 @end

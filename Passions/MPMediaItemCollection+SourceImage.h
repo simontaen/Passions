@@ -11,6 +11,4 @@
 
 @interface MPMediaItemCollection (SourceImage) <PASSourceImage>
 
-- (NSString *)PAS_artistName;
-
 @end

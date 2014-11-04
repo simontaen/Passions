@@ -16,7 +16,7 @@
 #import "UIDevice-Hardware.h"
 #import "PASManageArtists.h"
 #import <Spotify/Spotify.h>
-#import "MPMediaItemCollection+SourceImage.h"
+#import "PASMediaQueryAccessor.h"
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
@@ -272,7 +272,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 {
 	// this initializes the most expensive tasks
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		[MPMediaItemCollection PAS_usesMusicApp];
+		[[PASMediaQueryAccessor sharedMngr] prepareCaches];
 	});
 }
 

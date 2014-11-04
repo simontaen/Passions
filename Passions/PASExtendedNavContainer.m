@@ -10,7 +10,7 @@
 #import "PASAddFromMusicTVC.h"
 #import "PASAddFromSpotifyTVC.h"
 #import "UIColor+Utils.h"
-#import "MPMediaItemCollection+SourceImage.h"
+#import "PASMediaQueryAccessor.h"
 
 CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 
@@ -37,7 +37,7 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 	PASAddFromSamplesTVC *result;
 	BOOL isSimulator = [[UIDevice currentDevice].model containsString:@"Simulator"];
 	
-	if (![MPMediaItemCollection PAS_usesMusicApp] || isSimulator) {
+	if (![PASMediaQueryAccessor sharedMngr].usesMusicApp || isSimulator) {
 		switch (index) {
 			case 0:
 				result = [[PASAddFromSpotifyTVC alloc] initWithNibName:nil bundle:nil];

@@ -8,8 +8,9 @@
 
 @import MediaPlayer;
 #import "PASAddFromMusicTVC.h"
-#import "MPMediaItemCollection+SourceImage.h"
 #import "MPMediaItem+Passions.h"
+#import "MPMediaItemCollection+Passions.h"
+#import "PASMediaQueryAccessor.h"
 #import "UIColor+Utils.h"
 
 @interface PASAddFromMusicTVC ()
@@ -54,12 +55,12 @@
 
 - (NSArray *)artistsOrderedByName
 {
-	return [MPMediaItemCollection PAS_artistsOrderedByName];
+	return [PASMediaQueryAccessor sharedMngr].artistCollectionsOrderedByName;
 }
 
 - (NSArray *)artistsOrderedByPlaycount
 {
-	return [MPMediaItemCollection PAS_artistsOrderedByPlaycount];
+	return [PASMediaQueryAccessor sharedMngr].artistCollectionsOrderedByPlaycount;
 }
 
 - (NSString *)nameForArtist:(id)artist
@@ -71,7 +72,7 @@
 - (NSUInteger)playcountForArtist:(id)artist withName:(NSString *)name
 {
 	NSAssert([artist isKindOfClass:[MPMediaItemCollection class]], @"%@ cannot get playcount for artists of class %@", NSStringFromClass([PASAddFromMusicTVC class]), NSStringFromClass([artist class]));
-	return [MPMediaItemCollection PAS_playcountForArtistWithName:name];
+	return [[PASMediaQueryAccessor sharedMngr] playcountForArtistWithName:name];
 }
 
 - (NSString *)sortOrderDescription:(PASAddArtistsSortOrder)sortOrder

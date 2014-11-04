@@ -17,6 +17,7 @@
 		F424EE3819B657120010B3E1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F424EE3719B657120010B3E1 /* Security.framework */; };
 		F4256EC419EB1AAB00B9D95B /* PASExtendedNavContainer.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4256EC319EB1AAB00B9D95B /* PASExtendedNavContainer.xib */; };
 		F43402101A09883400A3D83C /* PASMediaQueryAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F434020F1A09883400A3D83C /* PASMediaQueryAccessor.m */; };
+		F43402131A09951200A3D83C /* MPMediaItemCollection+Passions.m in Sources */ = {isa = PBXBuildFile; fileRef = F43402121A09951200A3D83C /* MPMediaItemCollection+Passions.m */; };
 		F438692A17A55CE6000B7817 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */; };
 		F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */; };
 		F44E4BB619FE4FB900764532 /* UIColor+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = F44E4BB519FE4FB900764532 /* UIColor+Utils.m */; };
@@ -76,6 +77,8 @@
 		F4256EC319EB1AAB00B9D95B /* PASExtendedNavContainer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PASExtendedNavContainer.xib; sourceTree = "<group>"; };
 		F434020E1A09883400A3D83C /* PASMediaQueryAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASMediaQueryAccessor.h; sourceTree = "<group>"; };
 		F434020F1A09883400A3D83C /* PASMediaQueryAccessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASMediaQueryAccessor.m; sourceTree = "<group>"; };
+		F43402111A09951200A3D83C /* MPMediaItemCollection+Passions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MPMediaItemCollection+Passions.h"; sourceTree = "<group>"; };
+		F43402121A09951200A3D83C /* MPMediaItemCollection+Passions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MPMediaItemCollection+Passions.m"; sourceTree = "<group>"; };
 		F44E4BB419FE4FB900764532 /* UIColor+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Utils.h"; sourceTree = "<group>"; };
 		F44E4BB519FE4FB900764532 /* UIColor+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Utils.m"; sourceTree = "<group>"; };
 		F450FCE519F7044D00DF2D38 /* PASManageArtists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASManageArtists.h; sourceTree = "<group>"; };
@@ -332,6 +335,8 @@
 				F434020F1A09883400A3D83C /* PASMediaQueryAccessor.m */,
 				F4DEE4F219FBA808007EBB6A /* MPMediaItem+Passions.h */,
 				F4DEE4F319FBA808007EBB6A /* MPMediaItem+Passions.m */,
+				F43402111A09951200A3D83C /* MPMediaItemCollection+Passions.h */,
+				F43402121A09951200A3D83C /* MPMediaItemCollection+Passions.m */,
 			);
 			name = "Add Artist Helpers";
 			sourceTree = "<group>";
@@ -526,6 +531,7 @@
 				F4BB585E19E9F23600221912 /* PASMyPVC.m in Sources */,
 				F4D6C4B319BFAB8800465781 /* PASArtistTVCell.m in Sources */,
 				F4B8B0B919E060AD00E1064D /* CPFQueryCollectionViewController.m in Sources */,
+				F43402131A09951200A3D83C /* MPMediaItemCollection+Passions.m in Sources */,
 				F476F0EB19B8D8EA00185544 /* PASArtist.m in Sources */,
 				F4A779841793113E00C770B9 /* main.m in Sources */,
 				F49618B319BC4CAC00B4F3FE /* PASTimelineCVC.m in Sources */,

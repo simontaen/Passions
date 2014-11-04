@@ -10,7 +10,7 @@
 
 @implementation MPMediaItem (Passions)
 
-- (NSString *)PAS_artistName
+- (NSString *)PAS_artistItemName
 {
 	return [self valueForProperty:MPMediaItemPropertyArtist];
 }
