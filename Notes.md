@@ -54,7 +54,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## Adding
 * Faving an artist in spotify only shows the faved artist in music after dismissing and showing music again
-* No refresh control on spotify (make sure the refresh is solid).
 
 ## Fav Artists
 

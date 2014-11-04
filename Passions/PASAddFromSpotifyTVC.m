@@ -19,9 +19,13 @@
 @property (nonatomic, strong) NSMutableDictionary *artists; // of NSString (artistName) -> SPTPartialArtist
 @property (nonatomic, strong) NSMutableDictionary *artistsTracks; // of NSString (artistName) -> NSMutableArray of SPTSavedTrack
 
+// Helpers for the fetching process
 @property (nonatomic, strong) dispatch_queue_t artistsQ;
 @property (nonatomic, strong) NSMutableArray *artistsInProgress;
 @property (nonatomic, assign) BOOL fetchedAllArtists;
+
+// Main indicator if fetching is done
+@property (nonatomic, assign) BOOL isFetching;
 @end
 
 @implementation PASAddFromSpotifyTVC
@@ -64,17 +68,32 @@
 	[super viewDidLoad];
 	
 	// TableView Setup
-	self.refreshControl = [[UIRefreshControl alloc] init];
-	[self.refreshControl addTarget:self action:@selector(_fetchSpotifyArtists) forControlEvents:UIControlEventValueChanged];
+//	self.refreshControl = [[UIRefreshControl alloc] init];
+//	[self.refreshControl addTarget:self action:@selector(_fetchSpotifyArtists) forControlEvents:UIControlEventValueChanged];
 	
 	[self _validateSessionWithCallback:^{
-		[self fetchedAllArtists];
+		if (![self _cachesAreReady] && !self.isFetching) {
+			[self _fetchSpotifyArtists];
+		} else {
+			// everything seems to be ready
+			[self.tableView reloadData];
+		}
 	}];
 }
 
 - (void)prepareCaches
 {
-	NSLog(@"Spotify is preparing caches");
+	// Caches are updated when new data is received
+	[self _validateSessionWithCallback:^{
+		if (![self _cachesAreReady] && !self.isFetching) {
+			[self _fetchSpotifyArtists];
+		}
+	}];
+}
+
+- (BOOL)_cachesAreReady
+{
+	return self.artists && self.artistsInProgress.count == 0 && self.fetchedAllArtists;
 }
 
 #pragma mark - Accessors
@@ -196,8 +215,13 @@
 					[self.artistsInProgress removeObject:artistName];
 					if (self.artistsInProgress.count == 0 && self.fetchedAllArtists) {
 						dispatch_async(dispatch_get_main_queue(), ^{
-							[self.tableView reloadData];
-							[self.refreshControl endRefreshing];
+							if ([self isViewLoaded]) {
+								// TODO: this would be nice with a callback from _fetchSpotifyArtists
+								// we could have been called when unloaded
+								[self.tableView reloadData];
+							}
+							//[self.refreshControl endRefreshing]; // uncomment this and viewDidLoad will get calles!
+							self.isFetching = NO;
 						});
 					}
 				});
@@ -208,7 +232,8 @@
 
 -(void)_fetchSpotifyArtists
 {
-	[self.refreshControl beginRefreshing];
+	self.isFetching = YES;
+	//[self.refreshControl beginRefreshing]; // uncomment this and viewDidLoad will get calles!
 	self.artists = [NSMutableDictionary dictionary];
 	self.artistsTracks = [NSMutableDictionary dictionary];
 	__weak typeof(self) weakSelf = self;
