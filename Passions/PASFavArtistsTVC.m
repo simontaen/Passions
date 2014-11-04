@@ -34,9 +34,6 @@
 	self.paginationEnabled = NO;
 	self.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
 
-	// instantiate the container so it can prepare caches
-	self.addVcContainer = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPVCNavVc"];
-	
 	// Setup navigationBar
 	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
 																		  target:self
@@ -71,6 +68,9 @@
 {
 	[super viewDidLoad];
 
+	// instantiate the container so it can prepare caches
+	self.addVcContainer = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPVCNavVc"];
+	
 	// layout and look
 	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9 alpha:1.0];
 	self.navigationController.navigationBar.barTintColor = [UIColor defaultNavBarTintColor];
