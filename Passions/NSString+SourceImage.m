@@ -26,7 +26,8 @@
 
 - (NSString *)UUID
 {
-    // http://oleb.net/blog/2011/05/faking-ivars-in-objc-categories-with-associative-references/
+	// http://oleb.net/blog/2011/05/faking-ivars-in-objc-categories-with-associative-references/
+	// http://nshipster.com/associated-objects/
 	id obj = objc_getAssociatedObject(self, @selector(UUID));
 	if (!obj) {
 		CFUUIDBytes UUIDBytes = FICUUIDBytesFromMD5HashOfString(self);
