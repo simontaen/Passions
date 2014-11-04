@@ -74,7 +74,7 @@
 	[self _validateSessionWithCallback:^{
 		if (![self _cachesAreReady] && !self.isFetching) {
 			[self _fetchSpotifyArtists];
-		} else {
+		} else if (!self.isFetching) {
 			// everything seems to be ready
 			[self.tableView reloadData];
 		}
