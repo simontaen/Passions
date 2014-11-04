@@ -65,7 +65,7 @@
 	
 	// TableView Setup
 	self.refreshControl = [[UIRefreshControl alloc] init];
-	[self.refreshControl addTarget:self action:@selector(fetchSpotifyArtists) forControlEvents:UIControlEventValueChanged];
+	[self.refreshControl addTarget:self action:@selector(_fetchSpotifyArtists) forControlEvents:UIControlEventValueChanged];
 	
 	[self _validateSessionWithCallback:^{
 		[self fetchedAllArtists];
@@ -146,7 +146,7 @@
 
 #pragma mark - Spotify Data Fetching
 
-- (void)cacheTrack:(SPTSavedTrack *)track forArtists:(NSArray *)artists
+- (void)_cacheTrack:(SPTSavedTrack *)track forArtists:(NSArray *)artists
 {
 	for (SPTPartialArtist *artist in artists) {
 		NSString *artistName = artist.name;
@@ -162,7 +162,7 @@
 	}
 }
 
-- (void)cacheArtistsFromArray:(NSArray *)artists
+- (void)_cacheArtistsFromArray:(NSArray *)artists
 {
 	for (SPTPartialArtist *artist in artists) {
 		NSString *artistName = artist.name;
@@ -206,7 +206,7 @@
 	}
 }
 
--(void)fetchSpotifyArtists
+-(void)_fetchSpotifyArtists
 {
 	[self.refreshControl beginRefreshing];
 	self.artists = [NSMutableDictionary dictionary];
@@ -225,8 +225,8 @@
 			}
 			
 			for (SPTSavedTrack *track in [list items]) {
-				[weakSelf cacheArtistsFromArray:track.artists];
-				[weakSelf cacheTrack:track forArtists:track.artists];
+				[weakSelf _cacheArtistsFromArray:track.artists];
+				[weakSelf _cacheTrack:track forArtists:track.artists];
 			}
 			
 		} else {
@@ -248,7 +248,7 @@
 
 #pragma mark - Spotify Auth
 
-- (void)showLoginWithSpotify
+- (void)_showLoginWithSpotify
 {
 	UIImage *img = [PASResources spotifyLogin];
 	CGFloat imgWidth = img.size.width;
@@ -259,12 +259,12 @@
 	self.spotifyLoginButton = btn;
 	
 	[btn setImage:img forState:UIControlStateNormal];
-	[btn addTarget:self action:@selector(loginWithSpotify:) forControlEvents:UIControlEventTouchUpInside];
+	[btn addTarget:self action:@selector(_loginWithSpotify:) forControlEvents:UIControlEventTouchUpInside];
 	
 	[self.view addSubview:btn];
 }
 
--(IBAction)loginWithSpotify:(UIButton *)sender
+-(IBAction)_loginWithSpotify:(UIButton *)sender
 {
 	self.spotifyLoginButton.userInteractionEnabled = NO;
 	NSURL *loginPageURL = [[SPTAuth defaultInstance] loginURLForClientId:kPASSpotifyClientId
@@ -312,7 +312,7 @@
 																												   callback:authCallback];
 													  }];
 		// show login button
-		[self showLoginWithSpotify];
+		[self _showLoginWithSpotify];
 		
 	} else if (![self.session isValid]) {
 		// Renew the session
