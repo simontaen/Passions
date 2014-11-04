@@ -16,6 +16,7 @@
 		F424EE3419B656FA0010B3E1 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F424EE3319B656FA0010B3E1 /* libz.dylib */; };
 		F424EE3819B657120010B3E1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F424EE3719B657120010B3E1 /* Security.framework */; };
 		F4256EC419EB1AAB00B9D95B /* PASExtendedNavContainer.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4256EC319EB1AAB00B9D95B /* PASExtendedNavContainer.xib */; };
+		F43402101A09883400A3D83C /* PASMediaQueryAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F434020F1A09883400A3D83C /* PASMediaQueryAccessor.m */; };
 		F438692A17A55CE6000B7817 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */; };
 		F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */; };
 		F44E4BB619FE4FB900764532 /* UIColor+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = F44E4BB519FE4FB900764532 /* UIColor+Utils.m */; };
@@ -73,6 +74,8 @@
 		F424EE3319B656FA0010B3E1 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		F424EE3719B657120010B3E1 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		F4256EC319EB1AAB00B9D95B /* PASExtendedNavContainer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PASExtendedNavContainer.xib; sourceTree = "<group>"; };
+		F434020E1A09883400A3D83C /* PASMediaQueryAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASMediaQueryAccessor.h; sourceTree = "<group>"; };
+		F434020F1A09883400A3D83C /* PASMediaQueryAccessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASMediaQueryAccessor.m; sourceTree = "<group>"; };
 		F44E4BB419FE4FB900764532 /* UIColor+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Utils.h"; sourceTree = "<group>"; };
 		F44E4BB519FE4FB900764532 /* UIColor+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Utils.m"; sourceTree = "<group>"; };
 		F450FCE519F7044D00DF2D38 /* PASManageArtists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASManageArtists.h; sourceTree = "<group>"; };
@@ -325,6 +328,8 @@
 			children = (
 				F450FCE519F7044D00DF2D38 /* PASManageArtists.h */,
 				F450FCE619F7044D00DF2D38 /* PASManageArtists.m */,
+				F434020E1A09883400A3D83C /* PASMediaQueryAccessor.h */,
+				F434020F1A09883400A3D83C /* PASMediaQueryAccessor.m */,
 				F4DEE4F219FBA808007EBB6A /* MPMediaItem+Passions.h */,
 				F4DEE4F319FBA808007EBB6A /* MPMediaItem+Passions.m */,
 			);
@@ -542,6 +547,7 @@
 				F4DEE4F419FBA808007EBB6A /* MPMediaItem+Passions.m in Sources */,
 				F4A814B919E20CBD003879B0 /* NSString+SourceImage.m in Sources */,
 				F44E4BB619FE4FB900764532 /* UIColor+Utils.m in Sources */,
+				F43402101A09883400A3D83C /* PASMediaQueryAccessor.m in Sources */,
 				F4694D6419B74ABB00D12576 /* PASFavArtistsTVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
