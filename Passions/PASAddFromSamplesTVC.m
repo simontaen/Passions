@@ -63,6 +63,17 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	// Prepare the Manager
 	[PASManageArtists sharedMngr];
 	
+	// Detail Text Formatting
+	__weak typeof(self) weakSelf = self;
+	self.detailTextBlock = ^NSString *(id<FICEntity> artist, NSString *name) {
+		NSUInteger charcount = [weakSelf playcountForArtist:artist withName:name];
+		if (charcount == 1) {
+			return [NSString stringWithFormat:@"%lu Character", (unsigned long)charcount];
+		} else {
+			return [NSString stringWithFormat:@"%lu Characters", (unsigned long)charcount];
+		}
+	};
+	
 	return self;
 }
 
@@ -267,17 +278,6 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	
 	// kick off the caches
 	[self prepareCaches];
-	
-	// Detail Text Formatting
-	__weak typeof(self) weakSelf = self;
-	self.detailTextBlock = ^NSString *(id<FICEntity> artist, NSString *name) {
-		NSUInteger charcount = [weakSelf playcountForArtist:artist withName:name];
-		if (charcount == 1) {
-			return [NSString stringWithFormat:@"%lu Character", (unsigned long)charcount];
-		} else {
-			return [NSString stringWithFormat:@"%lu Characters", (unsigned long)charcount];
-		}
-	};
 }
 
 - (void)prepareCaches

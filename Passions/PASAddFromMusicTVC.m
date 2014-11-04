@@ -17,18 +17,12 @@
 
 @implementation PASAddFromMusicTVC
 
-#pragma mark - Accessors
+#pragma mark - Init
 
-- (NSString *)title
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-	return @"My Music";
-}
-
-#pragma mark - View Lifecycle
-
-- (void)viewDidLoad
-{
-	[super viewDidLoad];
+	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+	if (!self) return nil;
 	
 	// Detail Text Formatting
 	__weak typeof(self) weakSelf = self;
@@ -40,6 +34,15 @@
 			return [NSString stringWithFormat:@"%lu Plays", (unsigned long)playcount];
 		}
 	};
+
+	return self;
+}
+
+#pragma mark - Accessors
+
+- (NSString *)title
+{
+	return @"My Music";
 }
 
 #pragma mark - Subclassing

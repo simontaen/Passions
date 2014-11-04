@@ -26,25 +26,46 @@
 
 @implementation PASAddFromSpotifyTVC
 
-#pragma mark - View Lifecycle
+#pragma mark - Init
 
-- (void)viewDidLoad
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-	[super viewDidLoad];
+	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+	if (!self) return nil;
 	
 	// perpare for caching artists
 	self.artistsQ = dispatch_queue_create("artistsQ", DISPATCH_QUEUE_CONCURRENT);
 	self.artistsInProgress = [NSMutableArray array];
-	
-	// TableView Setup
-	self.refreshControl = [[UIRefreshControl alloc] init];
-	[self.refreshControl addTarget:self action:@selector(fetchSpotifyArtists) forControlEvents:UIControlEventValueChanged];
 	
 	// Try to get a stored Seesion
 	NSData *sessionData = [UICKeyChainStore dataForKey:NSStringFromClass([self class])];
 	if (sessionData) {
 		self.session = [NSKeyedUnarchiver unarchiveObjectWithData:sessionData];
 	}
+	
+	// Detail Text Formatting
+	__weak typeof(self) weakSelf = self;
+	self.detailTextBlock = ^NSString *(id<FICEntity> artist, NSString *name) {
+		NSUInteger trackcount = [weakSelf _trackcountForArtist:artist withName:name];
+		if (trackcount == 1) {
+			return [NSString stringWithFormat:@"%lu Track", (unsigned long)trackcount];
+		} else {
+			return [NSString stringWithFormat:@"%lu Tracks", (unsigned long)trackcount];
+		}
+	};
+	
+	return self;
+}
+
+#pragma mark - View Lifecycle
+
+- (void)viewDidLoad
+{
+	[super viewDidLoad];
+	
+	// TableView Setup
+	self.refreshControl = [[UIRefreshControl alloc] init];
+	[self.refreshControl addTarget:self action:@selector(fetchSpotifyArtists) forControlEvents:UIControlEventValueChanged];
 	
 	// This is the callback that'll be triggered when auth is completed (or fails).
 	SPTAuthCallback authCallback = ^(NSError *error, SPTSession *session) {
@@ -90,16 +111,6 @@
 		[self fetchSpotifyArtists];
 	}
 	
-	// Detail Text Formatting
-	__weak typeof(self) weakSelf = self;
-	self.detailTextBlock = ^NSString *(id<FICEntity> artist, NSString *name) {
-		NSUInteger trackcount = [weakSelf _trackcountForArtist:artist withName:name];
-		if (trackcount == 1) {
-			return [NSString stringWithFormat:@"%lu Track", (unsigned long)trackcount];
-		} else {
-			return [NSString stringWithFormat:@"%lu Tracks", (unsigned long)trackcount];
-		}
-	};
 }
 
 
