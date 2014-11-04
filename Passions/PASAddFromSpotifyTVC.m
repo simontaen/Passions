@@ -67,52 +67,13 @@
 	self.refreshControl = [[UIRefreshControl alloc] init];
 	[self.refreshControl addTarget:self action:@selector(fetchSpotifyArtists) forControlEvents:UIControlEventValueChanged];
 	
-	// This is the callback that'll be triggered when auth is completed (or fails).
-	SPTAuthCallback authCallback = ^(NSError *error, SPTSession *session) {
-		if (error != nil) {
-			NSLog(@"%@", error);
-			// allow more attempts
-			self.spotifyLoginButton.userInteractionEnabled = YES;
-			self.spotifyLoginButton.hidden = NO;
-			
-		} else {
-			// We are authenticated, cleanup
-			[[NSNotificationCenter defaultCenter] removeObserver:nil
-															name:kPASSpotifyClientId
-														  object:self];
-			// Persist the new session and fetch new data
-			self.session = session;
-			[self fetchSpotifyArtists];
-			NSData *sessionData = [NSKeyedArchiver archivedDataWithRootObject:self.session];
-			[UICKeyChainStore setData:sessionData forKey:NSStringFromClass([self class])];
-		}
-	};
-	
-	if (!self.session) {
-		// No valid session found, first register for nofications when done
-		[[NSNotificationCenter defaultCenter] addObserverForName:kPASSpotifyClientId
-														  object:nil queue:nil
-													  usingBlock:^(NSNotification *note) {
-														  id obj = note.userInfo[kPASSpotifyClientId];
-														  NSAssert([obj isKindOfClass:[NSURL class]], @"kPASSpotifyClientId must carry a NSURL");
-														  self.spotifyLoginButton.hidden = YES;
-														  // The user finished the authentication in Safari, handle it
-														  [[SPTAuth defaultInstance] handleAuthCallbackWithTriggeredAuthURL:(NSURL *)obj
-																							  tokenSwapServiceEndpointAtURL:[PASResources spotifyTokenSwap]
-																												   callback:authCallback];
-													  }];
-		// show login button
-		[self showLoginWithSpotify];
-		
-	} else if (![self.session isValid]) {
-		// Renew the session
-		[[SPTAuth defaultInstance] renewSession:self.session withServiceEndpointAtURL:[PASResources spotifyTokenRefresh] callback:authCallback];
-	} else {
-		[self fetchSpotifyArtists];
-	}
-	
+	[self _validateSession];
 }
 
+- (void)prepareCaches
+{
+	NSLog(@"Spotify is preparing caches");
+}
 
 #pragma mark - Accessors
 
@@ -308,6 +269,53 @@
 													 declaredRedirectURL:[PASResources	spotifyCallbackUri]
 																  scopes:@[SPTAuthUserLibraryRead]];
 	[[UIApplication sharedApplication] openURL:loginPageURL];
+}
+
+- (void)_validateSession
+{
+	// This is the callback that'll be triggered when auth is completed (or fails).
+	SPTAuthCallback authCallback = ^(NSError *error, SPTSession *session) {
+		if (error != nil) {
+			NSLog(@"%@", error);
+			// allow more attempts
+			self.spotifyLoginButton.userInteractionEnabled = YES;
+			self.spotifyLoginButton.hidden = NO;
+			
+		} else {
+			// We are authenticated, cleanup
+			[[NSNotificationCenter defaultCenter] removeObserver:nil
+															name:kPASSpotifyClientId
+														  object:self];
+			// Persist the new session and fetch new data
+			self.session = session;
+			[self fetchSpotifyArtists];
+			NSData *sessionData = [NSKeyedArchiver archivedDataWithRootObject:self.session];
+			[UICKeyChainStore setData:sessionData forKey:NSStringFromClass([self class])];
+		}
+	};
+	
+	if (!self.session) {
+		// No valid session found, first register for nofications when done
+		[[NSNotificationCenter defaultCenter] addObserverForName:kPASSpotifyClientId
+														  object:nil queue:nil
+													  usingBlock:^(NSNotification *note) {
+														  id obj = note.userInfo[kPASSpotifyClientId];
+														  NSAssert([obj isKindOfClass:[NSURL class]], @"kPASSpotifyClientId must carry a NSURL");
+														  self.spotifyLoginButton.hidden = YES;
+														  // The user finished the authentication in Safari, handle it
+														  [[SPTAuth defaultInstance] handleAuthCallbackWithTriggeredAuthURL:(NSURL *)obj
+																							  tokenSwapServiceEndpointAtURL:[PASResources spotifyTokenSwap]
+																												   callback:authCallback];
+													  }];
+		// show login button
+		[self showLoginWithSpotify];
+		
+	} else if (![self.session isValid]) {
+		// Renew the session
+		[[SPTAuth defaultInstance] renewSession:self.session withServiceEndpointAtURL:[PASResources spotifyTokenRefresh] callback:authCallback];
+	} else {
+		[self fetchSpotifyArtists];
+	}
 }
 
 @end
