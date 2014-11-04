@@ -26,41 +26,29 @@
 {
 	self = [super initWithCoder:aDecoder];
 	if (!self) return nil;
+
 	self.parseClassName = [PASArtist parseClassName];
 	self.title = @"My Favorite Artists";
 	self.pullToRefreshEnabled = YES;
 	// no paging, I don't expect >200 fav artists
 	self.paginationEnabled = NO;
-	return self;
-}
-
-#pragma mark - View Lifecycle
-
-- (void)viewDidLoad
-{
-	[super viewDidLoad];
-
-	// layout and look
 	self.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
-	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9 alpha:1.0];
-	self.navigationController.navigationBar.barTintColor = [UIColor defaultNavBarTintColor];
+
+	// instantiate the container so it can prepare caches
+	self.addVcContainer = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPVCNavVc"];
 	
 	// Setup navigationBar
 	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
 																		  target:self
 																		  action:@selector(addButtonTapped:)];
 	self.navigationItem.rightBarButtonItem = rbbi;
-	
-	// instantiate the container so it can prepare caches
-	self.addVcContainer = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPVCNavVc"];
-
-	// TableView Properties
-	self.tableView.separatorInset = UIEdgeInsetsMake(0, kPASSizeArtistThumbnailSmall + 4, 0, 0);
-	self.tableView.separatorColor = [UIColor tableViewSeparatorColor];
-
-	// register the custom cell
-	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil]
-		 forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];
+#ifdef DEBUG
+	// Image Cache Reset
+	UIBarButtonItem *lbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
+																		  target:self
+																		  action:@selector(resetFastimageCache:)];
+	self.navigationItem.leftBarButtonItem = lbbi;
+#endif
 	
 	// register to get notified if fav artists have been edited
 	[[NSNotificationCenter defaultCenter] addObserverForName:kPASDidEditFavArtists
@@ -74,13 +62,26 @@
 														  [self _refreshUI];
 													  }
 												  }];
-#ifdef DEBUG
-	// Image Cache Reset
-	UIBarButtonItem *lbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
-																		  target:self
-																		  action:@selector(resetFastimageCache:)];
-	self.navigationItem.leftBarButtonItem = lbbi;
-#endif
+	return self;
+}
+
+#pragma mark - View Lifecycle
+
+- (void)viewDidLoad
+{
+	[super viewDidLoad];
+
+	// layout and look
+	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9 alpha:1.0];
+	self.navigationController.navigationBar.barTintColor = [UIColor defaultNavBarTintColor];
+	
+	// TableView Properties
+	self.tableView.separatorInset = UIEdgeInsetsMake(0, kPASSizeArtistThumbnailSmall + 4, 0, 0);
+	self.tableView.separatorColor = [UIColor tableViewSeparatorColor];
+
+	// register the custom cell
+	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil]
+		 forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];
 }
 
 - (IBAction)resetFastimageCache:(UIBarButtonItem *)sender
