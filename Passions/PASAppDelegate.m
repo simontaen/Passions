@@ -16,6 +16,7 @@
 #import "UIDevice-Hardware.h"
 #import "PASManageArtists.h"
 #import <Spotify/Spotify.h>
+#import "MPMediaItemCollection+SourceImage.h"
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
@@ -37,6 +38,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	
 	[self _setupParse];
 	[self _setupImageCache];
+	[self _setupMusicAppCache];
 	
 	if (application.applicationState != UIApplicationStateBackground) {
 		// Track an app open here if NOT from push,
@@ -262,6 +264,16 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		return YES;
 	}
 	return NO;
+}
+
+#pragma mark - Music App
+
+- (void)_setupMusicAppCache
+{
+	// this initializes the most expensive tasks
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		[MPMediaItemCollection PAS_usesMusicApp];
+	});
 }
 
 #pragma mark - Application Lifecycle
