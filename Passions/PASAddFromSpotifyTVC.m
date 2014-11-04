@@ -230,6 +230,7 @@
 	}
 }
 
+/// reloadData on tableView if view is loaded
 -(void)_fetchSpotifyArtists
 {
 	self.isFetching = YES;
