@@ -67,7 +67,9 @@
 	self.refreshControl = [[UIRefreshControl alloc] init];
 	[self.refreshControl addTarget:self action:@selector(fetchSpotifyArtists) forControlEvents:UIControlEventValueChanged];
 	
-	[self _validateSession];
+	[self _validateSessionWithCallback:^{
+		[self fetchedAllArtists];
+	}];
 }
 
 - (void)prepareCaches
@@ -271,7 +273,7 @@
 	[[UIApplication sharedApplication] openURL:loginPageURL];
 }
 
-- (void)_validateSession
+- (void)_validateSessionWithCallback:(void (^)())completion
 {
 	// This is the callback that'll be triggered when auth is completed (or fails).
 	SPTAuthCallback authCallback = ^(NSError *error, SPTSession *session) {
@@ -288,7 +290,9 @@
 														  object:self];
 			// Persist the new session and fetch new data
 			self.session = session;
-			[self fetchSpotifyArtists];
+			if (completion) {
+				completion();
+			}
 			NSData *sessionData = [NSKeyedArchiver archivedDataWithRootObject:self.session];
 			[UICKeyChainStore setData:sessionData forKey:NSStringFromClass([self class])];
 		}
@@ -313,8 +317,9 @@
 	} else if (![self.session isValid]) {
 		// Renew the session
 		[[SPTAuth defaultInstance] renewSession:self.session withServiceEndpointAtURL:[PASResources spotifyTokenRefresh] callback:authCallback];
-	} else {
-		[self fetchSpotifyArtists];
+		
+	} else if (completion) {
+		completion();
 	}
 }
 
