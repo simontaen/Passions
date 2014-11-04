@@ -62,7 +62,8 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 		}
 	}
 	
-	if (index == 1) {
+	if (index == 0) {
+		// prepare caches for the first adding TVC
 		[result prepareCaches];
 	}
 	return result;
