@@ -159,7 +159,7 @@
 												   options:NSJSONWritingPrettyPrinted error:nil];
 
 	[req setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-	[req setValue:[NSString stringWithFormat:@"%d", [body length]] forHTTPHeaderField:@"Content-Length"];
+	[req setValue:[NSString stringWithFormat:@"%tu", [body length]] forHTTPHeaderField:@"Content-Length"];
 	[req setValue:kPASParseAppId forHTTPHeaderField:@"X-Parse-Application-Id"];
 	[req setValue:kPASParseMasterKey forHTTPHeaderField:@"X-Parse-Master-Key"];
 	req.HTTPBody = body;
