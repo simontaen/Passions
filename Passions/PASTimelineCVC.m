@@ -165,6 +165,7 @@
 
 - (void)_showAlbum:(PASAlbum *)album animated:(BOOL)animated
 {
+	// self.storyboard is nil since we don't come from a Storyboard
 	PASArtistInfo *vc = (PASArtistInfo *)[self.storyboard instantiateViewControllerWithIdentifier:@"PASArtistInfo"];
 	vc.album = album;
 	
