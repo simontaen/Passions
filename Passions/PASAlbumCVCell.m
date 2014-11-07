@@ -38,7 +38,7 @@
 
 + (NSString *)reuseIdentifier
 {
-	return @"AlbumCell";
+	return @"PASAlbumCVCell";
 }
 
 @end

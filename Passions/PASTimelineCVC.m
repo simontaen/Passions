@@ -11,7 +11,7 @@
 #import "PASArtistInfo.h"
 #import "PASAlbum.h"
 
-@interface PASTimelineCVC ()
+@interface PASTimelineCVC () <UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic) UIVisualEffectView *effectView;
 @property (nonatomic, weak) IBOutlet UIButton *swipeLeftHint;
 @end
@@ -20,9 +20,9 @@
 
 #pragma mark - Init
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)init
 {
-	self = [super initWithCoder:aDecoder];
+	self = [super initWithCollectionViewLayout:[UICollectionViewFlowLayout new]];
 	if (!self) return nil;
 	
 	// Configure Parse Query
@@ -59,6 +59,10 @@
 {
 	[super viewDidLoad];
 	self.effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+	
+	// register the custom cell
+	[self.collectionView registerNib:[UINib nibWithNibName:[PASAlbumCVCell reuseIdentifier] bundle:nil]
+		  forCellWithReuseIdentifier:[PASAlbumCVCell reuseIdentifier]];
 }
 
 - (void)viewDidLayoutSubviews
@@ -128,6 +132,28 @@
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
 	return UIStatusBarStyleDefault;
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+	return CGSizeMake(160, 160);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+	return UIEdgeInsetsZero;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+	return 0;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+	return 0;
 }
 
 #pragma mark - Navigation

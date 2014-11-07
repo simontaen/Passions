@@ -40,18 +40,13 @@
 																									object:self];
 												  }];
 	// init and add the page view controllers view controllers
-	self.viewControllers = @[[self _timelineCVC], [self _favArtistsNavController]];
+	self.viewControllers = @[[PASTimelineCVC new], [self _favArtistsNavController]];
 }
 
 - (UINavigationController *)_favArtistsNavController
 {
 	// Create a nav controller to hack around the status bar problem (also creates containing view controller)
 	return [self.storyboard instantiateViewControllerWithIdentifier:@"FavArtistsNav"];
-}
-
-- (UINavigationController *)_timelineCVC
-{
-	return [self.storyboard instantiateViewControllerWithIdentifier:@"PASTimelineCVC"];
 }
 
 #pragma mark - View Lifecycle

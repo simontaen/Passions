@@ -22,6 +22,7 @@
 		F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */; };
 		F44E4BB619FE4FB900764532 /* UIColor+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = F44E4BB519FE4FB900764532 /* UIColor+Utils.m */; };
 		F450FCE719F7044D00DF2D38 /* PASManageArtists.m in Sources */ = {isa = PBXBuildFile; fileRef = F450FCE619F7044D00DF2D38 /* PASManageArtists.m */; };
+		F453BF4C1A0D4E430068FE6D /* PASAlbumCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F453BF4A1A0D4E430068FE6D /* PASAlbumCVCell.xib */; };
 		F45586551A0506C2000D5893 /* PASAddFromSpotifyTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F45586541A0506C2000D5893 /* PASAddFromSpotifyTVC.m */; };
 		F4589D3D19C240D500E17D49 /* PASPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4589D3C19C240D500E17D49 /* PASPageViewController.m */; };
 		F461C8E119EB006C0081B445 /* PASExtendedNavContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = F461C8DF19EB006C0081B445 /* PASExtendedNavContainer.m */; };
@@ -81,6 +82,7 @@
 		F44E4BB519FE4FB900764532 /* UIColor+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Utils.m"; sourceTree = "<group>"; };
 		F450FCE519F7044D00DF2D38 /* PASManageArtists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASManageArtists.h; sourceTree = "<group>"; };
 		F450FCE619F7044D00DF2D38 /* PASManageArtists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASManageArtists.m; sourceTree = "<group>"; };
+		F453BF4A1A0D4E430068FE6D /* PASAlbumCVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PASAlbumCVCell.xib; sourceTree = "<group>"; };
 		F45586531A0506C2000D5893 /* PASAddFromSpotifyTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddFromSpotifyTVC.h; sourceTree = "<group>"; };
 		F45586541A0506C2000D5893 /* PASAddFromSpotifyTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAddFromSpotifyTVC.m; sourceTree = "<group>"; };
 		F4589D3B19C240D500E17D49 /* PASPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASPageViewController.h; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 				F49618B219BC4CAC00B4F3FE /* PASTimelineCVC.m */,
 				F4B8B0B419E039EE00E1064D /* PASAlbumCVCell.h */,
 				F4B8B0B519E039EE00E1064D /* PASAlbumCVCell.m */,
+				F453BF4A1A0D4E430068FE6D /* PASAlbumCVCell.xib */,
 			);
 			name = "Album Timeline";
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				F4256EC419EB1AAB00B9D95B /* PASExtendedNavContainer.xib in Resources */,
 				F4EC62C019E66ADF009C5EF5 /* Images.xcassets in Resources */,
 				F4D6C4B419BFAB8800465781 /* PASArtistTVCell.xib in Resources */,
+				F453BF4C1A0D4E430068FE6D /* PASAlbumCVCell.xib in Resources */,
 				F4D9E94C19C39AB100B762A7 /* PASPageViewController.xib in Resources */,
 				F4A779911793113E00C770B9 /* iPhone.storyboard in Resources */,
 			);
