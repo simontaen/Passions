@@ -11,7 +11,7 @@
 #import "PASArtistInfo.h"
 #import "PASAlbum.h"
 
-@interface PASTimelineCVC () <UICollectionViewDelegateFlowLayout>
+@interface PASTimelineCVC ()
 @property (strong, nonatomic) UIVisualEffectView *effectView;
 @property (nonatomic, weak) IBOutlet UIButton *swipeLeftHint;
 @end
@@ -122,7 +122,7 @@
 	PASAlbum *album = (PASAlbum *)object;
 	PASAlbumCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[PASAlbumCVCell reuseIdentifier] forIndexPath:indexPath];
 	
-	cell.album = album;
+	[cell showAlbum:album];
 
 	return cell;
 }
@@ -138,7 +138,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-	return CGSizeMake(160, 160);
+	return CGSizeMake(self.collectionView.frame.size.width / 2, self.collectionView.frame.size.width / 2);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section

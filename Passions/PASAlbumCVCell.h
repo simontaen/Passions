@@ -8,13 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "PASAlbum.h"
+#import "PASArtist.h"
 
+// TODO: rename to PASArtworkCVCell
 @interface PASAlbumCVCell : UICollectionViewCell
 
 @property (nonatomic, strong) IBOutlet UIImageView *albumImage;
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *releaseDateBackground;
 @property (weak, nonatomic) IBOutlet UILabel *releaseDateLabel;
 
-@property (nonatomic, strong) PASAlbum *album;
+- (void)showAlbum:(PASAlbum *)album;
+- (void)showArtist:(PASArtist *)artist;
 
 + (NSString *)reuseIdentifier;
 

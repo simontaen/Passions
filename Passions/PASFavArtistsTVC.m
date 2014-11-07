@@ -11,8 +11,8 @@
 #import "PASArtist.h"
 #import "PASMyPVC.h"
 #import "FICImageCache.h"
-#import "PASArtistInfo.h"
 #import "UIColor+Utils.h"
+#import "PASArtistInfoCVC.h"
 
 @interface PASFavArtistsTVC()
 @property (nonatomic, strong) UIViewController *addVcContainer;
@@ -175,7 +175,7 @@
 {
 	PASArtist *artist = [self _artistAtIndexPath:indexPath];
 	
-	PASArtistInfo *vc = (PASArtistInfo *)[self.storyboard instantiateViewControllerWithIdentifier:@"PASArtistInfo"];
+	PASArtistInfoCVC *vc = [PASArtistInfoCVC new];
 	vc.artist = artist;
 	
 	UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:vc];

@@ -13,7 +13,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cwN-Ec-x7X">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cwN-Ec-x7X">
                         <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                     </imageView>
                     <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R79-ZT-pPB">
@@ -36,8 +36,15 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="cwN-Ec-x7X" secondAttribute="bottom" id="LQq-aN-JVl"/>
+                <constraint firstAttribute="trailing" secondItem="cwN-Ec-x7X" secondAttribute="trailing" id="UyG-5B-Y44"/>
+                <constraint firstItem="cwN-Ec-x7X" firstAttribute="top" secondItem="SJp-YA-0oW" secondAttribute="top" id="nWC-Fd-5wa"/>
+                <constraint firstItem="cwN-Ec-x7X" firstAttribute="leading" secondItem="SJp-YA-0oW" secondAttribute="leading" id="riR-Hh-D3O"/>
+            </constraints>
             <connections>
                 <outlet property="albumImage" destination="cwN-Ec-x7X" id="ekq-0z-23W"/>
+                <outlet property="releaseDateBackground" destination="R79-ZT-pPB" id="JOY-Bs-6tU"/>
                 <outlet property="releaseDateLabel" destination="oCd-hX-iec" id="Czw-ZH-7iz"/>
             </connections>
         </collectionViewCell>
