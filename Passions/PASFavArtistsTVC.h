@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 edgeguard. All rights reserved.
 //
 
-#import <Parse/Parse.h>
+#import "PFQueryTableViewController.h"
 
 /// Listens to kPASDidEditFavArtists
 @interface PASFavArtistsTVC : PFQueryTableViewController

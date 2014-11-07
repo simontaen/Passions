@@ -1,5 +1,7 @@
 source 'https://github.com/CocoaPods/Specs'
 
+# https://github.com/ParsePlatform/ParseUI-iOS
+pod 'ParseUI' # For PFQueryTableViewController
 # https://github.com/MrAlek/AWPercentDrivenInteractiveTransition
 pod 'AWPercentDrivenInteractiveTransition' # Drop in replacement for UIPercentDrivenInteractiveTransition, as it has a bug
 # https://github.com/path/FastImageCache
