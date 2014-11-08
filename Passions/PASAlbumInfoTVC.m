@@ -8,14 +8,35 @@
 
 #import "PASAlbumInfoTVC.h"
 #import "PASArtworkTVCell.h"
+#import "AJSITunesAPI.h"
 
 @interface PASAlbumInfoTVC ()
-
+@property (nonatomic, strong) NSArray *tracks; // AJSITunesResult
 @end
 
 @implementation PASAlbumInfoTVC
 
 static NSString * const kCellIdentifier = @"TrackCell";
+static NSInteger const kAddCells = 1;
+
+#pragma mark - Accessors
+
+- (void)setAlbum:(PASAlbum *)album
+{
+	if (album != _album) {
+		_album = album;
+		self.tracks = [NSArray array];
+		
+		[[AJSITunesClient sharedClient] lookupWithId:[album.iTunesId stringValue] entityType:@"song" country:nil limit:200 completion:^(NSArray *results, NSError *error) {
+			NSMutableArray *tracks = [results mutableCopy];
+			[tracks removeObject:[results firstObject]];
+			self.tracks = tracks;
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self.tableView reloadData];
+			});
+		}];
+	}
+}
 
 #pragma mark - View Lifecycle
 
@@ -61,8 +82,7 @@ static NSString * const kCellIdentifier = @"TrackCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	// Return the number of rows in the section.
-	return 10;
+	return self.tracks.count + kAddCells;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -76,7 +96,13 @@ static NSString * const kCellIdentifier = @"TrackCell";
 		return cell;
 		
 	} else {
-		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
+		NSIndexPath *newIdxPath = [self _newIdxPath:indexPath];
+		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:newIdxPath];
+		
+		AJSITunesResult *track = self.tracks[newIdxPath.row];
+		
+		cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@", track.trackNumber, track.title];
+		
 		return cell;
 	}
 }
@@ -93,6 +119,13 @@ static NSString * const kCellIdentifier = @"TrackCell";
 - (IBAction)doneButtonTapped:(UIBarButtonItem *)sender
 {
 	[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Private Methods
+
+- (NSIndexPath *)_newIdxPath:(NSIndexPath *)idxPath
+{
+	return [NSIndexPath indexPathForRow:idxPath.row - kAddCells inSection:idxPath.section];
 }
 
 @end

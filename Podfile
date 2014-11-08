@@ -14,6 +14,9 @@ pod 'UIDevice-Hardware' # Hardware properties for analytics
 pod 'GBVersionTracking' # Version and launch tracking
 # https://github.com/kishikawakatsumi/UICKeyChainStore
 pod 'UICKeyChainStore' # Easy Keychain Access
+# https://github.com/andysmart/AJS-iTunes-API
+pod 'AJSITunesAPI', :path => '/Users/simon/Documents/code/iOS/Github/AJS-iTunes-API' # iTunes API
+
 # 
-pod 'LastFmFetchr', :path => '/Users/simon/Documents/code/iOS/LastFmFetchr/'
+pod 'LastFmFetchr', :path => '/Users/simon/Documents/code/iOS/LastFmFetchr'
 pod 'SpotifySDK', :path => '/Users/simon/Documents/code/iOS/Github/ios-sdk'
