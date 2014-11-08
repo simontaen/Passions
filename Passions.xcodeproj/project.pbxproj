@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		65F86A33B682476FBAAC9AE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF473646EE4645ECB8A1B050 /* libPods.a */; };
+		F40A50F91A0E6C9F002C703C /* PASArtworkTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F40A50F71A0E6C9F002C703C /* PASArtworkTVCell.m */; };
+		F40A50FA1A0E6C9F002C703C /* PASArtworkTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F40A50F81A0E6C9F002C703C /* PASArtworkTVCell.xib */; };
 		F40BBA6B18538DAD00877D60 /* PASAddFromMusicTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F40BBA6A18538DAD00877D60 /* PASAddFromMusicTVC.m */; };
 		F40BBA6E1853908700877D60 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F40BBA6D1853908700877D60 /* MediaPlayer.framework */; };
 		F42422A519CD8FCA0097C0F1 /* PASInteractiveTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = F42422A419CD8FCA0097C0F1 /* PASInteractiveTransition.m */; };
@@ -65,6 +67,9 @@
 		32629A8CC07EC786B4B6BF2B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8074225D79F3AFFFEE8E01D6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		CF473646EE4645ECB8A1B050 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F40A50F61A0E6C9F002C703C /* PASArtworkTVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASArtworkTVCell.h; sourceTree = "<group>"; };
+		F40A50F71A0E6C9F002C703C /* PASArtworkTVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASArtworkTVCell.m; sourceTree = "<group>"; };
+		F40A50F81A0E6C9F002C703C /* PASArtworkTVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PASArtworkTVCell.xib; sourceTree = "<group>"; };
 		F40BBA6918538DAD00877D60 /* PASAddFromMusicTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddFromMusicTVC.h; sourceTree = "<group>"; };
 		F40BBA6A18538DAD00877D60 /* PASAddFromMusicTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAddFromMusicTVC.m; sourceTree = "<group>"; };
 		F40BBA6D1853908700877D60 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -310,6 +315,9 @@
 				F453BF4A1A0D4E430068FE6D /* PASArtworkCVCell.xib */,
 				F4A2AFB71A0DF66100D5EE72 /* PASAlbumInfoTVC.h */,
 				F4A2AFB81A0DF66100D5EE72 /* PASAlbumInfoTVC.m */,
+				F40A50F61A0E6C9F002C703C /* PASArtworkTVCell.h */,
+				F40A50F71A0E6C9F002C703C /* PASArtworkTVCell.m */,
+				F40A50F81A0E6C9F002C703C /* PASArtworkTVCell.xib */,
 			);
 			name = "Album Timeline";
 			sourceTree = "<group>";
@@ -454,6 +462,7 @@
 				F4EC62C019E66ADF009C5EF5 /* Images.xcassets in Resources */,
 				F4D6C4B419BFAB8800465781 /* PASArtistTVCell.xib in Resources */,
 				F453BF4C1A0D4E430068FE6D /* PASArtworkCVCell.xib in Resources */,
+				F40A50FA1A0E6C9F002C703C /* PASArtworkTVCell.xib in Resources */,
 				F4D9E94C19C39AB100B762A7 /* PASPageViewController.xib in Resources */,
 				F4A779911793113E00C770B9 /* iPhone.storyboard in Resources */,
 			);
@@ -531,6 +540,7 @@
 				F42422A519CD8FCA0097C0F1 /* PASInteractiveTransition.m in Sources */,
 				F4589D3D19C240D500E17D49 /* PASPageViewController.m in Sources */,
 				F4BB585E19E9F23600221912 /* PASMyPVC.m in Sources */,
+				F40A50F91A0E6C9F002C703C /* PASArtworkTVCell.m in Sources */,
 				F4D6C4B319BFAB8800465781 /* PASArtistTVCell.m in Sources */,
 				F4B8B0B919E060AD00E1064D /* CPFQueryCollectionViewController.m in Sources */,
 				F43402131A09951200A3D83C /* MPMediaItemCollection+Passions.m in Sources */,
