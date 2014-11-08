@@ -98,7 +98,7 @@ static NSInteger const kAddCells = 1;
 	if (indexPath.row == 0) {
 		return NO;
 	} else {
-		return [super collectionView:collectionView shouldSelectItemAtIndexPath:indexPath];
+		return YES;
 	}
 }
 
