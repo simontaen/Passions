@@ -7,7 +7,7 @@
 //
 
 #import "PASArtistInfoCVC.h"
-#import "PASAlbumCVCell.h"
+#import "PASArtworkCVCell.h"
 
 @implementation PASArtistInfoCVC
 
@@ -20,7 +20,7 @@ static NSInteger const kAddCells = 1;
 	[super viewDidLoad];
 	
 	// register the custom cell
-	[self.collectionView registerNib:[UINib nibWithNibName:[PASAlbumCVCell reuseIdentifier] bundle:nil] forCellWithReuseIdentifier:[PASAlbumCVCell reuseIdentifier]];
+	[self.collectionView registerNib:[UINib nibWithNibName:[PASArtworkCVCell reuseIdentifier] bundle:nil] forCellWithReuseIdentifier:[PASArtworkCVCell reuseIdentifier]];
 	
 	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																		  target:self
@@ -61,7 +61,7 @@ static NSInteger const kAddCells = 1;
 	if (indexPath.row == 0) {
 		PASArtist *artist = (PASArtist *)object;
 
-		PASAlbumCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[PASAlbumCVCell reuseIdentifier] forIndexPath:indexPath];
+		PASArtworkCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[PASArtworkCVCell reuseIdentifier] forIndexPath:indexPath];
 		
 		[cell showArtist:artist];
 		

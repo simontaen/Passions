@@ -7,7 +7,7 @@
 //
 
 #import "PASTimelineCVC.h"
-#import "PASAlbumCVCell.h"
+#import "PASArtworkCVCell.h"
 #import "PASArtistInfo.h"
 #import "PASAlbum.h"
 
@@ -61,8 +61,8 @@
 	self.effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
 	
 	// register the custom cell
-	[self.collectionView registerNib:[UINib nibWithNibName:[PASAlbumCVCell reuseIdentifier] bundle:nil]
-		  forCellWithReuseIdentifier:[PASAlbumCVCell reuseIdentifier]];
+	[self.collectionView registerNib:[UINib nibWithNibName:[PASArtworkCVCell reuseIdentifier] bundle:nil]
+		  forCellWithReuseIdentifier:[PASArtworkCVCell reuseIdentifier]];
 }
 
 - (void)viewDidLayoutSubviews
@@ -120,7 +120,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
 	PASAlbum *album = (PASAlbum *)object;
-	PASAlbumCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[PASAlbumCVCell reuseIdentifier] forIndexPath:indexPath];
+	PASArtworkCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[PASArtworkCVCell reuseIdentifier] forIndexPath:indexPath];
 	
 	[cell showAlbum:album];
 

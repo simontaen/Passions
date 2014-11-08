@@ -1,5 +1,5 @@
 //
-//  PASAlbumCVCell.h
+//  PASArtworkCVCell.h
 //  Passions
 //
 //  Created by Simon Tännler on 04/10/14.
@@ -11,7 +11,7 @@
 #import "PASArtist.h"
 
 // TODO: rename to PASArtworkCVCell
-@interface PASAlbumCVCell : UICollectionViewCell
+@interface PASArtworkCVCell : UICollectionViewCell
 
 @property (nonatomic, strong) IBOutlet UIImageView *albumImage;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *releaseDateBackground;

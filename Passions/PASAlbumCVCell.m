@@ -1,20 +1,20 @@
 //
-//  PASAlbumCVCell.m
+//  PASArtworkCVCell.m
 //  Passions
 //
 //  Created by Simon Tännler on 04/10/14.
 //  Copyright (c) 2014 edgeguard. All rights reserved.
 //
 
-#import "PASAlbumCVCell.h"
+#import "PASArtworkCVCell.h"
 #import "FICImageCache.h"
 #import "SORelativeDateTransformer.h"
 
-@interface PASAlbumCVCell()
+@interface PASArtworkCVCell()
 @property (nonatomic, strong) id<FICEntity> entity;
 @end
 
-@implementation PASAlbumCVCell
+@implementation PASArtworkCVCell
 
 #pragma mark - "Accessors"
 
@@ -61,7 +61,7 @@
 
 + (NSString *)reuseIdentifier
 {
-	return @"PASAlbumCVCell";
+	return @"PASArtworkCVCell";
 }
 
 @end
