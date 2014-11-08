@@ -104,8 +104,6 @@
 		F49137F019B7137900E4FC0D /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		F49137F219B7142300E4FC0D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		F49137F419B714A200E4FC0D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		F49137F619B716A500E4FC0D /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Passions/Bolts.framework; sourceTree = "<group>"; };
-		F49137F719B716A500E4FC0D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Passions/Parse.framework; sourceTree = "<group>"; };
 		F49618B119BC4CAC00B4F3FE /* PASTimelineCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASTimelineCVC.h; sourceTree = "<group>"; };
 		F49618B219BC4CAC00B4F3FE /* PASTimelineCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASTimelineCVC.m; sourceTree = "<group>"; };
 		F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -253,7 +251,6 @@
 			children = (
 				F49137F019B7137900E4FC0D /* Accounts.framework */,
 				F424EE2D19B656D40010B3E1 /* AudioToolbox.framework */,
-				F49137F619B716A500E4FC0D /* Bolts.framework */,
 				F424EE2F19B656DD0010B3E1 /* CFNetwork.framework */,
 				F4A7797B1793113E00C770B9 /* CoreGraphics.framework */,
 				F4A779791793113E00C770B9 /* Foundation.framework */,
@@ -261,7 +258,6 @@
 				F424EE3319B656FA0010B3E1 /* libz.dylib */,
 				F40BBA6D1853908700877D60 /* MediaPlayer.framework */,
 				F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */,
-				F49137F719B716A500E4FC0D /* Parse.framework */,
 				F49137F419B714A200E4FC0D /* QuartzCore.framework */,
 				F424EE3719B657120010B3E1 /* Security.framework */,
 				F49137F219B7142300E4FC0D /* Social.framework */,
