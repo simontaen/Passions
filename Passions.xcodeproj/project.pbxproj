@@ -191,6 +191,29 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		F40A50FB1A0EB703002C703C /* Artwork Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F4B8B0B419E039EE00E1064D /* PASArtworkCVCell.h */,
+				F4B8B0B519E039EE00E1064D /* PASArtworkCVCell.m */,
+				F453BF4A1A0D4E430068FE6D /* PASArtworkCVCell.xib */,
+				F40A50F61A0E6C9F002C703C /* PASArtworkTVCell.h */,
+				F40A50F71A0E6C9F002C703C /* PASArtworkTVCell.m */,
+				F40A50F81A0E6C9F002C703C /* PASArtworkTVCell.xib */,
+			);
+			name = "Artwork Cells";
+			sourceTree = "<group>";
+		};
+		F40A50FC1A0EBA27002C703C /* Artist Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F4D6C4B019BFAB8800465781 /* PASArtistTVCell.h */,
+				F4D6C4B119BFAB8800465781 /* PASArtistTVCell.m */,
+				F4D6C4B219BFAB8800465781 /* PASArtistTVCell.xib */,
+			);
+			name = "Artist Cell";
+			sourceTree = "<group>";
+		};
 		F476F0E819B8D8C500185544 /* Parse Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -209,9 +232,6 @@
 			children = (
 				F4694D6219B74ABB00D12576 /* PASFavArtistsTVC.h */,
 				F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */,
-				F4D6C4B019BFAB8800465781 /* PASArtistTVCell.h */,
-				F4D6C4B119BFAB8800465781 /* PASArtistTVCell.m */,
-				F4D6C4B219BFAB8800465781 /* PASArtistTVCell.xib */,
 				F453BF401A0D3D2F0068FE6D /* PASArtistInfoCVC.h */,
 				F453BF411A0D3D2F0068FE6D /* PASArtistInfoCVC.m */,
 			);
@@ -281,7 +301,9 @@
 				F4A7798F1793113E00C770B9 /* iPhone.storyboard */,
 				F4FEC99619E3032C00935B1E /* Root */,
 				F4A814B219E1D3E5003879B0 /* Album Timeline */,
+				F40A50FB1A0EB703002C703C /* Artwork Cells */,
 				F49618B419BC4CC000B4F3FE /* Favorite Artists */,
+				F40A50FC1A0EBA27002C703C /* Artist Cell */,
 				F49618B519BC4CCB00B4F3FE /* Add Artists */,
 				F4F2336319FDD3B4004882B8 /* Add Artist Helpers */,
 				F4D9E94619C3612800B762A7 /* PageViewController */,
@@ -310,14 +332,8 @@
 			children = (
 				F49618B119BC4CAC00B4F3FE /* PASTimelineCVC.h */,
 				F49618B219BC4CAC00B4F3FE /* PASTimelineCVC.m */,
-				F4B8B0B419E039EE00E1064D /* PASArtworkCVCell.h */,
-				F4B8B0B519E039EE00E1064D /* PASArtworkCVCell.m */,
-				F453BF4A1A0D4E430068FE6D /* PASArtworkCVCell.xib */,
 				F4A2AFB71A0DF66100D5EE72 /* PASAlbumInfoTVC.h */,
 				F4A2AFB81A0DF66100D5EE72 /* PASAlbumInfoTVC.m */,
-				F40A50F61A0E6C9F002C703C /* PASArtworkTVCell.h */,
-				F40A50F71A0E6C9F002C703C /* PASArtworkTVCell.m */,
-				F40A50F81A0E6C9F002C703C /* PASArtworkTVCell.xib */,
 			);
 			name = "Album Timeline";
 			sourceTree = "<group>";
@@ -354,12 +370,12 @@
 			children = (
 				F476F0EC19B8D9A100185544 /* PASResources.h */,
 				F476F0ED19B8D9A100185544 /* PASResources.m */,
+				F44E4BB419FE4FB900764532 /* UIColor+Utils.h */,
+				F44E4BB519FE4FB900764532 /* UIColor+Utils.m */,
 				F4B8B0B719E060AD00E1064D /* CPFQueryCollectionViewController.h */,
 				F4B8B0B819E060AD00E1064D /* CPFQueryCollectionViewController.m */,
 				F4768C7819FD3F11003682BD /* STKTableViewCell.h */,
 				F4768C7919FD3F11003682BD /* STKTableViewCell.m */,
-				F44E4BB419FE4FB900764532 /* UIColor+Utils.h */,
-				F44E4BB519FE4FB900764532 /* UIColor+Utils.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";

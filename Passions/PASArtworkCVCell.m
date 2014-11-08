@@ -23,7 +23,9 @@
 	if (album != _entity) {
 		_entity = album;
 		
-		[self _loadThumbnailImageForEntity:album withFormatName:ImageFormatNameAlbumThumbnailMedium placeholder:[PASResources albumThumbnailPlaceholder]];
+		[self _loadThumbnailImageForEntity:album
+							withFormatName:ImageFormatNameAlbumThumbnailMedium
+							   placeholder:[PASResources albumThumbnailPlaceholder]];
 		
 		self.releaseDateLabel.text = [[SORelativeDateTransformer registeredTransformer] transformedValue:album.releaseDate];
 		self.releaseDateBackground.hidden = NO;

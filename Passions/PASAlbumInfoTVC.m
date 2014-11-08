@@ -87,7 +87,6 @@ static NSInteger const kAddCells = 1;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	
 	if (indexPath.row == 0) {
 		PASArtworkTVCell *cell = [tableView dequeueReusableCellWithIdentifier:[PASArtworkTVCell reuseIdentifier] forIndexPath:indexPath];
 		
