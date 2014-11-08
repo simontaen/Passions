@@ -23,7 +23,7 @@
 	if (album != _entity) {
 		_entity = album;
 		
-		[self _loadThumbnailImageForEntity:album withFormatName:ImageFormatNameAlbumThumbnailMedium];
+		[self _loadThumbnailImageForEntity:album withFormatName:ImageFormatNameAlbumThumbnailMedium placeholder:[PASResources albumThumbnailPlaceholder]];
 		
 		self.releaseDateLabel.text = [[SORelativeDateTransformer registeredTransformer] transformedValue:album.releaseDate];
 		self.releaseDateBackground.hidden = NO;
@@ -35,14 +35,16 @@
 	if (artist != _entity) {
 		_entity = artist;
 		
-		[self _loadThumbnailImageForEntity:artist withFormatName:ImageFormatNameArtistThumbnailLarge];
+		[self _loadThumbnailImageForEntity:artist withFormatName:ImageFormatNameArtistThumbnailLarge placeholder:[PASResources artistThumbnailPlaceholder]];
+		
 		self.releaseDateBackground.hidden = YES;
+		//self.name.text = [artist availableAlbums];
 	}
 }
 
 #pragma mark - Private Methods
 
-- (void)_loadThumbnailImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName
+- (void)_loadThumbnailImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName placeholder:(UIImage *)placeholder
 {
 	// clear the image to avoid seeing old images when scrolling
 	self.artworkImage.image = nil;
@@ -50,8 +52,9 @@
 	[[FICImageCache sharedImageCache] retrieveImageForEntity:entity
 											  withFormatName:formatName
 											 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+												 // check if this image view hasn't been reused for a different entity
 												 if (entity == self.entity) {
-													 self.artworkImage.image = image ?: [PASResources albumThumbnailPlaceholder];
+													 self.artworkImage.image = image ?: placeholder;
 												 }
 											 }];
 }
