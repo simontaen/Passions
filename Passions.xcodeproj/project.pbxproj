@@ -49,7 +49,7 @@
 		F4A814B919E20CBD003879B0 /* NSString+SourceImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A814B819E20CBD003879B0 /* NSString+SourceImage.m */; };
 		F4B8B0B619E039EE00E1064D /* PASArtworkCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B8B0B519E039EE00E1064D /* PASArtworkCVCell.m */; };
 		F4B8B0B919E060AD00E1064D /* CPFQueryCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B8B0B819E060AD00E1064D /* CPFQueryCollectionViewController.m */; };
-		F4BB585E19E9F23600221912 /* PASMyPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BB585D19E9F23600221912 /* PASMyPVC.m */; };
+		F4BB585E19E9F23600221912 /* PASAddingPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BB585D19E9F23600221912 /* PASAddingPVC.m */; };
 		F4D284CD19E087D0008A3913 /* PASAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D284CC19E087D0008A3913 /* PASAlbum.m */; };
 		F4D284D019E0AE26008A3913 /* PASParseObjectWithImages.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D284CF19E0AE26008A3913 /* PASParseObjectWithImages.m */; };
 		F4D6C4B319BFAB8800465781 /* PASArtistTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D6C4B119BFAB8800465781 /* PASArtistTVCell.m */; };
@@ -134,8 +134,8 @@
 		F4B8B0B519E039EE00E1064D /* PASArtworkCVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASArtworkCVCell.m; sourceTree = "<group>"; };
 		F4B8B0B719E060AD00E1064D /* CPFQueryCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPFQueryCollectionViewController.h; sourceTree = "<group>"; };
 		F4B8B0B819E060AD00E1064D /* CPFQueryCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPFQueryCollectionViewController.m; sourceTree = "<group>"; };
-		F4BB585C19E9F23600221912 /* PASMyPVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASMyPVC.h; sourceTree = "<group>"; };
-		F4BB585D19E9F23600221912 /* PASMyPVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASMyPVC.m; sourceTree = "<group>"; };
+		F4BB585C19E9F23600221912 /* PASAddingPVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddingPVC.h; sourceTree = "<group>"; };
+		F4BB585D19E9F23600221912 /* PASAddingPVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAddingPVC.m; sourceTree = "<group>"; };
 		F4D284CB19E087D0008A3913 /* PASAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAlbum.h; sourceTree = "<group>"; };
 		F4D284CC19E087D0008A3913 /* PASAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAlbum.m; sourceTree = "<group>"; };
 		F4D284CE19E0AE26008A3913 /* PASParseObjectWithImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASParseObjectWithImages.h; sourceTree = "<group>"; };
@@ -241,8 +241,8 @@
 		F49618B519BC4CCB00B4F3FE /* Add Artists */ = {
 			isa = PBXGroup;
 			children = (
-				F4BB585C19E9F23600221912 /* PASMyPVC.h */,
-				F4BB585D19E9F23600221912 /* PASMyPVC.m */,
+				F4BB585C19E9F23600221912 /* PASAddingPVC.h */,
+				F4BB585D19E9F23600221912 /* PASAddingPVC.m */,
 				F461C8DE19EB006C0081B445 /* PASExtendedNavContainer.h */,
 				F461C8DF19EB006C0081B445 /* PASExtendedNavContainer.m */,
 				F4256EC319EB1AAB00B9D95B /* PASExtendedNavContainer.xib */,
@@ -555,7 +555,7 @@
 				F4768C7A19FD3F11003682BD /* STKTableViewCell.m in Sources */,
 				F42422A519CD8FCA0097C0F1 /* PASInteractiveTransition.m in Sources */,
 				F4589D3D19C240D500E17D49 /* PASPageViewController.m in Sources */,
-				F4BB585E19E9F23600221912 /* PASMyPVC.m in Sources */,
+				F4BB585E19E9F23600221912 /* PASAddingPVC.m in Sources */,
 				F40A50F91A0E6C9F002C703C /* PASArtworkTVCell.m in Sources */,
 				F4D6C4B319BFAB8800465781 /* PASArtistTVCell.m in Sources */,
 				F4B8B0B919E060AD00E1064D /* CPFQueryCollectionViewController.m in Sources */,
