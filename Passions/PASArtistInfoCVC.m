@@ -31,6 +31,7 @@ static NSInteger const kAddCells = 1;
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
+	
 	// Configure navigationController
 	self.title = self.artist.name;
 	self.navigationController.navigationBarHidden = NO;
@@ -87,6 +88,17 @@ static NSInteger const kAddCells = 1;
 		return CGSizeMake(self.collectionView.frame.size.width, self.collectionView.frame.size.width);
 	} else {
 		return [super collectionView:collectionView layout:collectionViewLayout sizeForItemAtIndexPath:[self _newIdxPath:indexPath]];
+	}
+}
+
+#pragma mark - UICollectionViewDelegate (when the touch lifts)
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+	if (indexPath.row == 0) {
+		return NO;
+	} else {
+		return [super collectionView:collectionView shouldSelectItemAtIndexPath:indexPath];
 	}
 }
 
