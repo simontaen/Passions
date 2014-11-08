@@ -36,6 +36,7 @@
 		F49137F319B7142300E4FC0D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F219B7142300E4FC0D /* Social.framework */; };
 		F49137F519B714A200E4FC0D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F419B714A200E4FC0D /* QuartzCore.framework */; };
 		F49618B319BC4CAC00B4F3FE /* PASTimelineCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F49618B219BC4CAC00B4F3FE /* PASTimelineCVC.m */; };
+		F4A2AFB91A0DF66100D5EE72 /* PASAlbumInfoTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A2AFB81A0DF66100D5EE72 /* PASAlbumInfoTVC.m */; };
 		F4A779781793113E00C770B9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A779771793113E00C770B9 /* UIKit.framework */; };
 		F4A7797A1793113E00C770B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A779791793113E00C770B9 /* Foundation.framework */; };
 		F4A7797C1793113E00C770B9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A7797B1793113E00C770B9 /* CoreGraphics.framework */; };
@@ -106,6 +107,8 @@
 		F49137F419B714A200E4FC0D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F49618B119BC4CAC00B4F3FE /* PASTimelineCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASTimelineCVC.h; sourceTree = "<group>"; };
 		F49618B219BC4CAC00B4F3FE /* PASTimelineCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASTimelineCVC.m; sourceTree = "<group>"; };
+		F4A2AFB71A0DF66100D5EE72 /* PASAlbumInfoTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAlbumInfoTVC.h; sourceTree = "<group>"; };
+		F4A2AFB81A0DF66100D5EE72 /* PASAlbumInfoTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAlbumInfoTVC.m; sourceTree = "<group>"; };
 		F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F4A779741793113E00C770B9 /* Passions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Passions.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -305,6 +308,8 @@
 				F4B8B0B419E039EE00E1064D /* PASArtworkCVCell.h */,
 				F4B8B0B519E039EE00E1064D /* PASArtworkCVCell.m */,
 				F453BF4A1A0D4E430068FE6D /* PASArtworkCVCell.xib */,
+				F4A2AFB71A0DF66100D5EE72 /* PASAlbumInfoTVC.h */,
+				F4A2AFB81A0DF66100D5EE72 /* PASAlbumInfoTVC.m */,
 			);
 			name = "Album Timeline";
 			sourceTree = "<group>";
@@ -521,6 +526,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4A2AFB91A0DF66100D5EE72 /* PASAlbumInfoTVC.m in Sources */,
 				F4768C7A19FD3F11003682BD /* STKTableViewCell.m in Sources */,
 				F42422A519CD8FCA0097C0F1 /* PASInteractiveTransition.m in Sources */,
 				F4589D3D19C240D500E17D49 /* PASPageViewController.m in Sources */,
