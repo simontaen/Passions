@@ -43,7 +43,7 @@
                 <constraint firstItem="cwN-Ec-x7X" firstAttribute="leading" secondItem="SJp-YA-0oW" secondAttribute="leading" id="riR-Hh-D3O"/>
             </constraints>
             <connections>
-                <outlet property="albumImage" destination="cwN-Ec-x7X" id="ekq-0z-23W"/>
+                <outlet property="artworkImage" destination="cwN-Ec-x7X" id="6Ud-2e-ehU"/>
                 <outlet property="releaseDateBackground" destination="R79-ZT-pPB" id="JOY-Bs-6tU"/>
                 <outlet property="releaseDateLabel" destination="oCd-hX-iec" id="Czw-ZH-7iz"/>
             </connections>

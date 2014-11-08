@@ -45,13 +45,13 @@
 - (void)_loadThumbnailImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName
 {
 	// clear the image to avoid seeing old images when scrolling
-	self.albumImage.image = nil;
+	self.artworkImage.image = nil;
 	
 	[[FICImageCache sharedImageCache] retrieveImageForEntity:entity
 											  withFormatName:formatName
 											 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
 												 if (entity == self.entity) {
-													 self.albumImage.image = image ?: [PASResources albumThumbnailPlaceholder];
+													 self.artworkImage.image = image ?: [PASResources albumThumbnailPlaceholder];
 												 }
 											 }];
 }

@@ -196,7 +196,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <outlet property="albumImage" destination="f0J-1H-sY0" id="xW2-Mz-2fb"/>
+                                    <outlet property="artworkImage" destination="f0J-1H-sY0" id="abW-Qd-9Kq"/>
                                     <outlet property="releaseDateLabel" destination="WNg-kP-8bK" id="fZJ-6p-CdA"/>
                                 </connections>
                             </collectionViewCell>

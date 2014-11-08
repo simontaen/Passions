@@ -10,10 +10,9 @@
 #import "PASAlbum.h"
 #import "PASArtist.h"
 
-// TODO: rename to PASArtworkCVCell
 @interface PASArtworkCVCell : UICollectionViewCell
 
-@property (nonatomic, strong) IBOutlet UIImageView *albumImage;
+@property (nonatomic, strong) IBOutlet UIImageView *artworkImage;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *releaseDateBackground;
 @property (weak, nonatomic) IBOutlet UILabel *releaseDateLabel;
 
