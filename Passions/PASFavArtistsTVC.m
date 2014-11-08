@@ -9,7 +9,7 @@
 #import "PASFavArtistsTVC.h"
 #import "PASArtistTVCell.h"
 #import "PASArtist.h"
-#import "PASMyPVC.h"
+#import "PASAddingPVC.h"
 #import "FICImageCache.h"
 #import "UIColor+Utils.h"
 #import "PASArtistInfoCVC.h"

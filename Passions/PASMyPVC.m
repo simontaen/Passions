@@ -1,21 +1,21 @@
 //
-//  PASMyPVC.m
+//  PASAddingPVC.m
 //  Passions
 //
 //  Created by Simon Tännler on 12/10/14.
 //  Copyright (c) 2014 edgeguard. All rights reserved.
 //
 
-#import "PASMyPVC.h"
+#import "PASAddingPVC.h"
 #import "PASExtendedNavContainer.h"
 #import "PASFavArtistsTVC.h"
 #import "UIColor+Utils.h"
 
-@interface PASMyPVC ()
+@interface PASAddingPVC ()
 @property (weak, nonatomic) UIImageView *navHairline;
 @end
 
-@implementation PASMyPVC
+@implementation PASAddingPVC
 
 #pragma mark - Init
 

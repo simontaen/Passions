@@ -1,5 +1,5 @@
 //
-//  PASMyPVC.h
+//  PASAddingPVC.h
 //  Passions
 //
 //  Created by Simon Tännler on 12/10/14.
@@ -9,6 +9,6 @@
 #import "PASPageViewController.h"
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been edited
-@interface PASMyPVC : PASPageViewController
+@interface PASAddingPVC : PASPageViewController
 
 @end
