@@ -8,7 +8,7 @@
 
 #import "PASTimelineCVC.h"
 #import "PASArtworkCVCell.h"
-#import "PASArtistInfo.h"
+#import "PASAlbumInfoTVC.h"
 #import "PASAlbum.h"
 
 @interface PASTimelineCVC ()
@@ -156,7 +156,7 @@
 	return 0;
 }
 
-#pragma mark - Navigation
+#pragma mark - UICollectionViewDelegate / Navigation
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -165,8 +165,7 @@
 
 - (void)_showAlbum:(PASAlbum *)album animated:(BOOL)animated
 {
-	// self.storyboard is nil since we don't come from a Storyboard
-	PASArtistInfo *vc = (PASArtistInfo *)[self.storyboard instantiateViewControllerWithIdentifier:@"PASArtistInfo"];
+	PASAlbumInfoTVC *vc = [PASAlbumInfoTVC new];
 	vc.album = album;
 	
 	UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:vc];

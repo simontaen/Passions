@@ -7,7 +7,10 @@
 //
 
 @import UIKit;
+#import "PASAlbum.h"
 
 @interface PASAlbumInfoTVC : UITableViewController
+
+@property (nonatomic, strong) PASAlbum *album;
 
 @end
