@@ -50,7 +50,6 @@
 	[[FICImageCache sharedImageCache] retrieveImageForEntity:entity
 											  withFormatName:formatName
 											 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
-												 // check if this cell hasn't been reused for a different album
 												 if (entity == self.entity) {
 													 self.albumImage.image = image ?: [PASResources albumThumbnailPlaceholder];
 												 }

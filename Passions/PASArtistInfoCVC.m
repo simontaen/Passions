@@ -66,6 +66,7 @@ static NSInteger const kAddCells = 1;
 		[cell showArtist:artist];
 		
 		return cell;
+
 	} else {
 		return [super collectionView:collectionView cellForItemAtIndexPath:indexPath object:object];
 	}
