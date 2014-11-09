@@ -16,13 +16,13 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cwN-Ec-x7X">
                         <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                     </imageView>
-                    <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R79-ZT-pPB">
+                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R79-ZT-pPB">
                         <rect key="frame" x="0.0" y="140" width="160" height="20"/>
-                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="QEk-2X-9C5">
+                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="QEk-2X-9C5">
                             <rect key="frame" x="0.0" y="0.0" width="160" height="20"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Release Date" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oCd-hX-iec">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Release Date" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oCd-hX-iec">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="20"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -30,15 +30,27 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="oCd-hX-iec" secondAttribute="trailing" id="6Kg-An-ZOX"/>
+                                <constraint firstAttribute="bottom" secondItem="oCd-hX-iec" secondAttribute="bottom" id="Ufr-In-PdG"/>
+                                <constraint firstItem="oCd-hX-iec" firstAttribute="top" secondItem="QEk-2X-9C5" secondAttribute="top" id="dBX-74-xBe"/>
+                                <constraint firstItem="oCd-hX-iec" firstAttribute="leading" secondItem="QEk-2X-9C5" secondAttribute="leading" id="k0t-as-9bW"/>
+                            </constraints>
                         </view>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="Rrn-dG-IKA"/>
+                        </constraints>
                         <blurEffect style="light"/>
                     </visualEffectView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="cwN-Ec-x7X" secondAttribute="bottom" id="LQq-aN-JVl"/>
+                <constraint firstAttribute="trailing" secondItem="R79-ZT-pPB" secondAttribute="trailing" id="7pe-Jf-7KF"/>
+                <constraint firstAttribute="bottom" secondItem="cwN-Ec-x7X" secondAttribute="bottom" placeholder="YES" id="LQq-aN-JVl"/>
                 <constraint firstAttribute="trailing" secondItem="cwN-Ec-x7X" secondAttribute="trailing" id="UyG-5B-Y44"/>
+                <constraint firstAttribute="bottom" secondItem="R79-ZT-pPB" secondAttribute="bottom" placeholder="YES" id="jeI-xq-7Ho"/>
+                <constraint firstItem="R79-ZT-pPB" firstAttribute="leading" secondItem="SJp-YA-0oW" secondAttribute="leading" id="kJY-3a-C8j"/>
                 <constraint firstItem="cwN-Ec-x7X" firstAttribute="top" secondItem="SJp-YA-0oW" secondAttribute="top" id="nWC-Fd-5wa"/>
                 <constraint firstItem="cwN-Ec-x7X" firstAttribute="leading" secondItem="SJp-YA-0oW" secondAttribute="leading" id="riR-Hh-D3O"/>
             </constraints>
@@ -47,6 +59,7 @@
                 <outlet property="releaseDateBackground" destination="R79-ZT-pPB" id="JOY-Bs-6tU"/>
                 <outlet property="releaseDateLabel" destination="oCd-hX-iec" id="Czw-ZH-7iz"/>
             </connections>
+            <point key="canvasLocation" x="575" y="571"/>
         </collectionViewCell>
     </objects>
 </document>

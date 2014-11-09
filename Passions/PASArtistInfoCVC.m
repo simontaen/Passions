@@ -86,7 +86,7 @@ static NSInteger const kAddCells = 1;
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
 	if (indexPath.row == 0) {
-		return CGSizeMake(self.collectionView.frame.size.width, self.collectionView.frame.size.width);
+		return CGSizeMake(self.collectionView.frame.size.width, self.collectionView.frame.size.width + 20);
 	} else {
 		return [super collectionView:collectionView layout:collectionViewLayout sizeForItemAtIndexPath:[self _newIdxPath:indexPath]];
 	}

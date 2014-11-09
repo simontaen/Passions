@@ -12,6 +12,8 @@
 
 @interface PASArtworkCVCell()
 @property (nonatomic, strong) id<FICEntity> entity;
+@property (nonatomic, strong) NSLayoutConstraint *artistCn;
+@property (nonatomic, strong) NSLayoutConstraint *albumCn;
 @end
 
 @implementation PASArtworkCVCell
@@ -28,8 +30,26 @@
 							   placeholder:[PASResources albumThumbnailPlaceholder]];
 		
 		self.releaseDateLabel.text = [[SORelativeDateTransformer registeredTransformer] transformedValue:album.releaseDate];
-		self.releaseDateBackground.hidden = NO;
+		
+		[self removeConstraint:self.artistCn];
+		[self addConstraint:self.albumCn];
+								  
+		//self.releaseDateBackground.hidden = NO;
 	}
+}
+
+- (NSLayoutConstraint *)albumCn
+{
+	if (!_albumCn) {
+		_albumCn = [NSLayoutConstraint constraintWithItem:self.artworkImage
+												attribute:NSLayoutAttributeBottom
+												relatedBy:NSLayoutRelationEqual
+												   toItem:self.releaseDateBackground
+												attribute:NSLayoutAttributeBottom
+											   multiplier:1
+												 constant:0];
+	}
+	return _albumCn;
 }
 
 - (void)showArtist:(PASArtist *)artist
@@ -37,11 +57,31 @@
 	if (artist != _entity) {
 		_entity = artist;
 		
-		[self _loadThumbnailImageForEntity:artist withFormatName:ImageFormatNameArtistThumbnailLarge placeholder:[PASResources artistThumbnailPlaceholder]];
+		[self _loadThumbnailImageForEntity:artist
+							withFormatName:ImageFormatNameArtistThumbnailLarge
+							   placeholder:[PASResources artistThumbnailPlaceholder]];
 		
-		self.releaseDateBackground.hidden = YES;
-		//self.name.text = [artist availableAlbums];
+		self.releaseDateLabel.text = [artist availableAlbums];
+		
+		[self removeConstraint:self.albumCn];
+		[self addConstraint:self.artistCn];
+		
+		//self.releaseDateBackground.hidden = YES;
 	}
+}
+
+- (NSLayoutConstraint *)artistCn
+{
+	if (!_artistCn) {
+		_artistCn = [NSLayoutConstraint constraintWithItem:self.artworkImage
+												 attribute:NSLayoutAttributeBottom
+												 relatedBy:NSLayoutRelationEqual
+													toItem:self.releaseDateBackground
+												 attribute:NSLayoutAttributeTop
+												multiplier:1
+												  constant:0];
+	}
+	return _artistCn;
 }
 
 #pragma mark - Private Methods
