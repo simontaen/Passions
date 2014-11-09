@@ -24,6 +24,9 @@
 /// all the view controllers this container displays
 @property (nonatomic, strong) NSArray *viewControllers;
 
+/// Show or Hide the PageControl
+@property (nonatomic, assign, getter=ispageControlHidden) BOOL pageControlHidden;
+
 /// Transition to the view controller at the specified index
 - (void)transitionToViewControllerAtIndex:(int)index interactive:(BOOL)interactive;
 
@@ -32,6 +35,10 @@
 /// let the delegate remove gesture recogizers for an interactive transition
 - (void)removeGestureRecognizerFromContainerView:(UIGestureRecognizer *)recognizer;
 
+@end
+
+@interface UIViewController (PASPageViewControllerAdditions)
+- (PASPageViewController *)pageViewController;
 @end
 
 @protocol PASPageViewControllerDelegate <NSObject>

@@ -49,6 +49,8 @@
 @property (strong, nonatomic) IBOutlet UIVisualEffectView *blurView;
 @property (nonatomic, weak) IBOutlet UIPageControl *pageControlView;
 @property (nonatomic, strong) PASInteractiveTransition *bla;
+
+@property (nonatomic, strong) NSMutableArray *containerViewRecognizers;
 @end
 
 @implementation PASPageViewController
@@ -61,6 +63,7 @@
 	// TODO: temporary
 	self.bla = [PASInteractiveTransition new];
 	self.delegate = (id<PASPageViewControllerDelegate>)self.bla;
+	self.containerViewRecognizers = [NSMutableArray array];
 }
 
 #pragma mark - View Lifecycle
@@ -204,6 +207,25 @@
 	}];
 }
 
+- (void)setPageControlHidden:(BOOL)pageControlHidden
+{
+	if (_pageControlHidden != pageControlHidden) {
+		_pageControlHidden = pageControlHidden;
+		
+		self.blurView.hidden = pageControlHidden;
+		
+		if (pageControlHidden) {
+			for (UIGestureRecognizer *recognizer in self.containerViewRecognizers) {
+				[self.containerView removeGestureRecognizer:recognizer];
+			}
+		} else {
+			for (UIGestureRecognizer *recognizer in self.containerViewRecognizers) {
+				[self.containerView addGestureRecognizer:recognizer];
+			}
+		}
+	}
+}
+
 #pragma mark - Public Methods
 
 - (void)transitionToViewControllerAtIndex:(int)index interactive:(BOOL)interactive
@@ -225,12 +247,14 @@
 
 - (void)addGestureRecognizerToContainerView:(UIGestureRecognizer *)recognizer
 {
+	[self.containerViewRecognizers addObject:recognizer];
 	[self.containerView addGestureRecognizer:recognizer];
 }
 
 - (void)removeGestureRecognizerFromContainerView:(UIGestureRecognizer *)recognizer
 {
 	[self.containerView removeGestureRecognizer:recognizer];
+	[self.containerViewRecognizers removeObject:recognizer];
 }
 
 #pragma mark - UIViewController

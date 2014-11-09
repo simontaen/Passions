@@ -10,6 +10,7 @@
 #import "PASArtworkCVCell.h"
 #import "PASAlbumInfoTVC.h"
 #import "PASAlbum.h"
+#import "PASPageViewController.h"
 
 @interface PASTimelineCVC ()
 @property (strong, nonatomic) UIVisualEffectView *effectView;
@@ -82,6 +83,7 @@
 	// Configure navigationController
 	// Needs to be in viewWillAppear since the Info VC's unhide the navigationBarHidden
 	self.navigationController.navigationBarHidden = YES;
+	self.pageViewController.pageControlHidden = NO;
 }
 
 #pragma mark - CPFQueryCollectionViewController
@@ -177,7 +179,7 @@
 	PASAlbumInfoTVC *vc = [PASAlbumInfoTVC new];
 	vc.album = album;
 	
-	// TODO: Hide the pageControl
+	self.pageViewController.pageControlHidden = YES;
 	[self.navigationController pushViewController:vc animated:YES];
 }
 

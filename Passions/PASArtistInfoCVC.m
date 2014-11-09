@@ -8,6 +8,7 @@
 
 #import "PASArtistInfoCVC.h"
 #import "PASArtworkCVCell.h"
+#import "PASPageViewController.h"
 
 @implementation PASArtistInfoCVC
 
@@ -28,11 +29,13 @@ static NSInteger const kAddCells = 1;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	[super viewWillAppear:animated];
+	// Do NOT call super, unsets the properties below
+	//[super viewWillAppear:animated];
 	
 	// Configure navigationController
 	// Needs to be in viewWillAppear since the Info VC's unhide the navigationBarHidden
 	self.navigationController.navigationBarHidden = NO;
+	self.pageViewController.pageControlHidden = YES;
 }
 
 #pragma mark - CPFQueryCollectionViewController
@@ -98,13 +101,6 @@ static NSInteger const kAddCells = 1;
 	} else {
 		return YES;
 	}
-}
-
-#pragma mark - Navigation
-
-- (IBAction)doneButtonTapped:(UIBarButtonItem *)sender
-{
-	[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Private Methods

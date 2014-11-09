@@ -9,7 +9,7 @@
 #import "PASFavArtistsTVC.h"
 #import "PASArtistTVCell.h"
 #import "PASArtist.h"
-#import "PASAddingPVC.h"
+#import "PASPageViewController.h"
 #import "FICImageCache.h"
 #import "UIColor+Utils.h"
 #import "PASArtistInfoCVC.h"
@@ -82,6 +82,12 @@
 	// register the custom cell
 	[self.tableView registerNib:[UINib nibWithNibName:[PASArtistTVCell reuseIdentifier] bundle:nil]
 		 forCellReuseIdentifier:[PASArtistTVCell reuseIdentifier]];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	self.pageViewController.pageControlHidden = NO;
 }
 
 - (IBAction)resetFastimageCache:(UIBarButtonItem *)sender
@@ -178,7 +184,6 @@
 	PASArtistInfoCVC *vc = [PASArtistInfoCVC new];
 	vc.artist = artist;
 	
-	// TODO: Hide the pageControl
 	[self.navigationController pushViewController:vc animated:YES];
 }
 

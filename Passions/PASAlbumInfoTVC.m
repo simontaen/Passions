@@ -103,13 +103,6 @@ static NSInteger const kAddCells = 1;
 	return NO;
 }
 
-#pragma mark - Navigation
-
-- (IBAction)doneButtonTapped:(UIBarButtonItem *)sender
-{
-	[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
 #pragma mark - Private Methods
 
 - (NSIndexPath *)_newIdxPath:(NSIndexPath *)idxPath
