@@ -75,6 +75,15 @@
 	[self.view addSubview:self.effectView];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	
+	// Configure navigationController
+	// Needs to be in viewWillAppear since the Info VC's unhide the navigationBarHidden
+	self.navigationController.navigationBarHidden = YES;
+}
+
 #pragma mark - CPFQueryCollectionViewController
 
 - (PASAlbum *)_albumAtIndexPath:(NSIndexPath *)indexPath
@@ -168,8 +177,10 @@
 	PASAlbumInfoTVC *vc = [PASAlbumInfoTVC new];
 	vc.album = album;
 	
-	UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:vc];
-	[self presentViewController:navVc animated:YES completion:nil];
+	[self.navigationController pushViewController:vc animated:YES];
+	
+//	UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:vc];
+//	[self presentViewController:navVc animated:YES completion:nil];
 }
 
 #pragma mark - Private Methods
