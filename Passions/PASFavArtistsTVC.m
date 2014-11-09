@@ -178,8 +178,8 @@
 	PASArtistInfoCVC *vc = [PASArtistInfoCVC new];
 	vc.artist = artist;
 	
-	UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:vc];
-	[self presentViewController:navVc animated:YES completion:nil];
+	// TODO: Hide the pageControl
+	[self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

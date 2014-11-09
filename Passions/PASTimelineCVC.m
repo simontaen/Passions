@@ -177,10 +177,8 @@
 	PASAlbumInfoTVC *vc = [PASAlbumInfoTVC new];
 	vc.album = album;
 	
+	// TODO: Hide the pageControl
 	[self.navigationController pushViewController:vc animated:YES];
-	
-//	UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:vc];
-//	[self presentViewController:navVc animated:YES completion:nil];
 }
 
 #pragma mark - Private Methods

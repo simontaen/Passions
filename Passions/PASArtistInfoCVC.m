@@ -22,10 +22,8 @@ static NSInteger const kAddCells = 1;
 	// register the custom cell
 	[self.collectionView registerNib:[UINib nibWithNibName:[PASArtworkCVCell reuseIdentifier] bundle:nil] forCellWithReuseIdentifier:[PASArtworkCVCell reuseIdentifier]];
 	
-	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-																		  target:self
-																		  action:@selector(doneButtonTapped:)];
-	self.navigationItem.rightBarButtonItem = rbbi;
+	// Configure navigationController
+	self.title = self.artist.name;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -33,7 +31,7 @@ static NSInteger const kAddCells = 1;
 	[super viewWillAppear:animated];
 	
 	// Configure navigationController
-	self.title = self.artist.name;
+	// Needs to be in viewWillAppear since the Info VC's unhide the navigationBarHidden
 	self.navigationController.navigationBarHidden = NO;
 }
 

@@ -55,11 +55,6 @@ static NSInteger const kAddCells = 1;
 	// Configure navigationController
 	self.title = self.album.name;
 	self.navigationController.navigationBarHidden = NO;
-	
-	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-																		  target:self
-																		  action:@selector(doneButtonTapped:)];
-	self.navigationItem.rightBarButtonItem = rbbi;
 }
 
 #pragma mark - UITableViewDelegate
