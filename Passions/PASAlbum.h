@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSNumber* trackCount;
 @property (nonatomic, strong) NSString* iTunesGenreName;
 @property (nonatomic, strong) NSString* artistId; // PASArtist.objectId
+@property (nonatomic, strong) NSString* artistName; // PASArtist.name
 @property (nonatomic, strong) NSDate* releaseDate;
 @property (nonatomic, strong) NSString* spotifyId;
 @property (nonatomic, strong) NSString* spotifyLink;

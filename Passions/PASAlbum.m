@@ -19,6 +19,7 @@
 @dynamic trackCount;
 @dynamic iTunesGenreName;
 @dynamic artistId; // PASArtist.objectId
+@dynamic artistName; // PASArtist.name
 @dynamic releaseDate;
 @dynamic spotifyId;
 @dynamic spotifyLink;

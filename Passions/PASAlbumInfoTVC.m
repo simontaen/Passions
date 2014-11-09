@@ -8,6 +8,7 @@
 
 #import "PASAlbumInfoTVC.h"
 #import "PASArtworkTVCell.h"
+#import "PASAlbumInfoTVCell.h"
 #import "AJSITunesAPI.h"
 
 @interface PASAlbumInfoTVC ()
@@ -17,7 +18,7 @@
 @implementation PASAlbumInfoTVC
 
 static NSString * const kCellIdentifier = @"TrackCell";
-static NSInteger const kAddCells = 1;
+static NSInteger const kAddCells = 2;
 
 #pragma mark - Accessors
 
@@ -47,13 +48,15 @@ static NSInteger const kAddCells = 1;
 	// register the custom cell
 	[self.tableView registerNib:[UINib nibWithNibName:[PASArtworkTVCell reuseIdentifier] bundle:nil]
 		 forCellReuseIdentifier:[PASArtworkTVCell reuseIdentifier]];
+	[self.tableView registerNib:[UINib nibWithNibName:[PASAlbumInfoTVCell reuseIdentifier] bundle:nil]
+		 forCellReuseIdentifier:[PASAlbumInfoTVCell reuseIdentifier]];
 	[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
 	
 	// TableView Properties
 	self.tableView.allowsSelection = NO;
 
 	// Configure navigationController
-	self.title = self.album.name;
+	self.title = @"Album Details";
 	self.navigationController.navigationBarHidden = NO;
 }
 
@@ -63,6 +66,8 @@ static NSInteger const kAddCells = 1;
 {
 	if (indexPath.row == 0) {
 		return self.tableView.frame.size.width;
+	} else if (indexPath.row == 1) {
+		return 67;
 	} else {
 		return 45;
 	}
@@ -81,6 +86,14 @@ static NSInteger const kAddCells = 1;
 		PASArtworkTVCell *cell = [tableView dequeueReusableCellWithIdentifier:[PASArtworkTVCell reuseIdentifier] forIndexPath:indexPath];
 		
 		[cell showAlbum:self.album];
+		
+		return cell;
+		
+	} else if (indexPath.row == 1) {
+		PASAlbumInfoTVCell *cell = [tableView dequeueReusableCellWithIdentifier:[PASAlbumInfoTVCell reuseIdentifier] forIndexPath:indexPath];
+		
+		cell.mainText.text = self.album.name;
+		cell.detailText.text = [NSString stringWithFormat:@"by %@, %@", self.album.artistName, [self _stringifiedTracks]];
 		
 		return cell;
 		
@@ -104,6 +117,18 @@ static NSInteger const kAddCells = 1;
 }
 
 #pragma mark - Private Methods
+
+- (NSString *)_stringifiedTracks
+{
+	NSUInteger tracks = self.tracks.count;
+	if (tracks == 0) {
+		return @"(Tracks unavailable)";
+	} else if (tracks == 1) {
+		return [NSString stringWithFormat:@"%tu Track", tracks];
+	} else {
+		return [NSString stringWithFormat:@"%tu Tracks", tracks];
+	}
+}
 
 - (NSIndexPath *)_newIdxPath:(NSIndexPath *)idxPath
 {

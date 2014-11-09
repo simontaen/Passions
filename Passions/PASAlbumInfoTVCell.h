@@ -11,7 +11,8 @@
 
 @interface PASAlbumInfoTVCell : UITableViewCell
 
-- (void)showAlbum:(PASAlbum *)album;
+@property (weak, nonatomic) IBOutlet UILabel *mainText;
+@property (weak, nonatomic) IBOutlet UILabel *detailText;
 
 + (NSString *)reuseIdentifier;
 

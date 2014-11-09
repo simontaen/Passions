@@ -10,13 +10,6 @@
 
 @implementation PASAlbumInfoTVCell
 
-#pragma mark - "Accessors"
-
-- (void)showAlbum:(PASAlbum *)album
-{
-	
-}
-
 #pragma mark - Static
 
 + (NSString *)reuseIdentifier
