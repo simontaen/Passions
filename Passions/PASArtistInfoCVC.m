@@ -36,6 +36,12 @@ static NSInteger const kAddCells = 1;
 	// Needs to be in viewWillAppear since the Info VC's unhide the navigationBarHidden
 	self.navigationController.navigationBarHidden = NO;
 	self.pageViewController.pageControlHidden = YES;
+	
+	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithTitle:@"iTunes"
+															 style:UIBarButtonItemStylePlain
+															target:self
+															action:@selector(iTunesButtonTapped:)];
+	self.navigationItem.rightBarButtonItem = rbbi;
 }
 
 #pragma mark - CPFQueryCollectionViewController
@@ -101,6 +107,13 @@ static NSInteger const kAddCells = 1;
 	} else {
 		return YES;
 	}
+}
+
+#pragma mark - Redirecting to External Sites
+
+- (IBAction)iTunesButtonTapped:(UIBarButtonItem *)sender
+{
+	[[UIApplication sharedApplication] openURL:[self.artist iTunesAttributedUrl]];
 }
 
 #pragma mark - Private Methods

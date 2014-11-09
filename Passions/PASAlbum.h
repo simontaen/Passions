@@ -34,4 +34,8 @@
 
 + (PFQuery *)albumsOfCurrentUsersFavoriteArtists;
 
+#pragma mark - Compound properties
+
+- (NSURL *)iTunesAttributedUrl;
+
 @end

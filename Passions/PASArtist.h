@@ -37,6 +37,7 @@
 #pragma mark - Compound properties
 
 - (NSString *)availableAlbums;
+- (NSURL *)iTunesAttributedUrl;
 
 #pragma mark - adding / creating
 

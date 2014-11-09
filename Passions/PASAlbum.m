@@ -48,4 +48,11 @@
 	return query;
 }
 
+#pragma mark - Compound properties
+
+- (NSURL *)iTunesAttributedUrl
+{
+	return [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@", self.iTunesUrl, kITunesAffiliation]];
+}
+
 @end

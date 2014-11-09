@@ -28,6 +28,9 @@ extern NSString * const kPASShowAlbumDetails;
 // Notification sent when the initial Artists have been favorited.
 extern NSString * const kPASDidFavoriteInitialArtists;
 
+// iTunes Affiliate Token
+extern NSString * const kITunesAffiliation;
+
 // Constant for Artist Artwork
 extern CGFloat const kPASSizeArtistThumbnailSmall;
 extern NSString *const ImageFormatFamilyArtistThumbnails;

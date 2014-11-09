@@ -58,6 +58,12 @@ static NSInteger const kAddCells = 2;
 	// Configure navigationController
 	self.title = @"Album Details";
 	self.navigationController.navigationBarHidden = NO;
+
+	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithTitle:@"iTunes"
+															 style:UIBarButtonItemStylePlain
+															target:self
+															action:@selector(iTunesButtonTapped:)];
+	self.navigationItem.rightBarButtonItem = rbbi;
 }
 
 #pragma mark - UITableViewDelegate
@@ -114,6 +120,13 @@ static NSInteger const kAddCells = 2;
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	return NO;
+}
+
+#pragma mark - Redirecting to External Sites
+
+- (IBAction)iTunesButtonTapped:(UIBarButtonItem *)sender
+{
+	[[UIApplication sharedApplication] openURL:[self.album iTunesAttributedUrl]];
 }
 
 #pragma mark - Private Methods

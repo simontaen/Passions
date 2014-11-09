@@ -70,6 +70,11 @@
 	}
 }
 
+- (NSURL *)iTunesAttributedUrl
+{
+	return [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@", self.iTunesUrl, kITunesAffiliation]];
+}
+
 #pragma mark - adding / creating
 
 + (void)favoriteArtistByCurrentUser:(NSString *)artistName
