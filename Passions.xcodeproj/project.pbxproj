@@ -12,6 +12,8 @@
 		F40A50FA1A0E6C9F002C703C /* PASArtworkTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F40A50F81A0E6C9F002C703C /* PASArtworkTVCell.xib */; };
 		F40BBA6B18538DAD00877D60 /* PASAddFromMusicTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F40BBA6A18538DAD00877D60 /* PASAddFromMusicTVC.m */; };
 		F40BBA6E1853908700877D60 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F40BBA6D1853908700877D60 /* MediaPlayer.framework */; };
+		F418E4291A0FECDF0027BDCE /* PASAlbumInfoTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F418E4271A0FECDF0027BDCE /* PASAlbumInfoTVCell.m */; };
+		F418E42A1A0FECDF0027BDCE /* PASAlbumInfoTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F418E4281A0FECDF0027BDCE /* PASAlbumInfoTVCell.xib */; };
 		F42422A519CD8FCA0097C0F1 /* PASInteractiveTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = F42422A419CD8FCA0097C0F1 /* PASInteractiveTransition.m */; };
 		F424EE2E19B656D40010B3E1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F424EE2D19B656D40010B3E1 /* AudioToolbox.framework */; };
 		F424EE3019B656DD0010B3E1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F424EE2F19B656DD0010B3E1 /* CFNetwork.framework */; };
@@ -73,6 +75,9 @@
 		F40BBA6918538DAD00877D60 /* PASAddFromMusicTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddFromMusicTVC.h; sourceTree = "<group>"; };
 		F40BBA6A18538DAD00877D60 /* PASAddFromMusicTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAddFromMusicTVC.m; sourceTree = "<group>"; };
 		F40BBA6D1853908700877D60 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		F418E4261A0FECDF0027BDCE /* PASAlbumInfoTVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAlbumInfoTVCell.h; sourceTree = "<group>"; };
+		F418E4271A0FECDF0027BDCE /* PASAlbumInfoTVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAlbumInfoTVCell.m; sourceTree = "<group>"; };
+		F418E4281A0FECDF0027BDCE /* PASAlbumInfoTVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PASAlbumInfoTVCell.xib; sourceTree = "<group>"; };
 		F42422A319CD8FCA0097C0F1 /* PASInteractiveTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASInteractiveTransition.h; sourceTree = "<group>"; };
 		F42422A419CD8FCA0097C0F1 /* PASInteractiveTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASInteractiveTransition.m; sourceTree = "<group>"; };
 		F424EE2D19B656D40010B3E1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -200,6 +205,9 @@
 				F40A50F61A0E6C9F002C703C /* PASArtworkTVCell.h */,
 				F40A50F71A0E6C9F002C703C /* PASArtworkTVCell.m */,
 				F40A50F81A0E6C9F002C703C /* PASArtworkTVCell.xib */,
+				F418E4261A0FECDF0027BDCE /* PASAlbumInfoTVCell.h */,
+				F418E4271A0FECDF0027BDCE /* PASAlbumInfoTVCell.m */,
+				F418E4281A0FECDF0027BDCE /* PASAlbumInfoTVCell.xib */,
 			);
 			name = "Artwork Cells";
 			sourceTree = "<group>";
@@ -476,6 +484,7 @@
 				F4A779821793113E00C770B9 /* InfoPlist.strings in Resources */,
 				F4256EC419EB1AAB00B9D95B /* PASExtendedNavContainer.xib in Resources */,
 				F4EC62C019E66ADF009C5EF5 /* Images.xcassets in Resources */,
+				F418E42A1A0FECDF0027BDCE /* PASAlbumInfoTVCell.xib in Resources */,
 				F4D6C4B419BFAB8800465781 /* PASArtistTVCell.xib in Resources */,
 				F453BF4C1A0D4E430068FE6D /* PASArtworkCVCell.xib in Resources */,
 				F40A50FA1A0E6C9F002C703C /* PASArtworkTVCell.xib in Resources */,
@@ -557,6 +566,7 @@
 				F4589D3D19C240D500E17D49 /* PASPageViewController.m in Sources */,
 				F4BB585E19E9F23600221912 /* PASAddingPVC.m in Sources */,
 				F40A50F91A0E6C9F002C703C /* PASArtworkTVCell.m in Sources */,
+				F418E4291A0FECDF0027BDCE /* PASAlbumInfoTVCell.m in Sources */,
 				F4D6C4B319BFAB8800465781 /* PASArtistTVCell.m in Sources */,
 				F4B8B0B919E060AD00E1064D /* CPFQueryCollectionViewController.m in Sources */,
 				F43402131A09951200A3D83C /* MPMediaItemCollection+Passions.m in Sources */,
