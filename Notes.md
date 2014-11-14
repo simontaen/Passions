@@ -60,7 +60,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Faving an artist in spotify only shows the faved artist in music after dismissing and showing music again
 
 ## Fav Artists
-* Spinner on delete
 
 ## Timeline
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)

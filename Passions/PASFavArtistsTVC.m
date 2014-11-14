@@ -102,7 +102,12 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	// I can't remove the Artist from self.objects manually, need to reload, but seems to slow for the animation.
+	PASArtistTVCell *cell = (PASArtistTVCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+	
 	[tableView beginUpdates];
+	[cell.activityIndicator startAnimating];
+	cell.activityIndicator.hidden = NO;
+
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
 		PASArtist *artist = [self _artistAtIndexPath:indexPath];
 		
@@ -113,9 +118,14 @@
 																	object:self
 																  userInfo:@{ kPASDidEditFavArtists : [NSNumber numberWithBool:YES] }];
 			}
+			
+			dispatch_async(dispatch_get_main_queue(), ^{
+				cell.activityIndicator.hidden = YES;
+				[cell.activityIndicator stopAnimating];
+				[tableView endUpdates];
+			});
 		}];
 	}
-	[tableView endUpdates];
 }
 
 #pragma mark - UITableViewDelegate
