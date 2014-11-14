@@ -164,6 +164,14 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 			sourceImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:requestURL]];
 		}
 		
+		if (!sourceImage) {
+			if ([entity isKindOfClass:[PASAlbum class]]) {
+				sourceImage = [PASResources albumThumbnailPlaceholder];
+			} else {
+				sourceImage = [PASResources artistThumbnailPlaceholder];
+			}
+		}
+		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			completionBlock(sourceImage);
 		});

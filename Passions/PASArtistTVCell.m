@@ -74,7 +74,7 @@
 											 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
 												 // check if this cell hasn't been reused for a different artist
 												 if (artist == self.entity) {
-													 self.artistImage.image = image ?: [PASResources artistThumbnailPlaceholder];
+													 self.artistImage.image = image;
 												 }
 											 }];
 }

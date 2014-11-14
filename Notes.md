@@ -63,7 +63,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## Timeline
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
-* Show the Album placeholder without the release Date when loading (instead of nil)
+* Show a spinner on the Artwork cell images when loading
 
 ## Artist and Album Info
 * Opening App several times from a Push stacks the new Album Info views on top of each other (discard any that is showing)

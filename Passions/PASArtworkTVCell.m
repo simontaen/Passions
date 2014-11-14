@@ -23,14 +23,13 @@
 		_entity = album;
 		
 		[self _loadThumbnailImageForEntity:album
-							withFormatName:ImageFormatNameAlbumThumbnailLarge
-							   placeholder:[PASResources albumThumbnailPlaceholder]];
+							withFormatName:ImageFormatNameAlbumThumbnailLarge];
 	}
 }
 
 #pragma mark - Private Methods
 
-- (void)_loadThumbnailImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName placeholder:(UIImage *)placeholder
+- (void)_loadThumbnailImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName
 {
 	// clear the image to avoid seeing old images when scrolling
 	self.artworkImage.image = nil;
@@ -40,7 +39,7 @@
 											 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
 												 // check if this image view hasn't been reused for a different entity
 												 if (entity == self.entity) {
-													 self.artworkImage.image = image ?: placeholder;
+													 self.artworkImage.image = image;
 												 }
 											 }];
 }
