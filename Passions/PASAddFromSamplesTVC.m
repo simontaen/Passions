@@ -14,6 +14,7 @@
 #import "PASSourceImage.h"
 #import "PASManageArtists.h"
 #import "UIColor+Utils.h"
+#import "PASPageViewController.h"
 
 @interface PASAddFromSamplesTVC ()
 
@@ -385,8 +386,8 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	cell.userInteractionEnabled = NO;
 	cell.starButton.hidden = YES;
 	[cell.activityIndicator startAnimating];
-	self.navigationController.navigationItem.rightBarButtonItem.enabled = NO;
-	self.navigationController.navigationItem.leftBarButtonItem.enabled = NO;
+	self.pageViewController.navigationItem.rightBarButtonItem.enabled = NO;
+	self.pageViewController.navigationItem.leftBarButtonItem.enabled = NO;
 	
 	[[PASManageArtists sharedMngr] didSelectArtistWithName:[self nameForArtist:[self _artistForIndexPath:indexPath]]
 												completion:^(NSError *error) {
@@ -394,8 +395,8 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 														[cell.activityIndicator stopAnimating];
 														cell.starButton.hidden = NO;
 														cell.userInteractionEnabled = YES;
-														self.navigationController.navigationItem.rightBarButtonItem.enabled = YES;
-														self.navigationController.navigationItem.leftBarButtonItem.enabled = YES;
+														self.pageViewController.navigationItem.rightBarButtonItem.enabled = YES;
+														self.pageViewController.navigationItem.leftBarButtonItem.enabled = YES;
 														
 														if (error) {
 															[self _handleError:error];
