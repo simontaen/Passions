@@ -65,7 +65,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Artist and Album Info
 * Opening App several times from a Push stacks the new Album Info views on top of each other (discard any that is showing)
 * Switch to FavArtists when opening from a Push (pageControl Index?)
-* Artist Info: no image leads to misplaced releasedate view (for a short period before it appears)
+* Artist Info: no image leads to misplaced releasedate view (for a short period before it appears) - changed FCIImageCache maximumCount
 
 # 2.0
 

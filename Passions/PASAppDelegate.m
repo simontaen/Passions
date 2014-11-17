@@ -124,7 +124,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 																			 family:ImageFormatFamilyAlbumThumbnails
 																		  imageSize:ImageFormatImageSizeAlbumThumbnailLarge
 																			  style:FICImageFormatStyle32BitBGR
-																	   maximumCount:100
+																	   maximumCount:800
 																			devices:FICImageFormatDevicePhone
 																	 protectionMode:FICImageFormatProtectionModeNone];
 	FICImageFormat *smallArtistThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameArtistThumbnailSmall
@@ -138,7 +138,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 																			  family:ImageFormatFamilyArtistThumbnails
 																		   imageSize:ImageFormatImageSizeArtistThumbnailLarge
 																			   style:FICImageFormatStyle32BitBGR
-																		maximumCount:50
+																		maximumCount:200
 																			 devices:FICImageFormatDevicePhone
 																	  protectionMode:FICImageFormatProtectionModeNone];
 	FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
@@ -180,6 +180,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (BOOL)imageCache:(FICImageCache *)imageCache shouldProcessAllFormatsInFamily:(NSString *)formatFamily forEntity:(id<FICEntity>)entity
 {
+	// you really should have the same maximumCount across the whole formatFamily if this is YES
 	return YES;
 }
 
