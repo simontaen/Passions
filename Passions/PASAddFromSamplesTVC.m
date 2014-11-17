@@ -385,8 +385,8 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	cell.userInteractionEnabled = NO;
 	cell.starButton.hidden = YES;
 	[cell.activityIndicator startAnimating];
-	self.parentViewController.parentViewController.navigationItem.rightBarButtonItem.enabled = NO;
-	self.parentViewController.parentViewController.navigationItem.leftBarButtonItem.enabled = NO;
+	self.navigationController.navigationItem.rightBarButtonItem.enabled = NO;
+	self.navigationController.navigationItem.leftBarButtonItem.enabled = NO;
 	
 	[[PASManageArtists sharedMngr] didSelectArtistWithName:[self nameForArtist:[self _artistForIndexPath:indexPath]]
 												completion:^(NSError *error) {
@@ -394,8 +394,8 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 														[cell.activityIndicator stopAnimating];
 														cell.starButton.hidden = NO;
 														cell.userInteractionEnabled = YES;
-														self.parentViewController.parentViewController.navigationItem.rightBarButtonItem.enabled = YES;
-														self.parentViewController.parentViewController.navigationItem.leftBarButtonItem.enabled = YES;
+														self.navigationController.navigationItem.rightBarButtonItem.enabled = YES;
+														self.navigationController.navigationItem.leftBarButtonItem.enabled = YES;
 														
 														if (error) {
 															[self _handleError:error];
