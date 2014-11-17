@@ -294,7 +294,9 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 {
 	[[PASManageArtists sharedMngr] passFavArtists:favArtists];
 	// refresh table view
-	[self.tableView reloadData];
+	if ([self isViewLoaded]) {
+		[self.tableView reloadData];
+	}
 }
 
 - (void)viewWillDisappear:(BOOL)animated
