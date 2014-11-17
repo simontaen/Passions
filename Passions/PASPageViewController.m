@@ -46,6 +46,9 @@
 @property (nonatomic, weak, readwrite) UIViewController *selectedViewController;
 @property (nonatomic, assign) BOOL interactive;
 
+// to get a sense of direction
+@property (nonatomic, assign) int previousViewControllerIndex;
+
 @property (strong, nonatomic) IBOutlet UIVisualEffectView *blurView;
 @property (nonatomic, weak) IBOutlet UIPageControl *pageControlView;
 @property (nonatomic, strong) PASInteractiveTransition *bla;
@@ -73,7 +76,7 @@
 	[super viewDidLoad];
 	
 	// hook up the page control
-	[self.pageControlView addTarget:self action:@selector(didChangeCurrentPage:) forControlEvents:UIControlEventValueChanged];
+	[self.pageControlView addTarget:self action:@selector(didChangeCurrentPage:) forControlEvents:UIControlEventTouchUpInside];
 	
 	// update the page control
 	self.pageControlView.numberOfPages = self.viewControllers.count;
@@ -191,7 +194,15 @@
 //			for (UIGestureRecognizer *gr in _selectedViewController.view.gestureRecognizers) {
 //				[self removeGestureRecognizerFromContainerView:gr];
 //			}
+			if (_selectedViewController) {
+				self.previousViewControllerIndex = [self.viewControllers indexOfObject:_selectedViewController];
+			} else {
+				// first time
+				self.previousViewControllerIndex = 0;
+			}
+			
 			_selectedViewController = newVc;
+			
 			self.title = newVc.title;
 			[self setNeedsStatusBarAppearanceUpdate];
 //			for (UIGestureRecognizer *gr in newVc.view.gestureRecognizers) {
@@ -238,8 +249,27 @@
 
 - (IBAction)didChangeCurrentPage:(UIPageControl *)sender
 {
-	if(sender.currentPage != self.selectedViewControllerIndex) {
-		[self transitionToViewControllerAtIndex:(int)sender.currentPage interactive:NO];
+	// reset to the current to it doesn't do an unintended switch
+	self.pageControlView.currentPage = self.selectedViewControllerIndex;
+	
+	if (self.selectedViewControllerIndex == 0) {
+		// go right if first is displayed
+		[self transitionToViewControllerAtIndex:1 interactive:NO];
+	} else if (self.selectedViewControllerIndex == self.viewControllers.count-1) {
+		// go left if last is displayed
+		[self transitionToViewControllerAtIndex:self.viewControllers.count-2 interactive:NO];
+	} else {
+		int delta = self.selectedViewControllerIndex - self.previousViewControllerIndex;
+		int target = self.selectedViewControllerIndex + delta;
+
+		
+		if (delta < 0 && target >= 0) {
+			// the delta indicates left and we can go left
+			[self transitionToViewControllerAtIndex:target interactive:NO];
+		} else {
+			// go right
+			[self transitionToViewControllerAtIndex:self.selectedViewControllerIndex+1 interactive:NO];
+		}
 	}
 }
 
