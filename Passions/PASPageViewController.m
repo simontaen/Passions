@@ -198,8 +198,12 @@
 //				[self addGestureRecognizerToContainerView:gr];
 //			}
 			if ([newVc conformsToProtocol:@protocol(PASPageViewControllerChildDelegate)]) {
+				id<PASPageViewControllerChildDelegate> childDelegate = (id<PASPageViewControllerChildDelegate>)newVc;
 				if ([newVc respondsToSelector:@selector(PAS_currentPageIndicatorTintColor)]) {
-					self.pageControlView.currentPageIndicatorTintColor = [(id<PASPageViewControllerChildDelegate>)newVc PAS_currentPageIndicatorTintColor];
+					self.pageControlView.currentPageIndicatorTintColor = [childDelegate PAS_currentPageIndicatorTintColor];
+				}
+				if ([newVc respondsToSelector:@selector(PAS_leftBarButtonItem)]) {
+					self.navigationItem.leftBarButtonItem = [childDelegate PAS_leftBarButtonItem];
 				}
 			}
 			self.pageControlView.currentPage = self.selectedViewControllerIndex;
