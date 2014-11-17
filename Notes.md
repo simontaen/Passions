@@ -43,7 +43,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Assertion failures when using the PVC (see crash logs), crash when sliding
 * Show an [MPProgressHUD](https://github.com/jdg/MBProgressHUD) when waiting is expected and unavoidable (think about earlier caching if you must)
 	* Splash screen or MBProgressHUD on launch when loading the Timeline
-	* also on Artist Info this could be good (any Time we change the Parse Query basically)
+	* also on Artist Info this could be good (any Time we change the Parse Query basically) - added cache Policy
 
 ### Spotify Integration
 * Fall back to Spotify if Music App does not seem to be used. But to what Artists? Current Top Artists?

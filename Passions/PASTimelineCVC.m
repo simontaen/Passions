@@ -97,7 +97,11 @@
 - (PFQuery *)queryForCollection
 {
 	if ([PFUser currentUser].objectId) {
-		return [PASAlbum albumsOfCurrentUsersFavoriteArtists];
+		PFQuery *query = [PASAlbum albumsOfCurrentUsersFavoriteArtists];
+		if (self.objects.count == 0) {
+			query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+		}
+		return query;
 	}
 	NSLog(@"CurrentUser not ready for Timeline");
 	return nil; // shows loading spinner
