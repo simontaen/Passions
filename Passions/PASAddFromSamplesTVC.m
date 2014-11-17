@@ -83,8 +83,8 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 		_sampleArtists = @[
 						   @"Beatles", @"Air", @"Pink Floid", @"Rammstein", @"Bloodhound Gang",
 						   @"Ancien Régime", @"Genius/GZA ", @"Belle & Sebastian", @"Björk",
-						   @"Ugress", @"ADELE", @"The Asteroids Galaxy Tour", @"Bar 9",
-						   @"Baskerville", @"Beastie Boys", @"Bee Gees", @"Bit Shifter",
+						   @"Ugress", @"ADELE", @"The Asteroids Galaxy Tour", @"Bar 9", @"Jennifer Rostock",
+						   @"Baskerville", @"Beastie Boys", @"Bee Gees", @"Bit Shifter", @"Garth Brooks",
 						   @"Bomfunk MC's", @"C-Mon & Kypski", @"The Cardigans", @"Carly Commando",
 						   @"Caro Emerald", @"Coldplay", @"Coolio", @"Cypress Hill", @"AC/DC",
 						   @"David Bowie", @"Dukes of Stratosphear", @"[dunkelbunt]",

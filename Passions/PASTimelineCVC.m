@@ -30,6 +30,7 @@
 	self.paginationEnabled = YES;
 	self.objectsPerPage = 500;
 	self.loadingViewEnabled = NO;
+	self.showSwipeHint = YES;
 	
 	// register to get notified when an album should be shown
 	[[NSNotificationCenter defaultCenter] addObserverForName:kPASShowAlbumDetails
@@ -105,24 +106,26 @@
 - (void)objectsDidLoad:(NSError *)error
 {
 	[super objectsDidLoad:error];
-	if (self.objects.count == 0 && !self.swipeLeftHint) {
-		UIImage *img = [PASResources swipeLeft];
-		CGFloat imgWidth = img.size.width;
-		CGFloat imgHeight = img.size.height;
-		
-		CGRect myFrame = CGRectMake(self.view.frame.size.width / 2 - imgWidth / 1.75, self.view.frame.size.height / 2 - imgHeight / 2, imgWidth, imgHeight);
-		UIButton *btn = [[UIButton alloc] initWithFrame:myFrame];
-		self.swipeLeftHint = btn;
-
-		[btn setImage:img forState:UIControlStateNormal];
-		btn.tintColor = [UIColor whiteColor];
-		btn.userInteractionEnabled = NO;
-		
-		[self.view addSubview:btn];
-		
-	} else if (self.objects.count > 0 && self.swipeLeftHint) {
-		[self.swipeLeftHint removeFromSuperview];
-		self.swipeLeftHint = nil;
+	if (self.showSwipeHint) {
+		if (self.objects.count == 0 && !self.swipeLeftHint) {
+			UIImage *img = [PASResources swipeLeft];
+			CGFloat imgWidth = img.size.width;
+			CGFloat imgHeight = img.size.height;
+			
+			CGRect myFrame = CGRectMake(self.view.frame.size.width / 2 - imgWidth / 1.75, self.view.frame.size.height / 2 - imgHeight / 2, imgWidth, imgHeight);
+			UIButton *btn = [[UIButton alloc] initWithFrame:myFrame];
+			self.swipeLeftHint = btn;
+			
+			[btn setImage:img forState:UIControlStateNormal];
+			btn.tintColor = [UIColor whiteColor];
+			btn.userInteractionEnabled = NO;
+			
+			[self.view addSubview:btn];
+			
+		} else if (self.objects.count > 0 && self.swipeLeftHint) {
+			[self.swipeLeftHint removeFromSuperview];
+			self.swipeLeftHint = nil;
+		}
 	}
 }
 

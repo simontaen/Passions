@@ -12,4 +12,7 @@
 /// Listens to kPASDidEditFavArtists and kPASShowAlbumDetails
 @interface PASTimelineCVC : CPFQueryCollectionViewController <UICollectionViewDelegateFlowLayout>
 
+/// Show swipe hints when no albums
+@property (nonatomic, assign) BOOL showSwipeHint;
+
 @end
