@@ -61,6 +61,10 @@
 														  [self _refreshUI];
 													  }
 												  }];
+
+	// instantiate the container so it can prepare caches
+	self.addVcContainer = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPVCNavVc"];
+	
 	return self;
 }
 
@@ -69,9 +73,6 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-
-	// instantiate the container so it can prepare caches
-	self.addVcContainer = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPVCNavVc"];
 	
 	// layout and look
 	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9 alpha:1.0];
