@@ -40,7 +40,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Artist fetch could fail and the iTunes Id would be empty then.
 
 ## General Functionality
-* Assertion failures when using the PVC (see crash logs)
+* Assertion failures when using the PVC (see crash logs), crash when sliding
 * Show an [MPProgressHUD](https://github.com/jdg/MBProgressHUD) when waiting is expected and unavoidable (think about earlier caching if you must)
 	* Splash screen or MBProgressHUD on launch when loading the Timeline
 	* also on Artist Info this could be good (any Time we change the Parse Query basically)
@@ -49,6 +49,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Fall back to Spotify if Music App does not seem to be used. But to what Artists? Current Top Artists?
 * Disable Scrolling when showing login on Spotify
 * Ability to change Spotify Account "Logout"
+* Add from spotify shows as first screen after first launch (why?)
 
 ## PageViewController Container
 * flickering when the transition gets aborted
@@ -60,6 +61,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Faving an artist in spotify only shows the faved artist in music after dismissing and showing music again
 
 ## Fav Artists
+* Selection retaining on FavArtists
 
 ## Timeline
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
@@ -69,7 +71,9 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Opening App several times from a Push stacks the new Album Info views on top of each other (discard any that is showing)
 * Switch to FavArtists when opening from a Push (pageControl Index?)
 * Aborting a swipe Back gesture hides the nav bar, no way to resolve (how to do this?)
-
+* Artist Info: 0 albums, 1 album
+	* Artist info shows slider hand on top of artist artwork when no album
+* Artist Info: no image leads to misplaced releasedate view (for a short period before it appears)
 
 # 2.0
 
