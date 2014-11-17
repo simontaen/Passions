@@ -81,7 +81,7 @@
 	[super viewWillAppear:animated];
 	
 	// Configure navigationController
-	// Needs to be in viewWillAppear since the Info VC's unhide the navigationBarHidden
+	// Needs to be in viewWillAppear to make it work with other VC's
 	self.navigationController.navigationBarHidden = YES;
 	self.pageViewController.pageControlHidden = NO;
 }

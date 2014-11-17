@@ -25,6 +25,12 @@ static NSInteger const kAddCells = 1;
 	
 	// Configure navigationController
 	self.title = self.artist.name;
+	
+	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithTitle:@"iTunes"
+															 style:UIBarButtonItemStylePlain
+															target:self
+															action:@selector(iTunesButtonTapped:)];
+	self.navigationItem.rightBarButtonItem = rbbi;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -33,15 +39,9 @@ static NSInteger const kAddCells = 1;
 	//[super viewWillAppear:animated];
 	
 	// Configure navigationController
-	// Needs to be in viewWillAppear since the Info VC's unhide the navigationBarHidden
+	// Needs to be in viewWillAppear to make it work with other VC's
 	self.navigationController.navigationBarHidden = NO;
 	self.pageViewController.pageControlHidden = YES;
-	
-	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithTitle:@"iTunes"
-															 style:UIBarButtonItemStylePlain
-															target:self
-															action:@selector(iTunesButtonTapped:)];
-	self.navigationItem.rightBarButtonItem = rbbi;
 }
 
 #pragma mark - CPFQueryCollectionViewController

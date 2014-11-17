@@ -10,6 +10,7 @@
 #import "PASArtworkTVCell.h"
 #import "PASAlbumInfoTVCell.h"
 #import "AJSITunesAPI.h"
+#import "PASPageViewController.h"
 
 @interface PASAlbumInfoTVC ()
 @property (nonatomic, strong) NSArray *tracks; // AJSITunesResult
@@ -57,13 +58,22 @@ static NSInteger const kAddCells = 2;
 
 	// Configure navigationController
 	self.title = @"Album Details";
-	self.navigationController.navigationBarHidden = NO;
 
 	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithTitle:@"iTunes"
 															 style:UIBarButtonItemStylePlain
 															target:self
 															action:@selector(iTunesButtonTapped:)];
 	self.navigationItem.rightBarButtonItem = rbbi;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	
+	// Configure navigationController
+	// Needs to be in viewWillAppear to make it work with other VC's
+	self.navigationController.navigationBarHidden = NO;
+	self.pageViewController.pageControlHidden = YES;
 }
 
 #pragma mark - UITableViewDelegate

@@ -87,6 +87,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
+	
+	// Configure navigationController
+	// Needs to be in viewWillAppear to make it work with other VC's
+	self.navigationController.navigationBarHidden = NO;
 	self.pageViewController.pageControlHidden = NO;
 }
 
