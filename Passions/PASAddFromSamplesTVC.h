@@ -27,8 +27,9 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 // When returning to the presenting Vc
 - (BOOL)didEditArtists;
 
-// Initialize all caches;
+// Caches handling
 - (void)prepareCaches;
+- (void)clearCaches;
 
 // UISegmentedControl Action
 - (IBAction)segmentChanged:(UISegmentedControl *)sender;

@@ -290,6 +290,17 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	});
 }
 
+- (void)clearCaches
+{
+	self.cachedArtistsOrderedByName = nil;
+	self.cachedAlphabeticalSectionIndex = nil;
+	self.cachedAlphabeticalSections = nil;
+	
+	self.cachedArtistsOrderedByPlaycount = nil;
+	self.cachedPlaycountSectionIndex = nil;
+	self.cachedPlaycountSections = nil;
+}
+
 - (void)_receiveFavArtists:(NSArray *)favArtists
 {
 	[[PASManageArtists sharedMngr] passFavArtists:favArtists];

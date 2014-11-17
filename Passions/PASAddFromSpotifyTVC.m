@@ -10,10 +10,11 @@
 #import "UIColor+Utils.h"
 #import <Spotify/Spotify.h>
 #import "UICKeyChainStore.h"
+#import "PASPageViewController.h"
 
 @interface PASAddFromSpotifyTVC ()
-@property (nonatomic, weak) IBOutlet UIButton *spotifyLoginButton;
 @property (nonatomic, strong) SPTSession *session;
+@property (nonatomic, strong) id observer; // the NSNotificationCenter observer token
 
 @property (nonatomic, copy) void (^savedTracksForUserCallback)(NSError *error, id object);
 @property (nonatomic, strong) NSMutableDictionary *artists; // of NSString (artistName) -> SPTPartialArtist
@@ -81,6 +82,23 @@
 	}];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	
+	UIBarButtonItem *lbbi = [[UIBarButtonItem alloc] initWithTitle:@"Login"
+															 style:UIBarButtonItemStylePlain
+															target:self action:@selector(spotifyButtonTapped:)];
+	self.pageViewController.navigationItem.leftBarButtonItem = lbbi;
+	[self _configureSpotifyButton];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+	self.pageViewController.navigationItem.leftBarButtonItem = nil;
+}
+
 - (void)prepareCaches
 {
 	// Caches are updated when new data is received
@@ -94,6 +112,14 @@
 - (BOOL)_cachesAreReady
 {
 	return self.artists && self.artistsInProgress.count == 0 && self.fetchedAllArtists;
+}
+
+- (void)clearCaches
+{
+	[super clearCaches];
+	self.artists = nil;
+	self.artistsTracks = nil;
+	self.fetchedAllArtists = NO;
 }
 
 #pragma mark - Accessors
@@ -274,29 +300,36 @@
 
 #pragma mark - Spotify Auth
 
-- (void)_showLoginWithSpotify
+- (void)spotifyButtonTapped:(UIBarButtonItem *)sender
 {
-	UIImage *img = [PASResources spotifyLogin];
-	CGFloat imgWidth = img.size.width;
-	CGFloat imgHeight = img.size.height;
-	
-	CGRect myFrame = CGRectMake(self.view.frame.size.width / 2 - imgWidth / 2, self.view.frame.size.height / 2 - imgHeight / 2, imgWidth, imgHeight);
-	UIButton *btn = [[UIButton alloc] initWithFrame:myFrame];
-	self.spotifyLoginButton = btn;
-	
-	[btn setImage:img forState:UIControlStateNormal];
-	[btn addTarget:self action:@selector(_loginWithSpotify:) forControlEvents:UIControlEventTouchUpInside];
-	
-	[self.view addSubview:btn];
+	if (self.session) {
+		[UICKeyChainStore removeItemForKey:NSStringFromClass([self class])];
+		self.session = nil;
+		[self clearCaches];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self.tableView reloadData];
+			[self _configureSpotifyButton];
+		});
+		
+	} else {
+		NSURL *loginPageURL = [[SPTAuth defaultInstance] loginURLForClientId:kPASSpotifyClientId
+														 declaredRedirectURL:[PASResources	spotifyCallbackUri]
+																	  scopes:@[SPTAuthUserLibraryRead]];
+		[[UIApplication sharedApplication] openURL:loginPageURL];
+	}
 }
 
--(IBAction)_loginWithSpotify:(UIButton *)sender
+- (void)_configureSpotifyButton
 {
-	self.spotifyLoginButton.userInteractionEnabled = NO;
-	NSURL *loginPageURL = [[SPTAuth defaultInstance] loginURLForClientId:kPASSpotifyClientId
-													 declaredRedirectURL:[PASResources	spotifyCallbackUri]
-																  scopes:@[SPTAuthUserLibraryRead]];
-	[[UIApplication sharedApplication] openURL:loginPageURL];
+	if (self.pageViewController.navigationItem.leftBarButtonItem) {
+		if (self.session) {
+			// logged in
+			self.pageViewController.navigationItem.leftBarButtonItem.title = @"Logout";
+		} else {
+			// logged out
+			self.pageViewController.navigationItem.leftBarButtonItem.title = @"Login";
+		}
+	}
 }
 
 - (void)_validateSessionWithCallback:(void (^)())completion
@@ -305,9 +338,6 @@
 	SPTAuthCallback authCallback = ^(NSError *error, SPTSession *session) {
 		if (error != nil) {
 			NSLog(@"%@", error);
-			// allow more attempts
-			self.spotifyLoginButton.userInteractionEnabled = YES;
-			self.spotifyLoginButton.hidden = NO;
 			
 		} else {
 			// We are authenticated, cleanup
@@ -317,34 +347,39 @@
 			// Persist the new session and fetch new data
 			self.session = session;
 			if (completion) {
-				completion();
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[self _configureSpotifyButton];
+					completion();
+				});
 			}
 			NSData *sessionData = [NSKeyedArchiver archivedDataWithRootObject:self.session];
 			[UICKeyChainStore setData:sessionData forKey:NSStringFromClass([self class])];
 		}
+		
 	};
 	
 	if (!self.session) {
-		// No valid session found, first register for nofications when done
-		[[NSNotificationCenter defaultCenter] addObserverForName:kPASSpotifyClientId
-														  object:nil queue:nil
-													  usingBlock:^(NSNotification *note) {
-														  id obj = note.userInfo[kPASSpotifyClientId];
-														  NSAssert([obj isKindOfClass:[NSURL class]], @"kPASSpotifyClientId must carry a NSURL");
-														  self.spotifyLoginButton.hidden = YES;
-														  // The user finished the authentication in Safari, handle it
-														  [[SPTAuth defaultInstance] handleAuthCallbackWithTriggeredAuthURL:(NSURL *)obj
-																							  tokenSwapServiceEndpointAtURL:[PASResources spotifyTokenSwap]
-																												   callback:authCallback];
-													  }];
-		// show login button
-		[self _showLoginWithSpotify];
+		if (!self.observer) {
+			// No valid session found, first register for nofications when done
+			self.observer = [[NSNotificationCenter defaultCenter] addObserverForName:kPASSpotifyClientId
+																			  object:nil queue:nil
+																		  usingBlock:^(NSNotification *note) {
+																			  id obj = note.userInfo[kPASSpotifyClientId];
+																			  NSAssert([obj isKindOfClass:[NSURL class]], @"kPASSpotifyClientId must carry a NSURL");
+																			  // The user finished the authentication in Safari, handle it
+																			  [[SPTAuth defaultInstance] handleAuthCallbackWithTriggeredAuthURL:(NSURL *)obj
+																												  tokenSwapServiceEndpointAtURL:[PASResources spotifyTokenSwap]
+																																	   callback:authCallback];
+																		  }];
+		}
 		
 	} else if (![self.session isValid]) {
 		// Renew the session
 		[[SPTAuth defaultInstance] renewSession:self.session withServiceEndpointAtURL:[PASResources spotifyTokenRefresh] callback:authCallback];
 		
 	} else if (completion) {
+		// update button status
+		[self _configureSpotifyButton];
 		completion();
 	}
 }
