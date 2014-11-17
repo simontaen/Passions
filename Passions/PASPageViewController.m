@@ -195,7 +195,7 @@
 //				[self removeGestureRecognizerFromContainerView:gr];
 //			}
 			if (_selectedViewController) {
-				self.previousViewControllerIndex = [self.viewControllers indexOfObject:_selectedViewController];
+				self.previousViewControllerIndex = (int)[self.viewControllers indexOfObject:_selectedViewController];
 			} else {
 				// first time
 				self.previousViewControllerIndex = 0;
