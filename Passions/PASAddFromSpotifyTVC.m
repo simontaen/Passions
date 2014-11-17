@@ -15,6 +15,7 @@
 @interface PASAddFromSpotifyTVC ()
 @property (nonatomic, strong) SPTSession *session;
 @property (nonatomic, strong) id observer; // the NSNotificationCenter observer token
+@property (nonatomic, strong) UIBarButtonItem *spotifyButton;
 
 @property (nonatomic, copy) void (^savedTracksForUserCallback)(NSError *error, id object);
 @property (nonatomic, strong) NSMutableDictionary *artists; // of NSString (artistName) -> SPTPartialArtist
@@ -62,6 +63,18 @@
 	return self;
 }
 
+#pragma mark - Accessors
+
+- (UIBarButtonItem *)spotifyButton
+{
+	if (!_spotifyButton) {
+		_spotifyButton = [[UIBarButtonItem alloc] initWithTitle:@""
+														  style:UIBarButtonItemStylePlain
+														 target:self action:@selector(spotifyButtonTapped:)];
+	}
+	return _spotifyButton;
+}
+
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
@@ -85,11 +98,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	
-	UIBarButtonItem *lbbi = [[UIBarButtonItem alloc] initWithTitle:@"Login"
-															 style:UIBarButtonItemStylePlain
-															target:self action:@selector(spotifyButtonTapped:)];
-	self.pageViewController.navigationItem.leftBarButtonItem = lbbi;
+	self.pageViewController.navigationItem.leftBarButtonItem = self.spotifyButton;
 	[self _configureSpotifyButton];
 }
 
