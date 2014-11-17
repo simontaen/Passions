@@ -83,7 +83,7 @@
 
 - (NSArray *)artistCollectionsOrderedByPlaycount
 {
-	if (_artistCollectionsOrderedByPlaycount) {
+	if (!_artistCollectionsOrderedByPlaycount) {
 		[self prepareCaches];
 	}
 	return _artistCollectionsOrderedByPlaycount;
@@ -124,6 +124,9 @@
 	}];
 	
 	self.artistPlaycounts = [NSDictionary dictionaryWithDictionary:artistPlaycounts];
+	
+	// this is the call during transitioning
+	[self usesMusicApp];
 }
 
 #pragma mark - Private Static Helpers
