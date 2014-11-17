@@ -18,6 +18,7 @@
 
 @interface PASArtistTVCell()
 @property (nonatomic, strong) id<FICEntity> entity;
+@property (nonatomic, strong) id observer; // the NSNotificationCenter observer token
 @end
 
 @implementation PASArtistTVCell
@@ -46,13 +47,25 @@
 	
 	if (![artist isKindOfClass:[PASArtist class]]) {
 		// Update the star button image as isFav could have changed externally
-		BOOL isFav = [[PASManageArtists sharedMngr] isFavoriteArtist:name];
-		UIImage *img = isFav ? [PASResources favoritedStar] : [PASResources outlinedStar];
-		[self.starButton setImage:img forState:UIControlStateNormal];
-		[self.starButton setImage:img forState:UIControlStateHighlighted];
-		[self.starButton setImage:img forState:UIControlStateSelected];
-		self.starButton.tintColor = [UIColor starTintColor];
+		[self _updateStarButton];
+		
+		if (!self.observer) {
+			// Register for single Artist updates when faving
+			self.observer = [[NSNotificationCenter defaultCenter] addObserverForName:kPASDidEditArtistWithName
+																			  object:nil queue:nil usingBlock:^(NSNotification *note) {
+																				  id obj = note.userInfo[kPASDidEditArtistWithName];
+																				  NSAssert([obj isKindOfClass:[NSString class]], @"kPASDidEditArtistWithName must carry a NSString");
+																				  NSString *artistName = (NSString *)obj;
+																				  
+																				  dispatch_async(dispatch_get_main_queue(), ^{
+																					  if ([artistName isEqualToString:self.artistName.text]) {
+																						  [self _updateStarButton];
+																					  }
+																				  });
+																			  }];
+		}
 	}
+	
 }
 
 #pragma mark - IBActions
@@ -63,6 +76,16 @@
 }
 
 #pragma mark - Private Methods
+
+- (void)_updateStarButton
+{
+	BOOL isFav = [[PASManageArtists sharedMngr] isFavoriteArtist:self.artistName.text];
+	UIImage *img = isFav ? [PASResources favoritedStar] : [PASResources outlinedStar];
+	[self.starButton setImage:img forState:UIControlStateNormal];
+	[self.starButton setImage:img forState:UIControlStateHighlighted];
+	[self.starButton setImage:img forState:UIControlStateSelected];
+	self.starButton.tintColor = [UIColor starTintColor];
+}
 
 - (void)_loadThumbnailImageForArtist:(id<FICEntity>)artist
 {

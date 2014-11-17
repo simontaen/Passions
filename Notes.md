@@ -56,7 +56,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Cells
 
 ## Adding
-* Faving an artist in spotify only shows the faved artist in music after dismissing and showing music again
 
 ## Fav Artists
 * Selection retaining on FavArtists

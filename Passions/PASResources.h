@@ -19,6 +19,8 @@ extern NSString * const kPASSpotifyClientId;
 
 // Notification received when favorite Artists have been edited
 extern NSString * const kPASDidEditFavArtists;
+// Notification received when a specific Artist has benn edited
+extern NSString * const kPASDidEditArtistWithName;
 
 // Notification received when album details should be shown for the passed Album
 extern NSString * const kPASShowAlbumDetails;

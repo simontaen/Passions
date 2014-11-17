@@ -112,6 +112,9 @@
 						[self.justFavArtistNames removeObject:resolvedName];
 					}
 					
+					[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditArtistWithName
+																		object:self
+																	  userInfo:@{kPASDidEditArtistWithName : resolvedName}];
 					if (completion) {
 						completion(nil);
 					}
@@ -142,6 +145,9 @@
 												[self.justFavArtistNames addObject:parseArtistName];
 												[self.justFavArtists addObject:artist];
 												
+												[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditArtistWithName
+																									object:self
+																								  userInfo:@{kPASDidEditArtistWithName : parseArtistName}];
 												if (completion) {
 													completion(nil);
 												}

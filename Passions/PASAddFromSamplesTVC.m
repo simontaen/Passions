@@ -390,9 +390,9 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 														
 														if (error) {
 															[self _handleError:error];
-														} else {
-															[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 														}
+														// in success case the cell is reloaded
+														// by the kPASDidEditArtistWithName Notification
 													});
 												}];
 }
