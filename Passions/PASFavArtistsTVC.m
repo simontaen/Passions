@@ -34,6 +34,7 @@
 	// no paging, I don't expect >200 fav artists
 	self.paginationEnabled = NO;
 	self.edgesForExtendedLayout = UIRectEdgeLeft|UIRectEdgeBottom|UIRectEdgeRight;
+	self.clearsSelectionOnViewWillAppear = YES;
 
 	// Setup navigationBar
 	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd

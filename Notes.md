@@ -58,7 +58,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Adding
 
 ## Fav Artists
-* Selection retaining on FavArtists
 
 ## Timeline
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
