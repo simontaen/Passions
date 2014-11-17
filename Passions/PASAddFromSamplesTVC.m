@@ -52,15 +52,6 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if (!self) return nil;
 	
-	// register to receive already favorited artists
-	[[NSNotificationCenter defaultCenter] addObserverForName:kPASSetFavArtists
-													  object:nil queue:nil
-												  usingBlock:^(NSNotification *note) {
-													  // get fav artists from the notification
-													  id obj = note.userInfo[kPASSetFavArtists];
-													  NSAssert([obj isKindOfClass:[NSArray class]], @"kPASSetFavArtists must carry a NSArray");
-													  [self _receiveFavArtists:(NSArray *)obj];
-												  }];
 	// Prepare the Manager
 	[PASManageArtists sharedMngr];
 	
@@ -227,11 +218,6 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 #pragma mark - Subclassing
 
-- (BOOL)didEditArtists
-{
-	return [[PASManageArtists sharedMngr] didEditArtists];
-}
-
 - (NSString *)nameForArtist:(id)artist
 {
 	NSAssert([artist isKindOfClass:[NSString class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([PASAddFromSamplesTVC class]), NSStringFromClass([artist class]));
@@ -299,15 +285,6 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	self.cachedArtistsOrderedByPlaycount = nil;
 	self.cachedPlaycountSectionIndex = nil;
 	self.cachedPlaycountSections = nil;
-}
-
-- (void)_receiveFavArtists:(NSArray *)favArtists
-{
-	[[PASManageArtists sharedMngr] passFavArtists:favArtists];
-	// refresh table view
-	if ([self isViewLoaded]) {
-		[self.tableView reloadData];
-	}
 }
 
 - (void)viewWillDisappear:(BOOL)animated

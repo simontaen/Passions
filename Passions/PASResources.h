@@ -17,8 +17,6 @@ extern NSString * const kPASLastFmApiKey;
 
 extern NSString * const kPASSpotifyClientId;
 
-// Notification sent to pass the already favorited Artists
-extern NSString * const kPASSetFavArtists;
 // Notification received when favorite Artists have been edited
 extern NSString * const kPASDidEditFavArtists;
 

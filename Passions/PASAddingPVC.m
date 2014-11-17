@@ -10,6 +10,7 @@
 #import "PASExtendedNavContainer.h"
 #import "PASFavArtistsTVC.h"
 #import "UIColor+Utils.h"
+#import "PASManageArtists.h"
 
 @interface PASAddingPVC ()
 @property (weak, nonatomic) UIImageView *navHairline;
@@ -91,7 +92,7 @@
 
 - (IBAction)doneButtonTapped:(UIBarButtonItem *)sender
 {
-	BOOL didEditArtists = [((PASExtendedNavContainer*) self.selectedViewController).addTvc didEditArtists];
+	BOOL didEditArtists = [[PASManageArtists sharedMngr] didEditArtists];
 	[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditFavArtists
 														object:self
 													  userInfo:@{ kPASDidEditFavArtists : [NSNumber numberWithBool:didEditArtists] }];

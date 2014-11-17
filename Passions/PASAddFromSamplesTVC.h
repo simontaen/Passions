@@ -14,7 +14,6 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 	PASAddArtistsSortOrderByPlaycount
 };
 
-// Listens for kPASSetFavArtists Notifications to receive already favorited Artists
 @interface PASAddFromSamplesTVC : UITableViewController
 
 // Formatting Blocks
@@ -23,9 +22,6 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 
 // Mapping an index, usually from a UISegmentedControl, to a sort order.
 - (PASAddArtistsSortOrder)sortOrderForIndex:(NSInteger)idx;
-
-// When returning to the presenting Vc
-- (BOOL)didEditArtists;
 
 // Caches handling
 - (void)prepareCaches;

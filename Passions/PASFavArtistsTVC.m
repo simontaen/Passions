@@ -13,6 +13,7 @@
 #import "FICImageCache.h"
 #import "UIColor+Utils.h"
 #import "PASArtistInfoCVC.h"
+#import "PASManageArtists.h"
 
 @interface PASFavArtistsTVC()
 @property (nonatomic, strong) UIViewController *addVcContainer;
@@ -185,9 +186,7 @@
 
 - (IBAction)addButtonTapped:(UIBarButtonItem *)sender
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:kPASSetFavArtists
-														object:self
-													  userInfo:@{ kPASSetFavArtists : self.objects }];
+	[[PASManageArtists sharedMngr] passFavArtists:self.objects];
 	[self presentViewController:self.addVcContainer animated:YES completion:nil];
 }
 
