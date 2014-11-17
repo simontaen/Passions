@@ -70,5 +70,4 @@
 // By convention this is to be implemented by the Child View Controllers
 @optional
 - (UIColor *)PAS_currentPageIndicatorTintColor;
-- (UIBarButtonItem *)PAS_leftBarButtonItem;
 @end

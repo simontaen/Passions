@@ -14,7 +14,7 @@
 
 CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 
-@interface PASExtendedNavContainer () <PASPageViewControllerChildDelegate>
+@interface PASExtendedNavContainer ()
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UIToolbar *segmentBar;
@@ -110,14 +110,6 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 - (UIColor *)PAS_currentPageIndicatorTintColor
 {
 	return [self.addTvc chosenTintColor];
-}
-
-- (UIBarButtonItem *)PAS_leftBarButtonItem
-{
-	if ([self.addTvc respondsToSelector:@selector(PAS_leftBarButtonItem)]) {
-		return [(id<PASPageViewControllerChildDelegate>)self.addTvc PAS_leftBarButtonItem];
-	}
-	return nil;
 }
 
 @end
