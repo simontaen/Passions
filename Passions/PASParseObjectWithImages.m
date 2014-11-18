@@ -26,7 +26,7 @@
 
 - (NSURL *)sourceImageURL
 {
-	if (!_sourceImageURL) {
+	if (!_sourceImageURL && [self.images firstObject]) {
 		NSString *url;
 		if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || self.images.count < 4) {
 			url = [self.images firstObject];
