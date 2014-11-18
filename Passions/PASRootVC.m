@@ -27,7 +27,8 @@
 	[[NSNotificationCenter defaultCenter] addObserverForName:kPASShowAlbumDetails
 													  object:nil queue:nil
 												  usingBlock:^(NSNotification *note) {
-													  [self transitionToViewControllerAtIndex:1 interactive:NO];
+													  // Show Timeline when push arrives
+													  [self transitionToViewControllerAtIndex:0 interactive:NO];
 												  }];
 	[[NSNotificationCenter defaultCenter] addObserverForName:kPASDidFavoriteInitialArtists
 													  object:nil queue:nil
