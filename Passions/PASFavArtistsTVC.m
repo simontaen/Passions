@@ -70,16 +70,8 @@
 {
 	[super viewDidLoad];
 	
-	// I'm trying to launch the transition as fast as possible
-	dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
-	int64_t delay = 0.5 * NSEC_PER_SEC;
-	int64_t leeway = 0.2 * NSEC_PER_SEC;
-	dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, delay , leeway);
-	dispatch_source_set_event_handler(timer, ^{
-		// instantiate the container so it can prepare caches
-		self.addVcContainer = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPVCNavVc"];
-	});
-	dispatch_resume(timer);
+	// instantiate the container so it can prepare caches
+	self.addVcContainer = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPVCNavVc"];
 
 	// layout and look
 	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9 alpha:1.0];
