@@ -186,9 +186,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)imageCache:(FICImageCache *)imageCache errorDidOccurWithMessage:(NSString *)errorMessage
 {
-	if (![errorMessage containsString:@"nil source image URL for image format"]) {
-		NSLog(@"%@", errorMessage);
-	}
+	NSLog(@"%@", errorMessage);
 }
 
 #pragma mark - Notifications
