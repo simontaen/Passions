@@ -186,6 +186,11 @@
 	PASAlbumInfoTVC *vc = [PASAlbumInfoTVC new];
 	vc.album = album;
 	
+	if (![self.navigationController.topViewController isKindOfClass:[self class]]) {
+		// Timeline is presenting something, dismiss it first
+		[self.navigationController popToRootViewControllerAnimated:YES];
+	}
+	
 	self.pageViewController.pageControlHidden = YES;
 	[self.navigationController pushViewController:vc animated:YES];
 }
