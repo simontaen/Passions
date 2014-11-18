@@ -9,6 +9,7 @@
 #import "PASParseObjectWithImages.h"
 #import "FICUtilities.h"
 #import "UIImage+Utils.h"
+#import "PASAlbum.h"
 
 @interface PASParseObjectWithImages ()
 @property (nonatomic, copy, readwrite) NSString *UUID;
@@ -24,6 +25,7 @@
 
 #pragma mark - Accessors
 
+// returns nil or a url from parse
 - (NSURL *)sourceImageURL
 {
 	if (!_sourceImageURL && [self.images firstObject]) {
@@ -41,6 +43,7 @@
 
 #pragma mark - FICEntity
 
+// generate a UUID, if it succeeds store it and keep returning it, if it fails return a dummy
 - (NSString *)UUID
 {
 	if (_UUID == nil) {
@@ -52,7 +55,31 @@
 		}
 	}
 	
-	return _UUID;
+	if (_UUID) {
+		return _UUID;
+	} else {
+		// this is pretty hacky, but like this
+		// FCI will "fetch" and process the placeholder once
+		// for all PASParseObjectWithImages objects
+		if ([self isKindOfClass:[PASAlbum class]]) {
+			static NSString *dummyAlbumUUID;
+			static dispatch_once_t albumOnce;
+			dispatch_once(&albumOnce, ^{
+				CFUUIDBytes dummyAlbumUUIDBytes = FICUUIDBytesFromMD5HashOfString(@"album");
+				dummyAlbumUUID = FICStringWithUUIDBytes(dummyAlbumUUIDBytes);
+			});
+			return dummyAlbumUUID;
+			
+		} else {
+			static NSString *dummyOthersUUID;
+			static dispatch_once_t othersOnce;
+			dispatch_once(&othersOnce, ^{
+				CFUUIDBytes dummyOthersUUIDBytes = FICUUIDBytesFromMD5HashOfString(@"artist");
+				dummyOthersUUID = FICStringWithUUIDBytes(dummyOthersUUIDBytes);
+			});
+			return dummyOthersUUID;
+		}
+	};
 }
 
 - (NSString *)sourceImageUUID
@@ -62,7 +89,13 @@
 
 - (NSURL *)sourceImageURLWithFormatName:(NSString *)formatName
 {
-	return self.sourceImageURL;
+	if (self.sourceImageURL) {
+		return self.sourceImageURL;
+	} else {
+		// This does not HAVE to be a valid URL
+		// FIC uses this to key the pending requests
+		return [NSURL URLWithString:self.UUID];
+	}
 }
 
 - (FICEntityImageDrawingBlock)drawingBlockForImage:(UIImage *)image withFormatName:(NSString *)formatName
