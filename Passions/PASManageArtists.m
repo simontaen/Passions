@@ -182,9 +182,8 @@
 		NSLog(@"The user doesn't seem to use the Music App");
 		// still send the notification
 		[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists object:nil];
-	}
 	
-	if (topArtists.count > 2) {
+	} else if (topArtists.count > 2) {
 		int __block doneCounter = 0;
 		
 		for (int i = 0; i < 3; i++) {

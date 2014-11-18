@@ -47,7 +47,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ### Spotify Integration
 * Fall back to Spotify if Music App does not seem to be used. But to what Artists? Current Top Artists?
-* Add from spotify shows as first screen after first launch (why?)
 
 ## PageViewController Container
 * flickering when the transition gets aborted
