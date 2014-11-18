@@ -33,8 +33,11 @@
 	[[NSNotificationCenter defaultCenter] addObserverForName:kPASDidFavoriteInitialArtists
 													  object:nil queue:nil
 												  usingBlock:^(NSNotification *note) {
-													  PASTimelineCVC *vc = (PASTimelineCVC *)self.selectedViewController;
-													  [vc loadObjects];
+													  UINavigationController *nav = (UINavigationController *)self.selectedViewController;
+													  UIViewController *vc = nav.topViewController;
+													  if ([vc isKindOfClass:[PASTimelineCVC class]]) {
+														  [((PASTimelineCVC *)vc) loadObjects];
+													  }
 													  // this is a one time only thing
 													  [[NSNotificationCenter defaultCenter] removeObserver:nil
 																									  name:kPASDidFavoriteInitialArtists
