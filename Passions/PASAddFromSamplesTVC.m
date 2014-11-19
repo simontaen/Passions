@@ -455,8 +455,8 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 		[alert addAction:alertAction];
 	}
 	
-	UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:defaultButton ?: @"OK"
-															style:UIAlertActionStyleDefault
+	UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:defaultButton ?: @"OK"
+															style:UIAlertActionStyleCancel
 														  handler:nil];
 	[alert addAction:defaultAction];
 	
