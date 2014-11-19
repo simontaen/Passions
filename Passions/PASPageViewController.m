@@ -257,7 +257,7 @@
 		[self transitionToViewControllerAtIndex:1 interactive:NO];
 	} else if (self.selectedViewControllerIndex == self.viewControllers.count-1) {
 		// go left if last is displayed
-		[self transitionToViewControllerAtIndex:self.viewControllers.count-2 interactive:NO];
+		[self transitionToViewControllerAtIndex:(int)self.viewControllers.count-2 interactive:NO];
 	} else {
 		int delta = self.selectedViewControllerIndex - self.previousViewControllerIndex;
 		int target = self.selectedViewControllerIndex + delta;
