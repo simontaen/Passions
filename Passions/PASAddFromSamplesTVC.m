@@ -286,6 +286,17 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	self.cachedPlaycountSections = nil;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	
+	if (self.alertController) {
+		[self presentViewController:self.alertController animated:YES completion:^{
+			self.alertController = nil;
+		}];
+	}
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
@@ -460,8 +471,12 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 														  handler:nil];
 	[alert addAction:defaultAction];
 	
-	// TODO: cache the alert if VC is not displaying and show it when viewDidAppear
-	[self presentViewController:alert animated:YES completion:nil];
+	if (self.isViewLoaded && self.view.window) {
+		[self presentViewController:alert animated:YES completion:nil];
+	} else {
+		// cache and present on viewDidAppear
+		self.alertController = alert;
+	}
 }
 
 #pragma mark - Private Methods

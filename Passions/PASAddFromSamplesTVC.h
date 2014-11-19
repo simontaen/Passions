@@ -18,7 +18,8 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 
 // Formatting Blocks
 @property (nonatomic, copy) NSString * (^detailTextBlock)(id<FICEntity> artist, NSString *name);
-
+// a potential alert that needs to be presented
+@property (nonatomic, strong) UIAlertController *alertController;
 
 // Mapping an index, usually from a UISegmentedControl, to a sort order.
 - (PASAddArtistsSortOrder)sortOrderForIndex:(NSInteger)idx;
