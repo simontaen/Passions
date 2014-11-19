@@ -30,6 +30,9 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 // UISegmentedControl Action
 - (IBAction)segmentChanged:(UISegmentedControl *)sender;
 
+// Error handling
+- (void)showAlertWithTitle:(NSString *)title message:(NSString *)msg action:(NSString *)action;
+
 // for subclassing, called once
 // cacheing of these results is handled by this class
 - (NSArray *)artistsOrderedByName; // of the appropriate object

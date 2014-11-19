@@ -442,11 +442,16 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 			break;
 	}
 	
-	UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Try Again"
+	[self showAlertWithTitle:@"Try Again" message:msg action:@"OK"];
+}
+
+- (void)showAlertWithTitle:(NSString *)title message:(NSString *)msg action:(NSString *)action
+{
+	UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
 																   message:msg
 															preferredStyle:UIAlertControllerStyleAlert];
 	
-	UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK"
+	UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:action
 															style:UIAlertActionStyleDefault
 														  handler:^(UIAlertAction * action) {
 															  [alert dismissViewControllerAnimated:YES completion:nil];
