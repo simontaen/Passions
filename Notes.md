@@ -55,6 +55,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Cells
 
 ## Adding
+* Timeout on LastFmFetchr getCorrectionForArtist
 
 ## Fav Artists
 
