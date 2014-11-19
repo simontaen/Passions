@@ -34,14 +34,28 @@
 	// clear the image to avoid seeing old images when scrolling
 	self.artworkImage.image = nil;
 	
-	[[FICImageCache sharedImageCache] retrieveImageForEntity:entity
-											  withFormatName:formatName
-											 completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
-												 // check if this image view hasn't been reused for a different entity
-												 if (entity == self.entity) {
-													 self.artworkImage.image = image;
-												 }
-											 }];
+	// Cache the cache
+	FICImageCache *cache = [FICImageCache sharedImageCache];
+	
+	BOOL cacheAvailable = [cache asynchronouslyRetrieveImageForEntity:entity
+													   withFormatName:formatName
+													  completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+														  // check if this image view hasn't been reused for a different entity
+														  if (image && entity == self.entity) {
+															  self.artworkImage.image = image;
+														  }
+													  }];
+	if (!cacheAvailable) {
+		[cache asynchronouslyRetrieveImageForEntity:[PASAlbum object]
+									 withFormatName:formatName
+									completionBlock:^(id<FICEntity> dummy, NSString *formatName, UIImage *image) {
+										// check if this image view hasn't been reused for a different entity
+										// and if the image is still unset
+										if (image && entity == self.entity && self.artworkImage.image == nil) {
+											self.artworkImage.image = image;
+										}
+									}];
+	}
 }
 
 #pragma mark - Static

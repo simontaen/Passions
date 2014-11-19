@@ -42,8 +42,9 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## General Functionality
 * Assertion failures when using the PVC (see crash logs), crash when sliding
 * Show an [MPProgressHUD](https://github.com/jdg/MBProgressHUD) when waiting is expected and unavoidable (think about earlier caching if you must)
-	* Splash screen or MBProgressHUD on launch when loading the Timeline
-	* also on Artist Info this could be good (any Time we change the Parse Query basically) - added cache Policy
+	* when loading albums from Parse (all Timeline instances), or a splash screen?
+		* make sure swipeHint can only be displayed after the loading is done
+	* when loading tracks
 
 ### Spotify Integration
 * Fall back to Spotify if Music App does not seem to be used. But to what Artists? Current Top Artists?
@@ -59,7 +60,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## Timeline
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
-* Show a spinner on the Artwork cell images when loading
 
 ## Artist and Album Info
 * Artist Info: no image leads to misplaced releasedate view (for a short period before it appears) - changed FCIImageCache maximumCount
