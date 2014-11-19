@@ -184,7 +184,7 @@
 		return sortedArtists;
 		
 	} else {
-		return nil;
+		return [NSArray array];
 	}
 }
 
@@ -213,7 +213,7 @@
 		return sortedArtists;
 		
 	} else {
-		return nil;
+		return [NSArray array];
 	}
 }
 
