@@ -10,7 +10,6 @@
 #import "PASFavArtistsTVC.h"
 #import "PASArtist.h"
 #import "PASArtistTVCell.h"
-#import "FICImageCache.h"
 #import "PASSourceImage.h"
 #import "PASManageArtists.h"
 #import "UIColor+Utils.h"
