@@ -110,6 +110,21 @@
 	[super viewWillAppear:animated];
 	self.pageViewController.navigationItem.leftBarButtonItem = self.spotifyButton;
 	[self _configureSpotifyButton];
+
+	if (self.artists && self.artists.count == 0) {
+		// artists have been fetched but non exists
+		[self _validateSessionWithCallback:^{
+			[self _fetchSpotifyArtistsWithCompletion:^(NSError *error) {
+				if (!error) {
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[self.tableView reloadData];
+					});
+				} else {
+					[self _handleError:error];
+				}
+			}];
+		}];
+	}
 }
 
 - (void)viewWillDisappear:(BOOL)animated
