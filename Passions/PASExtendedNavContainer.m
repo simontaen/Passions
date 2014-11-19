@@ -16,7 +16,6 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 
 @interface PASExtendedNavContainer ()
 @property (weak, nonatomic) IBOutlet UIView *containerView;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UIToolbar *segmentBar;
 @end
 
@@ -113,3 +112,20 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 }
 
 @end
+
+#pragma mark - PASExtendedNavContainerAdditions
+
+@implementation UIViewController (PASExtendedNavContainerAdditions)
+- (PASExtendedNavContainer *)extendedNavController
+{
+	UIViewController *parent = [self parentViewController];
+	while(parent) {
+		if([parent isKindOfClass:[PASExtendedNavContainer class]]) {
+			return (PASExtendedNavContainer *)parent;
+		}
+		parent = [parent parentViewController];
+	}
+	return nil;
+}
+@end
+
