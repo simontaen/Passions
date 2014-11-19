@@ -11,6 +11,7 @@
 #import <Spotify/Spotify.h>
 #import "UICKeyChainStore.h"
 #import "PASPageViewController.h"
+#import "PASExtendedNavContainer.h"
 #import "MBProgressHUD.h"
 
 @interface PASAddFromSpotifyTVC ()
@@ -359,6 +360,7 @@
 	dispatch_async(dispatch_get_main_queue(), ^{
 		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 		hud.labelText = @"Loading Spotify Artists...";
+		self.extendedNavController.segmentedControl.enabled = NO;
 		self.pageViewController.navigationItem.leftBarButtonItem.enabled = NO;
 	});
 }
@@ -367,6 +369,7 @@
 {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[MBProgressHUD hideHUDForView:self.view animated:YES];
+		self.extendedNavController.segmentedControl.enabled = YES;
 		self.pageViewController.navigationItem.leftBarButtonItem.enabled = YES;
 	});
 }
