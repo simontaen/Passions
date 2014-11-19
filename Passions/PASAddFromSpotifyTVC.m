@@ -11,6 +11,7 @@
 #import <Spotify/Spotify.h>
 #import "UICKeyChainStore.h"
 #import "PASPageViewController.h"
+#import "MBProgressHUD.h"
 
 @interface PASAddFromSpotifyTVC ()
 @property (nonatomic, strong) SPTSession *session;
@@ -153,6 +154,14 @@
 - (NSString *)title
 {
 	return @"Spotify";
+}
+
+- (void)setIsFetching:(BOOL)isFetching
+{
+	if (_isFetching != isFetching) {
+		_isFetching = isFetching;
+		isFetching ? [self _showProgressHud] : [self _hideProgressHud];
+	}
 }
 
 #pragma mark - Subclassing
@@ -341,7 +350,25 @@
 			completion(nil);
 		}
 	}
+}
 
+#pragma mark - MBProgressHUD
+
+- (void)_showProgressHud
+{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+		hud.labelText = @"Loading Spotify Artists...";
+		self.pageViewController.navigationItem.leftBarButtonItem.enabled = NO;
+	});
+}
+
+- (void)_hideProgressHud
+{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
+		self.pageViewController.navigationItem.leftBarButtonItem.enabled = YES;
+	});
 }
 
 #pragma mark - Private Methods

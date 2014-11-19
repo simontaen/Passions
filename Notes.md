@@ -47,7 +47,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 	* when loading albums from Parse (all Timeline instances), or a splash screen?
 		* make sure swipeHint can only be displayed after the loading is done
 	* when loading tracks
-	* when loading spotify
 * Use AFNetworkReachabilityManager to check if you should show a MBProgressHUD
 * Use AFNetworkActivityIndicatorManager.h to better show network activity (loading images)
 
