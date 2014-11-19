@@ -439,6 +439,7 @@
 	// use force to the stop loading
 	self.isFetching = NO;
 	self.sessionIsRenewing = NO;
+	self.pageViewController.navigationItem.leftBarButtonItem.enabled = YES;
 	
 	UIAlertAction *retry = [UIAlertAction actionWithTitle:@"Retry"
 													style:UIAlertActionStyleDefault
