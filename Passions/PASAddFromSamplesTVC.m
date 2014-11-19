@@ -442,22 +442,25 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 			break;
 	}
 	
-	[self showAlertWithTitle:@"Try Again" message:msg action:@"OK"];
+	[self showAlertWithTitle:@"Try Again" message:msg actions:nil defaultButton:@"OK"];
 }
 
-- (void)showAlertWithTitle:(NSString *)title message:(NSString *)msg action:(NSString *)action
+- (void)showAlertWithTitle:(NSString *)title message:(NSString *)msg actions:(NSArray *)actions defaultButton:(NSString *)defaultButton
 {
+	NSAssert(actions.count > 0 || defaultButton, @"Must provide actions or defaultButton to show an Alert");
 	UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
 																   message:msg
 															preferredStyle:UIAlertControllerStyleAlert];
+	for (UIAlertAction *alertAction in actions) {
+		[alert addAction:alertAction];
+	}
 	
-	UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:action
+	UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:defaultButton ?: @"OK"
 															style:UIAlertActionStyleDefault
-														  handler:^(UIAlertAction * action) {
-															  [alert dismissViewControllerAnimated:YES completion:nil];
-														  }];
+														  handler:nil];
 	[alert addAction:defaultAction];
 	
+	// TODO: cache the alert if VC is not displaying and show it when viewDidAppear
 	[self presentViewController:alert animated:YES completion:nil];
 }
 

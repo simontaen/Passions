@@ -31,7 +31,7 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 - (IBAction)segmentChanged:(UISegmentedControl *)sender;
 
 // Error handling
-- (void)showAlertWithTitle:(NSString *)title message:(NSString *)msg action:(NSString *)action;
+- (void)showAlertWithTitle:(NSString *)title message:(NSString *)msg actions:(NSArray *)actions defaultButton:(NSString *)defaultButton;
 
 // for subclassing, called once
 // cacheing of these results is handled by this class
