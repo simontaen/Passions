@@ -23,11 +23,14 @@
 
 // Helpers for the fetching process
 @property (nonatomic, strong) dispatch_queue_t artistsQ;
-@property (nonatomic, strong) NSMutableArray *artistsInProgress;
-@property (nonatomic, assign) BOOL fetchedAllArtists;
+// YES when the all simplified artists are available
+@property (nonatomic, assign) BOOL fetchedAllPartialArtists;
+// 0 when all artists are upgraded to full objects
+@property (nonatomic, assign) int artistsInPromotion;
 
 // Main indicator if fetching is done
 @property (nonatomic, assign) BOOL isFetching;
+
 @end
 
 @implementation PASAddFromSpotifyTVC
@@ -39,9 +42,11 @@
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if (!self) return nil;
 	
+	// we are not ready on init
+	self.artistsInPromotion = -1;
+	
 	// perpare for caching artists
-	self.artistsQ = dispatch_queue_create("artistsQ", DISPATCH_QUEUE_CONCURRENT);
-	self.artistsInProgress = [NSMutableArray array];
+	self.artistsQ = dispatch_queue_create("spotifyArtistsQ", DISPATCH_QUEUE_CONCURRENT);
 	
 	// Try to get a stored Seesion
 	NSData *sessionData = [UICKeyChainStore dataForKey:NSStringFromClass([self class])];
@@ -120,15 +125,18 @@
 
 - (BOOL)_cachesAreReady
 {
-	return self.artists && self.artistsInProgress.count == 0 && self.fetchedAllArtists;
+	return self.fetchedAllPartialArtists && self.artistsInPromotion == 0;
 }
 
 - (void)clearCaches
 {
 	[super clearCaches];
-	self.artists = nil;
-	self.artistsTracks = nil;
-	self.fetchedAllArtists = NO;
+	if (!self.isFetching) {
+		self.artists = nil;
+		self.artistsTracks = nil;
+		self.fetchedAllPartialArtists = NO;
+		self.artistsInPromotion = -1;
+	}
 }
 
 #pragma mark - Accessors
@@ -147,39 +155,47 @@
 
 - (NSArray *)artistsOrderedByName
 {
-	NSArray *nameSortedKeys = [[self.artists allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-	NSMutableArray *sortedArtists = [NSMutableArray arrayWithCapacity:nameSortedKeys.count];
-	
-	for (NSString *key in nameSortedKeys) {
-		[sortedArtists addObject:self.artists[key]];
+	if ([self _cachesAreReady]) {
+		NSArray *nameSortedKeys = [[self.artists allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+		NSMutableArray *sortedArtists = [NSMutableArray arrayWithCapacity:nameSortedKeys.count];
+		
+		for (NSString *key in nameSortedKeys) {
+			[sortedArtists addObject:self.artists[key]];
+		}
+		return sortedArtists;
+		
+	} else {
+		return nil;
 	}
-	
-	return sortedArtists;
 }
 
 - (NSArray *)artistsOrderedByPlaycount
 {
-	NSArray *trackcountSortedKeys = [[self.artistsTracks allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-		NSMutableArray *obj1Tracks = self.artistsTracks[obj1];
-		NSMutableArray *obj2Tracks = self.artistsTracks[obj2];
+	if ([self _cachesAreReady]) {
+		NSArray *trackcountSortedKeys = [[self.artistsTracks allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+			NSMutableArray *obj1Tracks = self.artistsTracks[obj1];
+			NSMutableArray *obj2Tracks = self.artistsTracks[obj2];
+			
+			NSInteger result = obj1Tracks.count - obj2Tracks.count;
+			
+			if (result > 0) {
+				return NSOrderedAscending;
+			} else if (result < 0) {
+				return NSOrderedDescending;
+			}
+			return NSOrderedSame;
+		}];
 		
-		NSInteger result = obj1Tracks.count - obj2Tracks.count;
+		NSMutableArray *sortedArtists = [NSMutableArray arrayWithCapacity:trackcountSortedKeys.count];
 		
-		if (result > 0) {
-			return NSOrderedAscending;
-		} else if (result < 0) {
-			return NSOrderedDescending;
+		for (NSString *key in trackcountSortedKeys) {
+			[sortedArtists addObject:self.artists[key]];
 		}
-		return NSOrderedSame;
-	}];
-	
-	NSMutableArray *sortedArtists = [NSMutableArray arrayWithCapacity:trackcountSortedKeys.count];
-	
-	for (NSString *key in trackcountSortedKeys) {
-		[sortedArtists addObject:self.artists[key]];
+		return sortedArtists;
+		
+	} else {
+		return nil;
 	}
-	
-	return sortedArtists;
 }
 
 - (NSString *)nameForArtist:(id)artist
@@ -221,45 +237,42 @@
 	for (SPTPartialArtist *artist in artists) {
 		NSString *artistName = artist.name;
 		
-		BOOL __block inProgress = YES;
+		BOOL __block cachedAlready;
 		dispatch_barrier_sync(self.artistsQ, ^{
-			inProgress = [self.artistsInProgress containsObject:artistName];
+			cachedAlready = !!self.artists[artistName];
 		});
-		
-		BOOL __block cachedAlready = YES;
-		if (!inProgress) {
-			dispatch_barrier_sync(self.artistsQ, ^{
-				cachedAlready = !!self.artists[artistName];
-			});
-		}
 		
 		if (!cachedAlready) {
 			dispatch_barrier_async(self.artistsQ, ^{
-				[self.artistsInProgress addObject:artistName];
+				// this is for signaling that we are working on the artist
+				self.artists[artistName] = artist;
 			});
+			self.artistsInPromotion++;
 			
-			// Need to promote to Full Artist
+			// Need to promote to full Artist for the images
+			// https://developer.spotify.com/web-api/object-model/#artist-object-full
 			[SPTRequest requestItemFromPartialObject:artist withSession:self.session callback:^(NSError *error, id object) {
+				self.artistsInPromotion--;
+				
 				if (!error && object) {
 					dispatch_barrier_async(self.artistsQ, ^{
 						self.artists[artistName] = object;
 					});
+				} else {
+					NSLog(@"Spotify %@", error);
 				}
 				
-				dispatch_barrier_sync(self.artistsQ, ^{
-					[self.artistsInProgress removeObject:artistName];
-					if (self.artistsInProgress.count == 0 && self.fetchedAllArtists) {
-						dispatch_async(dispatch_get_main_queue(), ^{
-							if ([self isViewLoaded]) {
-								// TODO: this would be nice with a callback from _fetchSpotifyArtists
-								// we could have been called when unloaded
-								[self.tableView reloadData];
-							}
-							//[self.refreshControl endRefreshing]; // uncomment this and viewDidLoad will get calles!
-							self.isFetching = NO;
-						});
-					}
-				});
+				if ([self _cachesAreReady]) {
+					dispatch_async(dispatch_get_main_queue(), ^{
+						if ([self isViewLoaded]) {
+							// TODO: this would be nice with a callback from _fetchSpotifyArtists
+							// we could have been called when unloaded
+							[self.tableView reloadData];
+						}
+						//[self.refreshControl endRefreshing]; // uncomment this and viewDidLoad will get calles!
+						self.isFetching = NO;
+					});
+				}
 			}];
 		}
 	}
@@ -269,6 +282,7 @@
 -(void)_fetchSpotifyArtists
 {
 	self.isFetching = YES;
+	self.artistsInPromotion = 0;
 	//[self.refreshControl beginRefreshing]; // uncomment this and viewDidLoad will get calles!
 	self.artists = [NSMutableDictionary dictionary];
 	self.artistsTracks = [NSMutableDictionary dictionary];
@@ -282,7 +296,7 @@
 			if ([list hasNextPage]) {
 				[list requestNextPageWithSession:weakSelf.session callback:weakSelf.savedTracksForUserCallback];
 			} else {
-				weakSelf.fetchedAllArtists = YES;
+				weakSelf.fetchedAllPartialArtists = YES;
 			}
 			
 			for (SPTSavedTrack *track in [list items]) {
@@ -291,11 +305,11 @@
 			}
 			
 		} else {
-			NSLog(@"%@", error);
+			NSLog(@"Spotify %@", error);
 		}
 	};
 
-	self.fetchedAllArtists = NO;
+	self.fetchedAllPartialArtists = NO;
 	[SPTRequest savedTracksForUserInSession:self.session callback:self.savedTracksForUserCallback];
 }
 
