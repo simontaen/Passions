@@ -38,16 +38,22 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## Parse
 * Artist fetch could fail and the iTunes Id would be empty then.
+* Stuck in processing on server, why? How should the App react?
 
 ## General Functionality
 * Assertion failures when using the PVC (see crash logs), crash when sliding
-* Show an [MPProgressHUD](https://github.com/jdg/MBProgressHUD) when waiting is expected and unavoidable (think about earlier caching if you must)
+	* Take out the assert on swiping (check the crashlog shortly before 12)
+* Show an [MBProgressHUD](https://github.com/jdg/MBProgressHUD) when waiting is expected and unavoidable (think about earlier caching if you must)
 	* when loading albums from Parse (all Timeline instances), or a splash screen?
 		* make sure swipeHint can only be displayed after the loading is done
 	* when loading tracks
+	* when loading spotify
+* Use AFNetworkReachabilityManager to check if you should show a MBProgressHUD
+* Use AFNetworkActivityIndicatorManager.h to better show network activity (loading images)
 
 ### Spotify Integration
 * Fall back to Spotify if Music App does not seem to be used. But to what Artists? Current Top Artists?
+* Show logout button only when spotify appeared
 
 ## PageViewController Container
 * flickering when the transition gets aborted
@@ -56,6 +62,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## Adding
 * Timeout on LastFmFetchr getCorrectionForArtist
+* Multi faving enables done after first is finished
 
 ## Fav Artists
 
