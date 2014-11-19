@@ -237,62 +237,66 @@
 
 - (void)_cacheTrack:(SPTSavedTrack *)track forArtists:(NSArray *)artists
 {
-	for (SPTPartialArtist *artist in artists) {
-		NSString *artistName = artist.name;
-		
-		NSMutableArray *tracks = self.artistsTracks[artistName];
-		
-		if (!tracks) {
-			self.artistsTracks[artistName] = [NSMutableArray array];
-			tracks = self.artistsTracks[artistName];
+	if (self.isFetching) {
+		for (SPTPartialArtist *artist in artists) {
+			NSString *artistName = artist.name;
+			
+			NSMutableArray *tracks = self.artistsTracks[artistName];
+			
+			if (!tracks) {
+				self.artistsTracks[artistName] = [NSMutableArray array];
+				tracks = self.artistsTracks[artistName];
+			}
+			
+			[tracks addObject:track];
 		}
-		
-		[tracks addObject:track];
 	}
 }
 
 - (void)_cacheArtistsFromArray:(NSArray *)artists completion:(void (^)(NSError *error))completion
 {
-	// an artists comes here several times and we are called multiple times
-	for (SPTPartialArtist *artist in artists) {
-		NSString *artistName = artist.name;
-		
-		BOOL __block cachedAlready;
-		dispatch_barrier_sync(self.artistsQ, ^{
-			cachedAlready = !!self.artists[artistName];
-		});
-		
-		if (!cachedAlready) {
-			dispatch_barrier_async(self.artistsQ, ^{
-				// this is for signaling that we are working on the artist
-				self.artists[artistName] = artist;
-			});
-			self.artistsInPromotion++;
-			__weak typeof(self) weakSelf = self;
+	if (self.isFetching) {
+		// an artists comes here several times and we are called multiple times
+		for (SPTPartialArtist *artist in artists) {
+			NSString *artistName = artist.name;
 			
-			// Need to promote to full Artist for the images
-			// https://developer.spotify.com/web-api/object-model/#artist-object-full
-			[SPTRequest requestItemFromPartialObject:artist withSession:self.session callback:^(NSError *error, id object) {
-				self.artistsInPromotion--;
-				if (!error && object) {
-					dispatch_barrier_async(self.artistsQ, ^{
-						self.artists[artistName] = object;
-					});
-					if ([weakSelf _cachesAreReady] && completion) {
-						// fire the completion when all artists have been processed
-						completion(nil);
+			BOOL __block cachedAlready;
+			dispatch_barrier_sync(self.artistsQ, ^{
+				cachedAlready = !!self.artists[artistName];
+			});
+			
+			if (!cachedAlready) {
+				dispatch_barrier_async(self.artistsQ, ^{
+					// this is for signaling that we are working on the artist
+					self.artists[artistName] = artist;
+				});
+				self.artistsInPromotion++;
+				__weak typeof(self) weakSelf = self;
+				
+				// Need to promote to full Artist for the images
+				// https://developer.spotify.com/web-api/object-model/#artist-object-full
+				[SPTRequest requestItemFromPartialObject:artist withSession:self.session callback:^(NSError *error, id object) {
+					self.artistsInPromotion--;
+					if (!error && object) {
+						dispatch_barrier_async(self.artistsQ, ^{
+							self.artists[artistName] = object;
+						});
+						if ([weakSelf _cachesAreReady] && completion) {
+							// fire the completion when all artists have been processed
+							completion(nil);
+						}
+						
+					} else {
+						dispatch_barrier_async(self.artistsQ, ^{
+							// must remove the partial artist
+							[self.artists removeObjectForKey:artistName];
+						});
+						if (completion) {
+							completion(error);
+						}
 					}
-					
-				} else {
-					dispatch_barrier_async(self.artistsQ, ^{
-						// must remove the partial artist
-						[self.artists removeObjectForKey:artistName];
-					});
-					if (completion) {
-						completion(error);
-					}
-				}
-			}];
+				}];
+			}
 		}
 	}
 }
