@@ -358,7 +358,7 @@
 - (void)_showProgressHud
 {
 	dispatch_async(dispatch_get_main_queue(), ^{
-		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.pageViewController.view animated:YES];
 		hud.labelText = @"Loading Spotify Artists...";
 		self.extendedNavController.segmentedControl.enabled = NO;
 		self.pageViewController.navigationItem.leftBarButtonItem.enabled = NO;
@@ -368,7 +368,7 @@
 - (void)_hideProgressHud
 {
 	dispatch_async(dispatch_get_main_queue(), ^{
-		[MBProgressHUD hideHUDForView:self.view animated:YES];
+		[MBProgressHUD hideHUDForView:self.pageViewController.view animated:YES];
 		self.extendedNavController.segmentedControl.enabled = YES;
 		self.pageViewController.navigationItem.leftBarButtonItem.enabled = YES;
 	});
