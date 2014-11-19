@@ -91,12 +91,15 @@
 //	[self.refreshControl addTarget:self action:@selector(_fetchSpotifyArtists) forControlEvents:UIControlEventValueChanged];
 	
 	[self _validateSessionWithCallback:^{
-		if (![self _cachesAreReady] && !self.isFetching) {
-			[self _fetchSpotifyArtists];
-		} else if (!self.isFetching) {
-			// everything seems to be ready
-			[self.tableView reloadData];
-		}
+		[self _fetchSpotifyArtistsWithCompletion:^(NSError *error) {
+			if (!error) {
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[self.tableView reloadData];
+				});
+			} else {
+				[self _handleError:error];
+			}
+		}];
 	}];
 }
 
@@ -117,9 +120,15 @@
 {
 	// Caches are updated when new data is received
 	[self _validateSessionWithCallback:^{
-		if (![self _cachesAreReady] && !self.isFetching) {
-			[self _fetchSpotifyArtists];
-		}
+		[self _fetchSpotifyArtistsWithCompletion:^(NSError *error) {
+			if (!error && [self isViewLoaded]) {
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[self.tableView reloadData];
+				});
+			} else {
+				[self _handleError:error];
+			}
+		}];
 	}];
 }
 
@@ -232,8 +241,9 @@
 	}
 }
 
-- (void)_cacheArtistsFromArray:(NSArray *)artists
+- (void)_cacheArtistsFromArray:(NSArray *)artists completion:(void (^)(NSError *error))completion
 {
+	// an artists comes here several times and we are called multiple times
 	for (SPTPartialArtist *artist in artists) {
 		NSString *artistName = artist.name;
 		
@@ -248,69 +258,90 @@
 				self.artists[artistName] = artist;
 			});
 			self.artistsInPromotion++;
+			__weak typeof(self) weakSelf = self;
 			
 			// Need to promote to full Artist for the images
 			// https://developer.spotify.com/web-api/object-model/#artist-object-full
 			[SPTRequest requestItemFromPartialObject:artist withSession:self.session callback:^(NSError *error, id object) {
 				self.artistsInPromotion--;
-				
 				if (!error && object) {
 					dispatch_barrier_async(self.artistsQ, ^{
 						self.artists[artistName] = object;
 					});
+					if ([weakSelf _cachesAreReady] && completion) {
+						// fire the completion when all artists have been processed
+						completion(nil);
+					}
+					
 				} else {
-					NSLog(@"Spotify %@", error);
-				}
-				
-				if ([self _cachesAreReady]) {
-					dispatch_async(dispatch_get_main_queue(), ^{
-						if ([self isViewLoaded]) {
-							// TODO: this would be nice with a callback from _fetchSpotifyArtists
-							// we could have been called when unloaded
-							[self.tableView reloadData];
-						}
-						//[self.refreshControl endRefreshing]; // uncomment this and viewDidLoad will get calles!
-						self.isFetching = NO;
+					dispatch_barrier_async(self.artistsQ, ^{
+						// must remove the partial artist
+						[self.artists removeObjectForKey:artistName];
 					});
+					if (completion) {
+						completion(error);
+					}
 				}
 			}];
 		}
 	}
 }
 
-/// reloadData on tableView if view is loaded
--(void)_fetchSpotifyArtists
+// if fetching is already running the completion will not get called
+- (void)_fetchSpotifyArtistsWithCompletion:(void (^)(NSError *error))completion
 {
-	self.isFetching = YES;
-	self.artistsInPromotion = 0;
-	//[self.refreshControl beginRefreshing]; // uncomment this and viewDidLoad will get calles!
-	self.artists = [NSMutableDictionary dictionary];
-	self.artistsTracks = [NSMutableDictionary dictionary];
-	__weak typeof(self) weakSelf = self;
-	
-	// the block to recursivly fetch all tracks
-	self.savedTracksForUserCallback = ^void(NSError *error, id object) {
-		if (!error && object) {
-			SPTListPage *list = (SPTListPage *)object;
+	if (!self.isFetching) {
+		if (![self _cachesAreReady]) {
+			self.isFetching = YES;
+			self.artists = [NSMutableDictionary dictionary];
+			self.artistsTracks = [NSMutableDictionary dictionary];
+			self.fetchedAllPartialArtists = NO;
+			self.artistsInPromotion = 0;
+			__weak typeof(self) weakSelf = self;
 			
-			if ([list hasNextPage]) {
-				[list requestNextPageWithSession:weakSelf.session callback:weakSelf.savedTracksForUserCallback];
-			} else {
-				weakSelf.fetchedAllPartialArtists = YES;
-			}
+			// the block to recursivly fetch all tracks
+			self.savedTracksForUserCallback = ^void(NSError *error, id object) {
+				if (!error && object) {
+					SPTListPage *list = (SPTListPage *)object;
+					
+					if ([list hasNextPage]) {
+						[list requestNextPageWithSession:weakSelf.session callback:weakSelf.savedTracksForUserCallback];
+					} else {
+						weakSelf.fetchedAllPartialArtists = YES;
+					}
+					
+					for (SPTSavedTrack *track in [list items]) {
+						[weakSelf _cacheArtistsFromArray:track.artists completion:^(NSError *innerError) {
+							// this only gets called when all (overall!) artists have been processed
+							if (!innerError) {
+								weakSelf.isFetching = NO;
+								if (completion) {
+									completion(nil);
+								}
+								
+							} else if (completion) {
+								completion(innerError);
+							}
+							
+						}];
+						[weakSelf _cacheTrack:track forArtists:track.artists];
+					}
+					
+				} else {
+					if (completion) {
+						completion(error);
+					}
+				}
+			};
 			
-			for (SPTSavedTrack *track in [list items]) {
-				[weakSelf _cacheArtistsFromArray:track.artists];
-				[weakSelf _cacheTrack:track forArtists:track.artists];
-			}
+			[SPTRequest savedTracksForUserInSession:self.session callback:self.savedTracksForUserCallback];
 			
 		} else {
-			NSLog(@"Spotify %@", error);
+			// caches are ready
+			completion(nil);
 		}
-	};
+	}
 
-	self.fetchedAllPartialArtists = NO;
-	[SPTRequest savedTracksForUserInSession:self.session callback:self.savedTracksForUserCallback];
 }
 
 #pragma mark - Private Methods
@@ -319,6 +350,29 @@
 {
 	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([PASAddFromSpotifyTVC class]), NSStringFromClass([artist class]));
 	return [self.artistsTracks[name] count];
+}
+
+#pragma mark - Error Handling
+
+- (void)_handleError:(NSError *)error
+{
+	// abort everything and display a message,
+	// show available artists
+	NSLog(@"%@", [error description]);
+	NSString *codeString = [NSString stringWithFormat:@"%d", (int)[error code]];
+	[PFAnalytics trackEvent:@"error" dimensions:@{ @"code": codeString,  @"desc" : [error description] }];
+	
+	NSString *msg;
+	switch (error.code) {
+		case -1001:
+			msg = @"The operation timed out.";
+			break;
+		default:
+			msg = @"Something went wrong.";
+			break;
+	}
+	
+	[self showAlertWithTitle:@"Try Again" message:msg action:@"OK"];
 }
 
 #pragma mark - Spotify Auth
