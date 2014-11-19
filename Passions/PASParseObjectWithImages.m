@@ -59,7 +59,7 @@
 		return _UUID;
 	} else {
 		// this is pretty hacky, but like this
-		// FCI will "fetch" and process the placeholder once
+		// FICImageCache will "fetch" and process the placeholder once
 		// for all PASParseObjectWithImages objects
 		if ([self isKindOfClass:[PASAlbum class]]) {
 			static NSString *dummyAlbumUUID;
