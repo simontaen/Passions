@@ -16,6 +16,7 @@
 
 @interface PASAddFromSpotifyTVC ()
 @property (nonatomic, strong) SPTSession *session;
+@property (nonatomic, assign) BOOL sessionIsRenewing;
 @property (nonatomic, strong) id observer; // the NSNotificationCenter observer token
 @property (nonatomic, strong) UIBarButtonItem *spotifyButton;
 
@@ -176,7 +177,15 @@
 {
 	if (_isFetching != isFetching) {
 		_isFetching = isFetching;
-		isFetching ? [self _showProgressHud] : [self _hideProgressHud];
+		isFetching ? [self _showProgressHudWithMessage:@"Loading Spotify Artists..."] : [self _hideProgressHud];
+	}
+}
+
+- (void)setSessionIsRenewing:(BOOL)sessionIsRenewing
+{
+	if (_sessionIsRenewing != sessionIsRenewing) {
+		_sessionIsRenewing = sessionIsRenewing;
+		sessionIsRenewing ? [self _showProgressHudWithMessage:@"Loading..."] : [self _hideProgressHud];
 	}
 }
 
@@ -374,11 +383,11 @@
 
 #pragma mark - MBProgressHUD
 
-- (void)_showProgressHud
+- (void)_showProgressHudWithMessage:(NSString *)msg
 {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.extendedNavController.view animated:YES];
-		hud.labelText = @"Loading Spotify Artists...";
+		hud.labelText = msg;
 		self.extendedNavController.segmentedControl.enabled = NO;
 		self.pageViewController.navigationItem.leftBarButtonItem.enabled = NO;
 	});
@@ -423,13 +432,14 @@
 	
 	// use force to the stop loading
 	self.isFetching = NO;
+	self.sessionIsRenewing = NO;
 	
 	UIAlertAction *retry = [UIAlertAction actionWithTitle:@"Retry"
-															style:UIAlertActionStyleDefault
-														  handler:^(UIAlertAction * action) {
-															  [self clearCaches];
-															  [self prepareCaches];
-														  }];
+													style:UIAlertActionStyleDefault
+												  handler:^(UIAlertAction * action) {
+													  [self clearCaches];
+													  [self prepareCaches];
+												  }];
 
 	[self showAlertWithTitle:@"Try Again" message:msg actions:@[retry] defaultButton:@"OK"];
 }
@@ -473,7 +483,7 @@
 	// This is the callback that'll be triggered when auth is completed (or fails).
 	SPTAuthCallback authCallback = ^(NSError *error, SPTSession *session) {
 		if (error != nil) {
-			NSLog(@"%@", error);
+			[self _handleError:error];
 			
 		} else {
 			// We are authenticated, cleanup
@@ -482,6 +492,8 @@
 														  object:self];
 			// Persist the new session and fetch new data
 			self.session = session;
+			self.sessionIsRenewing = NO;
+			
 			if (completion) {
 				dispatch_async(dispatch_get_main_queue(), ^{
 					[self _configureSpotifyButton];
@@ -509,11 +521,12 @@
 																		  }];
 		}
 		
-	} else if (![self.session isValid]) {
+	} else if (![self.session isValid] && !self.sessionIsRenewing) {
 		// Renew the session
+		self.sessionIsRenewing = YES;
 		[[SPTAuth defaultInstance] renewSession:self.session withServiceEndpointAtURL:[PASResources spotifyTokenRefresh] callback:authCallback];
 		
-	} else if (completion) {
+	} else if (!self.sessionIsRenewing && completion) {
 		// update button status
 		[self _configureSpotifyButton];
 		completion();
