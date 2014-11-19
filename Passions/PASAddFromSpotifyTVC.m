@@ -301,22 +301,24 @@
 				// https://developer.spotify.com/web-api/object-model/#artist-object-full
 				[SPTRequest requestItemFromPartialObject:artist withSession:self.session callback:^(NSError *error, id object) {
 					self.artistsInPromotion--;
-					if (!error && object) {
-						dispatch_barrier_async(self.artistsQ, ^{
-							self.artists[artistName] = object;
-						});
-						if ([weakSelf _cachesAreReady] && completion) {
-							// fire the completion when all artists have been processed
-							completion(nil);
-						}
-						
-					} else {
-						dispatch_barrier_async(self.artistsQ, ^{
-							// must remove the partial artist
-							[self.artists removeObjectForKey:artistName];
-						});
-						if (completion) {
-							completion(error);
+					if (self.isFetching) {
+						if (!error && object) {
+							dispatch_barrier_async(self.artistsQ, ^{
+								self.artists[artistName] = object;
+							});
+							if ([weakSelf _cachesAreReady] && completion) {
+								// fire the completion when all artists have been processed
+								completion(nil);
+							}
+							
+						} else {
+							dispatch_barrier_async(self.artistsQ, ^{
+								// must remove the partial artist
+								[self.artists removeObjectForKey:artistName];
+							});
+							if (completion) {
+								completion(error);
+							}
 						}
 					}
 				}];
@@ -339,35 +341,39 @@
 			
 			// the block to recursivly fetch all tracks
 			self.savedTracksForUserCallback = ^void(NSError *error, id object) {
-				if (!error && object) {
-					SPTListPage *list = (SPTListPage *)object;
-					
-					if ([list hasNextPage]) {
-						[list requestNextPageWithSession:weakSelf.session callback:weakSelf.savedTracksForUserCallback];
-					} else {
-						weakSelf.fetchedAllPartialArtists = YES;
-					}
-					
-					for (SPTSavedTrack *track in [list items]) {
-						[weakSelf _cacheArtistsFromArray:track.artists completion:^(NSError *innerError) {
-							// this only gets called when all (overall!) artists have been processed
-							if (!innerError) {
-								weakSelf.isFetching = NO;
-								if (completion) {
-									completion(nil);
+				if (weakSelf.isFetching) {
+					if (!error && object) {
+						SPTListPage *list = (SPTListPage *)object;
+						
+						if ([list hasNextPage]) {
+							[list requestNextPageWithSession:weakSelf.session callback:weakSelf.savedTracksForUserCallback];
+						} else {
+							weakSelf.fetchedAllPartialArtists = YES;
+						}
+						
+						for (SPTSavedTrack *track in [list items]) {
+							[weakSelf _cacheArtistsFromArray:track.artists completion:^(NSError *innerError) {
+								if (weakSelf.isFetching) {
+									// this only gets called when all (overall!) artists have been processed
+									if (!innerError) {
+										weakSelf.isFetching = NO;
+										if (completion) {
+											completion(nil);
+										}
+										
+									} else if (completion) {
+										completion(innerError);
+									}
 								}
 								
-							} else if (completion) {
-								completion(innerError);
-							}
-							
-						}];
-						[weakSelf _cacheTrack:track forArtists:track.artists];
-					}
-					
-				} else {
-					if (completion) {
-						completion(error);
+							}];
+							[weakSelf _cacheTrack:track forArtists:track.artists];
+						}
+						
+					} else {
+						if (completion) {
+							completion(error);
+						}
 					}
 				}
 			};
