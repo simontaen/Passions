@@ -16,6 +16,8 @@ pod 'GBVersionTracking' # Version and launch tracking
 pod 'UICKeyChainStore' # Easy Keychain Access
 # https://github.com/andysmart/AJS-iTunes-API
 pod 'AJSITunesAPI', :path => '/Users/simon/Documents/code/iOS/Github/AJS-iTunes-API' # iTunes API
+# https://github.com/jdg/MBProgressHUD
+pod 'MBProgressHUD' # show a loading HUD
 
 # 
 pod 'LastFmFetchr', :path => '/Users/simon/Documents/code/iOS/LastFmFetchr'
