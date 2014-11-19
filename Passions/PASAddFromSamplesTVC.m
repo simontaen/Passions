@@ -390,9 +390,11 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 														
 														if (error) {
 															[self _handleError:error];
+														} else {
+															// in success case the cell is reloaded by the kPASDidEditArtistWithName Notification
+															// but I've seen cases where it didn't work, so let's be sure by calling
+															[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 														}
-														// in success case the cell is reloaded
-														// by the kPASDidEditArtistWithName Notification
 													});
 												}];
 }
