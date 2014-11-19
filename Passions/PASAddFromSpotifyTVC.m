@@ -406,7 +406,17 @@
 			break;
 	}
 	
-	[self showAlertWithTitle:@"Try Again" message:msg action:@"OK"];
+	// use force to the stop loading
+	self.isFetching = NO;
+	
+	UIAlertAction *retry = [UIAlertAction actionWithTitle:@"Retry"
+															style:UIAlertActionStyleDefault
+														  handler:^(UIAlertAction * action) {
+															  [self clearCaches];
+															  [self prepareCaches];
+														  }];
+
+	[self showAlertWithTitle:@"Try Again" message:msg actions:@[retry] defaultButton:@"OK"];
 }
 
 #pragma mark - Spotify Auth
