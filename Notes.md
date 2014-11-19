@@ -62,6 +62,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Adding
 * Timeout on LastFmFetchr getCorrectionForArtist
 * Multi faving enables done after first is finished
+* scrolling away during faving resets the star and disables the spinner
 
 ## Fav Artists
 
