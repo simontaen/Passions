@@ -39,6 +39,7 @@
 													  id obj = note.userInfo[kPASShowAlbumDetails];
 													  NSAssert([obj isKindOfClass:[PASAlbum class]], @"kPASShowAlbumDetails must carry a PASAlbum");
 													  [self _showAlbum:obj animated:NO];
+													  [self _refreshUI];
 												  }];
 	// register to get notified if fav artists have been edited
 	[[NSNotificationCenter defaultCenter] addObserverForName:kPASDidEditFavArtists
