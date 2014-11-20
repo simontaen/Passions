@@ -391,12 +391,14 @@
 
 - (void)_showProgressHudWithMessage:(NSString *)msg
 {
-	dispatch_async(dispatch_get_main_queue(), ^{
-		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.extendedNavController.view animated:YES];
-		hud.labelText = msg;
-		self.extendedNavController.segmentedControl.enabled = NO;
-		self.pageViewController.navigationItem.leftBarButtonItem.enabled = NO;
-	});
+	if (self.isViewLoaded) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.extendedNavController.view animated:YES];
+			hud.labelText = msg;
+			self.extendedNavController.segmentedControl.enabled = NO;
+			self.pageViewController.navigationItem.leftBarButtonItem.enabled = NO;
+		});
+	}
 }
 
 - (void)_hideProgressHud
