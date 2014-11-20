@@ -143,7 +143,7 @@
 				dispatch_async(dispatch_get_main_queue(), ^{
 					[self.tableView reloadData];
 				});
-			} else {
+			} else if (error) {
 				[self _handleError:error];
 			}
 		}];
