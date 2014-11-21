@@ -32,9 +32,6 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// Setup Crashlytics
-	[Fabric with:@[CrashlyticsKit]];
-	
 	// Setup LastFmFetchr
 	[LastFmFetchr fetchrWithApiKey:kPASLastFmApiKey];
 	
@@ -44,6 +41,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	[self _setupParse];
 	[self _setupImageCache];
 	[self _setupMusicAppCache];
+	[self _setupCrashlytics];
 	
 	if (application.applicationState != UIApplicationStateBackground) {
 		// Track an app open here if NOT from push,
@@ -58,6 +56,17 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	}
 	
 	return YES;
+}
+
+#pragma mark - Crashlytics
+
+- (void)_setupCrashlytics
+{
+	// Setup Crashlytics
+	[Fabric with:@[CrashlyticsKit]];
+	[Crashlytics sharedInstance];
+	
+	[Crashlytics setUserIdentifier:[PFUser currentUser].objectId];
 }
 
 #pragma mark - Parse
