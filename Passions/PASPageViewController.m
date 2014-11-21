@@ -11,6 +11,7 @@
 
 #import "PASPageViewController.h"
 #import "PASInteractiveTransition.h"
+#import <Parse/Parse.h>
 
 #pragma mark - PASPrivateTransitionContext
 
