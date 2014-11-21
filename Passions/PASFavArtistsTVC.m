@@ -41,7 +41,7 @@
 																		  target:self
 																		  action:@selector(addButtonTapped:)];
 	self.navigationItem.rightBarButtonItem = rbbi;
-#ifdef DEBUG
+#if DEBUG
 	// Image Cache Reset
 	UIBarButtonItem *lbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
 																		  target:self
