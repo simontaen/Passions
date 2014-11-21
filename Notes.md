@@ -49,7 +49,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ### Spotify Integration
 * Fall back to Spotify if Music App does not seem to be used. But to what Artists? Current Top Artists?
-* Show logout button only when spotify appeared
 * Prevent incoming responses from spotify having impact after the first error
 
 ## PageViewController Container
