@@ -14,8 +14,6 @@
 		F40BBA6E1853908700877D60 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F40BBA6D1853908700877D60 /* MediaPlayer.framework */; };
 		F418E4291A0FECDF0027BDCE /* PASAlbumInfoTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F418E4271A0FECDF0027BDCE /* PASAlbumInfoTVCell.m */; };
 		F418E42A1A0FECDF0027BDCE /* PASAlbumInfoTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F418E4281A0FECDF0027BDCE /* PASAlbumInfoTVCell.xib */; };
-		F42162F81A1F412B00D304D4 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F42162F61A1F412B00D304D4 /* Crashlytics.framework */; };
-		F42162F91A1F412B00D304D4 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F42162F71A1F412B00D304D4 /* Fabric.framework */; };
 		F42422A519CD8FCA0097C0F1 /* PASInteractiveTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = F42422A419CD8FCA0097C0F1 /* PASInteractiveTransition.m */; };
 		F424EE2E19B656D40010B3E1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F424EE2D19B656D40010B3E1 /* AudioToolbox.framework */; };
 		F424EE3019B656DD0010B3E1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F424EE2F19B656DD0010B3E1 /* CFNetwork.framework */; };
@@ -58,6 +56,8 @@
 		F4D284D019E0AE26008A3913 /* PASParseObjectWithImages.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D284CF19E0AE26008A3913 /* PASParseObjectWithImages.m */; };
 		F4D6C4B319BFAB8800465781 /* PASArtistTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D6C4B119BFAB8800465781 /* PASArtistTVCell.m */; };
 		F4D6C4B419BFAB8800465781 /* PASArtistTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4D6C4B219BFAB8800465781 /* PASArtistTVCell.xib */; };
+		F4D967BB1A1FF28F00E5026F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4D967B91A1FF28F00E5026F /* Crashlytics.framework */; };
+		F4D967BC1A1FF28F00E5026F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4D967BA1A1FF28F00E5026F /* Fabric.framework */; };
 		F4D9E94C19C39AB100B762A7 /* PASPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4D9E94B19C39AB100B762A7 /* PASPageViewController.xib */; };
 		F4D9E94F19C39D6200B762A7 /* PASRootVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D9E94E19C39D6200B762A7 /* PASRootVC.m */; };
 		F4DEE4F419FBA808007EBB6A /* MPMediaItem+Passions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DEE4F319FBA808007EBB6A /* MPMediaItem+Passions.m */; };
@@ -81,8 +81,6 @@
 		F418E4261A0FECDF0027BDCE /* PASAlbumInfoTVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAlbumInfoTVCell.h; sourceTree = "<group>"; };
 		F418E4271A0FECDF0027BDCE /* PASAlbumInfoTVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAlbumInfoTVCell.m; sourceTree = "<group>"; };
 		F418E4281A0FECDF0027BDCE /* PASAlbumInfoTVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PASAlbumInfoTVCell.xib; sourceTree = "<group>"; };
-		F42162F61A1F412B00D304D4 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
-		F42162F71A1F412B00D304D4 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		F42422A319CD8FCA0097C0F1 /* PASInteractiveTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASInteractiveTransition.h; sourceTree = "<group>"; };
 		F42422A419CD8FCA0097C0F1 /* PASInteractiveTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASInteractiveTransition.m; sourceTree = "<group>"; };
 		F424EE2D19B656D40010B3E1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -153,6 +151,8 @@
 		F4D6C4B019BFAB8800465781 /* PASArtistTVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASArtistTVCell.h; sourceTree = "<group>"; };
 		F4D6C4B119BFAB8800465781 /* PASArtistTVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASArtistTVCell.m; sourceTree = "<group>"; };
 		F4D6C4B219BFAB8800465781 /* PASArtistTVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PASArtistTVCell.xib; sourceTree = "<group>"; };
+		F4D967B91A1FF28F00E5026F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Passions/Crashlytics.framework; sourceTree = "<group>"; };
+		F4D967BA1A1FF28F00E5026F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Passions/Fabric.framework; sourceTree = "<group>"; };
 		F4D9E94B19C39AB100B762A7 /* PASPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PASPageViewController.xib; sourceTree = "<group>"; };
 		F4D9E94D19C39D6200B762A7 /* PASRootVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASRootVC.h; sourceTree = "<group>"; };
 		F4D9E94E19C39D6200B762A7 /* PASRootVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASRootVC.m; sourceTree = "<group>"; };
@@ -175,13 +175,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F49137F519B714A200E4FC0D /* QuartzCore.framework in Frameworks */,
-				F42162F81A1F412B00D304D4 /* Crashlytics.framework in Frameworks */,
 				F49137F319B7142300E4FC0D /* Social.framework in Frameworks */,
-				F42162F91A1F412B00D304D4 /* Fabric.framework in Frameworks */,
 				F49137F119B7137900E4FC0D /* Accounts.framework in Frameworks */,
+				F4D967BC1A1FF28F00E5026F /* Fabric.framework in Frameworks */,
 				F438692A17A55CE6000B7817 /* SystemConfiguration.framework in Frameworks */,
 				F424EE3819B657120010B3E1 /* Security.framework in Frameworks */,
 				F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */,
+				F4D967BB1A1FF28F00E5026F /* Crashlytics.framework in Frameworks */,
 				F424EE3419B656FA0010B3E1 /* libz.dylib in Frameworks */,
 				F4A7797C1793113E00C770B9 /* CoreGraphics.framework in Frameworks */,
 				F424EE3019B656DD0010B3E1 /* CFNetwork.framework in Frameworks */,
@@ -294,8 +294,8 @@
 		F4A779761793113E00C770B9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F42162F61A1F412B00D304D4 /* Crashlytics.framework */,
-				F42162F71A1F412B00D304D4 /* Fabric.framework */,
+				F4D967B91A1FF28F00E5026F /* Crashlytics.framework */,
+				F4D967BA1A1FF28F00E5026F /* Fabric.framework */,
 				F49137F019B7137900E4FC0D /* Accounts.framework */,
 				F424EE2D19B656D40010B3E1 /* AudioToolbox.framework */,
 				F424EE2F19B656DD0010B3E1 /* CFNetwork.framework */,
@@ -551,7 +551,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run 2ad20a89ee003e4862fb932697b3ad317147738a 4946402d0538a85cac035eab6cd2c05d0fd6a11c7061907ca55170418522345b";
+			shellScript = "./Passions/Fabric.framework/run 2ad20a89ee003e4862fb932697b3ad317147738a 4946402d0538a85cac035eab6cd2c05d0fd6a11c7061907ca55170418522345b";
 		};
 		F4D01C7B19E7DA20006C8BFD /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
