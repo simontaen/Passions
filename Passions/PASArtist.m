@@ -101,7 +101,7 @@
 			// now get the corrected name
 			BOOL isValidName = !error && data && data.name && ![data.name isEqualToString:@""];
 			NSString *resolvedName = isValidName ? data.name : artistName;
-			NSLog(@"Resolved Name after Correction to \"%@\"", resolvedName);
+			CLS_LOG(@"Resolved Name after Correction to \"%@\"", resolvedName);
 			
 			[PASArtist _createOrFindArtist:resolvedName completion:favingBlock];
 		}];
@@ -119,11 +119,11 @@
 	[query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
 		if (!object && error.code == kPFErrorObjectNotFound) {
 			// the artist does not exists yet, create it
-			NSLog(@"Creating new Artist \"%@\"", artistName);
+			CLS_LOG(@"Creating new Artist \"%@\"", artistName);
 			[PASArtist _createArtist:artistName completion:completion];
 			
 		} else if (object && !error) {
-			NSLog(@"Found existing Artist \"%@\"", artistName);
+			CLS_LOG(@"Found existing Artist \"%@\"", artistName);
 			completion((PASArtist *)object, error);
 			
 		} else {
@@ -183,12 +183,12 @@
 		// which you already faved with the correct name
 		// AC/DC is fav but we could add ACDC
 		// There are more problems in this case when removing, but lets not code for exceptions
-		NSLog(@"User \"%@\" has \"%@\" already favorited", currentUser.objectId, self.name);
+		CLS_LOG(@"User \"%@\" has \"%@\" already favorited", currentUser.objectId, self.name);
 		[PFAnalytics trackEvent:@"The ACDC Problem" dimensions:@{ @"artistName" : self.name}];
 		completion(self, nil);
 		
 	} else {
-		NSLog(@"Faving \"%@\" for User \"%@\"", self.name,  currentUser.objectId);
+		CLS_LOG(@"Faving \"%@\" for User \"%@\"", self.name,  currentUser.objectId);
 		
 		[currentUser addObject:self.objectId forKey:@"favArtists"];
 		[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -206,7 +206,7 @@
 	PFUser *currentUser = [PFUser currentUser];
 	[currentUser removeObject:self.objectId forKey:@"favArtists"];
 
-	NSLog(@"Removing \"%@\" from User \"%@\"", self.name, currentUser.objectId);
+	CLS_LOG(@"Removing \"%@\" from User \"%@\"", self.name, currentUser.objectId);
 	
 	NSDate *start = [NSDate date];
 	[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -225,9 +225,9 @@
 	[PFAnalytics trackEvent:faving dimensions:@{ @"time": duration }];
 	
 	if (success) {
-		NSLog(@"Took %@ seconds to %@ Aritst \"%@\" for User \"%@\"", duration, faving, artistName, [PFUser currentUser].objectId);
+		CLS_LOG(@"Took %@ seconds to %@ Aritst \"%@\" for User \"%@\"", duration, faving, artistName, [PFUser currentUser].objectId);
 	} else {
-		NSLog(@"Took %@ seconds and failed to %@ Aritst \"%@\" for User \"%@\"", duration, faving, artistName, [PFUser currentUser].objectId);
+		CLS_LOG(@"Took %@ seconds and failed to %@ Aritst \"%@\" for User \"%@\"", duration, faving, artistName, [PFUser currentUser].objectId);
 	}
 }
 

@@ -179,7 +179,7 @@
 	}
 	
 	if (![PASMediaQueryAccessor sharedMngr].usesMusicApp) {
-		NSLog(@"The user doesn't seem to use the Music App");
+		CLS_LOG(@"The user doesn't seem to use the Music App");
 		// still send the notification
 		[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists object:nil];
 	
@@ -248,7 +248,7 @@
 										  attributes:nil
 											   error:&err];
 			if (!success) {
-				NSLog(@"Cannot create cache dir (%@)", [err localizedDescription]);
+				CLS_LOG(@"Cannot create cache dir (%@)", [err localizedDescription]);
 			}
 		}
 		

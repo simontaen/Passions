@@ -104,7 +104,7 @@
 		}
 		return query;
 	}
-	NSLog(@"CurrentUser not ready for Timeline");
+	CLS_LOG(@"CurrentUser not ready for Timeline");
 	return nil; // shows loading spinner
 }
 

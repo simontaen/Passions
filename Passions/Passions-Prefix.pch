@@ -4,6 +4,7 @@
 
 #import <Availability.h>
 #import "PASResources.h"
+#import <Crashlytics/Crashlytics.h>
 
 #ifdef __OBJC__
 	@import UIKit;

@@ -51,7 +51,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		if (!userInfo) {
 			[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 		} else {
-			NSLog(@"UserInfo didFinishLaunchingWithOptions %@", userInfo);
+			CLS_LOG(@"UserInfo didFinishLaunchingWithOptions %@", userInfo);
 		}
 	}
 	
@@ -94,13 +94,13 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		[self _updateDeviceInfos:currentInstallation];
 		[currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 			if (succeeded && !error) {
-				NSLog(@"Current Installation initialized: %@", currentInstallation.objectId);
+				CLS_LOG(@"Current Installation initialized: %@", currentInstallation.objectId);
 				// create the assosiation for push notifications
 				[currentUser setObject:currentInstallation.objectId forKey:@"installation"];
 				[currentUser setObject:@0 forKey:@"runCount"];
 				[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 					if (succeeded && !error) {
-						NSLog(@"Current User initialized: %@", currentUser.objectId);
+						CLS_LOG(@"Current User initialized: %@", currentUser.objectId);
 						[Crashlytics setUserIdentifier:[PFUser currentUser].objectId];
 						[[PASManageArtists sharedMngr] addInitialFavArtists];
 					}
@@ -203,7 +203,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)imageCache:(FICImageCache *)imageCache errorDidOccurWithMessage:(NSString *)errorMessage
 {
-	NSLog(@"%@", errorMessage);
+	CLS_LOG(@"%@", errorMessage);
 }
 
 #pragma mark - Notifications
@@ -221,17 +221,17 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
 	if (error.code == 3010) {
-		NSLog(@"Push notifications are not supported in the iOS Simulator.");
+		CLS_LOG(@"Push notifications are not supported in the iOS Simulator.");
 	} else {
 		// show some alert or otherwise handle the failure to register.
-		NSLog(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
+		CLS_LOG(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
 	}
 }
 
 /// Process incoming remote notifications when running or (foreground) launching from a notification
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-	NSLog(@"didReceiveRemoteNotification with UserInfo %@", userInfo);
+	CLS_LOG(@"didReceiveRemoteNotification with UserInfo %@", userInfo);
 	NSString *albumId = userInfo[kAlbumIdPushKey];
 	NSString *refreshFlag = userInfo[kFavArtistsRefreshPushKey];
 	

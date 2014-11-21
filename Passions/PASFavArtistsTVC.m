@@ -162,7 +162,7 @@
 		}
 		return query;
 	}
-	NSLog(@"CurrentUser not ready for FavArtists");
+	CLS_LOG(@"CurrentUser not ready for FavArtists");
 	return nil; // shows loading spinner
 }
 

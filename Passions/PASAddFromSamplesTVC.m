@@ -439,7 +439,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (void)_handleError:(NSError *)error
 {
-	NSLog(@"%@", [error description]);
+	CLS_LOG(@"%@", [error description]);
 	NSString *codeString = [NSString stringWithFormat:@"%d", (int)[error code]];
 	[PFAnalytics trackEvent:@"error" dimensions:@{ @"code": codeString,  @"desc" : [error description] }];
 

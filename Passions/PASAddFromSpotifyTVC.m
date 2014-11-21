@@ -424,7 +424,7 @@
 {
 	// abort everything and display a message,
 	// show available artists
-	NSLog(@"%@", [error description]);
+	CLS_LOG(@"%@", [error description]);
 	NSString *codeString = [NSString stringWithFormat:@"%d", (int)[error code]];
 	[PFAnalytics trackEvent:@"error" dimensions:@{ @"code": codeString,  @"desc" : [error description] }];
 	
