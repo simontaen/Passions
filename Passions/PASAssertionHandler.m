@@ -20,11 +20,11 @@
 																									@"location" : location
 																									}];
 #if DEBUG
-	CLSNSLog(@"Assertion failure: FUNCTION = (%@) at (%@)", functionName, location);
+	CLSNSLog(@"Assertion failure: FUNCTION = (%@) at (%@), %@", functionName, location, format);
 	[super handleFailureInFunction:functionName file:fileName lineNumber:line description:format, @""];
 #else
 	// don't crash in production, just log
-	CLSLog(@"Assertion failure: FUNCTION = (%@) at (%@)", functionName, location);
+	CLSLog(@"Assertion failure: FUNCTION = (%@) at (%@), %@", functionName, location, format);
 #endif
 }
 
@@ -38,11 +38,11 @@
 																									@"location" : location
 																									}];
 #if DEBUG
-	CLSNSLog(@"Assertion failure: METHOD = (%@) for object = (%@) at (%@)", methodName, object, location);
+	CLSNSLog(@"Assertion failure: METHOD = (%@) for object = (%@) at (%@), %@", methodName, object, location, format);
 	[super handleFailureInMethod:selector object:object file:fileName lineNumber:line description:format, @""];
 #else
 	// don't crash in production, just log
-	CLSLog(@"Assertion failure: METHOD = (%@) for object = (%@) at (%@)", methodName, object, location);
+	CLSLog(@"Assertion failure: METHOD = (%@) for object = (%@) at (%@), %@", methodName, object, location, format);
 #endif
 }
 
