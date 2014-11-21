@@ -143,13 +143,16 @@ static NSInteger const kAddCells = 2;
 
 - (NSString *)_stringifiedTracks
 {
-	NSUInteger tracks = self.tracks.count;
-	if (tracks == 0) {
+	NSNumber *tracksNumber = self.album.trackCount;
+	if (!tracksNumber) {
 		return @"(Tracks unavailable)";
-	} else if (tracks == 1) {
-		return [NSString stringWithFormat:@"%tu Track", tracks];
 	} else {
-		return [NSString stringWithFormat:@"%tu Tracks", tracks];
+		NSUInteger tracks = [tracksNumber integerValue];
+		if (tracks == 1) {
+			return [NSString stringWithFormat:@"%tu Track", tracks];
+		} else {
+			return [NSString stringWithFormat:@"%tu Tracks", tracks];
+		}
 	}
 }
 
