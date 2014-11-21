@@ -38,10 +38,10 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	// Setup GBVersionTracking
 	[GBVersionTracking track];
 	
+	[self _setupCrashlytics];
 	[self _setupParse];
 	[self _setupImageCache];
 	[self _setupMusicAppCache];
-	[self _setupCrashlytics];
 	
 	if (application.applicationState != UIApplicationStateBackground) {
 		// Track an app open here if NOT from push,
@@ -66,11 +66,11 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	[Fabric with:@[CrashlyticsKit]];
 	[Crashlytics sharedInstance];
 	
-	[Crashlytics setUserIdentifier:[PFUser currentUser].objectId];
 }
 
 #pragma mark - Parse
 
+// run this AFTER Crashlytics
 - (void)_setupParse
 {
 	[Parse setApplicationId:kPASParseAppId
@@ -101,6 +101,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 				[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 					if (succeeded && !error) {
 						NSLog(@"Current User initialized: %@", currentUser.objectId);
+						[Crashlytics setUserIdentifier:[PFUser currentUser].objectId];
 						[[PASManageArtists sharedMngr] addInitialFavArtists];
 					}
 				}];
@@ -113,6 +114,8 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		[currentInstallation saveInBackground];
 		// DEBUG (since I'm changing artwork quite often
 		[[FICImageCache sharedImageCache] reset];
+	} else {
+		[Crashlytics setUserIdentifier:[PFUser currentUser].objectId];
 	}
 }
 
