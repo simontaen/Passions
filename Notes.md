@@ -53,6 +53,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ### Spotify Integration
 * Fall back to Spotify if Music App does not seem to be used. But to what Artists? Current Top Artists?
 * Show logout button only when spotify appeared
+* Prevent incoming responses from spotify having impact after the first error
 
 ## PageViewController Container
 * flickering when the transition gets aborted
@@ -71,6 +72,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## Artist and Album Info
 * Artist Info: no image leads to misplaced releasedate view (for a short period before it appears) - changed FCIImageCache maximumCount
+* Hide Tracklist from AlbumInfo, it reminds you too much of a music app
 
 # 2.0
 
