@@ -102,7 +102,8 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Get Suggestions based on my Favorite Artists (Maybe LastFm or even iTunes)
 * Dynamic Row height for bigger devices (5 and up, 6 and up)
 * releaseDate View: UIVisualEffectView always refreshes, causes flickering
-* Local Notification on release day of an album? 
+* Local Notification on release day of an album?
+* Use https://github.com/CanvasPod/Canvas
 
 # Data communication with Parse
 
