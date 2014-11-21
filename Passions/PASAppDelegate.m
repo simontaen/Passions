@@ -18,7 +18,7 @@
 #import <Spotify/Spotify.h>
 #import "PASMediaQueryAccessor.h"
 #import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
+#import "PASAssertionHandler.h"
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
@@ -32,6 +32,10 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	// Setting a custom assertion handler"
+	NSAssertionHandler* customAssertionHandler = [[PASAssertionHandler alloc] init];
+	[[[NSThread currentThread] threadDictionary] setValue:customAssertionHandler forKey:NSAssertionHandlerKey];
+	
 	// Setup LastFmFetchr
 	[LastFmFetchr fetchrWithApiKey:kPASLastFmApiKey];
 	
@@ -65,7 +69,6 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	// Setup Crashlytics
 	[Fabric with:@[CrashlyticsKit]];
 	[Crashlytics sharedInstance];
-	
 }
 
 #pragma mark - Parse
