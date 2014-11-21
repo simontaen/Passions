@@ -17,6 +17,8 @@
 #import "PASManageArtists.h"
 #import <Spotify/Spotify.h>
 #import "PASMediaQueryAccessor.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
@@ -30,6 +32,9 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	// Setup Crashlytics
+	[Fabric with:@[CrashlyticsKit]];
+	
 	// Setup LastFmFetchr
 	[LastFmFetchr fetchrWithApiKey:kPASLastFmApiKey];
 	
