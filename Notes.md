@@ -41,13 +41,10 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Stuck in processing on server, why? How should the App react?
 
 ## General Functionality
-* Assertion failures when using the PVC (see crash logs), crash when sliding
-	* Take out the assert on swiping (check the crashlog shortly before 12)
 * Show an [MBProgressHUD](https://github.com/jdg/MBProgressHUD) when waiting is expected and unavoidable (think about earlier caching if you must)
 	* when loading albums from Parse (all Timeline instances), or a splash screen?
 		* make sure swipeHint can only be displayed after the loading is done
-	* when loading tracks
-* Use AFNetworkReachabilityManager to check if you should show a MBProgressHUD
+	* when loading tracks (actually remove it, rename tracks to items)
 * Use AFNetworkActivityIndicatorManager.h to better show network activity (loading images)
 
 ### Spotify Integration
@@ -56,7 +53,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Prevent incoming responses from spotify having impact after the first error
 
 ## PageViewController Container
-* flickering when the transition gets aborted
 
 ## Cells
 
@@ -68,10 +64,8 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Fav Artists
 
 ## Timeline
-* Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
 
 ## Artist and Album Info
-* Artist Info: no image leads to misplaced releasedate view (for a short period before it appears) - changed FCIImageCache maximumCount
 * Hide Tracklist from AlbumInfo, it reminds you too much of a music app
 
 # 2.0
@@ -104,6 +98,8 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * releaseDate View: UIVisualEffectView always refreshes, causes flickering
 * Local Notification on release day of an album?
 * Use https://github.com/CanvasPod/Canvas
+* Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
+* flickering when the transition gets aborted (this is in the Container)
 
 # Data communication with Parse
 
