@@ -109,8 +109,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	self.pageViewController.navigationItem.leftBarButtonItem = self.spotifyButton;
-	[self _configureSpotifyButton];
 
 	if (!self.alertController && self.artists && self.artists.count == 0) {
 		// artists have been fetched but non exists
@@ -126,6 +124,13 @@
 			}];
 		}];
 	}
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	self.pageViewController.navigationItem.leftBarButtonItem = self.spotifyButton;
+	[self _configureSpotifyButton];	
 }
 
 - (void)viewWillDisappear:(BOOL)animated
