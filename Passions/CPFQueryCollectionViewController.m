@@ -8,6 +8,7 @@
 
 #import "CPFQueryCollectionViewController.h"
 #import <Parse/Parse.h>
+#import "MBProgressHUD.h"
 
 // Define our own version of NSLog(...) which will only send its input to the
 // output if we are in debug mode and a assertion logger which will cause an
@@ -138,25 +139,17 @@
     self.isLoading = YES;
 	
     // Display the loading thingy
-    if (self.loadingViewEnabled)
-    {
-        if (!_loadingIndicator)
-        {
-            _loadingIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-            _loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-            _loadingIndicator.hidesWhenStopped = YES;
-            _loadingIndicator.center = CGPointMake(self.collectionView.bounds.size.width / 2, self.collectionView.bounds.size.height / 2);
-            [self.view addSubview:_loadingIndicator];
-        }
-        // Unhide if this is the second time loading
-        _loadingIndicator.hidden = NO;
-        [_loadingIndicator startAnimating];
+    if (self.loadingViewEnabled) {
+		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+		hud.labelText = @"Loading Albums...";
     }
 }
 
 - (void)objectsDidLoad:(NSError *)error
 {
-    [_loadingIndicator stopAnimating];
+	if (self.loadingViewEnabled) {
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
+	}
     [self.collectionView reloadData];
 }
 

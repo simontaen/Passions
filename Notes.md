@@ -41,9 +41,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Stuck in processing on server, why? How should the App react?
 
 ## General Functionality
-* Show an [MBProgressHUD](https://github.com/jdg/MBProgressHUD) when waiting is expected and unavoidable (think about earlier caching if you must)
-	* when loading albums from Parse (all Timeline instances), or a splash screen?
-		* make sure swipeHint can only be displayed after the loading is done
 * Use AFNetworkActivityIndicatorManager.h to better show network activity (loading images)
 
 ### Spotify Integration

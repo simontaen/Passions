@@ -29,7 +29,7 @@
 	// Configure Parse Query
 	self.paginationEnabled = YES;
 	self.objectsPerPage = 500;
-	self.loadingViewEnabled = NO;
+	self.loadingViewEnabled = YES;
 	self.showSwipeHint = YES;
 	
 	// register to get notified when an album should be shown
