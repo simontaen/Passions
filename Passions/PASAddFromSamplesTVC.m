@@ -452,7 +452,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 			break;
 	}
 	
-	[self showAlertWithTitle:@"Try Again" message:msg actions:nil defaultButton:@"OK"];
+	[self showAlertWithTitle:@"Try again" message:msg actions:nil defaultButton:@"OK"];
 }
 
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)msg actions:(NSArray *)actions defaultButton:(NSString *)defaultButton
