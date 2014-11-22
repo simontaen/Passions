@@ -179,7 +179,20 @@
 
 - (BOOL)isArtistInProgress:(NSString *)artistName
 {
-	return [self.artistsInProgress containsObject:artistName];
+	BOOL __block result;
+	dispatch_barrier_sync(self.progressQ, ^{
+		result = [self.artistsInProgress containsObject:artistName];
+	});
+	return result;
+}
+
+- (BOOL)favingInProcess
+{
+	BOOL __block result;
+	dispatch_barrier_sync(self.progressQ, ^{
+		result = self.artistsInProgress.count != 0;
+	});
+	return result;
 }
 
 - (void)addInitialFavArtists

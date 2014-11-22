@@ -22,6 +22,7 @@
 
 - (BOOL)isFavoriteArtist:(NSString *)artistName;
 - (BOOL)isArtistInProgress:(NSString *)artistName;
+- (BOOL)favingInProcess;
 
 - (void)addInitialFavArtists;
 

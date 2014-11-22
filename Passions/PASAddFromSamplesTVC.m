@@ -391,8 +391,10 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 												completion:^(NSError *error) {
 													dispatch_async(dispatch_get_main_queue(), ^{
 														[cell showFaving:NO];
-														self.pageViewController.navigationItem.rightBarButtonItem.enabled = YES;
-														self.pageViewController.navigationItem.leftBarButtonItem.enabled = YES;
+														if (![[PASManageArtists sharedMngr] favingInProcess]) {
+															self.pageViewController.navigationItem.rightBarButtonItem.enabled = YES;
+															self.pageViewController.navigationItem.leftBarButtonItem.enabled = YES;
+														}
 														
 														if (error) {
 															[self _handleError:error];
