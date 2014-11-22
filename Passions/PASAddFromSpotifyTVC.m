@@ -433,14 +433,51 @@
 	NSString *codeString = [NSString stringWithFormat:@"%d", (int)[error code]];
 	[PFAnalytics trackEvent:@"error" dimensions:@{ @"code": codeString,  @"desc" : [error description] }];
 	
+	NSString *title = @"Try again";
 	NSString *msg;
-	switch (error.code) {
-		case -1001:
-			msg = @"The operation timed out.";
-			break;
-		default:
-			msg = @"Something went wrong.";
-			break;
+	NSString *defaultBtn;
+	NSMutableArray *actions = [NSMutableArray array];
+	
+	if ([[error domain] isEqualToString:@"com.spotify.auth"]) {
+		title = @"Spotify login failed";
+		UIAlertAction *reauth = [UIAlertAction actionWithTitle:@"Authenticate again"
+														style:UIAlertActionStyleDefault
+													  handler:^(UIAlertAction * action) {
+														  self.session = nil;
+														  [self _configureSpotifyButton];
+														  [self _validateSessionWithCallback:^{
+															  [self _fetchSpotifyArtistsWithCompletion:^(NSError *error) {
+																  if (!error) {
+																	  dispatch_async(dispatch_get_main_queue(), ^{
+																		  [self.tableView reloadData];
+																	  });
+																  } else {
+																	  [self _handleError:error];
+																  }
+															  }];
+														  }];
+														  [self spotifyButtonTapped:nil];
+													  }];
+		[actions addObject:reauth];
+		
+	} else {
+		switch (error.code) {
+			case -1001:
+				msg = @"The operation timed out.";
+				break;
+			default:
+				msg = @"Something went wrong.";
+				break;
+		}
+		
+		UIAlertAction *retry = [UIAlertAction actionWithTitle:@"Retry"
+														style:UIAlertActionStyleDefault
+													  handler:^(UIAlertAction * action) {
+														  [self clearCaches];
+														  [self prepareCaches];
+													  }];
+		[actions addObject:retry];
+		defaultBtn = @"OK";
 	}
 	
 	// use force to the stop loading
@@ -448,14 +485,7 @@
 	self.sessionIsRenewing = NO;
 	self.pageViewController.navigationItem.leftBarButtonItem.enabled = YES;
 	
-	UIAlertAction *retry = [UIAlertAction actionWithTitle:@"Retry"
-													style:UIAlertActionStyleDefault
-												  handler:^(UIAlertAction * action) {
-													  [self clearCaches];
-													  [self prepareCaches];
-												  }];
-
-	[self showAlertWithTitle:@"Try Again" message:msg actions:@[retry] defaultButton:@"OK"];
+	[self showAlertWithTitle:title message:msg actions:actions defaultButton:defaultBtn];
 }
 
 #pragma mark - Spotify Auth
@@ -494,6 +524,11 @@
 
 - (void)_validateSessionWithCallback:(void (^)())completion
 {
+	if (self.alertController) {
+		// an alert is pending, return immediatly
+		return;
+	}
+	
 	// This is the callback that'll be triggered when auth is completed (or fails).
 	SPTAuthCallback authCallback = ^(NSError *error, SPTSession *session) {
 		if (error != nil) {
