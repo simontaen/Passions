@@ -99,7 +99,7 @@
 	if (needsCorrection) {
 		NSURLSessionTask *task = [[LastFmFetchr fetchr] getCorrectionForArtist:artistName
 																	completion:^(LFMArtist *data, NSError *error) {
-																		if (data && !error) {
+																		if (!error) {
 																			// now get the corrected name
 																			BOOL isValidName = !error && data && data.name && ![data.name isEqualToString:@""];
 																			NSString *resolvedName = isValidName ? data.name : artistName;
@@ -117,6 +117,7 @@
 			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 				if ([task state] == NSURLSessionTaskStateRunning) {
 					// Task is running too long, cancel it
+					CLS_LOG(@"Cancelling getCorrectionForArtist Request");
 					[task cancel];
 				}
 			});
