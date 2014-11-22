@@ -67,7 +67,7 @@ CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 	static NSURL *spotifyTokenSwap;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		spotifyTokenSwap = [NSURL URLWithString:@"https://shrieking-grave-7597.herokuapp.com/swap"];
+		spotifyTokenSwap = [NSURL URLWithString:@"https://nameless-spire-5298.herokuapp.com/swap"];
 	});
 	return spotifyTokenSwap;
 }
@@ -77,7 +77,7 @@ CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 	static NSURL *spotifyTokenRefresh;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		spotifyTokenRefresh = [NSURL URLWithString:@"https://shrieking-grave-7597.herokuapp.com/refresh"];
+		spotifyTokenRefresh = [NSURL URLWithString:@"https://nameless-spire-5298.herokuapp.com/refresh"];
 	});
 	return spotifyTokenRefresh;
 }
