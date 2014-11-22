@@ -47,7 +47,7 @@
 	
 	if (![artist isKindOfClass:[PASArtist class]]) {
 		// Update the star button image as isFav could have changed externally
-		[self _updateStarButton];
+		[self _checkAndUpdateStarButtonWithArtistName:name];
 		
 		if (!self.observer) {
 			// Register for single Artist updates when faving
@@ -75,7 +75,30 @@
 	ROUTE(sender);
 }
 
+- (void)showFaving:(BOOL)faving
+{
+	if (faving) {
+		self.userInteractionEnabled = NO;
+		self.starButton.hidden = YES;
+		[self.activityIndicator startAnimating];
+	} else {
+		[self.activityIndicator stopAnimating];
+		self.starButton.hidden = NO;
+		self.userInteractionEnabled = YES;
+	}
+}
+
 #pragma mark - Private Methods
+
+- (void)_checkAndUpdateStarButtonWithArtistName:(NSString *)artistName
+{
+	if (![[PASManageArtists sharedMngr] isArtistInProgress:artistName]) {
+		[self showFaving:NO];
+		[self _updateStarButton];
+	} else {
+		[self showFaving:YES];
+	}
+}
 
 - (void)_updateStarButton
 {

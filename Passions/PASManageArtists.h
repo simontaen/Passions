@@ -21,6 +21,7 @@
 					 completion:(void (^)(NSError *error))completion;
 
 - (BOOL)isFavoriteArtist:(NSString *)artistName;
+- (BOOL)isArtistInProgress:(NSString *)artistName;
 
 - (void)addInitialFavArtists;
 

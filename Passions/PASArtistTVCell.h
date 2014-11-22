@@ -22,6 +22,7 @@
 - (void)showArtist:(id<FICEntity>)artist withName:(NSString *)name andDetailTextBlock:(NSString * (^)(id<FICEntity> artist, NSString *name))block;
 
 - (IBAction)starTapped:(id)sender;
+- (void)showFaving:(BOOL)faving;
 
 + (NSString *)reuseIdentifier;
 

@@ -383,18 +383,14 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 - (void)starTapped:(UIButton *)sender atIndexPath:(NSIndexPath *)indexPath
 {
 	PASArtistTVCell *cell = (PASArtistTVCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-	cell.userInteractionEnabled = NO;
-	cell.starButton.hidden = YES;
-	[cell.activityIndicator startAnimating];
+	[cell showFaving:YES];
 	self.pageViewController.navigationItem.rightBarButtonItem.enabled = NO;
 	self.pageViewController.navigationItem.leftBarButtonItem.enabled = NO;
 	
 	[[PASManageArtists sharedMngr] didSelectArtistWithName:[self nameForArtist:[self _artistForIndexPath:indexPath]]
 												completion:^(NSError *error) {
 													dispatch_async(dispatch_get_main_queue(), ^{
-														[cell.activityIndicator stopAnimating];
-														cell.starButton.hidden = NO;
-														cell.userInteractionEnabled = YES;
+														[cell showFaving:NO];
 														self.pageViewController.navigationItem.rightBarButtonItem.enabled = YES;
 														self.pageViewController.navigationItem.leftBarButtonItem.enabled = YES;
 														
