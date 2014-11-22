@@ -29,14 +29,15 @@ static NSInteger const kAddCells = 2;
 		_album = album;
 		self.tracks = [NSArray array];
 		
-		[[AJSITunesClient sharedClient] lookupWithId:[album.iTunesId stringValue] entityType:@"song" country:nil limit:200 completion:^(NSArray *results, NSError *error) {
-			NSMutableArray *tracks = [results mutableCopy];
-			[tracks removeObject:[results firstObject]];
-			self.tracks = tracks;
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[self.tableView reloadData];
-			});
-		}];
+		// enable only with a MBProgressHUD
+//		[[AJSITunesClient sharedClient] lookupWithId:[album.iTunesId stringValue] entityType:@"song" country:nil limit:200 completion:^(NSArray *results, NSError *error) {
+//			NSMutableArray *tracks = [results mutableCopy];
+//			[tracks removeObject:[results firstObject]];
+//			self.tracks = tracks;
+//			dispatch_async(dispatch_get_main_queue(), ^{
+//				[self.tableView reloadData];
+//			});
+//		}];
 	}
 }
 
@@ -55,6 +56,8 @@ static NSInteger const kAddCells = 2;
 	
 	// TableView Properties
 	self.tableView.allowsSelection = NO;
+	self.tableView.scrollEnabled = NO;
+	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
 	// Configure navigationController
 	self.title = @"Album Details";

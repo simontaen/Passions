@@ -44,7 +44,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Show an [MBProgressHUD](https://github.com/jdg/MBProgressHUD) when waiting is expected and unavoidable (think about earlier caching if you must)
 	* when loading albums from Parse (all Timeline instances), or a splash screen?
 		* make sure swipeHint can only be displayed after the loading is done
-	* when loading tracks (actually remove it, rename tracks to items)
 * Use AFNetworkActivityIndicatorManager.h to better show network activity (loading images)
 
 ### Spotify Integration
@@ -62,7 +61,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Timeline
 
 ## Artist and Album Info
-* Hide Tracklist from AlbumInfo, it reminds you too much of a music app
 
 # 2.0
 
