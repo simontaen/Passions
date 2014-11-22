@@ -213,7 +213,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)imageCache:(FICImageCache *)imageCache errorDidOccurWithMessage:(NSString *)errorMessage
 {
-	CLS_LOG(@"%@", errorMessage);
+	NSLog(@"%@", errorMessage);
 }
 
 #pragma mark - Notifications
