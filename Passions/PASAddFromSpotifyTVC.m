@@ -474,7 +474,7 @@
 	} else {
 		NSURL *loginPageURL = [[SPTAuth defaultInstance] loginURLForClientId:kPASSpotifyClientId
 														 declaredRedirectURL:[PASResources	spotifyCallbackUri]
-																	  scopes:@[SPTAuthUserLibraryRead]];
+																	  scopes:@[SPTAuthUserLibraryReadScope]];
 		[[UIApplication sharedApplication] openURL:loginPageURL];
 	}
 }
