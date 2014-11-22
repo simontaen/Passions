@@ -19,6 +19,7 @@
 #import "PASMediaQueryAccessor.h"
 #import <Fabric/Fabric.h>
 #import "PASAssertionHandler.h"
+#import "AFNetworkActivityIndicatorManager.h"
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
@@ -35,6 +36,9 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	// Setting a custom assertion handler"
 	NSAssertionHandler* customAssertionHandler = [[PASAssertionHandler alloc] init];
 	[[[NSThread currentThread] threadDictionary] setValue:customAssertionHandler forKey:NSAssertionHandlerKey];
+	
+	// Setup AFNetworking
+	[[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
 	
 	// Setup LastFmFetchr
 	[LastFmFetchr fetchrWithApiKey:kPASLastFmApiKey];
@@ -178,7 +182,10 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 			
 		} else {
 			// Fetch the desired source image by making a network request
+			[[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
 			NSURL *requestURL = [entity sourceImageURLWithFormatName:formatName];
+			[[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
+
 			// I could use something like AFNetworking or https://github.com/rs/SDWebImage
 			// but it seems to work pretty good actually
 			sourceImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:requestURL]];

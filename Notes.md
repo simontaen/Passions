@@ -41,7 +41,6 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Stuck in processing on server, why? How should the App react?
 
 ## General Functionality
-* Use AFNetworkActivityIndicatorManager.h to better show network activity (loading images)
 
 ### Spotify Integration
 * Fall back to Spotify if Music App does not seem to be used. But to what Artists? Current Top Artists?
