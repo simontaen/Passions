@@ -97,14 +97,33 @@
 	};
 	
 	if (needsCorrection) {
-		[[LastFmFetchr fetchr] getCorrectionForArtist:artistName completion:^(LFMArtist *data, NSError *error) {
-			// now get the corrected name
-			BOOL isValidName = !error && data && data.name && ![data.name isEqualToString:@""];
-			NSString *resolvedName = isValidName ? data.name : artistName;
-			CLS_LOG(@"Resolved Name after Correction to \"%@\"", resolvedName);
-			
-			[PASArtist _createOrFindArtist:resolvedName completion:favingBlock];
+		NSURLSessionTask *task = [[LastFmFetchr fetchr] getCorrectionForArtist:artistName
+																	completion:^(LFMArtist *data, NSError *error) {
+																		if (data && !error) {
+																			// now get the corrected name
+																			BOOL isValidName = !error && data && data.name && ![data.name isEqualToString:@""];
+																			NSString *resolvedName = isValidName ? data.name : artistName;
+																			CLS_LOG(@"Resolved Name after Correction to \"%@\"", resolvedName);
+																			
+																			[PASArtist _createOrFindArtist:resolvedName completion:favingBlock];
+																		} else {
+																			completion(nil, error);
+																		}
 		}];
+		
+		// Setup a Timeout
+		 void (^timer)(void) = ^{
+			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kPASLastFmTimeoutInSec * NSEC_PER_SEC);
+			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+				if ([task state] == NSURLSessionTaskStateRunning) {
+					// Task is running too long, cancel it
+					[task cancel];
+				}
+			});
+		};
+		// Start the timer
+		timer();
+		
 	} else {
 		[PASArtist _createOrFindArtist:artistName completion:favingBlock];
 	}

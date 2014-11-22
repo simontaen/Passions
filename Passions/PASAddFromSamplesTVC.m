@@ -444,6 +444,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	NSString *msg;
 	switch (error.code) {
 		case 141:
+		case -999:
 			msg = @"The operation timed out.";
 			break;
 		default:
