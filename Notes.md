@@ -58,20 +58,23 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## Artist and Album Info
 
+# 1.1 (?)
+* iPhone 6 Support
+* Dynamic Row height for bigger devices (5 and up, 6 and up)
+* search for not in library artists to add (but consider all resources!) - **number one feature request**!
+* The ReleaseDate View flickers when scrolling. This must be an Apple Bug. You could try to capture an image or replicate it using "Album Colors" and a 60% opaque background
+	* Use [LEColorPicker](https://github.com/luisespinoza/LEColorPicker)
+
 # 2.0
 
 * Try a TabBarController with a hidden tabBar replaced by a pageControl
 * Ask User for matching when unclear, but don't code for exceptions
 	* "I did my best but I still need your help to identify your favorite Artist"
 * Animate the cell when an Artist has been favorited.
-* Already favorited Artists passing in PASFavArtistsTVC (artistNames)
-	* It could be improved by checking if self.objects actually did change
-	* only then create a new artistNames array
 * segmented control on Timeline, in NavBar which hides on swipe (this would also solve the status bar problem)
 	* to filter results based on release date? Where do I get info on pre-releases?
 	* to filter results and show all or only missing albums (this is the most interesting!)
 	* change ordering: by release date, by artist.
-* search for not in library artists to add (but consider all resources!) - number one feature request!
 * Background fetch for a new Album
 * You might run into performance problems with _triggerAlbumFetching and fetchFullAlbums. If too many requests come in at the same time, I'll run out of background jobs. The job won't run, the user won't get a push when loading is done, and more importantly it could take until the next scheduled album fetch until the artist get its albums. We'll have to see how it turns out.
 	* Faving Artists fast leads to "processing" for ever (no Jobs available), how to resolve?
@@ -79,13 +82,9 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Some Artist might not have Albums, like Jennifer Rostock (store region) or Garth Brooks (won't sell them on iTunes). Fall back to Spotify in that case.
 * Albums "duplicate" check, more like "find different editions", when adding on Parse. This might work with a Stemmer (fix at the root problem) or hashing the image (fix the symptom).
 	* Also this requires a data model change since you need to make a relation between Albums
-* The ReleaseDate View flickers when scrolling. This must be an Apple Bug. You could try to capture an image or replicate it using "Album Colors" and a 60% opaque background
 * Get Concerts and Events from your Fav. Artists
-* How to I get logs from Test Devices (aka Remote Logging), PFAnalytics?
 * Add LastFm as a Source
-* Get Suggestions based on my Favorite Artists (Maybe LastFm or even iTunes)
-* Dynamic Row height for bigger devices (5 and up, 6 and up)
-* releaseDate View: UIVisualEffectView always refreshes, causes flickering
+* Get Suggestions based on my Favorite Artists (Maybe LastFm or even iTunes). But the app is NOT a discovery Service.
 * Local Notification on release day of an album?
 * Use https://github.com/CanvasPod/Canvas
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
