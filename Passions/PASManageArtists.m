@@ -16,6 +16,8 @@
 #pragma mark - Faving Artists
 // worker Q http://stackoverflow.com/a/5511403 / http://stackoverflow.com/a/13705529
 @property (nonatomic, strong) dispatch_queue_t favoritesQ;
+@property (nonatomic, strong) dispatch_queue_t progressQ;
+@property (nonatomic, strong) NSMutableArray* artistsInProgress; // NSString
 
 // passed by the segue, LFM Corrected!
 @property (nonatomic, strong, readonly) NSArray* originalFavArtists; // PASArtist, never changed
@@ -53,6 +55,8 @@
 	
 	// perpare for user favoriting artists
 	self.favoritesQ = dispatch_queue_create("favoritesQ", DISPATCH_QUEUE_CONCURRENT);
+	self.progressQ = dispatch_queue_create("progressQ", DISPATCH_QUEUE_CONCURRENT);
+	self.artistsInProgress = [NSMutableArray array];
 	
 	// load name corrections
 	self.correctionsQ = dispatch_queue_create("correctionsQ", DISPATCH_QUEUE_CONCURRENT);
@@ -97,6 +101,18 @@
 	NSParameterAssert(artistName);
 	NSString *resolvedName = [self _resolveArtistName:artistName];
 	
+	dispatch_barrier_async(self.progressQ, ^{
+		[self.artistsInProgress addObject:resolvedName];
+	});
+	void (^myCompletion)(NSError *error) = ^void(NSError *error) {
+		dispatch_barrier_async(self.progressQ, ^{
+			[self.artistsInProgress removeObject:resolvedName];
+		});
+		if (completion) {
+			completion(error);
+		}
+	};
+	
 	if ([self isFavoriteArtist:artistName]) {
 		PASArtist *artist = [self _artistForResolvedName:resolvedName];
 		// The artist is favorited, a correctedName MUST exists. BUT a NSAssert might be too much.
@@ -115,15 +131,11 @@
 					[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditArtistWithName
 																		object:self
 																	  userInfo:@{kPASDidEditArtistWithName : resolvedName}];
-					if (completion) {
-						completion(nil);
-					}
+					myCompletion(nil);
 				});
 				
 			} else {
-				if (completion) {
-					completion(error);
-				}
+				myCompletion(error);
 			}
 		}];
 		
@@ -148,15 +160,11 @@
 												[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditArtistWithName
 																									object:self
 																								  userInfo:@{kPASDidEditArtistWithName : parseArtistName}];
-												if (completion) {
-													completion(nil);
-												}
+												myCompletion(nil);
 											});
 											
 										} else {
-											if (completion) {
-												completion(error);
-											}
+											myCompletion(error);
 										}
 									}];
 	}
@@ -167,6 +175,11 @@
 	NSString *resolvedName = [self _resolveArtistName:artistName];
 	
 	return [self.favArtistNames containsObject:resolvedName] || [self.justFavArtistNames containsObject:resolvedName];
+}
+
+- (BOOL)isArtistInProgress:(NSString *)artistName
+{
+	return [self.artistsInProgress containsObject:artistName];
 }
 
 - (void)addInitialFavArtists
