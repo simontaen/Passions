@@ -49,7 +49,6 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	[self _setupCrashlytics];
 	[self _setupParse];
 	[self _setupImageCache];
-	[self _setupMusicAppCache];
 	
 	if (application.applicationState != UIApplicationStateBackground) {
 		// Track an app open here if NOT from push,
@@ -304,8 +303,11 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)_setupMusicAppCache
 {
-	// this initializes the most expensive tasks
+	// I never call this, if the Music App is used the caches are setup when
+	// the addVcContainer is initialized. When it's unused, the cache is setup
+	// when the previous Vc's viewDidLoad is executed
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		// this initializes the most expensive tasks
 		[[PASMediaQueryAccessor sharedMngr] prepareCaches];
 	});
 }
