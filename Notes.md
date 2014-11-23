@@ -38,7 +38,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 ## Parse
 * Artist fetch could fail and the iTunes Id would be empty then.
-* Stuck in processing on server, why? How should the App react?
+* The store is always US (leads to iTunes link to items unavailable to the current User)
 
 ## General Functionality
 
@@ -169,8 +169,6 @@ curl -X POST \
 -d '{"i":"T1y1GybQNl"}' \
 https://api.parse.com/1/jobs/fetchFullAlbums
 
-int middle = (int)(self.images.count / 2 - ((self.images.count % 2) / 2));
-
 // http://bendodson.com/code/itunes-artwork-finder/index.html
 curl -X GET \
 -H "Accept: application/json" \
@@ -182,8 +180,3 @@ https://developer.apple.com/library/ios/documentation/WindowsViews/Conceptual/Vi
 http://stackoverflow.com/questions/3182649/ios-sdk-uiviewcontentmodescaleaspectfit-vs-uiviewcontentmodescaleaspectfill
 imageView of UITableViewCell automatically resizes to image, mostly ignoring contentMode, this means
 http://nshipster.com/image-resizing/ does not work
-
-
-# This is far off
-
-Peter Steinberger recommends using `objc_msgSend` instead of performSelector in his [UIKonf 2013 talk](https://www.youtube.com/watch?v=psPNxC3G_hc) (last minute) after a call to `respondsToSelector`. It's faster and you don't get the nasty ARC warnings. This means I could do a ViewController generalization like I tried in the Stanford "6 - CoreDataSPot" project without `#pragma clang diagnostic push` in `prepareForSegue`.
