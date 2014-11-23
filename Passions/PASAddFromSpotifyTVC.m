@@ -93,17 +93,22 @@
 //	self.refreshControl = [[UIRefreshControl alloc] init];
 //	[self.refreshControl addTarget:self action:@selector(_fetchSpotifyArtists) forControlEvents:UIControlEventValueChanged];
 	
-	[self _validateSessionWithCallback:^{
-		[self _fetchSpotifyArtistsWithCompletion:^(NSError *error) {
-			if (!error) {
-				dispatch_async(dispatch_get_main_queue(), ^{
-					[self.tableView reloadData];
-				});
-			} else {
-				[self _handleError:error];
-			}
+	if (![self _cachesAreReady]) {
+		[self _validateSessionWithCallback:^{
+			[self _fetchSpotifyArtistsWithCompletion:^(NSError *error) {
+				if (!error) {
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[self.tableView reloadData];
+					});
+				} else {
+					[self _handleError:error];
+				}
+			}];
 		}];
-	}];
+		
+	} else {
+		[self.tableView reloadData];
+	}
 }
 
 - (void)viewWillAppear:(BOOL)animated
