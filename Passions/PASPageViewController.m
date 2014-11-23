@@ -309,15 +309,15 @@
 		return;
 	}
 	
+	// Prepare parent/child relationship changes.
+	[fromVc willMoveToParentViewController:nil];
+	[self addChildViewController:toVc];
+	
 	// prepare the view
 	UIView *toView = toVc.view;
 	[toView setTranslatesAutoresizingMaskIntoConstraints:YES];
 	toView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	toView.frame = self.containerView.bounds;
-	
-	// Prepare parent/child relationship changes.
-	[fromVc willMoveToParentViewController:nil];
-	[self addChildViewController:toVc];
 	
 	// If this is the initial presentation, add the new child with no animation.
 	if (!fromVc) {
