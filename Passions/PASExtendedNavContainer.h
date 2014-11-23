@@ -19,6 +19,9 @@ extern CGFloat const kPASSegmentBarHeight;
 // the contained view controller
 @property (nonatomic, strong) PASAddFromSamplesTVC *addTvc;
 
+// this view controllers index
+@property (nonatomic, assign) NSUInteger index;
+
 /// designated initializer
 - (instancetype)initWithIndex:(NSUInteger)index;
 

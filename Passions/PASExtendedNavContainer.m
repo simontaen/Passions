@@ -33,6 +33,7 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 
 - (PASAddFromSamplesTVC *)_viewControllerAtIndex:(NSUInteger)index
 {
+	self.index = index;
 	PASAddFromSamplesTVC *result;
 	BOOL isSimulator = [[UIDevice currentDevice].model containsString:@"Simulator"];
 	
@@ -102,6 +103,12 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 	[self.containerView addSubview:self.addTvc.view];
 	
 	[self.addTvc didMoveToParentViewController:self];
+	
+	// kick off the caches for the NEXT vc
+	if (self.index != self.pageViewController.viewControllers.count - 1) {
+		PASExtendedNavContainer *vc = (PASExtendedNavContainer *)self.pageViewController.viewControllers[self.index + 1];
+		[vc.addTvc prepareCaches];
+	}
 }
 
 #pragma mark - PASPageViewControllerChildDelegate

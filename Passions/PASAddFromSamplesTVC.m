@@ -261,9 +261,6 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	
 	// default is alphabetical
 	self.selectedSortOrder = PASAddArtistsSortOrderAlphabetical;
-	
-	// kick off the caches
-	[self prepareCaches];
 }
 
 - (void)prepareCaches
