@@ -295,6 +295,11 @@
 	return [self.selectedViewController prefersStatusBarHidden];
 }
 
+- (BOOL)shouldAutomaticallyForwardAppearanceMethods
+{
+	return NO;
+}
+
 #pragma mark - Private Methods
 
 - (void)_transitionToChildViewController:(UIViewController *)toVc completion:(void (^)(BOOL didTransition))completion
@@ -318,8 +323,8 @@
 	if (!fromVc) {
 		[self.containerView addSubview:toVc.view];
 		[toVc beginAppearanceTransition:YES animated:NO];
-//		[toVc didMoveToParentViewController:self];
-//		[toVc endAppearanceTransition];
+		[toVc didMoveToParentViewController:self];
+		[toVc endAppearanceTransition];
 		completion(YES);
 		return;
 	}
@@ -352,19 +357,19 @@
 	transitionContext.animated = YES;
 	transitionContext.interactive = self.interactive && interactiveTransitionDelegate != nil;
 	__weak typeof(self) weakSelf = self;
-//	__weak typeof(transitionContext) weakContext = transitionContext;
+	__weak typeof(transitionContext) weakContext = transitionContext;
 	
 	// Begin view appearance transitions.
-//	[fromVc beginAppearanceTransition:NO animated:transitionContext.animated];
-//	[toVc beginAppearanceTransition:YES animated:transitionContext.animated];
+	[fromVc beginAppearanceTransition:NO animated:transitionContext.animated];
+	[toVc beginAppearanceTransition:YES animated:transitionContext.animated];
 	
 	// https://github.com/MrAlek/custom-container-transitions/blob/master/Container%20Transitions/ContainerViewController.m#L205
 	transitionContext.completionBlock = ^(BOOL didComplete) {
 		if (didComplete) {
 			[fromVc.view removeFromSuperview];
 			// End the appearance transitions we began earlier.
-//			[fromVc endAppearanceTransition];
-//			[toVc endAppearanceTransition];
+			[fromVc endAppearanceTransition];
+			[toVc endAppearanceTransition];
 			
 			[fromVc removeFromParentViewController];
 			[toVc didMoveToParentViewController:weakSelf];
@@ -373,10 +378,10 @@
 			[toVc.view removeFromSuperview];
 			// Before ending each appearance transition, begin an
 			// appearance transition in the opposite direction.
-//			[toVc beginAppearanceTransition:NO animated:weakContext.animated];
-//			[toVc endAppearanceTransition];
-//			[fromVc beginAppearanceTransition:YES animated:weakContext.animated];
-//			[fromVc endAppearanceTransition];
+			[toVc beginAppearanceTransition:NO animated:weakContext.animated];
+			[toVc endAppearanceTransition];
+			[fromVc beginAppearanceTransition:YES animated:weakContext.animated];
+			[fromVc endAppearanceTransition];
 			
 			[toVc removeFromParentViewController];
 			[fromVc didMoveToParentViewController:weakSelf];
