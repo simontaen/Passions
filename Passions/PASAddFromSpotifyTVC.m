@@ -182,7 +182,7 @@
 {
 	if (_isFetching != isFetching) {
 		_isFetching = isFetching;
-		isFetching ? [self _showProgressHudWithMessage:@"Loading Spotify Artists..."] : [self _hideProgressHud];
+		isFetching ? [self _showProgressHudWithMessage:@"Loading Spotify Artists"] : [self _hideProgressHud];
 	}
 }
 
@@ -190,7 +190,7 @@
 {
 	if (_sessionIsRenewing != sessionIsRenewing) {
 		_sessionIsRenewing = sessionIsRenewing;
-		sessionIsRenewing ? [self _showProgressHudWithMessage:@"Loading..."] : [self _hideProgressHud];
+		sessionIsRenewing ? [self _showProgressHudWithMessage:@"Refreshing Session"] : [self _hideProgressHud];
 	}
 }
 
