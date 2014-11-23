@@ -144,10 +144,8 @@
 	// Caches are updated when new data is received
 	[self _validateSessionWithCallback:^{
 		[self _fetchSpotifyArtistsWithCompletion:^(NSError *error) {
-			if (!error && [self isViewLoaded]) {
-				dispatch_async(dispatch_get_main_queue(), ^{
-					[self.tableView reloadData];
-				});
+			if (!error) {
+				[super prepareCaches];
 			} else if (error) {
 				[self _handleError:error];
 			}
