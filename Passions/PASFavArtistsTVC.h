@@ -11,4 +11,6 @@
 /// Listens to kPASDidEditFavArtists
 @interface PASFavArtistsTVC : PFQueryTableViewController
 
+@property (nonatomic, strong) UIViewController *addVcContainer;
+
 @end

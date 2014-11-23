@@ -8,6 +8,7 @@
 
 #import "PASRootVC.h"
 #import "PASTimelineCVC.h"
+#import "PASFavArtistsTVC.h"
 #import "PASInteractiveTransition.h"
 #import "GBVersionTracking.h"
 
@@ -54,7 +55,21 @@
 
 - (UINavigationController *)_favArtists
 {
-	return [self.storyboard instantiateViewControllerWithIdentifier:@"FavArtistsNav"];
+	UINavigationController *favNav = [self.storyboard instantiateViewControllerWithIdentifier:@"FavArtistsNav"];
+	
+	// Setting up costly properties on PASFavArtistsTVC for performance reasons when transitioning
+	void (^timer)(void) = ^{
+		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC);
+		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+			PASFavArtistsTVC *vc = (PASFavArtistsTVC *)favNav.topViewController;
+			// instantiate the adding container so it can prepare caches
+			vc.addVcContainer = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPVCNavVc"];
+		});
+	};
+
+	timer();
+	
+	return favNav;
 }
 
 - (UINavigationController *)_timeline

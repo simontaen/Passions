@@ -15,10 +15,6 @@
 #import "PASArtistInfoCVC.h"
 #import "PASManageArtists.h"
 
-@interface PASFavArtistsTVC()
-@property (nonatomic, strong) UIViewController *addVcContainer;
-@end
-
 @implementation PASFavArtistsTVC
 
 #pragma mark - Init
@@ -70,9 +66,6 @@
 {
 	[super viewDidLoad];
 	
-	// instantiate the container so it can prepare caches
-	self.addVcContainer = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPVCNavVc"];
-
 	// layout and look
 	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9 alpha:1.0];
 	self.navigationController.navigationBar.barTintColor = [UIColor defaultNavBarTintColor];
