@@ -33,6 +33,10 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * Get a push Notification when a new Album gets released
 	* tapping the notification will show Album infos
 
+# App Description
+
+Passions lets you track your favorite Aritsts and sends you Notifications when one of them releases a new Album. You can browse available Albums of your favorite Artists ordered by release date and tap on "iTunes" to get redirected to the iTunes Store if you want to listen to the Album, get more Information or buy the Album. You can add Artists from your Music Library or your Spotify Account.
+
 
 # NewStuff.todo
 
@@ -41,10 +45,12 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 * The store is always US (leads to iTunes link to items unavailable to the current User)
 
 ## General Functionality
+* First launch, show loading and give feedback on progress of initially faving
 
 ### Spotify Integration
 * Fall back to Spotify if Music App does not seem to be used. But to what Artists? Current Top Artists?
 * Prevent incoming responses from spotify having impact after the first error
+* Spotify loading after session refresh
 
 ## PageViewController Container
 
@@ -57,6 +63,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 ## Timeline
 
 ## Artist and Album Info
+* Loading albums on album info seems to be distracting and unnessecary
 
 # 1.1 (?)
 * iPhone 6 Support
