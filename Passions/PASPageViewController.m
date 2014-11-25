@@ -566,7 +566,7 @@ static CGFloat const kPASInitialSpringVelocity = 0.5;
 						 // make sure you reset the fromVc view in case we got cancelled
 						 fromVc.view.transform = CGAffineTransformIdentity;
 						 fromVc.view.alpha = 1;
-						 [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+						 [transitionContext completeTransition:finished && ![transitionContext transitionWasCancelled]];
 					 }];
 }
 
