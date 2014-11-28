@@ -99,6 +99,18 @@
 					 completion:(void (^)(NSError *error))completion;
 {
 	NSParameterAssert(artistName);
+	
+#ifdef DEBUG
+	if ([artistName isEqualToString:@"Crash the App!"]) {
+		DDLogError(@"DDLogError right before Crash");
+		DDLogWarn(@"DDLogWarn right before Crash");
+		DDLogInfo(@"DDLogInfo right before Crash");
+		DDLogDebug(@"DDLogDebug right before Crash");
+		DDLogVerbose(@"DDLogVerbose right before Crash");
+		[[Crashlytics sharedInstance] crash];
+	}
+#endif
+	
 	NSString *resolvedName = [self _resolveArtistName:artistName];
 	
 	dispatch_barrier_async(self.progressQ, ^{

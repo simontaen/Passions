@@ -81,13 +81,13 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	dispatch_once(&onceToken, ^{
 		_sampleArtists = @[
 						   @"Beatles", @"Air", @"Pink Floid", @"Rammstein", @"Bloodhound Gang",
-						   @"Ancien Régime", @"Genius/GZA ", @"Belle & Sebastian", @"Björk",
+						   @"Ancien Régime", @"Genius/GZA ", @"Belle & Sebastian", @"Björk", @"Quiet Riot",
 						   @"Ugress", @"ADELE", @"The Asteroids Galaxy Tour", @"Bar 9", @"Jennifer Rostock",
 						   @"Baskerville", @"Beastie Boys", @"Bee Gees", @"Bit Shifter", @"Garth Brooks",
 						   @"Bomfunk MC's", @"C-Mon & Kypski", @"The Cardigans", @"Carly Commando",
 						   @"Caro Emerald", @"Coldplay", @"Coolio", @"Cypress Hill", @"AC/DC",
 						   @"David Bowie", @"Dukes of Stratosphear", @"[dunkelbunt]",
-						   @"Eminem", @"Enigma", @"Deadmouse", @"ACDC", @"Quiet Riot"
+						   @"Eminem", @"Enigma", @"Deadmouse", @"ACDC", @"Crash the App!"
 						   ];
 	});
 	return _sampleArtists;
