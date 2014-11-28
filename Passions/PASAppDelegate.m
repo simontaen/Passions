@@ -78,10 +78,10 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)_setupCocoaLumberjack
 {
-	[DDLog addLogger:[DDTTYLogger sharedInstance]];
+	[DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:LOG_LEVEL_VERBOSE];
 	[[DDTTYLogger sharedInstance] setColorsEnabled:YES];
 
-	[DDLog addLogger:[FRParseLogger sharedInstance]];
+	[DDLog addLogger:[FRParseLogger sharedInstance] withLogLevel:LOG_LEVEL_INFO];
 }
 
 #pragma mark - Parse
