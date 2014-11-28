@@ -434,7 +434,6 @@
 	// show available artists
 	DDLogInfo(@"%@", [error description]);
 	NSString *codeString = [NSString stringWithFormat:@"%d", (int)[error code]];
-	[PFAnalytics trackEvent:@"error" dimensions:@{ @"code": codeString,  @"desc" : [error description] }];
 	
 	NSString *title = @"Try again";
 	NSString *msg;

@@ -16,9 +16,6 @@
 	NSString *file = [[NSURL URLWithString:fileName] lastPathComponent];
 	NSString *location =  [NSString stringWithFormat:@"%@:%i", file, line];
 	
-	[PFAnalytics trackEvent:[NSString stringWithFormat:@"%@_%@", file, functionName] dimensions:@{ @"desc" : format,
-																									@"location" : location
-																									}];
 #if DEBUG
 	CLSNSLog(@"Assertion failure: FUNCTION = (%@) at (%@), %@", functionName, location, format);
 	[super handleFailureInFunction:functionName file:fileName lineNumber:line description:format, @""];
@@ -34,9 +31,6 @@
 	NSString *file = [[NSURL URLWithString:fileName] lastPathComponent];
 	NSString *location =  [NSString stringWithFormat:@"%@:%i", file, line];
 	
-	[PFAnalytics trackEvent:[NSString stringWithFormat:@"%@_%@", file, methodName] dimensions:@{ @"desc" : format,
-																									@"location" : location
-																									}];
 #if DEBUG
 	CLSNSLog(@"Assertion failure: METHOD = (%@) for object = (%@) at (%@), %@", methodName, object, location, format);
 	[super handleFailureInMethod:selector object:object file:fileName lineNumber:line description:format, @""];

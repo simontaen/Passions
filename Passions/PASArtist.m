@@ -203,8 +203,7 @@
 		// which you already faved with the correct name
 		// AC/DC is fav but we could add ACDC
 		// There are more problems in this case when removing, but lets not code for exceptions
-		DDLogInfo(@"User \"%@\" has \"%@\" already favorited", currentUser.objectId, self.name);
-		[PFAnalytics trackEvent:@"The ACDC Problem" dimensions:@{ @"artistName" : self.name}];
+		DDLogInfo(@"User \"%@\" has \"%@\" already favorited (The ACDC Problem)", currentUser.objectId, self.name);
 		completion(self, nil);
 		
 	} else {
@@ -241,8 +240,6 @@
 {
 	NSString *duration = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSinceDate:start]];
 	NSString *faving = add ? @"favorite" : @"unfavorite";
-	
-	[PFAnalytics trackEvent:faving dimensions:@{ @"time": duration }];
 	
 	if (success) {
 		DDLogInfo(@"Took %@ seconds to %@ Aritst \"%@\" for User \"%@\"", duration, faving, artistName, [PFUser currentUser].objectId);

@@ -442,11 +442,7 @@
 								goingRight:(BOOL)goingRight
 {
 	// https://github.com/MrAlek/custom-container-transitions/blob/master/Container%20Transitions/ContainerViewController.m#L267
-	BOOL assertionResult = [fromVc isViewLoaded] && fromVc.view.superview;
-	if (!assertionResult) {
-		[PFAnalytics trackEvent:@"PVCTransition"];
-	}
-	NSAssert (assertionResult, @"The fromVc view must reside in the container view upon initializing the transition context.");
+	NSAssert ([fromVc isViewLoaded] && fromVc.view.superview, @"The fromVc view must reside in the container view upon initializing the transition context.");
 	
 	if ((self = [super init])) {
 		self.presentationStyle = UIModalPresentationCustom;
