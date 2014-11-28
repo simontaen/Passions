@@ -45,13 +45,10 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	// Setup LastFmFetchr
 	[LastFmFetchr fetchrWithApiKey:kPASLastFmApiKey];
 	
-	// Setup GBVersionTracking
-	[GBVersionTracking track];
-	
 	[self _setupCrashlytics];
 	[self _setupParse];
-	[self _setupCocoaLumberjack];
 	[self _setupImageCache];
+	[self _setupCocoaLumberjack];
 	
 	if (application.applicationState != UIApplicationStateBackground) {
 		// Track an app open here if NOT from push,
@@ -90,6 +87,9 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 // run this AFTER Crashlytics
 - (void)_setupParse
 {
+	// Setup GBVersionTracking
+	[GBVersionTracking track];
+	
 	[Parse setApplicationId:kPASParseAppId
 				  clientKey:kPASParseClientKey];
 	
