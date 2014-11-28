@@ -21,6 +21,14 @@ pod 'MBProgressHUD' # show a loading HUD
 # https://github.com/CocoaLumberjack/CocoaLumberjack
 pod 'CocoaLumberjack' # extensive Logging
 
-# 
+# Development Pods
 pod 'LastFmFetchr', :path => '/Users/simon/Documents/code/iOS/LastFmFetchr'
 pod 'SpotifySDK', :path => '/Users/simon/Documents/code/iOS/Github/ios-sdk'
+
+# Non-pods, but still external Code
+# https://github.com/stablekernel/STKTableViewCell
+#STKTableViewCell # Controls in TableViewCells
+# https://github.com/hjnilsson/CPFQueryCollectionViewController
+#CPFQueryCollectionViewController # Fill a CollectionView with a PFQuery
+# https://github.com/veritech/FRParseLogger
+#FRParseLogger # Logging to Parse
