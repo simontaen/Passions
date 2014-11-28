@@ -31,6 +31,7 @@
 		F45586551A0506C2000D5893 /* PASAddFromSpotifyTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F45586541A0506C2000D5893 /* PASAddFromSpotifyTVC.m */; };
 		F4589D3D19C240D500E17D49 /* PASPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4589D3C19C240D500E17D49 /* PASPageViewController.m */; };
 		F461C8E119EB006C0081B445 /* PASExtendedNavContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = F461C8DF19EB006C0081B445 /* PASExtendedNavContainer.m */; };
+		F4643A4D1A27B6A6007DE3BA /* FRParseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = F4643A4C1A27B6A6007DE3BA /* FRParseLogger.m */; };
 		F4694D6419B74ABB00D12576 /* PASFavArtistsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */; };
 		F4768C7A19FD3F11003682BD /* STKTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4768C7919FD3F11003682BD /* STKTableViewCell.m */; };
 		F476F0EB19B8D8EA00185544 /* PASArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = F476F0EA19B8D8EA00185544 /* PASArtist.m */; };
@@ -105,6 +106,8 @@
 		F4589D3C19C240D500E17D49 /* PASPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASPageViewController.m; sourceTree = "<group>"; };
 		F461C8DE19EB006C0081B445 /* PASExtendedNavContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASExtendedNavContainer.h; sourceTree = "<group>"; };
 		F461C8DF19EB006C0081B445 /* PASExtendedNavContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASExtendedNavContainer.m; sourceTree = "<group>"; };
+		F4643A4B1A27B6A6007DE3BA /* FRParseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRParseLogger.h; sourceTree = "<group>"; };
+		F4643A4C1A27B6A6007DE3BA /* FRParseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRParseLogger.m; sourceTree = "<group>"; };
 		F4694D6219B74ABB00D12576 /* PASFavArtistsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASFavArtistsTVC.h; sourceTree = "<group>"; };
 		F4694D6319B74ABB00D12576 /* PASFavArtistsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASFavArtistsTVC.m; sourceTree = "<group>"; };
 		F4768C7819FD3F11003682BD /* STKTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKTableViewCell.h; sourceTree = "<group>"; };
@@ -387,6 +390,8 @@
 		F4FA316519B8B7F2000337A0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				F4643A4B1A27B6A6007DE3BA /* FRParseLogger.h */,
+				F4643A4C1A27B6A6007DE3BA /* FRParseLogger.m */,
 				F476F0EC19B8D9A100185544 /* PASResources.h */,
 				F476F0ED19B8D9A100185544 /* PASResources.m */,
 				F44E4BB419FE4FB900764532 /* UIColor+Utils.h */,
@@ -603,6 +608,7 @@
 				F4FA316819B8B867000337A0 /* UIImage+Utils.m in Sources */,
 				F4B8B0B619E039EE00E1064D /* PASArtworkCVCell.m in Sources */,
 				F450FCE719F7044D00DF2D38 /* PASManageArtists.m in Sources */,
+				F4643A4D1A27B6A6007DE3BA /* FRParseLogger.m in Sources */,
 				F4D9E94F19C39D6200B762A7 /* PASRootVC.m in Sources */,
 				F4FEC99A19E3072100935B1E /* MPMediaItemCollection+SourceImage.m in Sources */,
 				F4D284D019E0AE26008A3913 /* PASParseObjectWithImages.m in Sources */,

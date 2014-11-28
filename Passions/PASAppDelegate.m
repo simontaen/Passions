@@ -21,6 +21,7 @@
 #import "PASAssertionHandler.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "DDTTYLogger.h"
+#import "FRParseLogger.h"
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
@@ -80,6 +81,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)_setupCocoaLumberjack
 {
+	[DDLog addLogger:[FRParseLogger sharedInstance]];
 	[DDLog addLogger:[DDTTYLogger sharedInstance]];
 }
 
