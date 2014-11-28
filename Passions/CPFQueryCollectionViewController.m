@@ -10,14 +10,14 @@
 #import <Parse/Parse.h>
 #import "MBProgressHUD.h"
 
-// Define our own version of NSLog(...) which will only send its input to the
+// Define our own version of DDLogInfo(...) which will only send its input to the
 // output if we are in debug mode and a assertion logger which will cause an
 // assertion if we are in debug mode and a in non-debug mode it will output the
-// assertion via NSLog(...)
+// assertion via DDLogInfo(...)
 #ifdef DEBUG
 	#define ALog(...) [[NSAssertionHandler currentHandler] handleFailureInFunction:@(__PRETTY_FUNCTION__) file:@(__FILE__) lineNumber:__LINE__ description:__VA_ARGS__]
 #else // !DEBUG
-	#define ALog(...) NSLog(@"*** %s: %@", __PRETTY_FUNCTION__, [NSString stringWithFormat:__VA_ARGS__])
+	#define ALog(...) DDLogInfo(@"*** %s: %@", __PRETTY_FUNCTION__, [NSString stringWithFormat:__VA_ARGS__])
 #endif // DEBUG
 
 @interface CPFQueryCollectionViewController()

@@ -5,10 +5,17 @@
 #import <Availability.h>
 #import "PASResources.h"
 #import <Crashlytics/Crashlytics.h>
+#import "DDLog.h"
 
 #ifdef __OBJC__
 	@import UIKit;
 	@import Foundation;
 	@import SystemConfiguration;
 	@import MobileCoreServices;
+#endif
+
+#ifdef DEBUG
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+#else
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 #endif

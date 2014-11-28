@@ -144,26 +144,26 @@ CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 
 + (void)printViewControllerLayoutStack:(UIViewController *)viewController
 {
-	CLS_LOG(@"---- ViewController Stack ----");
+	DDLogInfo(@"---- ViewController Stack ----");
 	UIViewController *vc = viewController;
 	while (vc) {
-		CLS_LOG(@"%@ %@ | %@", NSStringFromClass([vc class]), NSStringFromCGRect(vc.view.bounds), NSStringFromCGRect(vc.view.frame));
+		DDLogInfo(@"%@ %@ | %@", NSStringFromClass([vc class]), NSStringFromCGRect(vc.view.bounds), NSStringFromCGRect(vc.view.frame));
 		vc = vc.parentViewController;
 	}
 }
 
 + (void)printViewLayoutStack:(UIViewController *)vc
 {
-	CLS_LOG(@"---- %@ ----", NSStringFromClass([vc class]));
+	DDLogInfo(@"---- %@ ----", NSStringFromClass([vc class]));
 	[self printSubviews:vc.view];
 }
 
 + (void)printSubviews:(UIView *)vw
 {
-	CLS_LOG(@"Container %@ %@ | %@", NSStringFromClass([vw class]), NSStringFromCGRect(vw.bounds), NSStringFromCGRect(vw.frame));
+	DDLogInfo(@"Container %@ %@ | %@", NSStringFromClass([vw class]), NSStringFromCGRect(vw.bounds), NSStringFromCGRect(vw.frame));
 	for (UIView *aView in vw.subviews) {
 		if (aView.subviews.count == 0) {
-			return CLS_LOG(@"%@ | %@ %@ ", NSStringFromCGRect(aView.bounds), NSStringFromCGRect(aView.frame), NSStringFromClass([aView class]));
+			return DDLogInfo(@"%@ | %@ %@", NSStringFromCGRect(aView.bounds), NSStringFromCGRect(aView.frame), NSStringFromClass([aView class]));
 		}
 		[self printSubviews:aView];
 	}
@@ -171,12 +171,12 @@ CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 
 + (void)printGestureRecognizerStack:(UIViewController *)viewController
 {
-	CLS_LOG(@"---- Gesture Recognizer Stack ----");
+	DDLogInfo(@"---- Gesture Recognizer Stack ----");
 	UIViewController *vc = viewController;
 	while (vc) {
 		NSString *vcName = NSStringFromClass([vc class]);
 		for (UIGestureRecognizer *gr in vc.view.gestureRecognizers) {
-			CLS_LOG(@"%@: %@", vcName, NSStringFromClass([gr class]));
+			DDLogInfo(@"%@: %@", vcName, NSStringFromClass([gr class]));
 		}
 		vc = vc.parentViewController;
 	}

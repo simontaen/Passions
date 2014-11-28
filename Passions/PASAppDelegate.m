@@ -20,6 +20,7 @@
 #import <Fabric/Fabric.h>
 #import "PASAssertionHandler.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "DDTTYLogger.h"
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
@@ -48,6 +49,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	
 	[self _setupCrashlytics];
 	[self _setupParse];
+	[self _setupCocoaLumberjack];
 	[self _setupImageCache];
 	
 	if (application.applicationState != UIApplicationStateBackground) {
@@ -58,7 +60,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		if (!userInfo) {
 			[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 		} else {
-			CLS_LOG(@"UserInfo didFinishLaunchingWithOptions %@", userInfo);
+			DDLogInfo(@"UserInfo didFinishLaunchingWithOptions %@", userInfo);
 		}
 	}
 	
@@ -72,6 +74,13 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	// Setup Crashlytics
 	[Fabric with:@[CrashlyticsKit]];
 	[Crashlytics sharedInstance];
+}
+
+#pragma mark - CocoaLumberjack
+
+- (void)_setupCocoaLumberjack
+{
+	[DDLog addLogger:[DDTTYLogger sharedInstance]];
 }
 
 #pragma mark - Parse
@@ -100,13 +109,13 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		[self _updateDeviceInfos:currentInstallation];
 		[currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 			if (succeeded && !error) {
-				CLS_LOG(@"Current Installation initialized: %@", currentInstallation.objectId);
+				DDLogInfo(@"Current Installation initialized: %@", currentInstallation.objectId);
 				// create the assosiation for push notifications
 				[currentUser setObject:currentInstallation.objectId forKey:@"installation"];
 				[currentUser setObject:@0 forKey:@"runCount"];
 				[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 					if (succeeded && !error) {
-						CLS_LOG(@"Current User initialized: %@", currentUser.objectId);
+						DDLogInfo(@"Current User initialized: %@", currentUser.objectId);
 						[Crashlytics setUserIdentifier:[PFUser currentUser].objectId];
 						[[PASManageArtists sharedMngr] addInitialFavArtists];
 					}
@@ -212,7 +221,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)imageCache:(FICImageCache *)imageCache errorDidOccurWithMessage:(NSString *)errorMessage
 {
-	NSLog(@"%@", errorMessage);
+	DDLogInfo(@"%@", errorMessage);
 }
 
 #pragma mark - Notifications
@@ -230,17 +239,17 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
 	if (error.code == 3010) {
-		CLS_LOG(@"Push notifications are not supported in the iOS Simulator.");
+		DDLogInfo(@"Push notifications are not supported in the iOS Simulator.");
 	} else {
 		// show some alert or otherwise handle the failure to register.
-		CLS_LOG(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
+		DDLogInfo(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
 	}
 }
 
 /// Process incoming remote notifications when running or (foreground) launching from a notification
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-	CLS_LOG(@"didReceiveRemoteNotification with UserInfo %@", userInfo);
+	DDLogInfo(@"didReceiveRemoteNotification with UserInfo %@", userInfo);
 	NSString *albumId = userInfo[kAlbumIdPushKey];
 	NSString *refreshFlag = userInfo[kFavArtistsRefreshPushKey];
 	

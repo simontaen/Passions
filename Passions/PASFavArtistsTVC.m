@@ -155,7 +155,7 @@
 		}
 		return query;
 	}
-	CLS_LOG(@"CurrentUser not ready for FavArtists");
+	DDLogInfo(@"CurrentUser not ready for FavArtists");
 	return nil; // shows loading spinner
 }
 

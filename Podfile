@@ -18,6 +18,8 @@ pod 'UICKeyChainStore' # Easy Keychain Access
 pod 'AJSITunesAPI', :path => '/Users/simon/Documents/code/iOS/Github/AJS-iTunes-API' # iTunes API
 # https://github.com/jdg/MBProgressHUD
 pod 'MBProgressHUD' # show a loading HUD
+# https://github.com/CocoaLumberjack/CocoaLumberjack
+pod 'CocoaLumberjack' # extensive Logging
 
 # 
 pod 'LastFmFetchr', :path => '/Users/simon/Documents/code/iOS/LastFmFetchr'

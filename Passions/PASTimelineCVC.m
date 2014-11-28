@@ -104,7 +104,7 @@
 		}
 		return query;
 	}
-	CLS_LOG(@"CurrentUser not ready for Timeline");
+	DDLogInfo(@"CurrentUser not ready for Timeline");
 	return nil; // shows loading spinner
 }
 
