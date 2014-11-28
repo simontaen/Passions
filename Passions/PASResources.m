@@ -144,26 +144,26 @@ CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 
 + (void)printViewControllerLayoutStack:(UIViewController *)viewController
 {
-	DDLogInfo(@"---- ViewController Stack ----");
+	DDLogVerbose(@"---- ViewController Stack ----");
 	UIViewController *vc = viewController;
 	while (vc) {
-		DDLogInfo(@"%@ %@ | %@", NSStringFromClass([vc class]), NSStringFromCGRect(vc.view.bounds), NSStringFromCGRect(vc.view.frame));
+		DDLogVerbose(@"%@ %@ | %@", NSStringFromClass([vc class]), NSStringFromCGRect(vc.view.bounds), NSStringFromCGRect(vc.view.frame));
 		vc = vc.parentViewController;
 	}
 }
 
 + (void)printViewLayoutStack:(UIViewController *)vc
 {
-	DDLogInfo(@"---- %@ ----", NSStringFromClass([vc class]));
+	DDLogVerbose(@"---- %@ ----", NSStringFromClass([vc class]));
 	[self printSubviews:vc.view];
 }
 
 + (void)printSubviews:(UIView *)vw
 {
-	DDLogInfo(@"Container %@ %@ | %@", NSStringFromClass([vw class]), NSStringFromCGRect(vw.bounds), NSStringFromCGRect(vw.frame));
+	DDLogVerbose(@"Container %@ %@ | %@", NSStringFromClass([vw class]), NSStringFromCGRect(vw.bounds), NSStringFromCGRect(vw.frame));
 	for (UIView *aView in vw.subviews) {
 		if (aView.subviews.count == 0) {
-			return DDLogInfo(@"%@ | %@ %@", NSStringFromCGRect(aView.bounds), NSStringFromCGRect(aView.frame), NSStringFromClass([aView class]));
+			DDLogVerbose(@"%@ | %@ %@", NSStringFromCGRect(aView.bounds), NSStringFromCGRect(aView.frame), NSStringFromClass([aView class]));
 		}
 		[self printSubviews:aView];
 	}
@@ -171,12 +171,12 @@ CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 
 + (void)printGestureRecognizerStack:(UIViewController *)viewController
 {
-	DDLogInfo(@"---- Gesture Recognizer Stack ----");
+	DDLogVerbose(@"---- Gesture Recognizer Stack ----");
 	UIViewController *vc = viewController;
 	while (vc) {
 		NSString *vcName = NSStringFromClass([vc class]);
 		for (UIGestureRecognizer *gr in vc.view.gestureRecognizers) {
-			DDLogInfo(@"%@: %@", vcName, NSStringFromClass([gr class]));
+			DDLogVerbose(@"%@: %@", vcName, NSStringFromClass([gr class]));
 		}
 		vc = vc.parentViewController;
 	}
