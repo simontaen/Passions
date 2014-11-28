@@ -22,6 +22,7 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "DDTTYLogger.h"
 #import "FRParseLogger.h"
+#import <CrashlyticsLumberjack/CrashlyticsLogger.h>
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
@@ -82,6 +83,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	[[DDTTYLogger sharedInstance] setColorsEnabled:YES];
 
 	[DDLog addLogger:[FRParseLogger sharedInstance] withLogLevel:LOG_LEVEL_INFO];
+	[DDLog addLogger:[CrashlyticsLogger sharedInstance] withLogLevel:LOG_LEVEL_WARN];
 }
 
 #pragma mark - Parse

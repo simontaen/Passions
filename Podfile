@@ -20,6 +20,8 @@ pod 'AJSITunesAPI', :path => '/Users/simon/Documents/code/iOS/Github/AJS-iTunes-
 pod 'MBProgressHUD' # show a loading HUD
 # https://github.com/CocoaLumberjack/CocoaLumberjack
 pod 'CocoaLumberjack' # extensive Logging
+# https://github.com/TechSmith/CrashlyticsLumberjack
+pod 'CrashlyticsLumberjack' # Enhancing Crashlytics Crashreports https://dev.twitter.com/crashlytics/ios/enhancing-crash-reports
 
 # Development Pods
 pod 'LastFmFetchr', :path => '/Users/simon/Documents/code/iOS/LastFmFetchr'
