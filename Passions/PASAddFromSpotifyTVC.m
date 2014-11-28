@@ -433,7 +433,6 @@
 	// abort everything and display a message,
 	// show available artists
 	DDLogInfo(@"%@", [error description]);
-	NSString *codeString = [NSString stringWithFormat:@"%d", (int)[error code]];
 	
 	NSString *title = @"Try again";
 	NSString *msg;
