@@ -24,7 +24,11 @@
 {
 	[super awakeFromNib];
 	// init and add the page view controllers view controllers
+#ifdef DEBUG
 	self.viewControllers = @[[self _viewControllerAtIndex:0], [self _viewControllerAtIndex:1], [self _viewControllerAtIndex:2]];
+#else
+	self.viewControllers = @[[self _viewControllerAtIndex:0], [self _viewControllerAtIndex:1]];
+#endif
 }
 
 - (PASExtendedNavContainer *)_viewControllerAtIndex:(NSUInteger)index

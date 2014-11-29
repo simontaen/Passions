@@ -43,15 +43,14 @@ CGFloat const kPASSegmentBarHeight = 44; // UIToolbar height
 				result = [[PASAddFromSpotifyTVC alloc] initWithNibName:nil bundle:nil];
 				break;
 			case 1:
-				result = [[PASAddFromSamplesTVC alloc] initWithNibName:nil bundle:nil];
+				result = [[PASAddFromMusicTVC alloc] initWithNibName:nil bundle:nil];
 				break;
 			default:
-				result = [[PASAddFromMusicTVC alloc] initWithNibName:nil bundle:nil];
+				result = [[PASAddFromSamplesTVC alloc] initWithNibName:nil bundle:nil];
 		}
 	} else {
 		switch (index) {
 			case 0:
-				// switch here
 				result = [[PASAddFromMusicTVC alloc] initWithNibName:nil bundle:nil];
 				break;
 			case 1:
