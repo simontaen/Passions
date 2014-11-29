@@ -147,9 +147,6 @@
 
 - (void)objectsDidLoad:(NSError *)error
 {
-	if (self.loadingViewEnabled) {
-		[MBProgressHUD hideHUDForView:self.view animated:YES];
-	}
     [self.collectionView reloadData];
 }
 
@@ -176,8 +173,12 @@
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     // No sections displayed while loading
-    if (self.isLoading)
-        return 0;
+	if (self.isLoading) {
+		return 0;
+	}
+	if (self.loadingViewEnabled) {
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
+	}
     return 1;
 }
 
