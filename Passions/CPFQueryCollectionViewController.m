@@ -86,6 +86,8 @@
     PFQuery *query = self.queryForCollection;
 	
 	if (query) {
+		[self objectsWillLoad];
+		
 		if (_paginationEnabled) {
 			// we need to know how many objects there are to prevent
 			// constant refreshing when scrolling past the end of the view
@@ -104,8 +106,6 @@
 				[query setSkip:self.objects.count];
 			}
 		}
-		
-		[self objectsWillLoad];
 		
 		[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 			self.isLoading = NO;
