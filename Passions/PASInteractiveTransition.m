@@ -86,7 +86,7 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
 	BOOL result = NO;
-	//DDLogInfo(@"%@ on %@", NSStringFromClass([otherGestureRecognizer class]), NSStringFromClass([otherGestureRecognizer.view class]));
+	//DDLogVerbose(@"%@ on %@", NSStringFromClass([otherGestureRecognizer class]), NSStringFromClass([otherGestureRecognizer.view class]));
 	if (gestureRecognizer == self.panRecognizer &&
 		[otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] && // handles scrolling (one for horizontal and one for vertical)
 		![otherGestureRecognizer.view isKindOfClass:[UITableView class]] && // handles vertical scrolling
@@ -95,7 +95,7 @@
 		) {
 		result = YES;
 	}
-	//DDLogInfo(@"%hhd", result);
+	//DDLogVerbose(@"%hhd", result);
 	return result;
 }
 

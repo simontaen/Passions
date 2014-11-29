@@ -227,7 +227,10 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)imageCache:(FICImageCache *)imageCache errorDidOccurWithMessage:(NSString *)errorMessage
 {
-	DDLogInfo(@"%@", errorMessage);
+	if ([errorMessage containsString:@"returned a nil source image URL"]) {
+		DDLogVerbose(@"%@", errorMessage);
+	}
+	DDLogError(@"%@", errorMessage);
 }
 
 #pragma mark - Notifications
@@ -245,17 +248,17 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
 	if (error.code == 3010) {
-		DDLogInfo(@"Push notifications are not supported in the iOS Simulator.");
+		DDLogVerbose(@"Push notifications are not supported in the iOS Simulator.");
 	} else {
 		// show some alert or otherwise handle the failure to register.
-		DDLogInfo(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
+		DDLogError(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
 	}
 }
 
 /// Process incoming remote notifications when running or (foreground) launching from a notification
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-	DDLogInfo(@"didReceiveRemoteNotification with UserInfo %@", userInfo);
+	DDLogDebug(@"didReceiveRemoteNotification with UserInfo %@", userInfo);
 	NSString *albumId = userInfo[kAlbumIdPushKey];
 	NSString *refreshFlag = userInfo[kFavArtistsRefreshPushKey];
 	

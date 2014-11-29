@@ -103,7 +103,7 @@
 																			// now get the corrected name
 																			BOOL isValidName = !error && data && data.name && ![data.name isEqualToString:@""];
 																			NSString *resolvedName = isValidName ? data.name : artistName;
-																			DDLogInfo(@"Resolved Name after Correction to \"%@\"", resolvedName);
+																			DDLogDebug(@"Resolved Name after Correction to \"%@\"", resolvedName);
 																			
 																			[PASArtist _createOrFindArtist:resolvedName completion:favingBlock];
 																		} else {
@@ -139,11 +139,11 @@
 	[query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
 		if (!object && error.code == kPFErrorObjectNotFound) {
 			// the artist does not exists yet, create it
-			DDLogInfo(@"Creating new Artist \"%@\"", artistName);
+			DDLogDebug(@"Creating new Artist \"%@\"", artistName);
 			[PASArtist _createArtist:artistName completion:completion];
 			
 		} else if (object && !error) {
-			DDLogInfo(@"Found existing Artist \"%@\"", artistName);
+			DDLogDebug(@"Found existing Artist \"%@\"", artistName);
 			completion((PASArtist *)object, error);
 			
 		} else {
@@ -203,11 +203,11 @@
 		// which you already faved with the correct name
 		// AC/DC is fav but we could add ACDC
 		// There are more problems in this case when removing, but lets not code for exceptions
-		DDLogInfo(@"User \"%@\" has \"%@\" already favorited (The ACDC Problem)", currentUser.objectId, self.name);
+		DDLogWarn(@"User \"%@\" has \"%@\" already favorited (The ACDC Problem)", currentUser.objectId, self.name);
 		completion(self, nil);
 		
 	} else {
-		DDLogInfo(@"Faving \"%@\" for User \"%@\"", self.name,  currentUser.objectId);
+		DDLogDebug(@"Faving \"%@\" for User \"%@\"", self.name,  currentUser.objectId);
 		
 		[currentUser addObject:self.objectId forKey:@"favArtists"];
 		[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -225,7 +225,7 @@
 	PFUser *currentUser = [PFUser currentUser];
 	[currentUser removeObject:self.objectId forKey:@"favArtists"];
 
-	DDLogInfo(@"Removing \"%@\" from User \"%@\"", self.name, currentUser.objectId);
+	DDLogDebug(@"Removing \"%@\" from User \"%@\"", self.name, currentUser.objectId);
 	
 	NSDate *start = [NSDate date];
 	[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {

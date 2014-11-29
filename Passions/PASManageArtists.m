@@ -286,7 +286,7 @@
 										  attributes:nil
 											   error:&err];
 			if (!success) {
-				DDLogInfo(@"Cannot create cache dir (%@)", [err localizedDescription]);
+				DDLogError(@"Cannot create cache dir (%@)", [err localizedDescription]);
 			}
 		}
 		

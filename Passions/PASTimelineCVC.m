@@ -104,7 +104,7 @@
 		}
 		return query;
 	}
-	DDLogInfo(@"CurrentUser not ready for Timeline");
+	DDLogDebug(@"CurrentUser not ready for Timeline");
 	return nil; // shows loading spinner
 }
 

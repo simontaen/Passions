@@ -15,7 +15,7 @@
 	#import "DDLog.h"
 #endif
 
-#define NSLog DDLogInfo
+#define NSLog DDLogDebug
 
 #ifdef DEBUG
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;

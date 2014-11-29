@@ -155,7 +155,7 @@
 		}
 		return query;
 	}
-	DDLogInfo(@"CurrentUser not ready for FavArtists");
+	DDLogDebug(@"CurrentUser not ready for FavArtists");
 	return nil; // shows loading spinner
 }
 
