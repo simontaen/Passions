@@ -82,6 +82,18 @@ static FRParseLogger *sharedLogger;
 		[obj setObject:[[NSNumber numberWithInt:logMessage->lineNumber] stringValue]
 				forKey:@"line"];
 		
+		NSString *logLevel;
+		switch (logMessage->logFlag)
+		{
+			case LOG_FLAG_ERROR : logLevel = @"Error"; break;
+			case LOG_FLAG_WARN  : logLevel = @"Warn"; break;
+			case LOG_FLAG_INFO  : logLevel = @"Info"; break;
+			case LOG_FLAG_DEBUG : logLevel = @"Debug"; break;
+			default             : logLevel = @"Verbose"; break;
+		}
+		
+		[obj setObject:logLevel	forKey:@"logLevel"];
+		
 		[obj saveEventually];
 	}
 }
