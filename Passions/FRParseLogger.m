@@ -48,41 +48,42 @@ static FRParseLogger *sharedLogger;
 	if( !dateFormatter_ ){
 		dateFormatter_ = [[NSDateFormatter alloc] init];
 		[dateFormatter_ setFormatterBehavior:NSDateFormatterBehavior10_4];
-		[dateFormatter_ setDateFormat:@"yyyy-MM-dd HH:mm:ss:SSS"];		
+		[dateFormatter_ setDateFormat:@"yyyy-MM-dd HH:mm:ss:SSS"];
 	}
 	
 	return dateFormatter_;
 }
 
-- (void)logMessage:(DDLogMessage *) aLogMessage{
-
-	PFObject	*obj;
-	NSString *logMsg = aLogMessage->logMsg;
+- (void)logMessage:(DDLogMessage *) logMessage{
 	
-	if (formatter) {
-		// formatting is supported but not encouraged!
-		logMsg = [formatter formatLogMessage:aLogMessage];
+	NSString *logMsg = logMessage->logMsg;
+	
+	if (self->formatter) {
+		logMsg = [self->formatter formatLogMessage:logMessage];
 	}
 	
-	obj = [PFObject objectWithClassName:@"FRParseLogger"];
-	
-	[obj setObject:logMsg 
-			forKey:@"message"];	
-	
-	[obj setObject:[[UIDevice currentDevice] name]
-			forKey:@"device"];
-	
-	[obj setObject:[[NSString stringWithUTF8String: aLogMessage->file] lastPathComponent]
-			forKey:@"file"];
-	
-	[obj setObject:[NSString stringWithUTF8String:aLogMessage->function]
-			forKey:@"Method"];
-	
-	[obj setObject:[[NSNumber numberWithInt:aLogMessage->lineNumber] stringValue]
-			forKey:@"line"];
+	if (logMsg) {
+		PFObject *obj;
 		
-	[obj saveEventually];
-	
+		obj = [PFObject objectWithClassName:@"FRParseLogger"];
+		
+		[obj setObject:logMsg
+				forKey:@"message"];
+		
+		[obj setObject:[PFInstallation currentInstallation].objectId
+				forKey:@"installation"];
+		
+		[obj setObject:[[NSString stringWithUTF8String: logMessage->file] lastPathComponent]
+				forKey:@"file"];
+		
+		[obj setObject:[NSString stringWithUTF8String:logMessage->function]
+				forKey:@"method"];
+		
+		[obj setObject:[[NSNumber numberWithInt:logMessage->lineNumber] stringValue]
+				forKey:@"line"];
+		
+		[obj saveEventually];
+	}
 }
 
 - (NSString *)loggerName{
