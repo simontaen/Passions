@@ -217,7 +217,7 @@
 	}
 	
 	if (![PASMediaQueryAccessor sharedMngr].usesMusicApp) {
-		DDLogInfo(@"The user doesn't seem to use the Music App");
+		DDLogInfo(@"User \"%@\" doesn't seem to use the Music App", [PFUser currentUser]);
 		// still send the notification
 		[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists object:nil];
 	

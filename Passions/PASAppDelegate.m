@@ -229,8 +229,9 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 {
 	if ([errorMessage containsString:@"returned a nil source image URL"]) {
 		DDLogVerbose(@"%@", errorMessage);
+	} else {
+		DDLogError(@"%@", errorMessage);
 	}
-	DDLogError(@"%@", errorMessage);
 }
 
 #pragma mark - Notifications

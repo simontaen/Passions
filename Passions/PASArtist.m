@@ -117,7 +117,7 @@
 			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 				if ([task state] == NSURLSessionTaskStateRunning) {
 					// Task is running too long, cancel it
-					DDLogInfo(@"Cancelling getCorrectionForArtist Request");
+					DDLogDebug(@"Cancelling getCorrectionForArtist Request");
 					[task cancel];
 				}
 			});
