@@ -434,15 +434,16 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (void)_handleError:(NSError *)error
 {
-	DDLogInfo(@"%@", [error description]);
 
 	NSString *msg;
 	switch (error.code) {
 		case 141:
 		case -999:
+			DDLogWarn(@"%@", [error description]);
 			msg = @"The operation timed out.";
 			break;
 		default:
+			DDLogError(@"%@", [error description]);
 			msg = @"Something went wrong.";
 			break;
 	}

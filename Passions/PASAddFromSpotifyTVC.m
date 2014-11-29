@@ -432,7 +432,6 @@
 {
 	// abort everything and display a message,
 	// show available artists
-	DDLogInfo(@"%@", [error description]);
 	
 	NSString *title = @"Try again";
 	NSString *msg;
@@ -440,6 +439,7 @@
 	NSMutableArray *actions = [NSMutableArray array];
 	
 	if ([[error domain] isEqualToString:@"com.spotify.auth"]) {
+		DDLogWarn(@"%@", [error description]);
 		title = @"Spotify login failed";
 		UIAlertAction *reauth = [UIAlertAction actionWithTitle:@"Authenticate again"
 														style:UIAlertActionStyleDefault
@@ -464,9 +464,11 @@
 	} else {
 		switch (error.code) {
 			case -1001:
+				DDLogWarn(@"%@", [error description]);
 				msg = @"The operation timed out.";
 				break;
 			default:
+				DDLogError(@"%@", [error description]);
 				msg = @"Something went wrong.";
 				break;
 		}
