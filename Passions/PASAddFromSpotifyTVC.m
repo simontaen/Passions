@@ -93,7 +93,7 @@
 //	self.refreshControl = [[UIRefreshControl alloc] init];
 //	[self.refreshControl addTarget:self action:@selector(_fetchSpotifyArtists) forControlEvents:UIControlEventValueChanged];
 	
-	if (![self _cachesAreReady]) {
+	if (![self cachesAreReady]) {
 		[self _validateSessionWithCallback:^{
 			[self _fetchSpotifyArtistsWithCompletion:^(NSError *error) {
 				if (!error) {
@@ -158,9 +158,9 @@
 	}];
 }
 
-- (BOOL)_cachesAreReady
+- (BOOL)cachesAreReady
 {
-	return self.fetchedAllPartialArtists && self.artistsInPromotion == 0;
+	return self.fetchedAllPartialArtists && self.artistsInPromotion == 0 && [super cachesAreReady];
 }
 
 - (void)clearCaches
@@ -206,7 +206,7 @@
 
 - (NSArray *)artistsOrderedByName
 {
-	if ([self _cachesAreReady]) {
+	if ([self cachesAreReady]) {
 		NSArray *nameSortedKeys = [[self.artists allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 		NSMutableArray *sortedArtists = [NSMutableArray arrayWithCapacity:nameSortedKeys.count];
 		
@@ -222,7 +222,7 @@
 
 - (NSArray *)artistsOrderedByPlaycount
 {
-	if ([self _cachesAreReady]) {
+	if ([self cachesAreReady]) {
 		NSArray *trackcountSortedKeys = [[self.artistsTracks allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
 			NSMutableArray *obj1Tracks = self.artistsTracks[obj1];
 			NSMutableArray *obj2Tracks = self.artistsTracks[obj2];
@@ -314,7 +314,7 @@
 							dispatch_barrier_async(self.artistsQ, ^{
 								self.artists[artistName] = object;
 							});
-							if ([weakSelf _cachesAreReady] && completion) {
+							if ([weakSelf cachesAreReady] && completion) {
 								// fire the completion when all artists have been processed
 								completion(nil);
 							}
@@ -339,7 +339,7 @@
 - (void)_fetchSpotifyArtistsWithCompletion:(void (^)(NSError *error))completion
 {
 	if (!self.isFetching) {
-		if (![self _cachesAreReady]) {
+		if (![self cachesAreReady]) {
 			self.isFetching = YES;
 			self.artists = [NSMutableDictionary dictionary];
 			self.artistsTracks = [NSMutableDictionary dictionary];

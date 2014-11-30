@@ -272,6 +272,12 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	});
 }
 
+- (BOOL)cachesAreReady
+{
+	return self.cachedAlphabeticalSectionIndex && self.cachedAlphabeticalSectionIndex.count == 0
+		   && self.cachedPlaycountSectionIndex && self.cachedPlaycountSectionIndex.count == 0;
+}
+
 - (void)clearCaches
 {
 	self.cachedArtistsOrderedByName = nil;
