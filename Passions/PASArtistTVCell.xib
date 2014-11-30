@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,22 +15,22 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="egK-L2-nvz">
-                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                    </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9b-P4-EVE">
-                        <rect key="frame" x="57" y="5" width="198" height="22"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9b-P4-EVE">
+                        <rect key="frame" x="58" y="5" width="197" height="22"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uHQ-Ph-zX4">
-                        <rect key="frame" x="57" y="30" width="198" height="15"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uHQ-Ph-zX4">
+                        <rect key="frame" x="58" y="30" width="197" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m9l-Y3-fks">
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m9l-Y3-fks">
                         <rect key="frame" x="247" y="1" width="48" height="48"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="m9l-Y3-fks" secondAttribute="height" multiplier="1:1" id="XxO-Yg-Se3"/>
+                        </constraints>
                         <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -36,11 +38,37 @@
                             <action selector="starTapped:" destination="g9v-1O-Kt9" eventType="touchUpInside" id="aPQ-GM-R1l"/>
                         </connections>
                     </button>
-                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="WBk-a0-NFh">
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="WBk-a0-NFh">
                         <rect key="frame" x="261" y="15" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="WBk-a0-NFh" secondAttribute="height" multiplier="1:1" id="dvF-Jg-t92"/>
+                        </constraints>
                         <color key="color" cocoaTouchSystemColor="darkTextColor"/>
                     </activityIndicatorView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="egK-L2-nvz">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="egK-L2-nvz" secondAttribute="height" multiplier="1:1" id="BpW-Wf-Iy4"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="d9b-P4-EVE" firstAttribute="leading" secondItem="egK-L2-nvz" secondAttribute="trailing" constant="8" id="AKF-yp-Gaz"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="uHQ-Ph-zX4" secondAttribute="bottom" constant="-4" id="Hok-pi-Iel"/>
+                    <constraint firstItem="uHQ-Ph-zX4" firstAttribute="leading" secondItem="egK-L2-nvz" secondAttribute="trailing" constant="8" id="I7h-ei-k7Y"/>
+                    <constraint firstItem="WBk-a0-NFh" firstAttribute="top" secondItem="mby-4B-QNC" secondAttribute="topMargin" constant="7" id="KNl-8E-mto"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="m9l-Y3-fks" secondAttribute="trailing" constant="17" id="M5R-Jg-xKI"/>
+                    <constraint firstItem="m9l-Y3-fks" firstAttribute="leading" secondItem="d9b-P4-EVE" secondAttribute="trailing" constant="-8" id="Tyq-Uj-XGZ"/>
+                    <constraint firstItem="m9l-Y3-fks" firstAttribute="leading" secondItem="uHQ-Ph-zX4" secondAttribute="trailing" constant="-8" id="Ua8-dT-8AI"/>
+                    <constraint firstItem="m9l-Y3-fks" firstAttribute="top" secondItem="mby-4B-QNC" secondAttribute="topMargin" constant="-7" id="VmI-8A-fZI"/>
+                    <constraint firstItem="egK-L2-nvz" firstAttribute="leading" secondItem="mby-4B-QNC" secondAttribute="leadingMargin" constant="-8" id="adI-Yd-Vsn"/>
+                    <constraint firstItem="egK-L2-nvz" firstAttribute="top" secondItem="mby-4B-QNC" secondAttribute="topMargin" constant="-8" id="cDI-cG-IHZ"/>
+                    <constraint firstItem="d9b-P4-EVE" firstAttribute="top" secondItem="mby-4B-QNC" secondAttribute="topMargin" constant="-3" id="ebd-lg-ok8"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="egK-L2-nvz" secondAttribute="bottom" constant="-9" id="fZd-tt-7Ah"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="m9l-Y3-fks" secondAttribute="bottom" constant="-8" id="oRP-UV-lxQ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="WBk-a0-NFh" secondAttribute="trailing" constant="31" id="wRQ-wU-Rxu"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="WBk-a0-NFh" secondAttribute="bottom" constant="6" id="x32-fk-3E7"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="activityIndicator" destination="WBk-a0-NFh" id="X1j-cH-thf"/>
@@ -49,11 +77,7 @@
                 <outlet property="detailText" destination="uHQ-Ph-zX4" id="d9c-fB-4aU"/>
                 <outlet property="starButton" destination="m9l-Y3-fks" id="fAd-ri-s5t"/>
             </connections>
+            <point key="canvasLocation" x="140" y="155"/>
         </tableViewCell>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>
