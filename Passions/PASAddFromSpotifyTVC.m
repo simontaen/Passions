@@ -89,45 +89,22 @@
 {
 	[super viewDidLoad];
 	
-	// TableView Setup
-//	self.refreshControl = [[UIRefreshControl alloc] init];
-//	[self.refreshControl addTarget:self action:@selector(_fetchSpotifyArtists) forControlEvents:UIControlEventValueChanged];
-	
-	if (![self cachesAreReady]) {
-		[self _validateSessionWithCallback:^{
-			[self _fetchSpotifyArtistsWithCompletion:^(NSError *error) {
-				if (!error) {
-					dispatch_async(dispatch_get_main_queue(), ^{
-						[self.tableView reloadData];
-					});
-				} else {
-					[self _handleError:error];
-				}
-			}];
-		}];
-		
-	} else {
+	if ([self cachesAreReady]) {
+		// prepareCaches has finished, but the view wasn't loaded so the TableView did not get reloaded
 		[self.tableView reloadData];
+	} else {
+		// the caches did not get executed, do it now
+		[self prepareCaches];
 	}
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-
+	
 	if (!self.alertController && self.artists && self.artists.count == 0) {
-		// artists have been fetched but non exists
-		[self _validateSessionWithCallback:^{
-			[self _fetchSpotifyArtistsWithCompletion:^(NSError *error) {
-				if (!error) {
-					dispatch_async(dispatch_get_main_queue(), ^{
-						[self.tableView reloadData];
-					});
-				} else {
-					[self _handleError:error];
-				}
-			}];
-		}];
+		// artists have been fetched but non exists (maybe an early error)
+		[self prepareCaches];
 	}
 }
 
@@ -135,7 +112,7 @@
 {
 	[super viewDidAppear:animated];
 	self.pageViewController.navigationItem.leftBarButtonItem = self.spotifyButton;
-	[self _configureSpotifyButton];	
+	[self _configureSpotifyButton];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -334,9 +311,16 @@
 // if fetching is already running the completion will not get called
 - (void)_fetchSpotifyArtistsWithCompletion:(void (^)(NSError *error))completion
 {
-	if (self.isFetching) return; // fetching already in process
-	if ([self cachesAreReady]) completion(nil); return; // caches are ready
-
+	if (self.isFetching) {
+		// fetching already in process
+		return;
+	}
+	if ([self cachesAreReady]) {
+		// caches are ready
+		completion(nil);
+		return;
+	}
+	
 	self.isFetching = YES;
 	self.artists = [NSMutableDictionary dictionary];
 	self.artistsTracks = [NSMutableDictionary dictionary];
@@ -434,23 +418,14 @@
 		DDLogWarn(@"%@", [error description]);
 		title = @"Spotify login failed";
 		UIAlertAction *reauth = [UIAlertAction actionWithTitle:@"Authenticate again"
-														style:UIAlertActionStyleDefault
-													  handler:^(UIAlertAction * action) {
-														  self.session = nil;
-														  [self _configureSpotifyButton];
-														  [self _validateSessionWithCallback:^{
-															  [self _fetchSpotifyArtistsWithCompletion:^(NSError *error) {
-																  if (!error) {
-																	  dispatch_async(dispatch_get_main_queue(), ^{
-																		  [self.tableView reloadData];
-																	  });
-																  } else {
-																	  [self _handleError:error];
-																  }
-															  }];
-														  }];
-														  [self spotifyButtonTapped:nil];
-													  }];
+														 style:UIAlertActionStyleDefault
+													   handler:^(UIAlertAction * action) {
+														   self.session = nil;
+														   [self _configureSpotifyButton];
+														   [self clearCaches];
+														   [self prepareCaches];
+														   [self spotifyButtonTapped:nil];
+													   }];
 		[actions addObject:reauth];
 		
 	} else {
@@ -488,9 +463,12 @@
 - (void)spotifyButtonTapped:(UIBarButtonItem *)sender
 {
 	if (self.session) {
+		// clear session and caches
 		[UICKeyChainStore removeItemForKey:NSStringFromClass([self class])];
 		self.session = nil;
 		[self clearCaches];
+		// this will set up for login
+		[self _validateSessionWithCallback:nil];
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[self.tableView reloadData];
 			[self _configureSpotifyButton];
