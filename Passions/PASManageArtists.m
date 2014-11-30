@@ -111,6 +111,18 @@
 	}
 #endif
 	
+#ifdef DEBUG
+	if ([artistName isEqualToString:@"Cause Assertion Error!"]) {
+		DDLogError(@"DDLogError right before Assertion");
+		DDLogWarn(@"DDLogWarn right before Assertion");
+		DDLogInfo(@"DDLogInfo right before Assertion");
+		DDLogDebug(@"DDLogDebug right before Assertion");
+		DDLogVerbose(@"DDLogVerbose right before Assertion");
+		
+		NSAssert(NO, @"Assertion Error triggered");
+	}
+#endif
+	
 	NSString *resolvedName = [self _resolveArtistName:artistName];
 	
 	dispatch_barrier_async(self.progressQ, ^{

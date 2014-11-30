@@ -38,7 +38,8 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 {
 	// Setting a custom assertion handler"
 	NSAssertionHandler* customAssertionHandler = [[PASAssertionHandler alloc] init];
-	[[[NSThread currentThread] threadDictionary] setValue:customAssertionHandler forKey:NSAssertionHandlerKey];
+	[[[NSThread currentThread] threadDictionary] setValue:customAssertionHandler
+												   forKey:NSAssertionHandlerKey];
 	
 	// Setup AFNetworking
 	[[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
