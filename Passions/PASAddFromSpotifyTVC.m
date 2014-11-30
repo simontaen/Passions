@@ -160,7 +160,7 @@
 
 - (BOOL)cachesAreReady
 {
-	return self.fetchedAllPartialArtists && self.artistsInPromotion == 0 && [super cachesAreReady];
+	return !self.isFetching && [super cachesAreReady];
 }
 
 - (void)clearCaches
@@ -206,7 +206,7 @@
 
 - (NSArray *)artistsOrderedByName
 {
-	if ([self cachesAreReady]) {
+	if (!self.isFetching) {
 		NSArray *nameSortedKeys = [[self.artists allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 		NSMutableArray *sortedArtists = [NSMutableArray arrayWithCapacity:nameSortedKeys.count];
 		
@@ -222,7 +222,7 @@
 
 - (NSArray *)artistsOrderedByPlaycount
 {
-	if ([self cachesAreReady]) {
+	if (!self.isFetching) {
 		NSArray *trackcountSortedKeys = [[self.artistsTracks allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
 			NSMutableArray *obj1Tracks = self.artistsTracks[obj1];
 			NSMutableArray *obj2Tracks = self.artistsTracks[obj2];
@@ -267,70 +267,66 @@
 
 #pragma mark - Spotify Data Fetching
 
+/// cache track for all artists
 - (void)_cacheTrack:(SPTSavedTrack *)track forArtists:(NSArray *)artists
 {
-	if (self.isFetching) {
-		for (SPTPartialArtist *artist in artists) {
-			NSString *artistName = artist.name;
-			
-			NSMutableArray *tracks = self.artistsTracks[artistName];
-			
-			if (!tracks) {
-				self.artistsTracks[artistName] = [NSMutableArray array];
-				tracks = self.artistsTracks[artistName];
-			}
-			
-			[tracks addObject:track];
+	for (SPTPartialArtist *artist in artists) {
+		NSString *artistName = artist.name;
+		
+		NSMutableArray *tracks = self.artistsTracks[artistName];
+		
+		if (!tracks) {
+			self.artistsTracks[artistName] = [NSMutableArray array];
+			tracks = self.artistsTracks[artistName];
 		}
+		
+		[tracks addObject:track];
 	}
 }
 
 - (void)_cacheArtistsFromArray:(NSArray *)artists completion:(void (^)(NSError *error))completion
 {
-	if (self.isFetching) {
-		// an artists comes here several times and we are called multiple times
-		for (SPTPartialArtist *artist in artists) {
-			NSString *artistName = artist.name;
-			
-			BOOL __block cachedAlready;
-			dispatch_barrier_sync(self.artistsQ, ^{
-				cachedAlready = !!self.artists[artistName];
+	// an artists comes here several times and we are called multiple times
+	for (SPTPartialArtist *artist in artists) {
+		NSString *artistName = artist.name;
+		
+		BOOL __block cachedAlready;
+		dispatch_barrier_sync(self.artistsQ, ^{
+			cachedAlready = !!self.artists[artistName];
+		});
+		
+		if (!cachedAlready) {
+			dispatch_barrier_async(self.artistsQ, ^{
+				// this is for signaling that we are working on the artist
+				self.artists[artistName] = artist;
 			});
+			self.artistsInPromotion++;
 			
-			if (!cachedAlready) {
-				dispatch_barrier_async(self.artistsQ, ^{
-					// this is for signaling that we are working on the artist
-					self.artists[artistName] = artist;
-				});
-				self.artistsInPromotion++;
-				__weak typeof(self) weakSelf = self;
+			// Need to promote to full Artist for the images
+			// https://developer.spotify.com/web-api/object-model/#artist-object-full
+			[SPTRequest requestItemFromPartialObject:artist withSession:self.session callback:^(NSError *error, id object) {
+				self.artistsInPromotion--;
+				if (!self.isFetching) return; // fetching got cancelled
 				
-				// Need to promote to full Artist for the images
-				// https://developer.spotify.com/web-api/object-model/#artist-object-full
-				[SPTRequest requestItemFromPartialObject:artist withSession:self.session callback:^(NSError *error, id object) {
-					self.artistsInPromotion--;
-					if (self.isFetching) {
-						if (!error && object) {
-							dispatch_barrier_async(self.artistsQ, ^{
-								self.artists[artistName] = object;
-							});
-							if ([weakSelf cachesAreReady] && completion) {
-								// fire the completion when all artists have been processed
-								completion(nil);
-							}
-							
-						} else {
-							dispatch_barrier_async(self.artistsQ, ^{
-								// must remove the partial artist
-								[self.artists removeObjectForKey:artistName];
-							});
-							if (completion) {
-								completion(error);
-							}
-						}
+				if (!error && object) {
+					dispatch_barrier_async(self.artistsQ, ^{
+						self.artists[artistName] = object;
+					});
+					if (self.fetchedAllPartialArtists && self.artistsInPromotion == 0 && completion) {
+						// fire the completion when all artists have been processed
+						completion(nil);
 					}
-				}];
-			}
+					
+				} else {
+					dispatch_barrier_async(self.artistsQ, ^{
+						// must remove the partial artist
+						[self.artists removeObjectForKey:artistName];
+					});
+					if (completion) {
+						completion(error);
+					}
+				}
+			}];
 		}
 	}
 }
@@ -338,61 +334,57 @@
 // if fetching is already running the completion will not get called
 - (void)_fetchSpotifyArtistsWithCompletion:(void (^)(NSError *error))completion
 {
-	if (!self.isFetching) {
-		if (![self cachesAreReady]) {
-			self.isFetching = YES;
-			self.artists = [NSMutableDictionary dictionary];
-			self.artistsTracks = [NSMutableDictionary dictionary];
-			self.fetchedAllPartialArtists = NO;
-			self.artistsInPromotion = 0;
-			__weak typeof(self) weakSelf = self;
+	if (self.isFetching) return; // fetching already in process
+	if ([self cachesAreReady]) completion(nil); return; // caches are ready
+
+	self.isFetching = YES;
+	self.artists = [NSMutableDictionary dictionary];
+	self.artistsTracks = [NSMutableDictionary dictionary];
+	self.fetchedAllPartialArtists = NO;
+	self.artistsInPromotion = 0;
+	__weak typeof(self) weakSelf = self;
+	
+	// the block to recursivly fetch all tracks
+	self.savedTracksForUserCallback = ^void(NSError *error, id object) {
+		if (!weakSelf.isFetching) return; // fetching got cancelled
+		
+		if (!error && object) {
+			SPTListPage *list = (SPTListPage *)object;
 			
-			// the block to recursivly fetch all tracks
-			self.savedTracksForUserCallback = ^void(NSError *error, id object) {
-				if (weakSelf.isFetching) {
-					if (!error && object) {
-						SPTListPage *list = (SPTListPage *)object;
-						
-						if ([list hasNextPage]) {
-							[list requestNextPageWithSession:weakSelf.session callback:weakSelf.savedTracksForUserCallback];
-						} else {
-							weakSelf.fetchedAllPartialArtists = YES;
-						}
-						
-						for (SPTSavedTrack *track in [list items]) {
-							[weakSelf _cacheArtistsFromArray:track.artists completion:^(NSError *innerError) {
-								if (weakSelf.isFetching) {
-									// this only gets called when all (overall!) artists have been processed
-									if (!innerError) {
-										weakSelf.isFetching = NO;
-										if (completion) {
-											completion(nil);
-										}
-										
-									} else if (completion) {
-										completion(innerError);
-									}
-								}
-								
-							}];
-							[weakSelf _cacheTrack:track forArtists:track.artists];
-						}
-						
-					} else {
+			if ([list hasNextPage]) {
+				// fetch next page
+				[list requestNextPageWithSession:weakSelf.session callback:weakSelf.savedTracksForUserCallback];
+			} else {
+				// we're done fetching tracks
+				weakSelf.fetchedAllPartialArtists = YES;
+			}
+			
+			for (SPTSavedTrack *track in [list items]) {
+				[weakSelf _cacheArtistsFromArray:track.artists completion:^(NSError *innerError) {
+					// this only gets called when all (overall!) artists have been processed
+					if (!weakSelf.isFetching) return; // fetching got cancelled
+					if (!innerError) {
+						weakSelf.isFetching = NO;
 						if (completion) {
-							completion(error);
+							completion(nil);
 						}
+						
+					} else if (completion) {
+						completion(innerError);
 					}
-				}
-			};
+					
+				}];
+				
+				// cache track for all artists
+				[weakSelf _cacheTrack:track forArtists:track.artists];
+			}
 			
-			[SPTRequest savedTracksForUserInSession:self.session callback:self.savedTracksForUserCallback];
-			
-		} else {
-			// caches are ready
-			completion(nil);
+		} else if (completion) {
+			completion(error);
 		}
-	}
+	};
+	
+	[SPTRequest savedTracksForUserInSession:self.session callback:self.savedTracksForUserCallback];
 }
 
 #pragma mark - MBProgressHUD
@@ -583,6 +575,7 @@
 		[self _configureSpotifyButton];
 		completion();
 	}
+	// a session renewal is in progress: don't do anything
 }
 
 @end
