@@ -24,6 +24,7 @@
 		F43402131A09951200A3D83C /* MPMediaItemCollection+Passions.m in Sources */ = {isa = PBXBuildFile; fileRef = F43402121A09951200A3D83C /* MPMediaItemCollection+Passions.m */; };
 		F438692A17A55CE6000B7817 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD917A05EC8008D8F6C /* SystemConfiguration.framework */; };
 		F438692B17A55CEF000B7817 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */; };
+		F4395A091A2B347200775AF7 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4395A081A2B347200775AF7 /* Launch Screen.xib */; };
 		F44E4BB619FE4FB900764532 /* UIColor+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = F44E4BB519FE4FB900764532 /* UIColor+Utils.m */; };
 		F450FCE719F7044D00DF2D38 /* PASManageArtists.m in Sources */ = {isa = PBXBuildFile; fileRef = F450FCE619F7044D00DF2D38 /* PASManageArtists.m */; };
 		F453BF421A0D3D2F0068FE6D /* PASArtistInfoCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F453BF411A0D3D2F0068FE6D /* PASArtistInfoCVC.m */; };
@@ -93,6 +94,7 @@
 		F434020F1A09883400A3D83C /* PASMediaQueryAccessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASMediaQueryAccessor.m; sourceTree = "<group>"; };
 		F43402111A09951200A3D83C /* MPMediaItemCollection+Passions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MPMediaItemCollection+Passions.h"; sourceTree = "<group>"; };
 		F43402121A09951200A3D83C /* MPMediaItemCollection+Passions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MPMediaItemCollection+Passions.m"; sourceTree = "<group>"; };
+		F4395A081A2B347200775AF7 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		F44E4BB419FE4FB900764532 /* UIColor+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Utils.h"; sourceTree = "<group>"; };
 		F44E4BB519FE4FB900764532 /* UIColor+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Utils.m"; sourceTree = "<group>"; };
 		F450FCE519F7044D00DF2D38 /* PASManageArtists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASManageArtists.h; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 				F4A779801793113E00C770B9 /* InfoPlist.strings */,
 				F4A779831793113E00C770B9 /* main.m */,
 				F4A779851793113E00C770B9 /* Passions-Prefix.pch */,
+				F4395A081A2B347200775AF7 /* Launch Screen.xib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -509,6 +512,7 @@
 				F40A50FA1A0E6C9F002C703C /* PASArtworkTVCell.xib in Resources */,
 				F4D9E94C19C39AB100B762A7 /* PASPageViewController.xib in Resources */,
 				F4A779911793113E00C770B9 /* iPhone.storyboard in Resources */,
+				F4395A091A2B347200775AF7 /* Launch Screen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -717,7 +721,6 @@
 			baseConfigurationReference = 8074225D79F3AFFFEE8E01D6 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Simon Taennler (ZNG9G9Z8CK)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Simon Taennler (ZNG9G9Z8CK)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -740,7 +743,6 @@
 			baseConfigurationReference = 32629A8CC07EC786B4B6BF2B /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Simon Taennler (KZ2BJ5Q7N6)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Simon Taennler (KZ2BJ5Q7N6)";
 				FRAMEWORK_SEARCH_PATHS = (
