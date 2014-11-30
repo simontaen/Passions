@@ -269,6 +269,11 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
 		[self _alphabeticalSectionIndex];
 		[self _playcountSectionIndex];
+		if ([self isViewLoaded]) {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self.tableView reloadData];
+			});
+		}
 	});
 }
 

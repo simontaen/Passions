@@ -25,6 +25,7 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 - (PASAddArtistsSortOrder)sortOrderForIndex:(NSInteger)idx;
 
 // Caches handling
+/// when done reloads TableView if possible
 - (void)prepareCaches;
 - (void)clearCaches;
 - (BOOL)cachesAreReady;
