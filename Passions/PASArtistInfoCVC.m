@@ -14,13 +14,21 @@
 
 static NSInteger const kAddCells = 1;
 
+#pragma mark - Init
+
+- (void)commonInit
+{
+	// Configure Parse Query
+	[super commonInit];
+	self.loadingViewEnabled = NO;
+	self.showSwipeHint = NO;
+}
+
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	self.showSwipeHint = NO;
-	self.loadingViewEnabled = NO;
 	
 	// register the custom cell
 	[self.collectionView registerNib:[UINib nibWithNibName:[PASArtworkCVCell reuseIdentifier] bundle:nil] forCellWithReuseIdentifier:[PASArtworkCVCell reuseIdentifier]];
