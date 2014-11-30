@@ -134,14 +134,16 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 			}
 		}];
 		
-	} else if ([GBVersionTracking isFirstLaunchForBuild]) {
-		// on first build launch, update the device specs
-		[self _updateDeviceInfos:currentInstallation];
-		[currentInstallation saveInBackground];
-		// DEBUG (since I'm changing artwork quite often
-		[[FICImageCache sharedImageCache] reset];
 	} else {
 		[Crashlytics setUserIdentifier:[PFUser currentUser].objectId];
+		[currentUser incrementKey:@"runCount"];
+		[currentUser saveEventually];
+		
+		if ([GBVersionTracking isFirstLaunchForBuild]) {
+			// on first build launch, update the device specs
+			[self _updateDeviceInfos:currentInstallation];
+			[currentInstallation saveInBackground];
+		}
 	}
 }
 
