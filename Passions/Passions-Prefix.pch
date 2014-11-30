@@ -22,5 +22,5 @@ static const int ddLogLevel = LOG_LEVEL_DEBUG;
 #else
 static const int ddLogLevel = LOG_LEVEL_INFO;
 // TODO: change this for store release
-#static const int ddLogLevel = LOG_LEVEL_WARN;
+// static const int ddLogLevel = LOG_LEVEL_WARN;
 #endif
