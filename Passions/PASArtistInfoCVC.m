@@ -20,6 +20,7 @@ static NSInteger const kAddCells = 1;
 {
 	[super viewDidLoad];
 	self.showSwipeHint = NO;
+	self.loadingViewEnabled = NO;
 	
 	// register the custom cell
 	[self.collectionView registerNib:[UINib nibWithNibName:[PASArtworkCVCell reuseIdentifier] bundle:nil] forCellWithReuseIdentifier:[PASArtworkCVCell reuseIdentifier]];

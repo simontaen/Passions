@@ -48,7 +48,6 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 * First launch, show loading and give feedback on progress of initially faving
 
 ### Spotify Integration
-* Fall back to Spotify if Music App does not seem to be used. But to what Artists? Current Top Artists?
 * Prevent incoming responses from spotify having impact after the first error
 * Spotify loading after session refresh
 
@@ -63,7 +62,6 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 ## Timeline
 
 ## Artist and Album Info
-* Loading albums on album info seems to be distracting and unnessecary
 
 # 1.1 (?)
 * iPhone 6 Support
