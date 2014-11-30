@@ -15,4 +15,6 @@
 /// Show swipe hints when no albums
 @property (nonatomic, assign) BOOL showSwipeHint;
 
+- (void)commonInit;
+
 @end

@@ -21,16 +21,21 @@
 
 #pragma mark - Init
 
-- (instancetype)init
+- (void)commonInit
 {
-	self = [super initWithCollectionViewLayout:[UICollectionViewFlowLayout new]];
-	if (!self) return nil;
-	
 	// Configure Parse Query
 	self.paginationEnabled = YES;
 	self.objectsPerPage = 500;
 	self.loadingViewEnabled = YES;
 	self.showSwipeHint = YES;
+}
+
+- (instancetype)init
+{
+	self = [super initWithCollectionViewLayout:[UICollectionViewFlowLayout new]];
+	if (!self) return nil;
+	
+	[self commonInit];
 	
 	// register to get notified when an album should be shown
 	[[NSNotificationCenter defaultCenter] addObserverForName:kPASShowAlbumDetails
