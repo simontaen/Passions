@@ -22,8 +22,7 @@ extern CGFloat const kPASSegmentBarHeight;
 // this view controllers index
 @property (nonatomic, assign) NSUInteger index;
 
-/// designated initializer
-- (instancetype)initWithIndex:(NSUInteger)index;
+- (instancetype)initWithIndex:(NSUInteger)index NS_DESIGNATED_INITIALIZER;
 
 @end
 

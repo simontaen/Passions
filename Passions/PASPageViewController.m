@@ -20,10 +20,9 @@
  @note The only methods that will be called on objects of this class are the ones defined in the UIViewControllerContextTransitioning protocol. The rest is our own private implementation.
  */
 @interface PASPrivateTransitionContext : NSObject <UIViewControllerContextTransitioning>
-/// Designated initializer.
 - (instancetype)initWithFromViewController:(UIViewController *)fromVc
 						  toViewController:(UIViewController *)toVc
-								goingRight:(BOOL)goingRight;
+								goingRight:(BOOL)goingRight NS_DESIGNATED_INITIALIZER;
 /// A block of code we can set to execute after having received the completeTransition: message.
 @property (nonatomic, copy) void (^completionBlock)(BOOL didComplete);
 /// Private setter for the animated property.
