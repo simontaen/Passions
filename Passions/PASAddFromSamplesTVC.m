@@ -267,8 +267,15 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 {
 	// Accessing both section indizes will setup everything
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-		[self _alphabeticalSectionIndex];
-		[self _playcountSectionIndex];
+		PASAddArtistsSortOrder origSortOrder = self.selectedSortOrder;
+		
+		for (int i = 0; i < PASAddArtistsSortOrderSize; i++) {
+			self.selectedSortOrder = [self sortOrderForIndex:i];
+			[self _sectionsShorthand];
+			[self _sectionIndexShorthand];
+		}
+		self.selectedSortOrder = origSortOrder;
+		
 		if ([self isViewLoaded]) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[self.tableView reloadData];
@@ -279,8 +286,8 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (BOOL)cachesAreReady
 {
-	return self.cachedAlphabeticalSectionIndex && self.cachedAlphabeticalSectionIndex.count != 0
-		   && self.cachedPlaycountSectionIndex && self.cachedPlaycountSectionIndex.count != 0;
+	return self.cachedArtistsOrderedByName && self.cachedArtistsOrderedByName.count != 0
+		   && self.cachedArtistsOrderedByPlaycount && self.cachedArtistsOrderedByPlaycount.count != 0;
 }
 
 - (void)clearCaches

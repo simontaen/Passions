@@ -14,6 +14,9 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 	PASAddArtistsSortOrderByPlaycount
 };
 
+// needed for prepareCaches
+# define PASAddArtistsSortOrderSize 2
+
 @interface PASAddFromSamplesTVC : UITableViewController
 
 // Formatting Blocks
