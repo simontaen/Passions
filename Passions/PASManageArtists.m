@@ -10,6 +10,7 @@
 #import "PASArtist.h"
 #import "PASMediaQueryAccessor.h"
 #import "MPMediaItemCollection+Passions.h"
+#import "LastFmFetchr.h"
 
 @interface PASManageArtists()
 
@@ -221,30 +222,53 @@
 
 - (void)addInitialFavArtists
 {
-	NSArray *topArtists = [PASMediaQueryAccessor sharedMngr].artistCollectionsOrderedByPlaycount;
 	
 	// this is called from the app delegate, make sure you're properly set up
 	if (!self.originalFavArtists) {
 		[self passFavArtists:@[]];
 	}
 	
-	if (![PASMediaQueryAccessor sharedMngr].usesMusicApp) {
-		DDLogInfo(@"User \"%@\" doesn't seem to use the Music App", [PFUser currentUser].objectId);
-		// still send the notification
-		[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists object:nil];
-	
-	} else if (topArtists.count > 2) {
+	void (^favingBlock)(NSArray*) = ^void(NSArray *artistNames) {
 		int __block doneCounter = 0;
+		NSUInteger count = artistNames.count;
 		
-		for (int i = 0; i < 3; i++) {
-			[self didSelectArtistWithName:[topArtists[i] PAS_artistName] completion:^(NSError *error) {
+		for (NSString *artistName in artistNames) {
+			[self didSelectArtistWithName:artistName completion:^(NSError *error) {
 				doneCounter++;
-				if (doneCounter == 3) {
+				if (doneCounter == count) {
 					[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists
 																		object:nil];
 				}
 			}];
 		}
+	};
+	
+	if (![PASMediaQueryAccessor sharedMngr].usesMusicApp) {
+		DDLogInfo(@"User \"%@\" doesn't seem to use the Music App", [PFUser currentUser].objectId);
+		
+		[[LastFmFetchr fetchr] getChartsTopArtists:nil
+										 withLimit:3 completion:^(LFMChartTopArtists *data, NSError *error) {
+											 NSMutableArray *artistNames = [NSMutableArray arrayWithCapacity:3];
+											 
+											 for (LFMArtistChart *artist in [data artists]) {
+												 [artistNames addObject:[artist name]];
+											 }
+											 favingBlock(artistNames);
+										 }];
+	
+	} else {
+		NSArray *topArtists = [PASMediaQueryAccessor sharedMngr].artistCollectionsOrderedByPlaycount;
+		NSMutableArray *artistNames = [NSMutableArray arrayWithCapacity:3];
+		int counter = 3;
+		
+		for (MPMediaItemCollection *artist in topArtists) {
+			[artistNames addObject:[artist PAS_artistName]];
+			counter--;
+			if (counter == 0) {
+				break;
+			}
+		}
+		favingBlock(artistNames);
 	}
 }
 
