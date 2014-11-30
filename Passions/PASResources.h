@@ -38,16 +38,17 @@ extern NSString *const ImageFormatFamilyArtistThumbnails;
 extern NSString *const ImageFormatNameArtistThumbnailSmall;
 extern CGSize const ImageFormatImageSizeArtistThumbnailSmall;
 extern NSString *const ImageFormatNameArtistThumbnailLarge;
-extern CGSize const ImageFormatImageSizeArtistThumbnailLarge;
 
 // Constant for Album Artwork
 extern NSString *const ImageFormatFamilyAlbumThumbnails;
 extern NSString *const ImageFormatNameAlbumThumbnailMedium;
-extern CGSize const ImageFormatImageSizeAlbumThumbnailMedium;
 extern NSString *const ImageFormatNameAlbumThumbnailLarge;
-extern CGSize const ImageFormatImageSizeAlbumThumbnailLarge;
 
 @interface PASResources : NSObject
+
++ (CGSize)imageFormatImageSizeArtistThumbnailLarge;
++ (CGSize)imageFormatImageSizeAlbumThumbnailMedium;
++ (CGSize)imageFormatImageSizeAlbumThumbnailLarge;
 
 + (NSURL *)spotifyCallbackUri;
 + (NSURL *)spotifyTokenSwap;

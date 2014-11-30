@@ -42,15 +42,39 @@ NSString *const ImageFormatFamilyArtistThumbnails = @"ImageFormatFamilyArtistThu
 NSString *const ImageFormatNameArtistThumbnailSmall = @"ImageFormatNameArtistThumbnailSmall";
 CGSize const ImageFormatImageSizeArtistThumbnailSmall = {kPASSizeArtistThumbnailSmall, kPASSizeArtistThumbnailSmall};
 NSString *const ImageFormatNameArtistThumbnailLarge = @"ImageFormatNameArtistThumbnailLarge";
-CGSize const ImageFormatImageSizeArtistThumbnailLarge = {320, 320};
 
 NSString *const ImageFormatFamilyAlbumThumbnails = @"ImageFormatFamilyAlbumThumbnails";
 NSString *const ImageFormatNameAlbumThumbnailMedium = @"ImageFormatNameAlbumThumbnailMedium";
-CGSize const ImageFormatImageSizeAlbumThumbnailMedium = {160, 160};
 NSString *const ImageFormatNameAlbumThumbnailLarge = @"ImageFormatNameAlbumThumbnailLarge";
-CGSize const ImageFormatImageSizeAlbumThumbnailLarge = {320, 320};
 
 @implementation PASResources
+
++ (CGSize)imageFormatImageSizeArtistThumbnailLarge
+{
+	return [PASResources imageFormatImageSizeAlbumThumbnailLarge];
+}
+
++ (CGSize)imageFormatImageSizeAlbumThumbnailMedium
+{
+	static CGSize imageFormatImageSizeAlbumThumbnailMedium;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		CGFloat halfSize = [UIScreen mainScreen].bounds.size.width / 2;
+		imageFormatImageSizeAlbumThumbnailMedium = CGSizeMake(halfSize, halfSize);
+	});
+	return imageFormatImageSizeAlbumThumbnailMedium;
+}
+
++ (CGSize)imageFormatImageSizeAlbumThumbnailLarge
+{
+	static CGSize imageFormatImageSizeAlbumThumbnailLarge;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		CGFloat fullSize = [UIScreen mainScreen].bounds.size.width;
+		imageFormatImageSizeAlbumThumbnailLarge = CGSizeMake(fullSize, fullSize);
+	});
+	return imageFormatImageSizeAlbumThumbnailLarge;
+}
 
 + (NSURL *)spotifyCallbackUri
 {

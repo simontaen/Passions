@@ -18,7 +18,7 @@
 - (UIImage *)sourceImageWithFormatName:(NSString *)formatName;
 {
 	NSAssert([formatName isEqualToString:ImageFormatNameArtistThumbnailSmall], @"Unsupported format Name: %@", formatName);
-	return [[[self representativeItem] valueForProperty:MPMediaItemPropertyArtwork] imageWithSize:ImageFormatImageSizeArtistThumbnailLarge];
+	return [[[self representativeItem] valueForProperty:MPMediaItemPropertyArtwork] imageWithSize:[PASResources imageFormatImageSizeArtistThumbnailLarge]];
 }
 
 #pragma mark - FICEntity

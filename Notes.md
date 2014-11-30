@@ -64,7 +64,6 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 ## Artist and Album Info
 
 # 1.1 (?)
-* iPhone 6 Support
 * Dynamic Row height for bigger devices (5 and up, 6 and up)
 * search for not in library artists to add (but consider all resources!) - **number one feature request**!
 * The ReleaseDate View flickers when scrolling. This must be an Apple Bug. You could try to capture an image or replicate it using "Album Colors" and a 60% opaque background

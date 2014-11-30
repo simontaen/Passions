@@ -23,6 +23,7 @@
 #import "DDTTYLogger.h"
 #import "FRParseLogger.h"
 #import <CrashlyticsLumberjack/CrashlyticsLogger.h>
+#import "PASResources.h"
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
@@ -160,14 +161,14 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 {
 	FICImageFormat *mediumAlbumThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameAlbumThumbnailMedium
 																			  family:ImageFormatFamilyAlbumThumbnails
-																		   imageSize:ImageFormatImageSizeAlbumThumbnailMedium
+																		   imageSize:[PASResources imageFormatImageSizeAlbumThumbnailMedium]
 																			   style:FICImageFormatStyle32BitBGR
 																		maximumCount:800
 																			 devices:FICImageFormatDevicePhone
 																	  protectionMode:FICImageFormatProtectionModeNone];
 	FICImageFormat *largeAlbumThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameAlbumThumbnailLarge
 																			 family:ImageFormatFamilyAlbumThumbnails
-																		  imageSize:ImageFormatImageSizeAlbumThumbnailLarge
+																		  imageSize:[PASResources imageFormatImageSizeAlbumThumbnailLarge]
 																			  style:FICImageFormatStyle32BitBGR
 																	   maximumCount:800
 																			devices:FICImageFormatDevicePhone
@@ -181,7 +182,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 																	  protectionMode:FICImageFormatProtectionModeNone];
 	FICImageFormat *largeArtistThumbnailImageFormat = [FICImageFormat formatWithName:ImageFormatNameArtistThumbnailLarge
 																			  family:ImageFormatFamilyArtistThumbnails
-																		   imageSize:ImageFormatImageSizeArtistThumbnailLarge
+																		   imageSize:[PASResources imageFormatImageSizeArtistThumbnailLarge]
 																			   style:FICImageFormatStyle32BitBGR
 																		maximumCount:200
 																			 devices:FICImageFormatDevicePhone
