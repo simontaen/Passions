@@ -14,7 +14,7 @@
 -(void)handleFailureInFunction:(NSString *)functionName file:(NSString *)fileName lineNumber:(NSInteger)line description:(NSString *)format, ...
 {
 	NSString *file = [[NSURL URLWithString:fileName] lastPathComponent];
-	NSString *location =  [NSString stringWithFormat:@"%@:%i", file, line];
+	NSString *location =  [NSString stringWithFormat:@"%@:%li", file, (long)line];
 	DDLogWarn(@"Assertion failure: FUNCTION = (%@) at (%@), %@", functionName, location, format);
 	
 #if DEBUG
@@ -26,7 +26,7 @@
 {
 	NSString *methodName = NSStringFromSelector(selector);
 	NSString *file = [[NSURL URLWithString:fileName] lastPathComponent];
-	NSString *location =  [NSString stringWithFormat:@"%@:%i", file, line];
+	NSString *location =  [NSString stringWithFormat:@"%@:%li", file, (long)line];
 	DDLogWarn(@"Assertion failure: METHOD = (%@) for object = (%@) at (%@), %@", methodName, object, location, format);
 	
 #if DEBUG
