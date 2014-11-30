@@ -148,6 +148,9 @@
 - (void)objectsDidLoad:(NSError *)error
 {
     [self.collectionView reloadData];
+	if (self.loadingViewEnabled) {
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
+	}
 }
 
 - (PFQuery *)queryForCollection
@@ -175,9 +178,6 @@
     // No sections displayed while loading
 	if (self.isLoading) {
 		return 0;
-	}
-	if (self.loadingViewEnabled) {
-		[MBProgressHUD hideHUDForView:self.view animated:YES];
 	}
     return 1;
 }
