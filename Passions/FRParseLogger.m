@@ -66,12 +66,15 @@ static FRParseLogger *sharedLogger;
 		PFObject *obj;
 		
 		obj = [PFObject objectWithClassName:@"FRParseLogger"];
+		[obj setACL:[self _parseACL]];
 		
 		[obj setObject:logMsg
 				forKey:@"message"];
 		
-		[obj setObject:[PFInstallation currentInstallation].objectId
-				forKey:@"installation"];
+		if ([PFInstallation currentInstallation].objectId) {
+			[obj setObject:[PFInstallation currentInstallation].objectId
+					forKey:@"installation"];
+		}
 		
 		[obj setObject:[[NSString stringWithUTF8String: logMessage->file] lastPathComponent]
 				forKey:@"file"];
@@ -100,6 +103,18 @@ static FRParseLogger *sharedLogger;
 
 - (NSString *)loggerName{
 	return @"com.floatright.ParseLogger";
+}
+
+- (PFACL *)_parseACL
+{
+	static PFACL *logACL;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		logACL = [PFACL ACL];
+		[logACL setPublicReadAccess:YES];
+		[logACL setPublicWriteAccess:YES];
+	});
+	return logACL;
 }
 
 @end
