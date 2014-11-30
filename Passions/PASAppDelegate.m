@@ -125,8 +125,12 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 						DDLogInfo(@"Current User initialized: %@", currentUser.objectId);
 						[Crashlytics setUserIdentifier:[PFUser currentUser].objectId];
 						[[PASManageArtists sharedMngr] addInitialFavArtists];
+					} else {
+						DDLogError(@"Could not initialize User: %@", [error localizedDescription]);
 					}
 				}];
+			} else {
+				DDLogError(@"Could not initialize Installation: %@", [error localizedDescription]);
 			}
 		}];
 		
