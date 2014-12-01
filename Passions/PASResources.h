@@ -55,7 +55,8 @@ extern NSString *const ImageFormatNameAlbumThumbnailLarge;
 + (NSURL *)spotifyTokenRefresh;
 + (UIImage *)spotifyLogin;
 
-+ (UIImage *) artistThumbnailPlaceholder;
++ (UIImage *) artistPlaceholder;
++ (UIImage *) artistPlaceholderSmall;
 + (UIImage *) albumPlaceholder;
 + (UIImage *) albumPlaceholderHalf;
 

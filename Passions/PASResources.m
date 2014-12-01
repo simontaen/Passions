@@ -116,14 +116,24 @@ NSString *const ImageFormatNameAlbumThumbnailLarge = @"ImageFormatNameAlbumThumb
 	return spotifyLogin;
 }
 
-+ (UIImage *)artistThumbnailPlaceholder
++ (UIImage *)artistPlaceholder
 {
-	static UIImage *artistThumbnailPlaceholder;
+	static UIImage *artistPlaceholder;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		artistThumbnailPlaceholder = [UIImage imageNamed: @"artistPlaceholder"];
+		artistPlaceholder = [UIImage imageNamed: @"artistPlaceholder"];
 	});
-	return artistThumbnailPlaceholder;
+	return artistPlaceholder;
+}
+
++ (UIImage *)artistPlaceholderSmall
+{
+	static UIImage *artistPlaceholderSmall;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		artistPlaceholderSmall = [UIImage imageNamed: @"artistPlaceholderSmall"];
+	});
+	return artistPlaceholderSmall;
 }
 
 + (UIImage *)albumPlaceholder

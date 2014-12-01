@@ -17,7 +17,7 @@
 
 - (UIImage *)sourceImageWithFormatName:(NSString *)formatName;
 {
-	return [PASResources artistThumbnailPlaceholder];
+	return [ImageFormatNameArtistThumbnailSmall isEqualToString:formatName] ? [PASResources artistPlaceholderSmall] : [PASResources artistPlaceholder];
 }
 
 #pragma mark - FICEntity
