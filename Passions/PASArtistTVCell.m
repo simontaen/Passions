@@ -113,30 +113,30 @@
 - (void)_loadThumbnailImageForArtist:(id<FICEntity>)entity
 {
 	// clear the image to avoid seeing old images when scrolling
-	self.artistImage.image = nil;
+	self.artistImage.image = [PASResources artistPlaceholderSmall];
 	
 	// Cache the cache
 	FICImageCache *cache = [FICImageCache sharedImageCache];
 	
-	BOOL cacheAvailable = [cache asynchronouslyRetrieveImageForEntity:entity
-													   withFormatName:ImageFormatNameArtistThumbnailSmall
-													  completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
-														  // check if this image view hasn't been reused for a different entity
-														  if (image && entity == self.entity) {
-															  self.artistImage.image = image;
-														  }
-													  }];
-	if (!cacheAvailable) {
-		[cache asynchronouslyRetrieveImageForEntity:[PASArtist object]
-									 withFormatName:ImageFormatNameArtistThumbnailSmall
-									completionBlock:^(id<FICEntity> dummy, NSString *formatName, UIImage *image) {
-										// check if this image view hasn't been reused for a different entity
-										// and if the image is still unset
-										if (image && entity == self.entity && self.artistImage.image == nil) {
-											self.artistImage.image = image;
-										}
-									}];
-	}
+	[cache asynchronouslyRetrieveImageForEntity:entity
+								 withFormatName:ImageFormatNameArtistThumbnailSmall
+								completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+									// check if this image view hasn't been reused for a different entity
+									if (image && entity == self.entity) {
+										self.artistImage.image = image;
+									}
+								}];
+//	if (!cacheAvailable) {
+//		[cache asynchronouslyRetrieveImageForEntity:[PASArtist object]
+//									 withFormatName:ImageFormatNameArtistThumbnailSmall
+//									completionBlock:^(id<FICEntity> dummy, NSString *formatName, UIImage *image) {
+//										// check if this image view hasn't been reused for a different entity
+//										// and if the image is still unset
+//										if (image && entity == self.entity && self.artistImage.image == nil) {
+//											self.artistImage.image = image;
+//										}
+//									}];
+//	}
 }
 
 #pragma mark - Static
