@@ -215,7 +215,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		
 		if (!sourceImage) {
 			if ([entity isKindOfClass:[PASAlbum class]]) {
-				sourceImage = [PASResources albumThumbnailPlaceholder];
+				sourceImage = [ImageFormatNameAlbumThumbnailMedium isEqualToString:formatName] ? [PASResources albumPlaceholderHalf] : [PASResources albumPlaceholder];
 			} else {
 				sourceImage = [PASResources artistThumbnailPlaceholder];
 			}

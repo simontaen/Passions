@@ -126,14 +126,24 @@ NSString *const ImageFormatNameAlbumThumbnailLarge = @"ImageFormatNameAlbumThumb
 	return artistThumbnailPlaceholder;
 }
 
-+ (UIImage *)albumThumbnailPlaceholder
++ (UIImage *)albumPlaceholder
 {
-	static UIImage *albumThumbnailPlaceholder;
+	static UIImage *albumPlaceholder;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		albumThumbnailPlaceholder = [UIImage imageNamed: @"albumPlaceholder"];
+		albumPlaceholder = [UIImage imageNamed: @"albumPlaceholder"];
 	});
-	return albumThumbnailPlaceholder;
+	return albumPlaceholder;
+}
+
++ (UIImage *)albumPlaceholderHalf
+{
+	static UIImage *albumPlaceholderHalf;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		albumPlaceholderHalf = [UIImage imageNamed: @"albumPlaceholderHalf"];
+	});
+	return albumPlaceholderHalf;
 }
 
 + (UIImage *)outlinedStar
