@@ -139,7 +139,12 @@ static NSInteger const kAddCells = 2;
 
 - (IBAction)iTunesButtonTapped:(UIBarButtonItem *)sender
 {
-	[[UIApplication sharedApplication] openURL:[self.album iTunesAttributedUrl]];
+	NSURL *url = [self.album iTunesAttributedUrl];
+	[PFAnalytics trackEventInBackground:@"urlOpen"
+							 dimensions:@{ @"provider" : @"iTunes",
+										   @"url" : [url absoluteString] }
+								  block:nil];
+	[[UIApplication sharedApplication] openURL:url];
 }
 
 #pragma mark - Private Methods
