@@ -7,6 +7,7 @@
 //
 
 #import "PASColorPickerCache.h"
+#import "UICKeyChainStore.h"
 
 @interface PASColorPickerCache()
 @property (nonatomic, strong) LEColorPicker *picker;
@@ -34,7 +35,13 @@ static PASColorPickerCache *_cache = nil;
 	if (!self) return nil;
 	
 	self.picker = [LEColorPicker new];
-	self.cache = [NSMutableDictionary new];
+	
+	NSData *cacheData = [UICKeyChainStore dataForKey:NSStringFromClass([self class])];
+	self.cache = (NSMutableDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:cacheData];
+	
+	if (!self.cache) {
+		self.cache = [NSMutableDictionary new];
+	}
 	
 	return self;
 }
@@ -49,21 +56,30 @@ static PASColorPickerCache *_cache = nil;
 	
 	LEColorScheme *colors = self.cache[key];
 	
-	if (colors) {
+	if (!colors) {
+		if (image) {
+			[self.picker pickColorsFromImage:image onComplete:^(LEColorScheme *colorScheme) {
+				self.cache[key] = colorScheme;
+				completion(colorScheme);
+			}];
+			return;
+			
+		} else {
+			// dummy
+			LEColorScheme *colors = [LEColorScheme new];
+			colors.backgroundColor = [UIColor clearColor];
+			colors.primaryTextColor = [UIColor darkTextColor];
+			colors.secondaryTextColor = [UIColor lightTextColor];
+		}
+	}
+	
+	if ([NSThread isMainThread]) {
 		completion(colors);
 		
-	} else if (image) {
-		[self.picker pickColorsFromImage:image onComplete:^(LEColorScheme *colorScheme) {
-			self.cache[key] = colorScheme;
-			completion(colorScheme);
-		}];
-		
 	} else {
-		LEColorScheme *dummy = [LEColorScheme new];
-		dummy.backgroundColor = [UIColor clearColor];
-		dummy.primaryTextColor = [UIColor darkTextColor];
-		dummy.secondaryTextColor = [UIColor lightTextColor];
-		completion(dummy);
+		dispatch_async(dispatch_get_main_queue(), ^{
+			completion(colors);
+		});
 	}
 }
 
@@ -71,28 +87,8 @@ static PASColorPickerCache *_cache = nil;
 
 - (void)writeToDisk
 {
-//	// save name corrections
-//	dispatch_barrier_async(self.correctionsQ, ^{
-//		NSFileManager *mng = [NSFileManager defaultManager];
-//		NSURL *cacheDir = [[mng URLsForDirectory:NSApplicationSupportDirectory
-//									   inDomains:NSUserDomainMask] firstObject];
-//		NSURL *cacheFile = [cacheDir URLByAppendingPathComponent:NSStringFromClass([self class])];
-//		
-//		// make sure the cacheDir exists
-//		if (![mng fileExistsAtPath:[cacheDir path]
-//					   isDirectory:nil]) {
-//			NSError *err = nil;
-//			BOOL success = [mng createDirectoryAtURL:cacheDir
-//						 withIntermediateDirectories:YES
-//										  attributes:nil
-//											   error:&err];
-//			if (!success) {
-//				DDLogError(@"Cannot create cache dir (%@)", [err localizedDescription]);
-//			}
-//		}
-//		
-//		[self.artistNameCorrections writeToURL:cacheFile atomically:NO];
-//	});
+	NSData *cacheData = [NSKeyedArchiver archivedDataWithRootObject:self.cache];
+	[UICKeyChainStore setData:cacheData forKey:NSStringFromClass([self class])];
 }
 
 @end

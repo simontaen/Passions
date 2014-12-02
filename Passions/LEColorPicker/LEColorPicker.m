@@ -14,8 +14,32 @@
 #import "UIColor+YUVSpace.h"
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
+#import "UIColor+Hex.h"
+
+NSString * const kBackgroundColor = @"BackgroundColor";
+NSString * const kPrimaryTextColor = @"PrimaryTextColor";
+NSString * const kSecondaryTextColor = @"SecondaryTextColor";
 
 @implementation LEColorScheme
+
+- (id)initWithCoder:(NSCoder *)decoder
+{
+	self = [super init];
+	if (self) {
+		_backgroundColor = [UIColor colorWithCSS:[decoder decodeObjectForKey:kBackgroundColor]];
+		_primaryTextColor = [UIColor colorWithCSS:[decoder decodeObjectForKey:kPrimaryTextColor]];
+		_secondaryTextColor = [UIColor colorWithCSS:[decoder decodeObjectForKey:kSecondaryTextColor]];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder
+{
+	[encoder encodeObject:[_backgroundColor cssString] forKey:kBackgroundColor];
+	[encoder encodeObject:[_primaryTextColor cssString] forKey:kPrimaryTextColor];
+	[encoder encodeObject:[_secondaryTextColor cssString] forKey:kSecondaryTextColor];
+}
+
 @end
 
 @implementation LEColorPicker
@@ -227,9 +251,9 @@ NSUInteger squareDistanceInRGBSpaceBetweenColor(LEColor colorA, LEColor colorB)
     
     [colorPicker pickColorsFromImage:image onComplete:^(LEColorScheme *colorScheme) {
         NSDictionary *colorsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                          colorScheme.backgroundColor,@"BackgroundColor",
-                                          colorScheme.primaryTextColor,@"PrimaryTextColor",
-                                          colorScheme.secondaryTextColor,@"SecondaryTextColor", nil];
+                                          colorScheme.backgroundColor,kBackgroundColor,
+                                          colorScheme.primaryTextColor,kPrimaryTextColor,
+                                          colorScheme.secondaryTextColor,kSecondaryTextColor, nil];
         if ([NSThread isMainThread]) {
             completeBlock(colorsDictionary);
         }

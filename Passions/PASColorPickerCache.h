@@ -13,7 +13,7 @@
 
 + (instancetype) sharedMngr;
 
-/// completion called NOT on the main thread
+/// completion always called on the main thread
 - (void)pickColorsFromImage:(UIImage*)image
 					withKey:(NSString *)key
 				 completion:(void (^)(LEColorScheme *colorScheme))completion;

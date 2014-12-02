@@ -19,7 +19,7 @@
 #	 define LELog(...) /* */
 #endif
 
-@interface LEColorScheme : NSObject
+@interface LEColorScheme : NSObject <NSCoding>
 @property(nonatomic,strong)UIColor *backgroundColor;
 @property(nonatomic,strong)UIColor *primaryTextColor;
 @property(nonatomic,strong)UIColor *secondaryTextColor;
