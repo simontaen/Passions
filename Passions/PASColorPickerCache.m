@@ -51,11 +51,19 @@ static PASColorPickerCache *_cache = nil;
 	
 	if (colors) {
 		completion(colors);
-	} else {
+		
+	} else if (image) {
 		[self.picker pickColorsFromImage:image onComplete:^(LEColorScheme *colorScheme) {
 			self.cache[key] = colorScheme;
 			completion(colorScheme);
 		}];
+		
+	} else {
+		LEColorScheme *dummy = [LEColorScheme new];
+		dummy.backgroundColor = [UIColor clearColor];
+		dummy.primaryTextColor = [UIColor darkTextColor];
+		dummy.secondaryTextColor = [UIColor lightTextColor];
+		completion(dummy);
 	}
 }
 
