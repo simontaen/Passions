@@ -213,13 +213,13 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 			sourceImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:requestURL]];
 		}
 		
-		if (!sourceImage) {
-			if ([entity isKindOfClass:[PASAlbum class]]) {
-				sourceImage = [ImageFormatNameAlbumThumbnailMedium isEqualToString:formatName] ? [PASResources albumPlaceholderHalf] : [PASResources albumPlaceholder];
-			} else {
-				sourceImage = [ImageFormatNameArtistThumbnailSmall isEqualToString:formatName] ? [PASResources artistPlaceholderSmall] : [PASResources artistPlaceholder];
-			}
-		}
+//		if (!sourceImage) {
+//			if ([entity isKindOfClass:[PASAlbum class]]) {
+//				sourceImage = [ImageFormatNameAlbumThumbnailMedium isEqualToString:formatName] ? [PASResources albumPlaceholderHalf] : [PASResources albumPlaceholder];
+//			} else {
+//				sourceImage = [ImageFormatNameArtistThumbnailSmall isEqualToString:formatName] ? [PASResources artistPlaceholderSmall] : [PASResources artistPlaceholder];
+//			}
+//		}
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			completionBlock(sourceImage);
