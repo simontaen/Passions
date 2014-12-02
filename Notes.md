@@ -46,22 +46,31 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 
 ## General Functionality
 * First launch, show loading and give feedback on progress of initially faving
+* add properly sized images
 
 ### Spotify Integration
 * Prevent incoming responses from spotify having impact after the first error
 * Spotify loading after session refresh
+* rework the display of the HUD, especially noticeable when you show spotify while renewing session or after logging in
 
 ## PageViewController Container
 
 ## Cells
 
 ## Adding
+* better cache preparation (see spotify example)
+* review displaying the alert controller
 
 ## Fav Artists
 
 ## Timeline
+* maybe the layouting slows everything down (since I'm dynamically adding constraints)
+* Hand shows when we are actually loading albums (should show loading hud)
 
 ## Artist and Album Info
+
+## App Icon
+* Maybe only one color, like omnifocus, but keep the spotlight
 
 # 1.1 (?)
 * Dynamic Row height for bigger devices (5 and up, 6 and up)
