@@ -22,6 +22,7 @@
 - (void)showAlbum:(PASAlbum *)album
 {
 	if (album != _entity) {
+		[self _handleEntityKindSwitchFrom:_entity to:album];
 		_entity = album;
 		
 		// clear the image to avoid seeing old images when scrolling
@@ -33,9 +34,6 @@
 		
 		self.releaseDateLabel.text = album.releaseDateFormatted;
 		
-		[self removeConstraint:self.artistCn];
-		[self addConstraint:self.albumCn];
-								  
 		//self.releaseDateBackground.hidden = NO;
 	}
 }
@@ -57,6 +55,7 @@
 - (void)showArtist:(PASArtist *)artist
 {
 	if (artist != _entity) {
+		[self _handleEntityKindSwitchFrom:_entity to:artist];
 		_entity = artist;
 		
 		// clear the image to avoid seeing old images when scrolling
@@ -67,9 +66,6 @@
 							withFormatName:ImageFormatNameArtistThumbnailLarge];
 		
 		self.releaseDateLabel.text = [artist availableAlbums];
-		
-		[self removeConstraint:self.albumCn];
-		[self addConstraint:self.artistCn];
 		
 		//self.releaseDateBackground.hidden = YES;
 	}
@@ -87,6 +83,24 @@
 												  constant:0];
 	}
 	return _artistCn;
+}
+
+- (void)_handleEntityKindSwitchFrom:(id<FICEntity>)oldEntity to:(id<FICEntity>)newEntity
+{
+	if ([oldEntity isKindOfClass:[newEntity class]]) {
+		// layouts stay the same
+		return;
+	} else {
+		if ([newEntity isKindOfClass:[PASAlbum class]]) {
+			[self removeConstraint:self.artistCn];
+			[self addConstraint:self.albumCn];
+			
+		} else {
+			[self removeConstraint:self.albumCn];
+			[self addConstraint:self.artistCn];
+			
+		}
+	}
 }
 
 #pragma mark - Private Methods
