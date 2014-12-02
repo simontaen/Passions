@@ -218,9 +218,8 @@ NSString *const ImageFormatNameAlbumThumbnailLarge = @"ImageFormatNameAlbumThumb
 	DDLogVerbose(@"---- Gesture Recognizer Stack ----");
 	UIViewController *vc = viewController;
 	while (vc) {
-		NSString *vcName = NSStringFromClass([vc class]);
 		for (UIGestureRecognizer *gr in vc.view.gestureRecognizers) {
-			DDLogVerbose(@"%@: %@", vcName, NSStringFromClass([gr class]));
+			DDLogVerbose(@"%@: %@", NSStringFromClass([vc class]), NSStringFromClass([gr class]));
 		}
 		vc = vc.parentViewController;
 	}
