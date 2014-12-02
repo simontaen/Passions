@@ -8,7 +8,6 @@
 
 #import "PASArtworkCVCell.h"
 #import "FICImageCache.h"
-#import "SORelativeDateTransformer.h"
 
 @interface PASArtworkCVCell()
 @property (nonatomic, strong) id<FICEntity> entity;
@@ -32,7 +31,7 @@
 		[self _loadThumbnailImageForEntity:album
 							withFormatName:ImageFormatNameAlbumThumbnailMedium];
 		
-		self.releaseDateLabel.text = [[SORelativeDateTransformer registeredTransformer] transformedValue:album.releaseDate];
+		self.releaseDateLabel.text = album.releaseDateFormatted;
 		
 		[self removeConstraint:self.artistCn];
 		[self addConstraint:self.albumCn];

@@ -37,5 +37,6 @@
 #pragma mark - Compound properties
 
 - (NSURL *)iTunesAttributedUrl;
+@property (nonatomic, strong, readonly) NSString* releaseDateFormatted;
 
 @end

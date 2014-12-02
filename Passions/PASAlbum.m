@@ -8,8 +8,12 @@
 
 #import "PASAlbum.h"
 #import <Parse/PFObject+Subclass.h>
+#import "SORelativeDateTransformer.h"
 
 @implementation PASAlbum
+{
+	NSString *_releaseDateFormatted;
+}
 
 @dynamic objectId;
 @dynamic name;
@@ -53,6 +57,14 @@
 - (NSURL *)iTunesAttributedUrl
 {
 	return [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@", self.iTunesUrl, kITunesAffiliation]];
+}
+
+- (NSString *)releaseDateFormatted
+{
+	if (!_releaseDateFormatted) {
+		_releaseDateFormatted = [[SORelativeDateTransformer registeredTransformer] transformedValue:self.releaseDate];
+	}
+	return _releaseDateFormatted;
 }
 
 @end
