@@ -42,6 +42,9 @@
 		F49137F319B7142300E4FC0D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F219B7142300E4FC0D /* Social.framework */; };
 		F49137F519B714A200E4FC0D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49137F419B714A200E4FC0D /* QuartzCore.framework */; };
 		F49618B319BC4CAC00B4F3FE /* PASTimelineCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F49618B219BC4CAC00B4F3FE /* PASTimelineCVC.m */; };
+		F49B64A91A2E51E2002B5667 /* LEColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F49B64A61A2E51E2002B5667 /* LEColorPicker.m */; };
+		F49B64AA1A2E51E2002B5667 /* UIColor+YUVSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = F49B64A81A2E51E2002B5667 /* UIColor+YUVSpace.m */; };
+		F49B64AC1A2E5385002B5667 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49B64AB1A2E5385002B5667 /* OpenGLES.framework */; };
 		F4A2AFB91A0DF66100D5EE72 /* PASAlbumInfoTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A2AFB81A0DF66100D5EE72 /* PASAlbumInfoTVC.m */; };
 		F4A779781793113E00C770B9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A779771793113E00C770B9 /* UIKit.framework */; };
 		F4A7797A1793113E00C770B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A779791793113E00C770B9 /* Foundation.framework */; };
@@ -125,6 +128,11 @@
 		F49137F419B714A200E4FC0D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F49618B119BC4CAC00B4F3FE /* PASTimelineCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASTimelineCVC.h; sourceTree = "<group>"; };
 		F49618B219BC4CAC00B4F3FE /* PASTimelineCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASTimelineCVC.m; sourceTree = "<group>"; };
+		F49B64A51A2E51E2002B5667 /* LEColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEColorPicker.h; sourceTree = "<group>"; };
+		F49B64A61A2E51E2002B5667 /* LEColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEColorPicker.m; sourceTree = "<group>"; };
+		F49B64A71A2E51E2002B5667 /* UIColor+YUVSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+YUVSpace.h"; sourceTree = "<group>"; };
+		F49B64A81A2E51E2002B5667 /* UIColor+YUVSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+YUVSpace.m"; sourceTree = "<group>"; };
+		F49B64AB1A2E5385002B5667 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		F4A2AFB71A0DF66100D5EE72 /* PASAlbumInfoTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAlbumInfoTVC.h; sourceTree = "<group>"; };
 		F4A2AFB81A0DF66100D5EE72 /* PASAlbumInfoTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAlbumInfoTVC.m; sourceTree = "<group>"; };
 		F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -179,6 +187,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F49B64AC1A2E5385002B5667 /* OpenGLES.framework in Frameworks */,
 				F49137F519B714A200E4FC0D /* QuartzCore.framework in Frameworks */,
 				F49137F319B7142300E4FC0D /* Social.framework in Frameworks */,
 				F49137F119B7137900E4FC0D /* Accounts.framework in Frameworks */,
@@ -278,6 +287,17 @@
 			name = "Add Artists";
 			sourceTree = "<group>";
 		};
+		F49B64A41A2E51E2002B5667 /* LEColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				F49B64A51A2E51E2002B5667 /* LEColorPicker.h */,
+				F49B64A61A2E51E2002B5667 /* LEColorPicker.m */,
+				F49B64A71A2E51E2002B5667 /* UIColor+YUVSpace.h */,
+				F49B64A81A2E51E2002B5667 /* UIColor+YUVSpace.m */,
+			);
+			path = LEColorPicker;
+			sourceTree = "<group>";
+		};
 		F4A7796B1793113E00C770B9 = {
 			isa = PBXGroup;
 			children = (
@@ -299,6 +319,7 @@
 		F4A779761793113E00C770B9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F49B64AB1A2E5385002B5667 /* OpenGLES.framework */,
 				F4D967B91A1FF28F00E5026F /* Crashlytics.framework */,
 				F4D967BA1A1FF28F00E5026F /* Fabric.framework */,
 				F49137F019B7137900E4FC0D /* Accounts.framework */,
@@ -328,6 +349,7 @@
 				F40A50FB1A0EB703002C703C /* Artwork Cells */,
 				F49618B419BC4CC000B4F3FE /* Favorite Artists */,
 				F40A50FC1A0EBA27002C703C /* Artist Cell */,
+				F49B64A41A2E51E2002B5667 /* LEColorPicker */,
 				F49618B519BC4CCB00B4F3FE /* Add Artists */,
 				F4F2336319FDD3B4004882B8 /* Add Artist Helpers */,
 				F4D9E94619C3612800B762A7 /* PageViewController */,
@@ -620,6 +642,7 @@
 				F4EFD4011A0697EF00AB9436 /* SPTArtist+FICEntity.m in Sources */,
 				F4A779881793113E00C770B9 /* PASAppDelegate.m in Sources */,
 				F45586551A0506C2000D5893 /* PASAddFromSpotifyTVC.m in Sources */,
+				F49B64A91A2E51E2002B5667 /* LEColorPicker.m in Sources */,
 				F4D284CD19E087D0008A3913 /* PASAlbum.m in Sources */,
 				F461C8E119EB006C0081B445 /* PASExtendedNavContainer.m in Sources */,
 				F476F0F119B8FFA700185544 /* PASAddFromSamplesTVC.m in Sources */,
@@ -628,6 +651,7 @@
 				F4DEE4F419FBA808007EBB6A /* MPMediaItem+Passions.m in Sources */,
 				F4A814B919E20CBD003879B0 /* NSString+SourceImage.m in Sources */,
 				F44E4BB619FE4FB900764532 /* UIColor+Utils.m in Sources */,
+				F49B64AA1A2E51E2002B5667 /* UIColor+YUVSpace.m in Sources */,
 				F43402101A09883400A3D83C /* PASMediaQueryAccessor.m in Sources */,
 				F4E0E13A1A1FDF0A00EFD812 /* PASAssertionHandler.m in Sources */,
 				F4694D6419B74ABB00D12576 /* PASFavArtistsTVC.m in Sources */,
