@@ -7,8 +7,27 @@
 //
 
 #import "PASAlbumInfoTVCell.h"
+#import "PASColorPickerCache.h"
 
 @implementation PASAlbumInfoTVCell
+
+#pragma mark - Static
+
+#pragma mark - "Accessors"
+
+- (void)showEntity:(id<FICEntity>)entity inTableView:(UITableView *)tableView
+{
+	[[PASColorPickerCache sharedMngr] pickColorsFromImage:nil
+												  withKey:[entity UUID]
+											   completion:^(LEColorScheme *colorScheme) {
+												   dispatch_async(dispatch_get_main_queue(), ^{
+													   tableView.backgroundColor = colorScheme.backgroundColor;
+													   self.backgroundColor = colorScheme.backgroundColor;
+													   self.mainText.textColor = colorScheme.primaryTextColor;
+													   self.detailText.textColor = colorScheme.primaryTextColor;
+												   });
+											   }];
+}
 
 #pragma mark - Static
 

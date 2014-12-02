@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *mainText;
 @property (weak, nonatomic) IBOutlet UILabel *detailText;
 
+- (void)showEntity:(id<FICEntity>)entity inTableView:(UITableView *)tableView;
+
 + (NSString *)reuseIdentifier;
 
 @end

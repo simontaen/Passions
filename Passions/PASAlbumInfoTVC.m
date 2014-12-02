@@ -113,6 +113,7 @@ static NSInteger const kAddCells = 2;
 		
 		cell.mainText.text = self.album.name;
 		cell.detailText.text = [NSString stringWithFormat:@"by %@, %@", self.album.artistName, [self _stringifiedTracks]];
+		[cell showEntity:self.album inTableView:self.tableView];
 		
 		return cell;
 		
