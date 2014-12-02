@@ -104,9 +104,15 @@
 {
 	if ([PFUser currentUser].objectId) {
 		PFQuery *query = [PASAlbum albumsOfCurrentUsersFavoriteArtists];
+		
 		if (self.objects.count == 0) {
-			query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+			// first time, prefer the cache
+			query.cachePolicy = kPFCachePolicyCacheElseNetwork;
+		} else {
+			// we have objects, this is a refresh call
+			query.cachePolicy = kPFCachePolicyNetworkOnly;
 		}
+		
 		return query;
 	}
 	DDLogDebug(@"CurrentUser not ready for Timeline");
@@ -205,8 +211,10 @@
 
 - (void)_refreshUI
 {
-	self.isRefreshing = YES;
-	[self loadObjects];
+	if (!self.isLoading) {
+		self.isRefreshing = YES;
+		[self loadObjects];
+	}
 }
 
 @end

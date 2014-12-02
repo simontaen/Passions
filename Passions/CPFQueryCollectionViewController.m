@@ -109,9 +109,9 @@
 		
 		[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 			self.isLoading = NO;
-			if (error)
+			if (error) {
 				self.objects = [NSArray new];
-			else {
+			} else {
 				if (_paginationEnabled && !_isRefreshing) {
 					//add a new page of objects
 					NSMutableArray *mutableObjects = [NSMutableArray arrayWithArray:self.objects];

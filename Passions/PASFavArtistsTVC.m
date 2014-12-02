@@ -148,11 +148,14 @@
 	if ([PFUser currentUser].objectId) {
 		PFQuery *query = [PASArtist favArtistsForCurrentUser];
 		
-		// If no objects are loaded in memory, we look to the cache first to fill the table
-		// and then subsequently do a query against the network.
 		if (self.objects.count == 0) {
-			query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+			// first time, prefer the cache
+			query.cachePolicy = kPFCachePolicyCacheElseNetwork;
+		} else {
+			// we have objects, this is a refresh call
+			query.cachePolicy = kPFCachePolicyNetworkOnly;
 		}
+		
 		return query;
 	}
 	DDLogDebug(@"CurrentUser not ready for FavArtists");
