@@ -56,7 +56,7 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 ## Cells
 
 ## Adding
-* better cache preparation (see spotify example)
+* better cache preparation (see spotify example), AND memory cleanup when under pressure
 * review displaying the alert controller
 
 ## Fav Artists
