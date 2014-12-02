@@ -347,6 +347,7 @@
 				[weakSelf _cacheArtistsFromArray:track.artists completion:^(NSError *innerError) {
 					// this only gets called when all (overall!) artists have been processed
 					if (!weakSelf.isFetching) return; // fetching got cancelled
+					
 					if (!innerError) {
 						weakSelf.isFetching = NO;
 						if (completion) {
