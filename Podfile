@@ -22,6 +22,8 @@ pod 'MBProgressHUD' # show a loading HUD
 pod 'CocoaLumberjack' # extensive Logging
 # https://github.com/TechSmith/CrashlyticsLumberjack
 pod 'CrashlyticsLumberjack' # Enhancing Crashlytics Crashreports https://dev.twitter.com/crashlytics/ios/enhancing-crash-reports
+# https://github.com/Inferis/UIColor-Hex
+pod 'UIColor+Hex' # Support NSCopying on UIColor
 
 # Development Pods
 pod 'LastFmFetchr', :path => '/Users/simon/Documents/code/iOS/LastFmFetchr'
@@ -34,3 +36,5 @@ pod 'SpotifySDK', :path => '/Users/simon/Documents/code/iOS/Github/ios-sdk'
 #CPFQueryCollectionViewController # Fill a CollectionView with a PFQuery
 # https://github.com/veritech/FRParseLogger
 #FRParseLogger # Logging to Parse
+# https://github.com/luisespinoza/LEColorPicker
+#LEColorPicker # iTunes 11 like colors
