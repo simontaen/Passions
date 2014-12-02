@@ -45,6 +45,7 @@
 		F49B64A91A2E51E2002B5667 /* LEColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F49B64A61A2E51E2002B5667 /* LEColorPicker.m */; };
 		F49B64AA1A2E51E2002B5667 /* UIColor+YUVSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = F49B64A81A2E51E2002B5667 /* UIColor+YUVSpace.m */; };
 		F49B64AC1A2E5385002B5667 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49B64AB1A2E5385002B5667 /* OpenGLES.framework */; };
+		F49B64AF1A2E5BDE002B5667 /* PASColorPickerCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F49B64AE1A2E5BDE002B5667 /* PASColorPickerCache.m */; };
 		F4A2AFB91A0DF66100D5EE72 /* PASAlbumInfoTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A2AFB81A0DF66100D5EE72 /* PASAlbumInfoTVC.m */; };
 		F4A779781793113E00C770B9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A779771793113E00C770B9 /* UIKit.framework */; };
 		F4A7797A1793113E00C770B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A779791793113E00C770B9 /* Foundation.framework */; };
@@ -133,6 +134,8 @@
 		F49B64A71A2E51E2002B5667 /* UIColor+YUVSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+YUVSpace.h"; sourceTree = "<group>"; };
 		F49B64A81A2E51E2002B5667 /* UIColor+YUVSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+YUVSpace.m"; sourceTree = "<group>"; };
 		F49B64AB1A2E5385002B5667 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		F49B64AD1A2E5BDE002B5667 /* PASColorPickerCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PASColorPickerCache.h; path = Passions/PASColorPickerCache.h; sourceTree = SOURCE_ROOT; };
+		F49B64AE1A2E5BDE002B5667 /* PASColorPickerCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PASColorPickerCache.m; path = Passions/PASColorPickerCache.m; sourceTree = SOURCE_ROOT; };
 		F4A2AFB71A0DF66100D5EE72 /* PASAlbumInfoTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAlbumInfoTVC.h; sourceTree = "<group>"; };
 		F4A2AFB81A0DF66100D5EE72 /* PASAlbumInfoTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAlbumInfoTVC.m; sourceTree = "<group>"; };
 		F4A60FD717A05EBC008D8F6C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -290,6 +293,8 @@
 		F49B64A41A2E51E2002B5667 /* LEColorPicker */ = {
 			isa = PBXGroup;
 			children = (
+				F49B64AD1A2E5BDE002B5667 /* PASColorPickerCache.h */,
+				F49B64AE1A2E5BDE002B5667 /* PASColorPickerCache.m */,
 				F49B64A51A2E51E2002B5667 /* LEColorPicker.h */,
 				F49B64A61A2E51E2002B5667 /* LEColorPicker.m */,
 				F49B64A71A2E51E2002B5667 /* UIColor+YUVSpace.h */,
@@ -619,6 +624,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4A2AFB91A0DF66100D5EE72 /* PASAlbumInfoTVC.m in Sources */,
+				F49B64AF1A2E5BDE002B5667 /* PASColorPickerCache.m in Sources */,
 				F4768C7A19FD3F11003682BD /* STKTableViewCell.m in Sources */,
 				F42422A519CD8FCA0097C0F1 /* PASInteractiveTransition.m in Sources */,
 				F4589D3D19C240D500E17D49 /* PASPageViewController.m in Sources */,
