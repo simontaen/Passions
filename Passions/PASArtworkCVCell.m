@@ -8,6 +8,7 @@
 
 #import "PASArtworkCVCell.h"
 #import "FICImageCache.h"
+#import "PASColorPickerCache.h"
 
 @interface PASArtworkCVCell()
 @property (nonatomic, strong) id<FICEntity> entity;
@@ -28,13 +29,11 @@
 		// clear the image to avoid seeing old images when scrolling
 		// Albums are shown HALF width in Timeline
 		self.artworkImage.image = [PASResources albumPlaceholderHalf];
-
+		
 		[self _loadThumbnailImageForEntity:album
 							withFormatName:ImageFormatNameAlbumThumbnailMedium];
 		
 		self.releaseDateLabel.text = album.releaseDateFormatted;
-		
-		//self.releaseDateBackground.hidden = NO;
 	}
 }
 
@@ -44,7 +43,7 @@
 		_albumCn = [NSLayoutConstraint constraintWithItem:self.artworkImage
 												attribute:NSLayoutAttributeBottom
 												relatedBy:NSLayoutRelationEqual
-												   toItem:self.releaseDateBackground
+												   toItem:self.releaseDateLabel
 												attribute:NSLayoutAttributeBottom
 											   multiplier:1
 												 constant:0];
@@ -66,8 +65,6 @@
 							withFormatName:ImageFormatNameArtistThumbnailLarge];
 		
 		self.releaseDateLabel.text = [artist availableAlbums];
-		
-		//self.releaseDateBackground.hidden = YES;
 	}
 }
 
@@ -77,7 +74,7 @@
 		_artistCn = [NSLayoutConstraint constraintWithItem:self.artworkImage
 												 attribute:NSLayoutAttributeBottom
 												 relatedBy:NSLayoutRelationEqual
-													toItem:self.releaseDateBackground
+													toItem:self.releaseDateLabel
 												 attribute:NSLayoutAttributeTop
 												multiplier:1
 												  constant:0];
@@ -109,6 +106,7 @@
 {
 	// Cache the cache
 	FICImageCache *cache = [FICImageCache sharedImageCache];
+	self.releaseDateLabel.hidden = YES;
 	
 	[cache asynchronouslyRetrieveImageForEntity:entity
 								 withFormatName:formatName
@@ -116,6 +114,18 @@
 									// check if this image view hasn't been reused for a different entity
 									if (image && entity == self.entity) {
 										self.artworkImage.image = image;
+										
+										[[PASColorPickerCache sharedMngr] pickColorsFromImage:image
+																					  withKey:[entity UUID]
+																				   completion:^(LEColorScheme *colorScheme) {
+																					   if (entity == self.entity && self.artworkImage.image == image) {
+																						   dispatch_async(dispatch_get_main_queue(), ^{
+																							   self.releaseDateLabel.backgroundColor = colorScheme.backgroundColor;
+																							   self.releaseDateLabel.textColor = colorScheme.primaryTextColor;
+																							   self.releaseDateLabel.hidden = NO;
+																						   });
+																					   }
+																				   }];
 									}
 								}];
 //	if (!cacheAvailable) {
