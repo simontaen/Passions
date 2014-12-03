@@ -77,8 +77,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (NSArray *)sampleArtists
 {
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
+	if (!_sampleArtists) {
 		_sampleArtists = @[
 						   @"Beatles", @"Air", @"Pink Floid", @"Rammstein", @"Bloodhound Gang",
 						   @"Ancien Régime", @"Genius/GZA ", @"Belle & Sebastian", @"Björk", @"Quiet Riot",
@@ -89,7 +88,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 						   @"David Bowie", @"Dukes of Stratosphear", @"[dunkelbunt]", @"Cause Assertion Error!",
 						   @"Eminem", @"Enigma", @"Deadmouse", @"ACDC", @"Crash the App!"
 						   ];
-	});
+	}
 	return _sampleArtists;
 }
 
@@ -311,13 +310,15 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (void)clearCaches
 {
-	self.cachedArtistsOrderedByName = nil;
-	self.cachedAlphabeticalSectionIndex = nil;
-	self.cachedAlphabeticalSections = nil;
+	_cachedArtistsOrderedByName = nil;
+	_cachedAlphabeticalSectionIndex = nil;
+	_cachedAlphabeticalSections = nil;
 	
-	self.cachedArtistsOrderedByPlaycount = nil;
-	self.cachedPlaycountSectionIndex = nil;
-	self.cachedPlaycountSections = nil;
+	_cachedArtistsOrderedByPlaycount = nil;
+	_cachedPlaycountSectionIndex = nil;
+	_cachedPlaycountSections = nil;
+	
+	_sampleArtists = nil;
 }
 
 #pragma mark - UITableViewDataSource required
