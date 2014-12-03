@@ -273,12 +273,6 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	}
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-	[[PASManageArtists sharedMngr] writeToDisk];
-}
-
 - (void)didReceiveMemoryWarning
 {
 	[super didReceiveMemoryWarning];

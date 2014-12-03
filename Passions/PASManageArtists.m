@@ -307,7 +307,7 @@
 - (void)writeToDisk
 {
 	// save name corrections
-	dispatch_barrier_async(self.correctionsQ, ^{
+	dispatch_barrier_sync(self.correctionsQ, ^{
 		NSFileManager *mng = [NSFileManager defaultManager];
 		NSURL *cacheDir = [[mng URLsForDirectory:NSApplicationSupportDirectory
 									   inDomains:NSUserDomainMask] firstObject];

@@ -78,6 +78,7 @@
 {
 	[super viewDidDisappear:animated];
 	[self _moveHairline:NO];
+	[[PASManageArtists sharedMngr] writeToDisk];
 }
 
 - (void)_moveHairline:(BOOL)appearing
