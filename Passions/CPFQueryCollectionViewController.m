@@ -80,6 +80,14 @@
     [self _performQuery];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	if (self.objects.count == 0) {
+		[self loadObjects];
+	}
+}
+
 - (void)didReceiveMemoryWarning
 {
 	[super didReceiveMemoryWarning];
