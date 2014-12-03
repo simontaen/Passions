@@ -482,6 +482,8 @@
 	
 	// This is the callback that'll be triggered when auth is completed (or fails).
 	SPTAuthCallback authCallback = ^(NSError *error, SPTSession *session) {
+		[self hideProgressHud];
+
 		if (error != nil) {
 			[self _handleError:error];
 			
@@ -515,6 +517,7 @@
 										usingBlock:^(NSNotification *note) {
 											id obj = note.userInfo[kPASSpotifyClientId];
 											NSAssert([obj isKindOfClass:[NSURL class]], @"kPASSpotifyClientId must carry a NSURL");
+											[self showProgressHudWithMessage:@"Logging in"];
 											// The user finished the authentication in Safari, handle it
 											[[SPTAuth defaultInstance] handleAuthCallbackWithTriggeredAuthURL:(NSURL *)obj
 																				tokenSwapServiceEndpointAtURL:[PASResources spotifyTokenSwap]
