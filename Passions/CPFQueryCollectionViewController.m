@@ -88,7 +88,7 @@
 	if (query) {
 		[self objectsWillLoad];
 		
-		if (_paginationEnabled) {
+		if (self.paginationEnabled) {
 			// we need to know how many objects there are to prevent
 			// constant refreshing when scrolling past the end of the view
 			// without getting new objects
@@ -96,13 +96,13 @@
 			if (countingQuery) {
 				// using a new query just in case
 				[countingQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
-					_expectedObjects = number;
+					self.expectedObjects = number;
 				}];
 			}
 			
-			[query setLimit:_objectsPerPage];
+			[query setLimit:self.objectsPerPage];
 			//fetching the next page of objects
-			if (!_isRefreshing) {
+			if (!self.isRefreshing) {
 				[query setSkip:self.objects.count];
 			}
 		}
@@ -112,7 +112,7 @@
 			if (error) {
 				self.objects = [NSArray new];
 			} else {
-				if (_paginationEnabled && !_isRefreshing) {
+				if (self.paginationEnabled && !self.isRefreshing) {
 					//add a new page of objects
 					NSMutableArray *mutableObjects = [NSMutableArray arrayWithArray:self.objects];
 					[mutableObjects addObjectsFromArray:objects];
@@ -130,7 +130,7 @@
 
 - (void)loadObjects
 {
-	[self performQuery];
+	if (!self.isLoading) [self performQuery];
 }
 
 - (void)objectsWillLoad
@@ -207,7 +207,7 @@
     //if the scrollView has reached the bottom fetch the next page of objects
     float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
     if (bottomEdge >= scrollView.contentSize.height && [self hasMoreObjects]) {
-        _isRefreshing = NO;
+        self.isRefreshing = NO;
         [self performQuery];
     }
 }
@@ -216,7 +216,7 @@
 
 - (BOOL)hasMoreObjects
 {
-	return _paginationEnabled && self.objects.count < _expectedObjects;
+	return self.paginationEnabled && self.objects.count < self.expectedObjects;
 }
 
 @end
