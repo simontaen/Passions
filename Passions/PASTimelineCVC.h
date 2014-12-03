@@ -17,4 +17,6 @@
 
 - (void)commonInit;
 
+- (void)helpViewWillAppear;
+
 @end

@@ -86,7 +86,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	
+	[self helpViewWillAppear];
+}
+
+- (void)helpViewWillAppear
+{
 	// Configure navigationController
 	// Needs to be in viewWillAppear to make it work with other VC's
 	self.navigationController.navigationBarHidden = YES;

@@ -43,11 +43,8 @@ static NSInteger const kAddCells = 1;
 	self.navigationItem.rightBarButtonItem = rbbi;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)helpViewWillAppear
 {
-	// Do NOT call super, unsets the properties below
-	//[super viewWillAppear:animated];
-	
 	// Configure navigationController
 	// Needs to be in viewWillAppear to make it work with other VC's
 	self.navigationController.navigationBarHidden = NO;
