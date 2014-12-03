@@ -15,12 +15,12 @@
 /**
  * Is the query currently loading (being fetched)?
  */
-@property (nonatomic) BOOL isLoading;
+@property (nonatomic, readonly) BOOL isLoading;
 
 /**
  * Is the query refreshing the collection or fetching more items?
  */
-@property (nonatomic) BOOL isRefreshing;
+@property (nonatomic, readonly) BOOL isRefreshing;
 
 /**
  * Should the collection view show an activity indicator while a query is in progress?

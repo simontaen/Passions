@@ -22,6 +22,8 @@
 
 @interface CPFQueryCollectionViewController()
 @property (nonatomic, assign) NSUInteger expectedObjects;
+@property (nonatomic, readwrite) BOOL isLoading;
+@property (nonatomic, readwrite) BOOL isRefreshing;
 @end
 
 @implementation CPFQueryCollectionViewController
@@ -75,13 +77,13 @@
     [super viewDidLoad];
     
     // Perform the first query
-    [self performQuery];
+    [self _performQuery];
 }
 
 #pragma mark - Parse.com logic
 
 // Private method, called when a query should be performed
-- (void)performQuery
+- (void)_performQuery
 {
     PFQuery *query = self.queryForCollection;
 	
@@ -102,27 +104,27 @@
 			
 			[query setLimit:self.objectsPerPage];
 			//fetching the next page of objects
-			if (!self.isRefreshing) {
+			if (self.isRefreshing) {
 				[query setSkip:self.objects.count];
 			}
 		}
 		
 		[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-			self.isLoading = NO;
 			if (error) {
 				self.objects = [NSArray new];
 			} else {
-				if (self.paginationEnabled && !self.isRefreshing) {
+				if (self.paginationEnabled && self.isRefreshing) {
 					//add a new page of objects
 					NSMutableArray *mutableObjects = [NSMutableArray arrayWithArray:self.objects];
 					[mutableObjects addObjectsFromArray:objects];
 					self.objects = [NSArray arrayWithArray:mutableObjects];
-				}
-				else {
+				} else {
 					self.objects = objects;
 				}
 			}
 			
+			self.isLoading = NO;
+			self.isRefreshing = NO;
 			[self objectsDidLoad:error];
 		}];
 	}
@@ -130,7 +132,7 @@
 
 - (void)loadObjects
 {
-	if (!self.isLoading) [self performQuery];
+	if (!self.isLoading) [self _performQuery];
 }
 
 - (void)objectsWillLoad
@@ -207,8 +209,8 @@
     //if the scrollView has reached the bottom fetch the next page of objects
     float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
     if (bottomEdge >= scrollView.contentSize.height && [self hasMoreObjects]) {
-        self.isRefreshing = NO;
-        [self performQuery];
+        self.isRefreshing = YES;
+        [self loadObjects];
     }
 }
 
