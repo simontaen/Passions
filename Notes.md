@@ -49,7 +49,7 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 * add properly sized images
 
 ### Spotify Integration
-* rework the display of the HUD, especially noticeable when you show spotify while renewing session or after logging in
+* rework the display of the HUD, especially noticeable when you show spotify after logging in
 
 ## PageViewController Container
 

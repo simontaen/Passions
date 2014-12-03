@@ -14,6 +14,8 @@
 #import "PASManageArtists.h"
 #import "UIColor+Utils.h"
 #import "PASPageViewController.h"
+#import "PASExtendedNavContainer.h"
+#import "MBProgressHUD.h"
 
 @interface PASAddFromSamplesTVC ()
 
@@ -262,6 +264,15 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	self.selectedSortOrder = PASAddArtistsSortOrderAlphabetical;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	if (self.hudMsg) {
+		[self _showHudMessage:self.hudMsg];
+		self.hudMsg = nil;
+	}
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
@@ -495,6 +506,37 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 		// cache and present on viewDidAppear
 		self.alertController = alert;
 	}
+}
+
+#pragma mark - MBProgressHUD
+
+- (void)showProgressHudWithMessage:(NSString *)msg
+{
+	if (self.isViewLoaded) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self _showHudMessage:msg];
+			self.extendedNavController.segmentedControl.enabled = NO;
+			self.pageViewController.navigationItem.leftBarButtonItem.enabled = NO;
+		});
+	} else {
+		self.hudMsg = msg;
+	}
+}
+
+// only call on the main thred and when viewIsLoaded
+- (void)_showHudMessage:(NSString *)msg
+{
+	MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.extendedNavController.view animated:YES];
+	hud.labelText = msg;
+}
+
+- (void)hideProgressHud
+{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[MBProgressHUD hideHUDForView:self.extendedNavController.view animated:YES];
+		self.extendedNavController.segmentedControl.enabled = YES;
+		self.pageViewController.navigationItem.leftBarButtonItem.enabled = YES;
+	});
 }
 
 #pragma mark - Private Methods

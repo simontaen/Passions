@@ -11,8 +11,6 @@
 #import <Spotify/Spotify.h>
 #import "UICKeyChainStore.h"
 #import "PASPageViewController.h"
-#import "PASExtendedNavContainer.h"
-#import "MBProgressHUD.h"
 
 @interface PASAddFromSpotifyTVC ()
 @property (nonatomic, strong) SPTSession *session;
@@ -82,7 +80,7 @@
 {
 	if (_isFetching != isFetching) {
 		_isFetching = isFetching;
-		isFetching ? [self _showProgressHudWithMessage:@"Loading Spotify Artists"] : [self _hideProgressHud];
+		isFetching ? [self showProgressHudWithMessage:@"Loading Spotify Artists"] : [self hideProgressHud];
 	}
 }
 
@@ -90,7 +88,7 @@
 {
 	if (_sessionIsRenewing != sessionIsRenewing) {
 		_sessionIsRenewing = sessionIsRenewing;
-		sessionIsRenewing ? [self _showProgressHudWithMessage:@"Refreshing Session"] : [self _hideProgressHud];
+		sessionIsRenewing ? [self showProgressHudWithMessage:@"Refreshing Session"] : [self hideProgressHud];
 	}
 }
 
@@ -370,29 +368,6 @@
 	};
 	
 	[SPTRequest savedTracksForUserInSession:self.session callback:self.savedTracksForUserCallback];
-}
-
-#pragma mark - MBProgressHUD
-
-- (void)_showProgressHudWithMessage:(NSString *)msg
-{
-	if (self.isViewLoaded) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.extendedNavController.view animated:YES];
-			hud.labelText = msg;
-			self.extendedNavController.segmentedControl.enabled = NO;
-			self.pageViewController.navigationItem.leftBarButtonItem.enabled = NO;
-		});
-	}
-}
-
-- (void)_hideProgressHud
-{
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[MBProgressHUD hideHUDForView:self.extendedNavController.view animated:YES];
-		self.extendedNavController.segmentedControl.enabled = YES;
-		self.pageViewController.navigationItem.leftBarButtonItem.enabled = YES;
-	});
 }
 
 #pragma mark - Private Methods
