@@ -61,7 +61,6 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 ## Fav Artists
 
 ## Timeline
-* Hand shows when we are actually loading albums (should show loading hud)
 
 ## Artist and Album Info
 
