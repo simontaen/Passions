@@ -17,15 +17,22 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mlE-8q-Xvz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="319"/>
                     </imageView>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="jUJ-Fj-Ctf">
+                        <rect key="frame" x="150" y="150" width="20" height="20"/>
+                        <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </activityIndicatorView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="centerY" secondItem="jUJ-Fj-Ctf" secondAttribute="centerY" constant="-0.5" id="8P8-oV-dov"/>
                     <constraint firstAttribute="trailingMargin" secondItem="mlE-8q-Xvz" secondAttribute="trailing" constant="-8" id="NPS-Ha-Pce"/>
                     <constraint firstItem="mlE-8q-Xvz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="azN-ya-sht"/>
                     <constraint firstItem="mlE-8q-Xvz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="fZD-fR-6mQ"/>
                     <constraint firstAttribute="bottomMargin" secondItem="mlE-8q-Xvz" secondAttribute="bottom" constant="-8" id="lU7-my-LdV"/>
+                    <constraint firstAttribute="centerX" secondItem="jUJ-Fj-Ctf" secondAttribute="centerX" id="v18-bw-ULa"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="activityIndicator" destination="jUJ-Fj-Ctf" id="NTx-aP-ei6"/>
                 <outlet property="artworkImage" destination="mlE-8q-Xvz" id="gqC-2O-wBU"/>
             </connections>
             <point key="canvasLocation" x="-56" y="240"/>

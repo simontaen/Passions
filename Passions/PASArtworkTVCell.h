@@ -12,6 +12,7 @@
 @interface PASArtworkTVCell : UITableViewCell
 
 @property (nonatomic, strong) IBOutlet UIImageView *artworkImage;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 - (void)showAlbum:(PASAlbum *)album;
 

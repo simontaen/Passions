@@ -26,19 +26,26 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="ObV-qt-fna">
+                        <rect key="frame" x="70" y="70" width="20" height="20"/>
+                        <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </activityIndicatorView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="oCd-hX-iec" secondAttribute="bottom" id="8GB-w2-0bT"/>
                 <constraint firstItem="cwN-Ec-x7X" firstAttribute="leading" secondItem="SJp-YA-0oW" secondAttribute="leading" id="ARf-Wl-oUE"/>
+                <constraint firstAttribute="centerY" secondItem="ObV-qt-fna" secondAttribute="centerY" id="CiX-hC-rGC"/>
                 <constraint firstItem="oCd-hX-iec" firstAttribute="leading" secondItem="SJp-YA-0oW" secondAttribute="leading" id="Hzt-4I-jO5"/>
                 <constraint firstAttribute="trailing" secondItem="oCd-hX-iec" secondAttribute="trailing" id="NPe-ES-HUG"/>
+                <constraint firstAttribute="centerX" secondItem="ObV-qt-fna" secondAttribute="centerX" id="cCW-QR-UUS"/>
                 <constraint firstItem="cwN-Ec-x7X" firstAttribute="top" secondItem="SJp-YA-0oW" secondAttribute="top" id="l6L-SH-wqU"/>
                 <constraint firstAttribute="trailing" secondItem="cwN-Ec-x7X" secondAttribute="trailing" id="mp3-A3-bD4"/>
                 <constraint firstAttribute="bottom" secondItem="cwN-Ec-x7X" secondAttribute="bottom" placeholder="YES" id="tX8-gK-FjS"/>
             </constraints>
             <connections>
+                <outlet property="activityIndicator" destination="ObV-qt-fna" id="qCZ-X1-YXb"/>
                 <outlet property="artworkImage" destination="cwN-Ec-x7X" id="6Ud-2e-ehU"/>
                 <outlet property="releaseDateLabel" destination="oCd-hX-iec" id="Czw-ZH-7iz"/>
             </connections>
