@@ -279,6 +279,12 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	[[PASManageArtists sharedMngr] writeToDisk];
 }
 
+- (void)didReceiveMemoryWarning
+{
+	[super didReceiveMemoryWarning];
+	[self clearCaches];
+}
+
 #pragma mark - Caching
 
 - (void)prepareCaches
