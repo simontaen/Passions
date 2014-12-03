@@ -73,6 +73,27 @@
 
 #pragma mark - Accessors
 
+- (NSString *)title
+{
+	return @"Spotify";
+}
+
+- (void)setIsFetching:(BOOL)isFetching
+{
+	if (_isFetching != isFetching) {
+		_isFetching = isFetching;
+		isFetching ? [self _showProgressHudWithMessage:@"Loading Spotify Artists"] : [self _hideProgressHud];
+	}
+}
+
+- (void)setSessionIsRenewing:(BOOL)sessionIsRenewing
+{
+	if (_sessionIsRenewing != sessionIsRenewing) {
+		_sessionIsRenewing = sessionIsRenewing;
+		sessionIsRenewing ? [self _showProgressHudWithMessage:@"Refreshing Session"] : [self _hideProgressHud];
+	}
+}
+
 - (UIBarButtonItem *)spotifyButton
 {
 	if (!_spotifyButton) {
@@ -121,6 +142,8 @@
 	self.pageViewController.navigationItem.leftBarButtonItem = nil;
 }
 
+#pragma mark - Caching
+
 - (void)prepareCaches
 {
 	// Caches are updated when new data is received
@@ -148,29 +171,6 @@
 		self.artistsTracks = nil;
 		self.fetchedAllPartialArtists = NO;
 		self.artistsInPromotion = -1;
-	}
-}
-
-#pragma mark - Accessors
-
-- (NSString *)title
-{
-	return @"Spotify";
-}
-
-- (void)setIsFetching:(BOOL)isFetching
-{
-	if (_isFetching != isFetching) {
-		_isFetching = isFetching;
-		isFetching ? [self _showProgressHudWithMessage:@"Loading Spotify Artists"] : [self _hideProgressHud];
-	}
-}
-
-- (void)setSessionIsRenewing:(BOOL)sessionIsRenewing
-{
-	if (_sessionIsRenewing != sessionIsRenewing) {
-		_sessionIsRenewing = sessionIsRenewing;
-		sessionIsRenewing ? [self _showProgressHudWithMessage:@"Refreshing Session"] : [self _hideProgressHud];
 	}
 }
 

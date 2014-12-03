@@ -263,6 +263,25 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	self.selectedSortOrder = PASAddArtistsSortOrderAlphabetical;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	
+	if (self.alertController) {
+		[self presentViewController:self.alertController animated:YES completion:^{
+			self.alertController = nil;
+		}];
+	}
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+	[[PASManageArtists sharedMngr] writeToDisk];
+}
+
+#pragma mark - Caching
+
 - (void)prepareCaches
 {
 	// Accessing both section indizes will setup everything
@@ -299,23 +318,6 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	self.cachedArtistsOrderedByPlaycount = nil;
 	self.cachedPlaycountSectionIndex = nil;
 	self.cachedPlaycountSections = nil;
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-	[super viewDidAppear:animated];
-	
-	if (self.alertController) {
-		[self presentViewController:self.alertController animated:YES completion:^{
-			self.alertController = nil;
-		}];
-	}
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-	[[PASManageArtists sharedMngr] writeToDisk];
 }
 
 #pragma mark - UITableViewDataSource required
