@@ -58,19 +58,27 @@
 	self.favoritesQ = dispatch_queue_create("favoritesQ", DISPATCH_QUEUE_CONCURRENT);
 	self.progressQ = dispatch_queue_create("progressQ", DISPATCH_QUEUE_CONCURRENT);
 	self.artistsInProgress = [NSMutableArray array];
-	
-	// load name corrections
 	self.correctionsQ = dispatch_queue_create("correctionsQ", DISPATCH_QUEUE_CONCURRENT);
-	NSURL *cacheFile = [[[[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory
-																inDomains:NSUserDomainMask] firstObject]
-						URLByAppendingPathComponent:NSStringFromClass([self class])];
-	self.artistNameCorrections = [NSMutableDictionary dictionaryWithContentsOfURL:cacheFile];
 	
-	if (!self.artistNameCorrections) {
-		self.artistNameCorrections = [NSMutableDictionary dictionary];
-	}
 
 	return self;
+}
+
+#pragma mark - Accessors
+
+- (NSMutableDictionary *)artistNameCorrections
+{
+	if (!_artistNameCorrections) {
+		NSURL *cacheFile = [[[[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory
+																	inDomains:NSUserDomainMask] firstObject]
+							URLByAppendingPathComponent:NSStringFromClass([self class])];
+		_artistNameCorrections = [NSMutableDictionary dictionaryWithContentsOfURL:cacheFile];
+		
+		if (!_artistNameCorrections) {
+			_artistNameCorrections = [NSMutableDictionary dictionary];
+		}
+	}
+	return _artistNameCorrections;
 }
 
 #pragma mark - Communication

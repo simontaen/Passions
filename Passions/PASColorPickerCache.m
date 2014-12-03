@@ -16,8 +16,6 @@
 
 @implementation PASColorPickerCache
 
-static PASColorPickerCache *_cache = nil;
-
 #pragma mark - Init
 
 + (instancetype) sharedMngr
@@ -33,17 +31,31 @@ static PASColorPickerCache *_cache = nil;
 - (instancetype) init {
 	self = [super init];
 	if (!self) return nil;
-	
-	self.picker = [LEColorPicker new];
-	
-	NSData *cacheData = [UICKeyChainStore dataForKey:NSStringFromClass([self class])];
-	self.cache = (NSMutableDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:cacheData];
-	
-	if (!self.cache) {
-		self.cache = [NSMutableDictionary new];
-	}
-	
 	return self;
+}
+
+#pragma mark - Accessors
+
+- (LEColorPicker *)picker
+{
+	if (!_picker) {
+		_picker = [LEColorPicker new];
+	}
+	return _picker;
+}
+
+-(NSMutableDictionary *)cache
+{
+	if (!_cache) {
+		NSData *cacheData = [UICKeyChainStore dataForKey:NSStringFromClass([self class])];
+		
+		if (cacheData) {
+			_cache = (NSMutableDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:cacheData];
+		} else {
+			_cache = [NSMutableDictionary new];
+		}
+	}
+	return _cache;
 }
 
 #pragma mark - Cache Retrieval
