@@ -211,10 +211,7 @@
 
 - (void)_refreshUI
 {
-	if (!self.isLoading) {
-		self.isRefreshing = YES;
-		[self loadObjects];
-	}
+	[self loadObjects];
 }
 
 @end
