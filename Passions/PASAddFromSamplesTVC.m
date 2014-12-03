@@ -532,6 +532,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (void)hideProgressHud
 {
+	self.hudMsg = nil;
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[MBProgressHUD hideHUDForView:self.extendedNavController.view animated:YES];
 		self.extendedNavController.segmentedControl.enabled = YES;
