@@ -80,6 +80,12 @@
     [self _performQuery];
 }
 
+- (void)didReceiveMemoryWarning
+{
+	[super didReceiveMemoryWarning];
+	if (!self.isLoading) self.objects = [NSArray new];
+}
+
 #pragma mark - Parse.com logic
 
 // Private method, called when a query should be performed
