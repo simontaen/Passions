@@ -157,7 +157,7 @@
     // Display the loading thingy
     if (self.loadingViewEnabled) {
 		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-		hud.labelText = @"Loading Albums...";
+		hud.labelText = @"Loading Albums";
     }
 }
 
