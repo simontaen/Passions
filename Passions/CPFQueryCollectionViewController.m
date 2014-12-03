@@ -8,6 +8,7 @@
 
 #import "CPFQueryCollectionViewController.h"
 #import <Parse/Parse.h>
+#import "GBVersiontracking.h"
 #import "MBProgressHUD.h"
 
 // Define our own version of DDLogInfo(...) which will only send its input to the
@@ -154,11 +155,22 @@
     // Enter the loading state
     self.isLoading = YES;
 	
-    // Display the loading thingy
-    if (self.loadingViewEnabled) {
-		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-		hud.labelText = @"Loading Albums";
-    }
+	if ([GBVersionTracking isFirstLaunchEver]) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[MBProgressHUD hideHUDForView:self.parentViewController.parentViewController.view animated:YES];
+			// Display the loading thingy
+			if (self.loadingViewEnabled) {
+				MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+				hud.labelText = @"Loading Albums";
+			}
+		});
+	} else {
+		// Display the loading thingy
+		if (self.loadingViewEnabled) {
+			MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+			hud.labelText = @"Loading Albums";
+		}
+	}
 }
 
 - (void)objectsDidLoad:(NSError *)error

@@ -45,7 +45,6 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 * The store is always US (leads to iTunes link to items unavailable to the current User)
 
 ## General Functionality
-* First launch, show loading and give feedback on progress of initially faving
 * add properly sized images
 
 ### Spotify Integration
@@ -53,6 +52,7 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 ## PageViewController Container
 
 ## Cells
+* show a spinner when we are on low connection and the cache is not available for the image
 
 ## Adding
 * review displaying the alert controller

@@ -7,6 +7,8 @@
 //
 
 #import "PASAppDelegate.h"
+#import "PASRootVC.h"
+#import "PASTimelineCVC.h"
 #import <Parse/Parse.h>
 #import "LastFmFetchr.h"
 #import "FICImageCache.h"
@@ -25,6 +27,7 @@
 #import <CrashlyticsLumberjack/CrashlyticsLogger.h>
 #import "PASResources.h"
 #import "PASColorPickerCache.h"
+#import "MBProgressHUD.h"
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
@@ -247,6 +250,17 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+	if ([GBVersionTracking isFirstLaunchEver]) {
+		PASRootVC *rootVc = (PASRootVC *)self.window.rootViewController;
+		UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
+		UIViewController *vc = nav.topViewController;
+		if ([vc isKindOfClass:[PASTimelineCVC class]]) {
+			if ([((PASTimelineCVC *)vc).objects count] == 0) {
+				[MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
+			}
+		}
+	}
+	
 	// Store the deviceToken in the current installation and save it to Parse.
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 	[currentInstallation setDeviceTokenFromData:deviceToken];
@@ -257,6 +271,17 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
+	if ([GBVersionTracking isFirstLaunchEver]) {
+		PASRootVC *rootVc = (PASRootVC *)self.window.rootViewController;
+		UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
+		UIViewController *vc = nav.topViewController;
+		if ([vc isKindOfClass:[PASTimelineCVC class]]) {
+			if ([((PASTimelineCVC *)vc).objects count] == 0) {
+				[MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
+			}
+		}
+	}
+	
 	if (error.code == 3010) {
 		DDLogVerbose(@"Push notifications are not supported in the iOS Simulator.");
 	} else {
