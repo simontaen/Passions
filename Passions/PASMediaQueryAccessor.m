@@ -44,7 +44,6 @@
 													  self.artistCollectionsOrderedByName = nil;
 													  self.artistCollectionsOrderedByPlaycount = nil;
 													  self.artistPlaycounts = nil;
-													  self.usesMusicAppNumber = nil;
 												  }];
 	return self;
 }
