@@ -226,7 +226,8 @@
 
 - (NSString *)nameForArtist:(id)artist
 {
-	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([PASAddFromSpotifyTVC class]), NSStringFromClass([artist class]));
+	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@",
+			 NSStringFromClass([PASAddFromSpotifyTVC class]), NSStringFromClass([artist class]));
 	return ((SPTArtist *)artist).name;
 }
 
@@ -374,7 +375,8 @@
 
 - (NSUInteger)_trackcountForArtist:(id)artist withName:(NSString *)name
 {
-	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@", NSStringFromClass([PASAddFromSpotifyTVC class]), NSStringFromClass([artist class]));
+	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@",
+			 NSStringFromClass([PASAddFromSpotifyTVC class]), NSStringFromClass([artist class]));
 	return [self.artistsTracks[name] count];
 }
 
@@ -507,16 +509,17 @@
 	if (!self.session) {
 		if (!self.observer) {
 			// No valid session found, first register for nofications when done
-			self.observer = [[NSNotificationCenter defaultCenter] addObserverForName:kPASSpotifyClientId
-																			  object:nil queue:nil
-																		  usingBlock:^(NSNotification *note) {
-																			  id obj = note.userInfo[kPASSpotifyClientId];
-																			  NSAssert([obj isKindOfClass:[NSURL class]], @"kPASSpotifyClientId must carry a NSURL");
-																			  // The user finished the authentication in Safari, handle it
-																			  [[SPTAuth defaultInstance] handleAuthCallbackWithTriggeredAuthURL:(NSURL *)obj
-																												  tokenSwapServiceEndpointAtURL:[PASResources spotifyTokenSwap]
-																																	   callback:authCallback];
-																		  }];
+			NSNotificationCenter *dc = [NSNotificationCenter defaultCenter];
+			self.observer = [dc addObserverForName:kPASSpotifyClientId
+											object:nil queue:nil
+										usingBlock:^(NSNotification *note) {
+											id obj = note.userInfo[kPASSpotifyClientId];
+											NSAssert([obj isKindOfClass:[NSURL class]], @"kPASSpotifyClientId must carry a NSURL");
+											// The user finished the authentication in Safari, handle it
+											[[SPTAuth defaultInstance] handleAuthCallbackWithTriggeredAuthURL:(NSURL *)obj
+																				tokenSwapServiceEndpointAtURL:[PASResources spotifyTokenSwap]
+																									 callback:authCallback];
+										}];
 		}
 		
 	} else if (![self.session isValid] && !self.sessionIsRenewing) {
