@@ -294,11 +294,6 @@
 	return [self.selectedViewController prefersStatusBarHidden];
 }
 
-- (BOOL)shouldAutomaticallyForwardAppearanceMethods
-{
-	return NO;
-}
-
 #pragma mark - Private Methods
 
 - (void)_transitionToChildViewController:(UIViewController *)toVc completion:(void (^)(BOOL didTransition))completion
