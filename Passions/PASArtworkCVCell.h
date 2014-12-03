@@ -13,7 +13,6 @@
 @interface PASArtworkCVCell : UICollectionViewCell
 
 @property (nonatomic, strong) IBOutlet UIImageView *artworkImage;
-@property (weak, nonatomic) IBOutlet UIVisualEffectView *releaseDateBackground;
 @property (weak, nonatomic) IBOutlet UILabel *releaseDateLabel;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
 
