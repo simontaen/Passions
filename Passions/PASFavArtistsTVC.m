@@ -89,12 +89,13 @@
 	self.pageViewController.pageControlHidden = NO;
 }
 
+#if DEBUG
 - (IBAction)resetFastimageCache:(UIBarButtonItem *)sender
 {
-	// TODO: DEBUG only
 	[[FICImageCache sharedImageCache] reset];
 	[self _refreshUI];
 }
+#endif
 
 #pragma mark - UITableViewDataSource Editing
 
