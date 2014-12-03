@@ -123,8 +123,8 @@
 {
 	[super viewWillAppear:animated];
 	
-	if (!self.alertController && self.artists && self.artists.count == 0) {
-		// artists have been fetched but non exists (maybe an early error)
+	if (!self.alertController && ![self cachesAreReady]) {
+		// somebody cleaned everything
 		[self prepareCaches];
 	}
 }
