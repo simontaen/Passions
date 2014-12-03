@@ -31,6 +31,14 @@
 - (instancetype) init {
 	self = [super init];
 	if (!self) return nil;
+	// register for memory warnings
+	[[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidReceiveMemoryWarningNotification
+													  object:nil queue:nil
+												  usingBlock:^(NSNotification *note) {
+													  [self writeToDisk];
+													  self.picker = nil;
+													  self.cache = nil;
+												  }];
 	return self;
 }
 

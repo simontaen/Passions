@@ -60,7 +60,13 @@
 	self.artistsInProgress = [NSMutableArray array];
 	self.correctionsQ = dispatch_queue_create("correctionsQ", DISPATCH_QUEUE_CONCURRENT);
 	
-
+	// register for memory warnings
+	[[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidReceiveMemoryWarningNotification
+													  object:nil queue:nil
+												  usingBlock:^(NSNotification *note) {
+													  [self writeToDisk];
+													  self.artistNameCorrections = nil;
+												  }];
 	return self;
 }
 
