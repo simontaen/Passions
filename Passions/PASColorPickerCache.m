@@ -111,4 +111,12 @@
 	[UICKeyChainStore setData:cacheData forKey:NSStringFromClass([self class])];
 }
 
+#pragma mark - dealloc
+
+- (void)dealloc
+{
+	[self writeToDisk];
+	// [super dealloc]; //(provided by the compiler)
+}
+
 @end
