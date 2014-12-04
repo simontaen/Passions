@@ -52,7 +52,6 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 ## PageViewController Container
 
 ## Cells
-* show a spinner when we are on low connection and the cache is not available for the image
 
 ## Adding
 * review displaying the alert controller
