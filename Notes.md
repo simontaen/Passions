@@ -45,7 +45,6 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 * The store is always US (leads to iTunes link to items unavailable to the current User)
 
 ## General Functionality
-* add properly sized images
 
 ### Spotify Integration
 
