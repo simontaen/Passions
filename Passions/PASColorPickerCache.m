@@ -94,9 +94,9 @@
 		} else {
 			// dummy
 			LEColorScheme *colors = [LEColorScheme new];
-			colors.backgroundColor = [UIColor clearColor];
-			colors.primaryTextColor = [UIColor darkTextColor];
-			colors.secondaryTextColor = [UIColor lightTextColor];
+			colors.backgroundColor = [UIColor whiteColor];
+			colors.primaryTextColor = [UIColor lightTextColor];
+			colors.secondaryTextColor = [UIColor darkTextColor];
 		}
 	}
 	
