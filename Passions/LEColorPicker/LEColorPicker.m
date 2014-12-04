@@ -19,6 +19,8 @@
 NSString * const kBackgroundColor = @"BackgroundColor";
 NSString * const kPrimaryTextColor = @"PrimaryTextColor";
 NSString * const kSecondaryTextColor = @"SecondaryTextColor";
+NSString * const kPreferredColorOverBackground = @"PreferredColorOverBackground";
+NSString * const kPreferredColorOverPrimary = @"PreferredColorOverPrimary";
 
 @implementation LEColorScheme
 
@@ -29,6 +31,8 @@ NSString * const kSecondaryTextColor = @"SecondaryTextColor";
 		_backgroundColor = [UIColor colorWithCSS:[decoder decodeObjectForKey:kBackgroundColor]];
 		_primaryTextColor = [UIColor colorWithCSS:[decoder decodeObjectForKey:kPrimaryTextColor]];
 		_secondaryTextColor = [UIColor colorWithCSS:[decoder decodeObjectForKey:kSecondaryTextColor]];
+		_preferredColorOverBackground = [UIColor colorWithCSS:[decoder decodeObjectForKey:kPreferredColorOverBackground]];
+		_preferredColorOverPrimary = [UIColor colorWithCSS:[decoder decodeObjectForKey:kPreferredColorOverPrimary]];
 	}
 	return self;
 }
@@ -38,6 +42,8 @@ NSString * const kSecondaryTextColor = @"SecondaryTextColor";
 	[encoder encodeObject:[_backgroundColor cssString] forKey:kBackgroundColor];
 	[encoder encodeObject:[_primaryTextColor cssString] forKey:kPrimaryTextColor];
 	[encoder encodeObject:[_secondaryTextColor cssString] forKey:kSecondaryTextColor];
+	[encoder encodeObject:[_preferredColorOverBackground cssString] forKey:kPreferredColorOverBackground];
+	[encoder encodeObject:[_preferredColorOverPrimary cssString] forKey:kPreferredColorOverPrimary];
 }
 
 @end
@@ -202,7 +208,19 @@ NSUInteger squareDistanceInRGBSpaceBetweenColor(LEColor colorA, LEColor colorB)
         dispatch_async(taskQueue, ^{
             // Color calculation process
             LEColorScheme *colorScheme = [self colorSchemeFromImage:image];
-            
+			
+			float distance = [UIColor YUVSpaceDistanceToColor:colorScheme.backgroundColor fromColor:colorScheme.primaryTextColor];
+			
+			if (distance > 0.25) {
+				// distance is wide enough
+				colorScheme.preferredColorOverBackground = colorScheme.primaryTextColor;
+				colorScheme.preferredColorOverPrimary = colorScheme.backgroundColor;
+			} else {
+				// background and primary are too close, use secondary
+				colorScheme.preferredColorOverBackground = colorScheme.secondaryTextColor;
+				colorScheme.preferredColorOverPrimary = colorScheme.secondaryTextColor;
+			}
+			
             // Call complete block and pass colors result
             dispatch_async(dispatch_get_main_queue(), ^{
                 completeBlock(colorScheme);
@@ -252,8 +270,10 @@ NSUInteger squareDistanceInRGBSpaceBetweenColor(LEColor colorA, LEColor colorB)
     [colorPicker pickColorsFromImage:image onComplete:^(LEColorScheme *colorScheme) {
         NSDictionary *colorsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                           colorScheme.backgroundColor,kBackgroundColor,
-                                          colorScheme.primaryTextColor,kPrimaryTextColor,
-                                          colorScheme.secondaryTextColor,kSecondaryTextColor, nil];
+										  colorScheme.primaryTextColor,kPrimaryTextColor,
+										  colorScheme.secondaryTextColor,kSecondaryTextColor,
+										  colorScheme.preferredColorOverBackground,kPrimaryTextColor,
+                                          colorScheme.preferredColorOverPrimary,kSecondaryTextColor, nil];
         if ([NSThread isMainThread]) {
             completeBlock(colorsDictionary);
         }

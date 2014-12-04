@@ -23,6 +23,8 @@
 @property(nonatomic,strong)UIColor *backgroundColor;
 @property(nonatomic,strong)UIColor *primaryTextColor;
 @property(nonatomic,strong)UIColor *secondaryTextColor;
+@property(nonatomic,strong)UIColor *preferredColorOverBackground;
+@property(nonatomic,strong)UIColor *preferredColorOverPrimary;
 @end
 
 @interface LEColorPicker : NSObject
