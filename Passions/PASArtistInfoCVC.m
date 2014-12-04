@@ -36,11 +36,13 @@ static NSInteger const kAddCells = 1;
 	// Configure navigationController
 	self.title = self.artist.name;
 	
-	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithTitle:@"iTunes"
-															 style:UIBarButtonItemStylePlain
-															target:self
-															action:@selector(iTunesButtonTapped:)];
-	self.navigationItem.rightBarButtonItem = rbbi;
+	if ([self.artist iTunesUrl]) {
+		UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithTitle:@"iTunes"
+																 style:UIBarButtonItemStylePlain
+																target:self
+																action:@selector(iTunesButtonTapped:)];
+		self.navigationItem.rightBarButtonItem = rbbi;
+	}
 }
 
 - (void)helpViewWillAppear

@@ -29,6 +29,14 @@ static NSInteger const kAddCells = 2;
 		_album = album;
 		self.tracks = [NSArray array];
 		
+		if ([album iTunesUrl]) {
+			UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithTitle:@"iTunes"
+																	 style:UIBarButtonItemStylePlain
+																	target:self
+																	action:@selector(iTunesButtonTapped:)];
+			self.navigationItem.rightBarButtonItem = rbbi;
+		}
+		
 		// enable only with a MBProgressHUD
 //		[[AJSITunesClient sharedClient] lookupWithId:[album.iTunesId stringValue] entityType:@"song" country:nil limit:200 completion:^(NSArray *results, NSError *error) {
 //			NSMutableArray *tracks = [results mutableCopy];
@@ -61,12 +69,6 @@ static NSInteger const kAddCells = 2;
 
 	// Configure navigationController
 	self.title = @"Album Details";
-
-	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithTitle:@"iTunes"
-															 style:UIBarButtonItemStylePlain
-															target:self
-															action:@selector(iTunesButtonTapped:)];
-	self.navigationItem.rightBarButtonItem = rbbi;
 }
 
 - (void)viewWillAppear:(BOOL)animated
