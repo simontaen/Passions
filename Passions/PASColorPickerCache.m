@@ -8,6 +8,7 @@
 
 #import "PASColorPickerCache.h"
 #import "UICKeyChainStore.h"
+#import "GBVersiontracking.h"
 
 @interface PASColorPickerCache()
 @property (nonatomic, strong) LEColorPicker *picker;
@@ -55,12 +56,18 @@
 -(NSMutableDictionary *)cache
 {
 	if (!_cache) {
-		NSData *cacheData = [UICKeyChainStore dataForKey:NSStringFromClass([self class])];
-		
-		if (cacheData) {
-			_cache = (NSMutableDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:cacheData];
-		} else {
+		if ([GBVersionTracking isFirstLaunchForBuild]) {
+			// on first build launch, clear cache data
 			_cache = [NSMutableDictionary new];
+			
+		} else {
+			NSData *cacheData = [UICKeyChainStore dataForKey:NSStringFromClass([self class])];
+			
+			if (cacheData) {
+				_cache = (NSMutableDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:cacheData];
+			} else {
+				_cache = [NSMutableDictionary new];
+			}
 		}
 	}
 	return _cache;
