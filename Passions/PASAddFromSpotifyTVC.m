@@ -121,7 +121,7 @@
 {
 	[super viewWillAppear:animated];
 	
-	if (!self.alertController && ![self cachesAreReady]) {
+	if (![self isAlertPending] && ![self cachesAreReady]) {
 		// somebody cleaned everything
 		[self prepareCaches];
 	}
@@ -384,16 +384,12 @@
 
 - (void)_handleError:(NSError *)error
 {
-	// abort everything and display a message,
-	// show available artists
-	
 	NSString *title = @"Try again";
 	NSString *msg;
 	NSString *defaultBtn;
 	NSMutableArray *actions = [NSMutableArray array];
 	
 	if ([[error domain] isEqualToString:@"com.spotify.auth"]) {
-		DDLogWarn(@"%@", [error description]);
 		title = @"Spotify login failed";
 		UIAlertAction *reauth = [UIAlertAction actionWithTitle:@"Authenticate again"
 														 style:UIAlertActionStyleDefault
@@ -409,22 +405,21 @@
 	} else {
 		switch (error.code) {
 			case -1001:
-				DDLogWarn(@"%@", [error description]);
 				msg = @"The operation timed out.";
 				break;
 			default:
-				DDLogError(@"%@", [error description]);
+				DDLogError(@"Something went wrong: %@", [error description]);
 				msg = @"Something went wrong.";
 				break;
 		}
 		
-		UIAlertAction *retry = [UIAlertAction actionWithTitle:@"Retry"
-														style:UIAlertActionStyleDefault
-													  handler:^(UIAlertAction * action) {
-														  [self clearCaches];
-														  [self prepareCaches];
-													  }];
-		[actions addObject:retry];
+		UIAlertAction *reload = [UIAlertAction actionWithTitle:@"Reload"
+														 style:UIAlertActionStyleDefault
+													   handler:^(UIAlertAction * action) {
+														   [self clearCaches];
+														   [self prepareCaches];
+													   }];
+		[actions addObject:reload];
 		defaultBtn = @"OK";
 	}
 	
@@ -475,7 +470,7 @@
 
 - (void)_validateSessionWithCallback:(void (^)())completion
 {
-	if (self.alertController) {
+	if ([self isAlertPending]) {
 		// an alert is pending, return immediatly
 		return;
 	}

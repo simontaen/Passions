@@ -21,8 +21,6 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 
 // Formatting Blocks
 @property (nonatomic, copy) NSString * (^detailTextBlock)(id<FICEntity> artist, NSString *name);
-// a potential alert that needs to be presented
-@property (nonatomic, strong) UIAlertController *alertController;
 // A message to be displayed in a HUD, if set the hud needs to be displayed
 @property (nonatomic, strong) NSString *hudMsg;
 
@@ -43,6 +41,8 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 - (void)hideProgressHud;
 
 // Error handling
+/// if YES, alert will be presented in viewDidAppear
+- (BOOL)isAlertPending;
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)msg actions:(NSArray *)actions defaultButton:(NSString *)defaultButton;
 
 // for subclassing, called once

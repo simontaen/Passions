@@ -23,6 +23,9 @@
 // Current Sort order
 @property (nonatomic, assign) PASAddArtistsSortOrder selectedSortOrder;
 
+// a potential alert that needs to be presented
+@property (nonatomic, strong) UIAlertController *alertController;
+
 // Accessors that know which sort order is used and cache the results
 @property (nonatomic, strong, readonly) NSArray *_artistsShorthand; // of the appropriate object
 @property (nonatomic, strong, readonly) NSArray *_sectionIndexShorthand; // NSString
@@ -466,21 +469,24 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (void)_handleError:(NSError *)error
 {
-
 	NSString *msg;
 	switch (error.code) {
 		case 141:
 		case -999:
-			DDLogWarn(@"%@", [error description]);
 			msg = @"The operation timed out.";
 			break;
 		default:
-			DDLogError(@"%@", [error description]);
+			DDLogError(@"Something went wrong: %@", [error description]);
 			msg = @"Something went wrong.";
 			break;
 	}
 	
 	[self showAlertWithTitle:@"Try again" message:msg actions:nil defaultButton:@"OK"];
+}
+
+- (BOOL)isAlertPending
+{
+	return !!self.alertController;
 }
 
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)msg actions:(NSArray *)actions defaultButton:(NSString *)defaultButton
