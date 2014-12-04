@@ -17,16 +17,17 @@
 
 - (void)showEntity:(id<FICEntity>)entity inTableView:(UITableView *)tableView
 {
-	[[PASColorPickerCache sharedMngr] pickColorsFromImage:nil
-												  withKey:[entity UUID]
-											   completion:^(LEColorScheme *colorScheme) {
-												   dispatch_async(dispatch_get_main_queue(), ^{
-													   tableView.backgroundColor = colorScheme.primaryTextColor;
-													   self.backgroundColor = colorScheme.primaryTextColor;
-													   self.mainText.textColor = colorScheme.preferredColorOverPrimary;
-													   self.detailText.textColor = colorScheme.preferredColorOverPrimary;
-												   });
-											   }];
+	PASColorPickerCache *pc = [PASColorPickerCache sharedMngr];
+	[pc pickColorsFromImage:nil
+					withKey:[entity UUID]
+				 completion:^(LEColorScheme *colorScheme) {
+					 dispatch_async(dispatch_get_main_queue(), ^{
+						 tableView.backgroundColor = colorScheme.primaryTextColor;
+						 self.backgroundColor = colorScheme.primaryTextColor;
+						 self.mainText.textColor = colorScheme.preferredColorOverPrimary;
+						 self.detailText.textColor = colorScheme.preferredColorOverPrimary;
+					 });
+				 }];
 }
 
 #pragma mark - Static

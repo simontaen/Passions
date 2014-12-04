@@ -117,17 +117,18 @@
 									if (image && entity == self.entity) {
 										self.artworkImage.image = image;
 										
-										[[PASColorPickerCache sharedMngr] pickColorsFromImage:image
-																					  withKey:[entity UUID]
-																				   completion:^(LEColorScheme *colorScheme) {
-																					   if (entity == self.entity && self.artworkImage.image == image) {
-																						   dispatch_async(dispatch_get_main_queue(), ^{
-																							   self.releaseDateLabel.backgroundColor = colorScheme.backgroundColor;
-																							   self.releaseDateLabel.textColor = colorScheme.preferredColorOverBackground;
-																							   self.releaseDateLabel.hidden = NO;
-																						   });
-																					   }
-																				   }];
+										PASColorPickerCache *pc = [PASColorPickerCache sharedMngr];
+										[pc pickColorsFromImage:image
+														withKey:[entity UUID]
+													 completion:^(LEColorScheme *colorScheme) {
+														 if (entity == self.entity && self.artworkImage.image == image) {
+															 dispatch_async(dispatch_get_main_queue(), ^{
+																 self.releaseDateLabel.backgroundColor = colorScheme.backgroundColor;
+																 self.releaseDateLabel.textColor = colorScheme.preferredColorOverBackground;
+																 self.releaseDateLabel.hidden = NO;
+															 });
+														 }
+													 }];
 									}
 								}];
 //	if (!cacheAvailable) {
