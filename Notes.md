@@ -54,7 +54,6 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 ## Cells
 
 ## Adding
-* review displaying the alert controller
 
 ## Fav Artists
 
