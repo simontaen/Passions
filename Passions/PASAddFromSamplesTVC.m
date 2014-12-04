@@ -86,7 +86,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 						   @"Ugress", @"ADELE", @"The Asteroids Galaxy Tour", @"Bar 9", @"Jennifer Rostock",
 						   @"Baskerville", @"Beastie Boys", @"Bee Gees", @"Bit Shifter", @"Garth Brooks",
 						   @"Bomfunk MC's", @"C-Mon & Kypski", @"The Cardigans", @"Carly Commando",
-						   @"Caro Emerald", @"Coldplay", @"Coolio", @"Cypress Hill", @"AC/DC",
+						   @"Caro Emerald", @"Coldplay", @"Coolio", @"Cypress Hill", @"AC/DC", @"Metallica",
 						   @"David Bowie", @"Dukes of Stratosphear", @"[dunkelbunt]", @"Cause Assertion Error!",
 						   @"Eminem", @"Enigma", @"Deadmouse", @"ACDC", @"Crash the App!"
 						   ];

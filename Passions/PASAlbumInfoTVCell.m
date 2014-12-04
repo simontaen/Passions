@@ -21,10 +21,10 @@
 												  withKey:[entity UUID]
 											   completion:^(LEColorScheme *colorScheme) {
 												   dispatch_async(dispatch_get_main_queue(), ^{
-													   tableView.backgroundColor = colorScheme.backgroundColor;
-													   self.backgroundColor = colorScheme.backgroundColor;
-													   self.mainText.textColor = colorScheme.primaryTextColor;
-													   self.detailText.textColor = colorScheme.primaryTextColor;
+													   tableView.backgroundColor = colorScheme.primaryTextColor;
+													   self.backgroundColor = colorScheme.primaryTextColor;
+													   self.mainText.textColor = colorScheme.preferredColorOverPrimary;
+													   self.detailText.textColor = colorScheme.preferredColorOverPrimary;
 												   });
 											   }];
 }

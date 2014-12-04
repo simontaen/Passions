@@ -123,7 +123,7 @@
 																					   if (entity == self.entity && self.artworkImage.image == image) {
 																						   dispatch_async(dispatch_get_main_queue(), ^{
 																							   self.releaseDateLabel.backgroundColor = colorScheme.backgroundColor;
-																							   self.releaseDateLabel.textColor = colorScheme.primaryTextColor;
+																							   self.releaseDateLabel.textColor = colorScheme.preferredColorOverBackground;
 																							   self.releaseDateLabel.hidden = NO;
 																						   });
 																					   }
