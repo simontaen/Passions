@@ -186,6 +186,12 @@ NSString *const ImageFormatNameAlbumThumbnailLarge = @"ImageFormatNameAlbumThumb
 	return swipeLeft;
 }
 
++ (NSString *)userCountry
+{
+	NSLocale *locale = [NSLocale autoupdatingCurrentLocale];
+	return [locale objectForKey: NSLocaleCountryCode];
+}
+
 + (void)printViewControllerLayoutStack:(UIViewController *)viewController
 {
 	DDLogVerbose(@"---- ViewController Stack ----");

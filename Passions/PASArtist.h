@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSString* objectId;
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, strong) NSNumber* iTunesId;
-@property (nonatomic, strong) NSString* iTunesUrl;
+@property (nonatomic, strong) NSDictionary* iTunesUrlMap;
 @property (nonatomic, strong) NSString* iTunesGenreName;
 @property (nonatomic, strong) NSNumber* iTunesGenreId;
 @property (nonatomic, strong) NSString* iTunesRadioUrl;
@@ -38,6 +38,7 @@
 
 - (NSString *)availableAlbums;
 - (NSURL *)iTunesAttributedUrl;
+- (NSString *)iTunesUrl;
 
 #pragma mark - adding / creating
 

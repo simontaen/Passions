@@ -9,13 +9,14 @@
 #import "PASArtist.h"
 #import <Parse/PFObject+Subclass.h>
 #import "LastFmFetchr.h"
+#import "PASResources.h"
 
 @implementation PASArtist
 
 @dynamic objectId;
 @dynamic name;
 @dynamic iTunesId;
-@dynamic iTunesUrl;
+@dynamic iTunesUrlMap;
 @dynamic iTunesGenreName;
 @dynamic iTunesGenreId;
 @dynamic iTunesRadioUrl;
@@ -72,7 +73,12 @@
 
 - (NSURL *)iTunesAttributedUrl
 {
-	return [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@", self.iTunesUrl, kITunesAffiliation]];
+	return [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@", [self iTunesUrl], kITunesAffiliation]];
+}
+
+- (NSString *)iTunesUrl
+{
+	return self.iTunesUrlMap[[PASResources userCountry]] ?: self.iTunesUrlMap[@"US"];
 }
 
 #pragma mark - adding / creating

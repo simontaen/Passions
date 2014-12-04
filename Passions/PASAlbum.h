@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSString* objectId;
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, strong) NSNumber* iTunesId;
-@property (nonatomic, strong) NSString* iTunesUrl;
+@property (nonatomic, strong) NSDictionary* iTunesUrlMap;
 @property (nonatomic, strong) NSString* explicitness;
 @property (nonatomic, strong) NSNumber* trackCount;
 @property (nonatomic, strong) NSString* iTunesGenreName;
@@ -37,6 +37,7 @@
 #pragma mark - Compound properties
 
 - (NSURL *)iTunesAttributedUrl;
+- (NSString *)iTunesUrl;
 @property (nonatomic, strong, readonly) NSString* releaseDateFormatted;
 
 @end

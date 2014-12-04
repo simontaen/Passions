@@ -9,6 +9,7 @@
 #import "PASAlbum.h"
 #import <Parse/PFObject+Subclass.h>
 #import "SORelativeDateTransformer.h"
+#import "PASResources.h"
 
 @implementation PASAlbum
 {
@@ -18,7 +19,7 @@
 @dynamic objectId;
 @dynamic name;
 @dynamic iTunesId;
-@dynamic iTunesUrl;
+@dynamic iTunesUrlMap;
 @dynamic explicitness;
 @dynamic trackCount;
 @dynamic iTunesGenreName;
@@ -56,7 +57,12 @@
 
 - (NSURL *)iTunesAttributedUrl
 {
-	return [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@", self.iTunesUrl, kITunesAffiliation]];
+	return [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@", [self iTunesUrl], kITunesAffiliation]];
+}
+
+- (NSString *)iTunesUrl
+{
+	return self.iTunesUrlMap[[PASResources userCountry]] ?: self.iTunesUrlMap[@"US"];
 }
 
 - (NSString *)releaseDateFormatted

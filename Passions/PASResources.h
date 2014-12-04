@@ -65,6 +65,8 @@ extern NSString *const ImageFormatNameAlbumThumbnailLarge;
 
 + (UIImage *)swipeLeft;
 
++ (NSString *)userCountry;
+
 + (void)printViewControllerLayoutStack:(UIViewController *)viewController;
 + (void)printViewLayoutStack:(UIViewController *)vc;
 + (void)printSubviews:(UIView *)vw;
