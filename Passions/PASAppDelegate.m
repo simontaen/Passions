@@ -103,6 +103,10 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	[Parse setApplicationId:kPASParseAppId
 				  clientKey:kPASParseClientKey];
 	
+	// does the error callback still get called?
+//	[Parse errorMessagesEnabled:YES];
+//	[Parse offlineMessagesEnabled:YES];
+	
 	[PFUser enableAutomaticUser];
 	// the app will crash if currentUser is a new user!
 	// queryForTable required a saved users for the parse object ID
