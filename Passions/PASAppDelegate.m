@@ -121,14 +121,12 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	PFUser *currentUser = [PFUser currentUser];
 	
 	if ([GBVersionTracking isFirstLaunchEver] || ![PFUser currentUser].objectId) {
-		// setup install and user on first launch
+		// setup installation on first launch
 		[self _updateDeviceInfos:currentInstallation];
 		[currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 			if (succeeded && !error) {
 				DDLogInfo(@"Current Installation initialized: %@", currentInstallation.objectId);
-				// create the assosiation for push notifications
-				[currentUser setObject:currentInstallation.objectId forKey:@"installation"];
-				[currentUser setObject:@0 forKey:@"runCount"];
+				[self _initialUserSetup:currentUser withInstallation:currentInstallation];
 				[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 					if (succeeded && !error) {
 						DDLogInfo(@"Current User initialized: %@", currentUser.objectId);
@@ -154,6 +152,13 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 			[currentInstallation saveInBackground];
 		}
 	}
+}
+
+- (void)_initialUserSetup:(PFUser *)user withInstallation:(PFInstallation *)installation
+{
+	// create the assosiation for push notifications
+	[user setObject:installation.objectId forKey:@"installation"];
+	[user setObject:@0 forKey:@"runCount"];
 }
 
 - (void)_updateDeviceInfos:(PFInstallation *)installation
