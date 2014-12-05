@@ -171,6 +171,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 - (void)_updateUserInfos:(PFUser *)user
 {
 	[user incrementKey:@"runCount"];
+	[user setObject:[PASResources userCountry] forKey:@"country"];
 }
 
 /// on first ever and first build launch
