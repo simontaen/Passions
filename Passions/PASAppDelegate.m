@@ -142,14 +142,18 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		}];
 		
 	} else {
-		[Crashlytics setUserIdentifier:[PFUser currentUser].objectId];
-		[currentUser incrementKey:@"runCount"];
-		[currentUser saveEventually];
+		[Crashlytics setUserIdentifier:currentUser.objectId];
+		[self _updateUserInfos:currentUser];
 		
 		if ([GBVersionTracking isFirstLaunchForBuild]) {
 			// on first build launch, update the device specs
 			[self _updateDeviceInfos:currentInstallation];
 			[currentInstallation saveInBackground];
+			// on first build launch, make sure the currentUser really gets saved
+			[currentUser saveInBackground];
+			
+		} else {
+			[currentUser saveEventually];
 		}
 	}
 }
@@ -159,8 +163,17 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	// create the assosiation for push notifications
 	[user setObject:installation.objectId forKey:@"installation"];
 	[user setObject:@0 forKey:@"runCount"];
+	
+	// also update normal user infos
+	[self _updateUserInfos:user];
 }
 
+- (void)_updateUserInfos:(PFUser *)user
+{
+	[user incrementKey:@"runCount"];
+}
+
+/// on first ever and first build launch
 - (void)_updateDeviceInfos:(PFInstallation *)installation
 {
 	[installation setObject:[UIDevice currentDevice].modelName forKey:@"modelName"];
