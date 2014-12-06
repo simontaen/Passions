@@ -118,17 +118,19 @@
 		
 		// De-favorite the user from the artist and reload the table view
 		[artist removeCurrentUserAsFavoriteWithCompletion:^(BOOL succeeded, NSError *error) {
-			if (succeeded && !error) {
-				[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditFavArtists
-																	object:self
-																  userInfo:@{ kPASDidEditFavArtists : [NSNumber numberWithBool:YES] }];
-			}
-			
 			dispatch_async(dispatch_get_main_queue(), ^{
 				cell.activityIndicator.hidden = YES;
 				[cell.activityIndicator stopAnimating];
 				[tableView endUpdates];
 			});
+			
+			if (succeeded && !error) {
+				[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditFavArtists
+																	object:self
+																  userInfo:@{ kPASDidEditFavArtists : [NSNumber numberWithBool:YES] }];
+			} else {
+				DDLogError(@"%@", [error description]);
+			}
 		}];
 	}
 }

@@ -147,11 +147,7 @@
 	// Caches are updated when new data is received
 	[self _validateSessionWithCallback:^{
 		[self _fetchSpotifyArtistsWithCompletion:^(NSError *error) {
-			if (!error) {
-				[super prepareCaches];
-			} else if (error) {
-				[self _handleError:error];
-			}
+			error ? [self _handleError:error] : [super prepareCaches];
 		}];
 	}];
 }

@@ -253,6 +253,9 @@
 					[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists
 																		object:nil];
 				}
+				if (error) {
+					DDLogError(@"%@", [error description]);
+				}
 			}];
 		}
 	};
@@ -262,12 +265,17 @@
 		
 		[[LastFmFetchr fetchr] getChartsTopArtists:nil
 										 withLimit:3 completion:^(LFMChartTopArtists *data, NSError *error) {
-											 NSMutableArray *artistNames = [NSMutableArray arrayWithCapacity:3];
-											 
-											 for (LFMArtistChart *artist in [data artists]) {
-												 [artistNames addObject:[artist name]];
+											 if (data && !error) {
+												 NSMutableArray *artistNames = [NSMutableArray arrayWithCapacity:3];
+												 
+												 for (LFMArtistChart *artist in [data artists]) {
+													 [artistNames addObject:[artist name]];
+												 }
+												 favingBlock(artistNames);
+											 } else {
+												 DDLogError(@"%@", [error description]);
+												 favingBlock(@[]);
 											 }
-											 favingBlock(artistNames);
 										 }];
 	
 	} else {

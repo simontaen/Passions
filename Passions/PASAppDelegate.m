@@ -125,11 +125,11 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		[self _updateDeviceInfos:currentInstallation];
 		[currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 			if (succeeded && !error) {
-				DDLogInfo(@"Current Installation initialized: %@", currentInstallation.objectId);
+				DDLogDebug(@"Current Installation initialized: %@", currentInstallation.objectId);
 				[self _initialUserSetup:currentUser withInstallation:currentInstallation];
 				[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 					if (succeeded && !error) {
-						DDLogInfo(@"Current User initialized: %@", currentUser.objectId);
+						DDLogDebug(@"Current User initialized: %@", currentUser.objectId);
 						[Crashlytics setUserIdentifier:[PFUser currentUser].objectId];
 						[[PASManageArtists sharedMngr] addInitialFavArtists];
 					} else {
@@ -311,7 +311,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		DDLogVerbose(@"Push notifications are not supported in the iOS Simulator.");
 	} else {
 		// show some alert or otherwise handle the failure to register.
-		DDLogError(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
+		DDLogError(@"%@", [error description]);
 	}
 }
 
