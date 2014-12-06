@@ -482,6 +482,9 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 		case -1001: // Spotify Timeout
 			msg = @"The operation timed out.";
 			break;
+		case -1009: // Spotify no Internet
+			msg = @"The Internet connection appears to be offline.";
+			break;
 		default:
 			DDLogError(@"Something went wrong: %@", [error description]);
 			msg = @"Something went wrong.";
