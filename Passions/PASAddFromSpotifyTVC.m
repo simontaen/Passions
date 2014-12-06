@@ -403,15 +403,7 @@
 		[actions addObject:reauth];
 		
 	} else {
-		switch (error.code) {
-			case -1001:
-				msg = @"The operation timed out.";
-				break;
-			default:
-				DDLogError(@"Something went wrong: %@", [error description]);
-				msg = @"Something went wrong.";
-				break;
-		}
+		msg = [self alertMessage:error];
 		
 		UIAlertAction *reload = [UIAlertAction actionWithTitle:@"Reload"
 														 style:UIAlertActionStyleDefault

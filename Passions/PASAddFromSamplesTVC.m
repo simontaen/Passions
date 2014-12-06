@@ -476,8 +476,10 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 {
 	NSString *msg;
 	switch (error.code) {
-		case 141:
-		case -999:
+		case 141: // Parse timeout
+		case 142: // Parse Validation failed
+		case -999: // LastFMFetchr artist.getCorrection cancelled
+		case -1001: // Spotify Timeout
 			msg = @"The operation timed out.";
 			break;
 		default:
