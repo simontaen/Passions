@@ -116,15 +116,14 @@
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
 		PASArtist *artist = [self _artistAtIndexPath:indexPath];
 		
-		// De-favorite the user from the artist and reload the table view
-		[artist removeCurrentUserAsFavoriteWithCompletion:^(BOOL succeeded, NSError *error) {
+		[[PASManageArtists sharedMngr] didSelectArtistWithName:artist.name completion:^(NSError *error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				cell.activityIndicator.hidden = YES;
 				[cell.activityIndicator stopAnimating];
 				[tableView endUpdates];
 			});
 			
-			if (succeeded && !error) {
+			if (!error) {
 				[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditFavArtists
 																	object:self
 																  userInfo:@{ kPASDidEditFavArtists : [NSNumber numberWithBool:YES] }];
