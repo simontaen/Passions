@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "GBVersiontracking.h"
 #import "MBProgressHUD.h"
+#import "PASPageViewController.h"
 
 // Define our own version of DDLogInfo(...) which will only send its input to the
 // output if we are in debug mode and a assertion logger which will cause an
@@ -92,7 +93,8 @@
 - (void)didReceiveMemoryWarning
 {
 	[super didReceiveMemoryWarning];
-	if (!self.isLoading) self.objects = [NSArray new];
+	// clear objects when we're not loading and not on screen
+	if (!self.isLoading && self.pageViewController.selectedViewController != self) self.objects = [NSArray new];
 }
 
 #pragma mark - Parse.com logic
@@ -126,6 +128,7 @@
 		
 		[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 			if (error) {
+				DDLogError([error description]);
 				self.objects = [NSArray new];
 			} else {
 				if (self.paginationEnabled && self.isRefreshing) {
