@@ -469,6 +469,11 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (void)_handleError:(NSError *)error
 {
+	[self showAlertWithTitle:@"Try again" message:[self alertMessage:error] actions:nil defaultButton:@"OK"];
+}
+
+- (NSString *)alertMessage:(NSError *)error
+{
 	NSString *msg;
 	switch (error.code) {
 		case 141:
@@ -480,8 +485,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 			msg = @"Something went wrong.";
 			break;
 	}
-	
-	[self showAlertWithTitle:@"Try again" message:msg actions:nil defaultButton:@"OK"];
+	return msg;
 }
 
 - (BOOL)isAlertPending

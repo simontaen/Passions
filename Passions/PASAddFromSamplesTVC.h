@@ -43,6 +43,7 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 // Error handling
 /// if YES, alert will be presented in viewDidAppear
 - (BOOL)isAlertPending;
+- (NSString *)alertMessage:(NSError *)error;
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)msg actions:(NSArray *)actions defaultButton:(NSString *)defaultButton;
 
 // for subclassing, called once
