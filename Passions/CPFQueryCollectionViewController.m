@@ -133,9 +133,7 @@
 			} else {
 				if (self.paginationEnabled && self.isRefreshing) {
 					//add a new page of objects
-					NSMutableArray *mutableObjects = [NSMutableArray arrayWithArray:self.objects];
-					[mutableObjects addObjectsFromArray:objects];
-					self.objects = [NSArray arrayWithArray:mutableObjects];
+					self.objects = [self.objects arrayByAddingObjectsFromArray:objects];
 				} else {
 					self.objects = objects;
 				}
