@@ -199,10 +199,13 @@
 {
 	PASArtist *artist = [self _artistAtIndexPath:indexPath];
 	
-	PASArtistInfoCVC *vc = [PASArtistInfoCVC new];
-	vc.artist = artist;
-	
-	[self.navigationController pushViewController:vc animated:YES];
+	if (!!artist.totalAlbums) {
+		// only allow selecting when not in processing on server
+		PASArtistInfoCVC *vc = [PASArtistInfoCVC new];
+		vc.artist = artist;
+		
+		[self.navigationController pushViewController:vc animated:YES];
+	}
 }
 
 @end
