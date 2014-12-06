@@ -144,15 +144,17 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	} else {
 		[Crashlytics setUserIdentifier:currentUser.objectId];
 		[self _updateUserInfos:currentUser];
+		[self _updateDeviceInfos:currentInstallation];
+		
+		NSUInteger runCount = [[currentUser objectForKey:@"runCount"] longLongValue];
 		
 		if ([GBVersionTracking isFirstLaunchForBuild]) {
-			// on first build launch, update the device specs
-			[self _updateDeviceInfos:currentInstallation];
+			// on first build launch, make sure it really gets saved
 			[currentInstallation saveInBackground];
-			// on first build launch, make sure the currentUser really gets saved
 			[currentUser saveInBackground];
 			
-		} else {
+		} else if (runCount % 3 == 0) {
+			[currentInstallation saveEventually];
 			[currentUser saveEventually];
 		}
 	}
