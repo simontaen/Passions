@@ -85,7 +85,7 @@
 {
 	[super viewWillAppear:animated];
 	if (self.objects.count == 0) {
-		[self loadObjects:NO];
+		[self loadObjects];
 	}
 }
 
@@ -144,9 +144,14 @@
 	}
 }
 
-- (void)loadObjects:(BOOL)refreshing
+- (void)loadObjects
 {
-	if (!self.isLoading) [self _performQuery:refreshing];
+	if (!self.isLoading) [self _performQuery:NO];
+}
+
+- (void)_refreshObjects
+{
+	if (!self.isLoading) [self _performQuery:YES];
 }
 
 - (void)objectsWillLoad
@@ -234,7 +239,7 @@
     //if the scrollView has reached the bottom fetch the next page of objects
     float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
     if (bottomEdge >= scrollView.contentSize.height && [self hasMoreObjects]) {
-		[self loadObjects:YES];
+		[self _refreshObjects];
     }
 }
 

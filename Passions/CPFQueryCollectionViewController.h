@@ -44,9 +44,9 @@
 @property NSArray *objects;
 
 /**
- * Loads next page of objects if refreshing, else loads first page.
+ * Loads first page of objects.
  */
-- (void)loadObjects:(BOOL)refreshing;
+- (void)loadObjects;
 
 /**
  * Called when a new query has been issued.
