@@ -25,7 +25,6 @@
 @interface CPFQueryCollectionViewController()
 @property (nonatomic, assign) NSUInteger expectedObjects;
 @property (nonatomic, readwrite) BOOL isLoading;
-@property (nonatomic, readwrite) BOOL isRefreshing;
 @end
 
 @implementation CPFQueryCollectionViewController
@@ -79,14 +78,14 @@
     [super viewDidLoad];
     
     // Perform the first query
-    [self _performQuery];
+	[self _performQuery:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
 	if (self.objects.count == 0) {
-		[self loadObjects];
+		[self loadObjects:NO];
 	}
 }
 
@@ -100,7 +99,7 @@
 #pragma mark - Parse.com logic
 
 // Private method, called when a query should be performed
-- (void)_performQuery
+- (void)_performQuery:(BOOL)refreshing
 {
     PFQuery *query = self.queryForCollection;
 	
@@ -121,7 +120,7 @@
 			
 			[query setLimit:self.objectsPerPage];
 			//fetching the next page of objects
-			if (self.isRefreshing) {
+			if (refreshing) {
 				[query setSkip:self.objects.count];
 			}
 		}
@@ -131,7 +130,7 @@
 				DDLogError([error description]);
 				self.objects = [NSArray new];
 			} else {
-				if (self.paginationEnabled && self.isRefreshing) {
+				if (self.paginationEnabled && refreshing) {
 					//add a new page of objects
 					self.objects = [self.objects arrayByAddingObjectsFromArray:objects];
 				} else {
@@ -140,15 +139,14 @@
 			}
 			
 			self.isLoading = NO;
-			self.isRefreshing = NO;
 			[self objectsDidLoad:error];
 		}];
 	}
 }
 
-- (void)loadObjects
+- (void)loadObjects:(BOOL)refreshing
 {
-	if (!self.isLoading) [self _performQuery];
+	if (!self.isLoading) [self _performQuery:refreshing];
 }
 
 - (void)objectsWillLoad
@@ -236,8 +234,7 @@
     //if the scrollView has reached the bottom fetch the next page of objects
     float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
     if (bottomEdge >= scrollView.contentSize.height && [self hasMoreObjects]) {
-        self.isRefreshing = YES;
-        [self loadObjects];
+		[self loadObjects:YES];
     }
 }
 

@@ -18,11 +18,6 @@
 @property (nonatomic, readonly) BOOL isLoading;
 
 /**
- * Is the query refreshing the collection or fetching more items?
- */
-@property (nonatomic, readonly) BOOL isRefreshing;
-
-/**
  * Should the collection view show an activity indicator while a query is in progress?
  */
 @property (nonatomic) BOOL loadingViewEnabled;
@@ -49,9 +44,9 @@
 @property NSArray *objects;
 
 /**
- * Loads the first page of objects.
+ * Loads next page of objects if refreshing, else loads first page.
  */
-- (void)loadObjects;
+- (void)loadObjects:(BOOL)refreshing;
 
 /**
  * Called when a new query has been issued.
