@@ -232,14 +232,14 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 			sourceImage = [(id<PASSourceImage>)entity sourceImageWithFormatName:formatName];
 			
 		} else {
+			NSURL *requestURL = [entity sourceImageURLWithFormatName:formatName];
+
 			// Fetch the desired source image by making a network request
 			[[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
-			NSURL *requestURL = [entity sourceImageURLWithFormatName:formatName];
-			[[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
-
 			// I could use something like AFNetworking or https://github.com/rs/SDWebImage
 			// but it seems to work pretty good actually
 			sourceImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:requestURL]];
+			[[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
 		}
 		
 //		if (!sourceImage) {
