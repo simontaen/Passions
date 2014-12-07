@@ -472,9 +472,9 @@
 			
 		} else {
 			// We are authenticated, cleanup
-			[[NSNotificationCenter defaultCenter] removeObserver:nil
-															name:kPASSpotifyClientId
-														  object:self];
+			[[NSNotificationCenter defaultCenter] removeObserver:self.observer];
+			self.observer = nil;
+			
 			// Persist the new session and fetch new data
 			self.session = session;
 			self.sessionIsRenewing = NO;

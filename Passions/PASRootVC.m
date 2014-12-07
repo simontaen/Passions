@@ -109,4 +109,14 @@
 	self.didSetupPushNotificaiton = YES;
 }
 
+#pragma mark - dealloc
+
+- (void)dealloc
+{
+	// Remove all observers
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:kPASShowAlbumDetails
+												  object:nil];
+}
+
 @end

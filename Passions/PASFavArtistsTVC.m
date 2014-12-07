@@ -221,4 +221,14 @@
 	}
 }
 
+#pragma mark - dealloc
+
+- (void)dealloc
+{
+	// Remove all observers
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:kPASDidEditFavArtists
+												  object:nil];
+}
+
 @end

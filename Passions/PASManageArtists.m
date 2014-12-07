@@ -354,8 +354,12 @@
 
 - (void)dealloc
 {
+	// Remove all observers
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:UIApplicationDidReceiveMemoryWarningNotification
+												  object:nil];
+	// Save cache
 	[self writeToDisk];
-	// [super dealloc]; //(provided by the compiler)
 }
 
 @end
