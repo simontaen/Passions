@@ -206,7 +206,7 @@
 {
 	PASArtist *artist = [self _artistAtIndexPath:indexPath];
 	
-	if (!!artist.totalAlbums) {
+	if (![artist isProcessingOnServer]) {
 		// only allow selecting when not in processing on server
 		PASArtistInfoCVC *vc = [PASArtistInfoCVC new];
 		vc.artist = artist;

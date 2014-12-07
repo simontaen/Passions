@@ -81,6 +81,10 @@
 	return self.iTunesUrlMap[[PASResources userCountry]] ?: self.iTunesUrlMap[@"US"];
 }
 
+- (BOOL)isProcessingOnServer
+{
+	return !!self.totalAlbums;
+}
 #pragma mark - adding / creating
 
 + (void)favoriteArtistByCurrentUser:(NSString *)artistName

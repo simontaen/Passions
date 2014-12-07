@@ -39,6 +39,7 @@
 - (NSString *)availableAlbums;
 - (NSURL *)iTunesAttributedUrl;
 - (NSString *)iTunesUrl;
+- (BOOL)isProcessingOnServer;
 
 #pragma mark - adding / creating
 
