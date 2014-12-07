@@ -41,7 +41,7 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 # NewStuff.todo
 
 ## Parse
-* Artist fetch could fail and the iTunes Id would be empty then.
+* Artist fetch could fail and the iTunes Id would be empty then (maybe a cleanup job?)
 * The store is always US (leads to iTunes link to items unavailable to the current User)
 	* Setup an artist and album (must run on all...) refresh job
 
