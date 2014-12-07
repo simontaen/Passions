@@ -280,7 +280,8 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
 		UIViewController *vc = nav.topViewController;
 		if ([vc isKindOfClass:[PASTimelineCVC class]]) {
-			if ([((PASTimelineCVC *)vc).objects count] == 0) {
+			PASTimelineCVC *tl = (PASTimelineCVC *)vc;
+			if (!tl.isLoading && tl.objects.count == 0) {
 				[MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
 			}
 		}
@@ -301,7 +302,8 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
 		UIViewController *vc = nav.topViewController;
 		if ([vc isKindOfClass:[PASTimelineCVC class]]) {
-			if ([((PASTimelineCVC *)vc).objects count] == 0) {
+			PASTimelineCVC *tl = (PASTimelineCVC *)vc;
+			if (!tl.isLoading && tl.objects.count == 0) {
 				[MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
 			}
 		}
