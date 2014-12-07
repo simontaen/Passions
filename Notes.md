@@ -62,7 +62,6 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 ## Artist and Album Info
 
 ## App Icon
-* Maybe only one color, like omnifocus, but keep the spotlight
 
 # 1.1 (?)
 * Dynamic Row height for bigger devices (5 and up, 6 and up)
