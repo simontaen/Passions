@@ -83,7 +83,7 @@
 
 - (BOOL)isProcessingOnServer
 {
-	return !!self.totalAlbums;
+	return !self.totalAlbums;
 }
 #pragma mark - adding / creating
 
