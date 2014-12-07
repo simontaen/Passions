@@ -15,6 +15,7 @@
 @interface PASTimelineCVC ()
 @property (strong, nonatomic) UIVisualEffectView *effectView;
 @property (nonatomic, weak) IBOutlet UIButton *swipeLeftHint;
+@property (nonatomic, assign) BOOL preferNetwok;
 @end
 
 @implementation PASTimelineCVC
@@ -44,7 +45,7 @@
 													  id obj = note.userInfo[kPASShowAlbumDetails];
 													  NSAssert([obj isKindOfClass:[PASAlbum class]], @"kPASShowAlbumDetails must carry a PASAlbum");
 													  [self _showAlbum:obj animated:NO];
-													  [self _refreshUI];
+													  [self refreshUI:YES];
 												  }];
 	// register to get notified if fav artists have been edited
 	[[NSNotificationCenter defaultCenter] addObserverForName:kPASDidEditFavArtists
@@ -55,7 +56,7 @@
 													  NSAssert([obj isKindOfClass:[NSNumber class]], @"kPASDidEditFavArtists must carry a NSNumber");
 													  BOOL didEditArtists = [((NSNumber *)obj) boolValue];
 													  if (didEditArtists && !self.isLoading) {
-														  [self _refreshUI];
+														  [self refreshUI:YES];
 													  }
 												  }];
 	return self;
@@ -65,6 +66,10 @@
 
 - (void)viewDidLoad
 {
+	// must execute before viewDidLoad such that
+	// queryForCollection can react correctly
+	self.preferNetwok = YES;
+	
 	[super viewDidLoad];
 	self.effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
 	
@@ -109,12 +114,10 @@
 	if ([PFUser currentUser].objectId) {
 		PFQuery *query = [PASAlbum albumsOfCurrentUsersFavoriteArtists];
 		
-		if (self.objects.count == 0) {
-			// first time, prefer the cache
-			query.cachePolicy = kPFCachePolicyCacheElseNetwork;
-		} else {
-			// we have objects, this is a refresh call
+		if (self.preferNetwok) {
 			query.cachePolicy = kPFCachePolicyNetworkOnly;
+		} else {
+			query.cachePolicy = kPFCachePolicyCacheElseNetwork;
 		}
 		
 		return query;
@@ -126,6 +129,8 @@
 - (void)objectsDidLoad:(NSError *)error
 {
 	[super objectsDidLoad:error];
+	self.preferNetwok = NO;
+
 	if (self.showSwipeHint) {
 		if (self.objects.count == 0 && !self.swipeLeftHint) {
 			UIImage *img = [PASResources swipeLeft];
@@ -211,10 +216,11 @@
 	[self.navigationController pushViewController:vc animated:YES];
 }
 
-#pragma mark - Private Methods
+#pragma mark - Public Methods
 
-- (void)_refreshUI
+- (void)refreshUI:(BOOL)network
 {
+	self.preferNetwok = network;
 	[self loadObjects];
 }
 

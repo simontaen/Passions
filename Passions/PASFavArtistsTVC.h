@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) UIViewController *addVcContainer;
 
+- (void)refreshUI:(BOOL)network;
+
 @end

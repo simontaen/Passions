@@ -45,7 +45,7 @@
 													  UINavigationController *nav = (UINavigationController *)self.selectedViewController;
 													  UIViewController *vc = nav.topViewController;
 													  if ([vc isKindOfClass:[PASTimelineCVC class]]) {
-														  [((PASTimelineCVC *)vc) loadObjects];
+														  [((PASTimelineCVC *)vc) refreshUI:YES];
 													  }
 													  // this is a one time only thing
 													  [[NSNotificationCenter defaultCenter] removeObserver:nil

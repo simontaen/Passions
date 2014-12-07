@@ -19,4 +19,6 @@
 
 - (void)helpViewWillAppear;
 
+- (void)refreshUI:(BOOL)network;
+
 @end

@@ -15,6 +15,10 @@
 #import "PASArtistInfoCVC.h"
 #import "PASManageArtists.h"
 
+@interface PASFavArtistsTVC ()
+@property (nonatomic, assign) BOOL preferNetwok;
+@end
+
 @implementation PASFavArtistsTVC
 
 #pragma mark - Init
@@ -54,7 +58,7 @@
 													  NSAssert([obj isKindOfClass:[NSNumber class]], @"kPASDidEditFavArtists must carry a NSNumber");
 													  BOOL didEditArtists = [((NSNumber *)obj) boolValue];
 													  if (didEditArtists) {
-														  [self _refreshUI];
+														  [self refreshUI:YES];
 													  }
 												  }];
 	return self;
@@ -64,6 +68,10 @@
 
 - (void)viewDidLoad
 {
+	// must execute before viewDidLoad such that
+	// queryForCollection can react correctly
+	self.preferNetwok = YES;
+	
 	[super viewDidLoad];
 	
 	// layout and look
@@ -93,7 +101,7 @@
 - (IBAction)resetFastimageCache:(UIBarButtonItem *)sender
 {
 	[[FICImageCache sharedImageCache] reset];
-	[self _refreshUI];
+	[self refreshUI:YES];
 }
 #endif
 
@@ -155,18 +163,22 @@
 	if ([PFUser currentUser].objectId) {
 		PFQuery *query = [PASArtist favArtistsForCurrentUser];
 		
-		if (self.objects.count == 0) {
-			// first time, prefer the cache
-			query.cachePolicy = kPFCachePolicyCacheElseNetwork;
-		} else {
-			// we have objects, this is a refresh call
+		if (self.preferNetwok) {
 			query.cachePolicy = kPFCachePolicyNetworkOnly;
+		} else {
+			query.cachePolicy = kPFCachePolicyCacheElseNetwork;
 		}
 		
 		return query;
 	}
 	DDLogDebug(@"CurrentUser not ready for FavArtists");
 	return nil; // shows loading spinner
+}
+
+- (void)objectsDidLoad:(NSError *)error
+{
+	[super objectsDidLoad:error];
+	self.preferNetwok = NO;
 }
 
 // Override to customize the look of a cell representing an object. The default is to display
@@ -183,8 +195,9 @@
 
 #pragma mark - Navigation
 
-- (void)_refreshUI
+- (void)refreshUI:(BOOL)network
 {
+	self.preferNetwok = network;
 	[self loadObjects];
 }
 
