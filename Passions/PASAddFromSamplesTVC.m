@@ -324,15 +324,17 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (void)clearCaches
 {
-	_cachedArtistsOrderedByName = nil;
-	_cachedAlphabeticalSectionIndex = nil;
-	_cachedAlphabeticalSections = nil;
-	
-	_cachedArtistsOrderedByPlaycount = nil;
-	_cachedPlaycountSectionIndex = nil;
-	_cachedPlaycountSections = nil;
-	
-	_sampleArtists = nil;
+	if (self.pageViewController.selectedViewController != self) {
+		_cachedArtistsOrderedByName = nil;
+		_cachedAlphabeticalSectionIndex = nil;
+		_cachedAlphabeticalSections = nil;
+		
+		_cachedArtistsOrderedByPlaycount = nil;
+		_cachedPlaycountSectionIndex = nil;
+		_cachedPlaycountSections = nil;
+		
+		_sampleArtists = nil;
+	}
 }
 
 #pragma mark - UITableViewDataSource required

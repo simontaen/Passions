@@ -105,11 +105,6 @@
 }
 #endif
 
-- (void)didReceiveMemoryWarning
-{
-	[super didReceiveMemoryWarning];
-}
-
 #pragma mark - UITableViewDataSource Editing
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
