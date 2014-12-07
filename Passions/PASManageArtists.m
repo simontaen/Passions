@@ -265,19 +265,17 @@
 		
 		[[LastFmFetchr fetchr] getChartsTopArtists:nil
 										 withLimit:3 completion:^(LFMChartTopArtists *data, NSError *error) {
+											 NSMutableArray *artistNames = [NSMutableArray arrayWithCapacity:3];
 											 if (data && !error) {
-												 NSMutableArray *artistNames = [NSMutableArray arrayWithCapacity:3];
-												 
 												 for (LFMArtistChart *artist in [data artists]) {
 													 [artistNames addObject:[artist name]];
 												 }
-												 favingBlock(artistNames);
 											 } else {
 												 DDLogError(@"%@", [error description]);
-												 favingBlock(@[]);
 											 }
+											 favingBlock(artistNames);
 										 }];
-	
+		
 	} else {
 		NSArray *topArtists = [PASMediaQueryAccessor sharedMngr].artistCollectionsOrderedByPlaycount;
 		NSMutableArray *artistNames = [NSMutableArray arrayWithCapacity:3];
