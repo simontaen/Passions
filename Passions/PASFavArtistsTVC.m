@@ -17,6 +17,7 @@
 
 @interface PASFavArtistsTVC ()
 @property (nonatomic, assign) BOOL preferNetwok;
+@property (nonatomic, assign) BOOL isWaitingForServer;
 @end
 
 @implementation PASFavArtistsTVC
@@ -158,7 +159,7 @@
 	if ([PFUser currentUser].objectId) {
 		PFQuery *query = [PASArtist favArtistsForCurrentUser];
 		
-		if (self.preferNetwok) {
+		if (self.preferNetwok || self.isWaitingForServer) {
 			query.cachePolicy = kPFCachePolicyNetworkOnly;
 		} else {
 			query.cachePolicy = kPFCachePolicyCacheElseNetwork;
@@ -173,6 +174,7 @@
 - (void)objectsDidLoad:(NSError *)error
 {
 	[super objectsDidLoad:error];
+	self.isWaitingForServer = NO;
 	self.preferNetwok = NO;
 }
 
@@ -182,6 +184,10 @@
 {
 	PASArtist *artist = (PASArtist *)object;
 	PASArtistTVCell *cell = [tableView dequeueReusableCellWithIdentifier:[PASArtistTVCell reuseIdentifier] forIndexPath:indexPath];
+	
+	if ([artist isProcessingOnServer]) {
+		self.isWaitingForServer = YES;
+	}
 	
 	[cell showArtist:artist withName:artist.name andDetailTextBlock:nil];
 	
