@@ -96,6 +96,8 @@
     PFQuery *query = self.queryForCollection;
 	
 	if (query) {
+		// Enter the loading state
+		self.isLoading = YES;		
 		[self objectsWillLoad];
 		
 		if (self.paginationEnabled) {
@@ -148,9 +150,6 @@
 
 - (void)objectsWillLoad
 {
-	// Enter the loading state
-	self.isLoading = YES;
-	
 	// Display the loading thingy
 	if (self.loadingViewEnabled) {
 		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

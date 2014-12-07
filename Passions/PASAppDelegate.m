@@ -31,7 +31,7 @@
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
-
+@property (nonatomic, assign) BOOL didFavoriteInitialArtists;
 @end
 
 @implementation PASAppDelegate
@@ -131,6 +131,28 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 					if (succeeded && !error) {
 						DDLogDebug(@"Current User initialized: %@", currentUser.objectId);
 						[Crashlytics setUserIdentifier:[PFUser currentUser].objectId];
+						
+						self.didFavoriteInitialArtists = NO;
+						[[NSNotificationCenter defaultCenter] addObserverForName:kPASDidFavoriteInitialArtists
+																		  object:nil queue:nil
+																	  usingBlock:^(NSNotification *note) {
+																		  self.didFavoriteInitialArtists = YES;
+																		  dispatch_async(dispatch_get_main_queue(), ^{
+																			  [MBProgressHUD hideHUDForView:self.window.rootViewController.view animated:YES];
+																		  });
+																		  
+																		  PASRootVC *rootVc = (PASRootVC *)self.window.rootViewController;
+																		  UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
+																		  UIViewController *vc = nav.topViewController;
+																		  if ([vc isKindOfClass:[PASTimelineCVC class]]) {
+																			  [((PASTimelineCVC *)vc) refreshUI:YES];
+																		  }
+
+																		  // this is a one time only thing
+																		  [[NSNotificationCenter defaultCenter] removeObserver:nil
+																														  name:kPASDidFavoriteInitialArtists
+																														object:self];
+																	  }];
 						[[PASManageArtists sharedMngr] addInitialFavArtists];
 					} else {
 						DDLogError(@"Could not initialize User: %@", [error localizedDescription]);
@@ -275,17 +297,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-	if ([GBVersionTracking isFirstLaunchEver]) {
-		PASRootVC *rootVc = (PASRootVC *)self.window.rootViewController;
-		UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
-		UIViewController *vc = nav.topViewController;
-		if ([vc isKindOfClass:[PASTimelineCVC class]]) {
-			PASTimelineCVC *tl = (PASTimelineCVC *)vc;
-			if (!tl.isLoading && tl.objects.count == 0) {
-				[MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
-			}
-		}
-	}
+	[self _processDidRegisterForRemoteNotifications];
 	
 	// Store the deviceToken in the current installation and save it to Parse.
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
@@ -297,23 +309,41 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-	if ([GBVersionTracking isFirstLaunchEver]) {
-		PASRootVC *rootVc = (PASRootVC *)self.window.rootViewController;
-		UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
-		UIViewController *vc = nav.topViewController;
-		if ([vc isKindOfClass:[PASTimelineCVC class]]) {
-			PASTimelineCVC *tl = (PASTimelineCVC *)vc;
-			if (!tl.isLoading && tl.objects.count == 0) {
-				[MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
-			}
-		}
-	}
+	[self _processDidRegisterForRemoteNotifications];
 	
 	if (error.code == 3010) {
 		DDLogVerbose(@"Push notifications are not supported in the iOS Simulator.");
 	} else {
 		// show some alert or otherwise handle the failure to register.
 		DDLogError(@"%@", [error description]);
+	}
+}
+
+- (void)_processDidRegisterForRemoteNotifications
+{
+	if ([GBVersionTracking isFirstLaunchEver]) {
+		PASRootVC *rootVc = (PASRootVC *)self.window.rootViewController;
+		UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
+		UIViewController *vc = nav.topViewController;
+		if ([vc isKindOfClass:[PASTimelineCVC class]]) {
+			PASTimelineCVC *tl = (PASTimelineCVC *)vc;
+			if (!tl.isLoading) { // this could mean
+				if (!self.didFavoriteInitialArtists) {
+					// NOT YET loading (kPASDidFavoriteInitialArtists not yet fired, still faving initial artists)
+					// either the user went through the onboarding very fast or initial faving takes very long
+					// show hud which will be hidden when kPASDidFavoriteInitialArtists fires
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
+					});
+				} else {
+					// NOT ANYMORE loading
+					// either the user took long with the onboarding or the initial faving was very fast
+					// sometimes (when a user faved an Artists that had to be created), the refreshUI triggered by
+					// kPASDidFavoriteInitialArtists did not bring back all Albums (since they need to be fetched)
+					[tl refreshUI:YES];
+				}
+			}
+		}
 	}
 }
 

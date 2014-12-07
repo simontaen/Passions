@@ -32,26 +32,6 @@
 													  // Show Timeline when push arrives
 													  [self transitionToViewControllerAtIndex:0 interactive:NO];
 												  }];
-	[[NSNotificationCenter defaultCenter] addObserverForName:kPASDidFavoriteInitialArtists
-													  object:nil queue:nil
-												  usingBlock:^(NSNotification *note) {
-													  if (self.selectedViewControllerIndex != 0) {
-														  // this shouldn't happen, but go back to Timeline
-														  [self transitionToViewControllerAtIndex:0 interactive:NO];
-													  }
-													  
-													  [MBProgressHUD hideHUDForView:self.view animated:YES];
-													  
-													  UINavigationController *nav = (UINavigationController *)self.selectedViewController;
-													  UIViewController *vc = nav.topViewController;
-													  if ([vc isKindOfClass:[PASTimelineCVC class]]) {
-														  [((PASTimelineCVC *)vc) refreshUI:YES];
-													  }
-													  // this is a one time only thing
-													  [[NSNotificationCenter defaultCenter] removeObserver:nil
-																									  name:kPASDidFavoriteInitialArtists
-																									object:self];
-												  }];
 	// init and add the page view controllers view controllers
 	self.viewControllers = @[[self _timeline], [self _favArtists]];
 }
