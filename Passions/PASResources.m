@@ -7,6 +7,7 @@
 //
 
 #import "PASResources.h"
+#import "SPTImage.h"
 
 //For archive build, use "Passions"
 #ifndef DEBUG
@@ -190,6 +191,65 @@ NSString *const ImageFormatNameAlbumThumbnailLarge = @"ImageFormatNameAlbumThumb
 {
 	NSLocale *locale = [NSLocale autoupdatingCurrentLocale];
 	return [locale objectForKey: NSLocaleCountryCode];
+}
+
++ (NSURL *)optimalImageUrlForParseObjects:(NSArray *)images
+{
+	if (images.count == 0) {
+		return nil;
+	}
+	
+	CGFloat screenWidth = [UIScreen mainScreen].nativeBounds.size.width;
+	NSDictionary *smallestImgObjForScreen;
+	
+	for (NSDictionary *imgObj in images) {
+		NSNumber *imgWidth = imgObj[@"width"];
+		
+		if ([imgWidth floatValue] >= screenWidth) {
+			smallestImgObjForScreen = imgObj;
+		}
+	}
+	NSString *url = smallestImgObjForScreen ? smallestImgObjForScreen[@"url"] : [images firstObject][@"url"];
+	return [NSURL URLWithString:url];
+}
+
++ (NSURL *)optimalImageUrlForSpotifyObjects:(NSArray *)images
+{
+	if (images.count == 0) {
+		return nil;
+	}
+	
+	CGFloat targetSize = kPASSizeArtistThumbnailSmall * [UIScreen mainScreen].nativeScale;
+	SPTImage *biggestImgObj;
+	SPTImage *optimalImgObj;
+	CGFloat optimalDistance;
+	
+	for (SPTImage *imgObj in images) {
+		CGFloat imgWidth = imgObj.size.width;
+		CGFloat distance = imgWidth - targetSize;
+
+		if (!optimalImgObj) {
+			biggestImgObj = imgObj;
+			optimalImgObj = imgObj;
+			optimalDistance = distance >= 0 ?: MAXFLOAT;
+			
+		} else {
+			if (distance >= 0 && distance < optimalDistance) {
+				optimalDistance = distance;
+				optimalImgObj = imgObj;
+			}
+			
+			if (imgWidth > biggestImgObj.size.width) {
+				biggestImgObj = imgObj;
+			}
+		}
+	}
+	
+	if (optimalImgObj) {
+		return optimalImgObj.imageURL;
+	} else {
+		return biggestImgObj.imageURL;
+	}
 }
 
 + (void)printViewControllerLayoutStack:(UIViewController *)viewController

@@ -53,13 +53,8 @@
 {
 	id obj = objc_getAssociatedObject(self, @selector(_imageURL));
 	if (!obj) {
-		NSURL *url;
-		if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || self.images.count < 4) {
-			url = [[self.images firstObject] imageURL];
-		} else {
-			// we have 4 or more images, the second image should suffice for iPhone
-			url = [self.images[1] imageURL];
-		}
+		NSURL *url = [PASResources optimalImageUrlForSpotifyObjects:self.images];
+		objc_setAssociatedObject(self, @selector(_imageURL), url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 		return url;
 	}
 	return obj;

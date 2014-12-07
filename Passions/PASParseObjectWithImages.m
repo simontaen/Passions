@@ -10,11 +10,12 @@
 #import "FICUtilities.h"
 #import "UIImage+Utils.h"
 #import "PASAlbum.h"
+#import "PASResources.h"
 
 @interface PASParseObjectWithImages ()
 @property (nonatomic, copy, readwrite) NSString *UUID;
 @property (nonatomic, copy, readwrite) NSURL *sourceImageURL;
-@property (nonatomic, strong) NSArray* images; // of NSString, ordered big to small
+@property (nonatomic, strong) NSArray* images; // of NSDictionary, ordered big to small
 @end
 
 @implementation PASParseObjectWithImages
@@ -28,15 +29,8 @@
 // returns nil or a url from parse
 - (NSURL *)sourceImageURL
 {
-	if (!_sourceImageURL && [self.images firstObject]) {
-		NSString *url;
-		if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || self.images.count < 4) {
-			url = [self.images firstObject];
-		} else {
-			// we have 4 or more images, the second image should suffice for iPhone
-			url = self.images[1];
-		}
-		_sourceImageURL = [NSURL URLWithString:url];
+	if (!_sourceImageURL) {
+		_sourceImageURL = [PASResources optimalImageUrlForParseObjects:self.images];
 	}
 	return _sourceImageURL;
 }

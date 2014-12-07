@@ -67,6 +67,9 @@ extern NSString *const ImageFormatNameAlbumThumbnailLarge;
 
 + (NSString *)userCountry;
 
++ (NSURL *)optimalImageUrlForParseObjects:(NSArray *)images;
++ (NSURL *)optimalImageUrlForSpotifyObjects:(NSArray *)images;
+
 + (void)printViewControllerLayoutStack:(UIViewController *)viewController;
 + (void)printViewLayoutStack:(UIViewController *)vc;
 + (void)printSubviews:(UIView *)vw;
