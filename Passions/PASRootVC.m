@@ -11,6 +11,7 @@
 #import "PASFavArtistsTVC.h"
 #import "PASInteractiveTransition.h"
 #import "GBVersionTracking.h"
+#import "MBProgressHUD.h"
 
 @interface PASRootVC ()
 @property (nonatomic, assign) BOOL didOnboard;
@@ -38,6 +39,8 @@
 														  // this shouldn't happen, but go back to Timeline
 														  [self transitionToViewControllerAtIndex:0 interactive:NO];
 													  }
+													  
+													  [MBProgressHUD hideHUDForView:self.view animated:YES];
 													  
 													  UINavigationController *nav = (UINavigationController *)self.selectedViewController;
 													  UIViewController *vc = nav.topViewController;
