@@ -11,7 +11,7 @@
 #import "GBVersiontracking.h"
 
 @interface PASColorPickerCache()
-@property (nonatomic, strong) LEColorPicker *picker;
+@property (nonatomic, strong) LEColorPicker *picker; // deallocates itself
 @property (nonatomic, strong) NSMutableDictionary* cache;
 @end
 
@@ -37,7 +37,6 @@
 													  object:nil queue:nil
 												  usingBlock:^(NSNotification *note) {
 													  [self writeToDisk];
-													  self.picker = nil;
 													  self.cache = nil;
 												  }];
 	return self;
@@ -114,8 +113,10 @@
 
 - (void)writeToDisk
 {
-	NSData *cacheData = [NSKeyedArchiver archivedDataWithRootObject:self.cache];
-	[UICKeyChainStore setData:cacheData forKey:NSStringFromClass([self class])];
+	if (self.cache) {
+		NSData *cacheData = [NSKeyedArchiver archivedDataWithRootObject:self.cache];
+		[UICKeyChainStore setData:cacheData forKey:NSStringFromClass([self class])];
+	}
 }
 
 #pragma mark - dealloc
