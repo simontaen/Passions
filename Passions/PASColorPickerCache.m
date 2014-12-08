@@ -113,7 +113,7 @@
 
 - (void)writeToDisk
 {
-	if (self.cache) {
+	if (_cache) { // access directly to avoid initializing cache
 		NSData *cacheData = [NSKeyedArchiver archivedDataWithRootObject:self.cache];
 		[UICKeyChainStore setData:cacheData forKey:NSStringFromClass([self class])];
 	}

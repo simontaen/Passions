@@ -326,28 +326,30 @@
 
 - (void)writeToDisk
 {
-	// save name corrections
-	dispatch_barrier_sync(self.correctionsQ, ^{
-		NSFileManager *mng = [NSFileManager defaultManager];
-		NSURL *cacheDir = [[mng URLsForDirectory:NSApplicationSupportDirectory
-									   inDomains:NSUserDomainMask] firstObject];
-		NSURL *cacheFile = [cacheDir URLByAppendingPathComponent:NSStringFromClass([self class])];
-		
-		// make sure the cacheDir exists
-		if (![mng fileExistsAtPath:[cacheDir path]
-					   isDirectory:nil]) {
-			NSError *err = nil;
-			BOOL success = [mng createDirectoryAtURL:cacheDir
-						 withIntermediateDirectories:YES
-										  attributes:nil
-											   error:&err];
-			if (!success) {
-				DDLogError(@"Cannot create cache dir (%@)", [err localizedDescription]);
+	if (_artistNameCorrections) { // access directly to avoid initializing cache
+		// save name corrections
+		dispatch_barrier_sync(self.correctionsQ, ^{
+			NSFileManager *mng = [NSFileManager defaultManager];
+			NSURL *cacheDir = [[mng URLsForDirectory:NSApplicationSupportDirectory
+										   inDomains:NSUserDomainMask] firstObject];
+			NSURL *cacheFile = [cacheDir URLByAppendingPathComponent:NSStringFromClass([self class])];
+			
+			// make sure the cacheDir exists
+			if (![mng fileExistsAtPath:[cacheDir path]
+						   isDirectory:nil]) {
+				NSError *err = nil;
+				BOOL success = [mng createDirectoryAtURL:cacheDir
+							 withIntermediateDirectories:YES
+											  attributes:nil
+												   error:&err];
+				if (!success) {
+					DDLogError(@"Cannot create cache dir (%@)", [err localizedDescription]);
+				}
 			}
-		}
-		
-		[self.artistNameCorrections writeToURL:cacheFile atomically:NO];
-	});
+			
+			[self.artistNameCorrections writeToURL:cacheFile atomically:NO];
+		});
+	}
 }
 
 #pragma mark - dealloc
