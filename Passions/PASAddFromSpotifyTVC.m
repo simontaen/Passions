@@ -49,12 +49,6 @@
 	// perpare for caching artists
 	self.artistsQ = dispatch_queue_create("spotifyArtistsQ", DISPATCH_QUEUE_CONCURRENT);
 	
-	// Try to get a stored Seesion
-	NSData *sessionData = [UICKeyChainStore dataForKey:NSStringFromClass([self class])];
-	if (sessionData) {
-		self.session = [NSKeyedUnarchiver unarchiveObjectWithData:sessionData];
-	}
-	
 	// Detail Text Formatting
 	__weak typeof(self) weakSelf = self;
 	self.detailTextBlock = ^NSString *(id<FICEntity> artist, NSString *name) {
@@ -102,6 +96,41 @@
 	return _spotifyButton;
 }
 
+@synthesize session = _session;
+
+- (SPTSession *)session
+{
+	if (!_session) {
+		// Try to get a stored Seesion
+		NSData *sessionData = [UICKeyChainStore dataForKey:NSStringFromClass([self class])];
+		if (sessionData) {
+			_session = [NSKeyedUnarchiver unarchiveObjectWithData:sessionData];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self _configureSpotifyButton];
+			});
+		}
+	}
+	return _session;
+}
+
+- (void)setSession:(SPTSession *)session
+{
+	if (_session != session) {
+		_session = session;
+		if (!_session) {
+			// clear session and caches
+			[UICKeyChainStore removeItemForKey:NSStringFromClass([self class])];
+		} else {
+			// Persist the new session
+			NSData *sessionData = [NSKeyedArchiver archivedDataWithRootObject:_session];
+			[UICKeyChainStore setData:sessionData forKey:NSStringFromClass([self class])];
+		}
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self _configureSpotifyButton];
+		});
+	}
+}
+
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
@@ -115,6 +144,9 @@
 		// the caches did not get executed, do it now
 		[self prepareCaches];
 	}
+	
+	// update button status initially
+	[self _configureSpotifyButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -399,7 +431,6 @@
 														 style:UIAlertActionStyleDefault
 													   handler:^(UIAlertAction * action) {
 														   self.session = nil;
-														   [self _configureSpotifyButton];
 														   [self clearCaches];
 														   [self prepareCaches];
 														   [self spotifyButtonTapped:nil];
@@ -432,15 +463,12 @@
 - (void)spotifyButtonTapped:(UIBarButtonItem *)sender
 {
 	if (self.session) {
-		// clear session and caches
-		[UICKeyChainStore removeItemForKey:NSStringFromClass([self class])];
 		self.session = nil;
 		[self clearCaches];
 		// this will set up for login
 		[self _validateSessionWithCallback:nil];
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[self.tableView reloadData];
-			[self _configureSpotifyButton];
 		});
 		
 	} else {
@@ -479,22 +507,20 @@
 			[self _handleError:error];
 			
 		} else {
-			// We are authenticated, cleanup
-			[[NSNotificationCenter defaultCenter] removeObserver:self.observer];
-			self.observer = nil;
-			
-			// Persist the new session and fetch new data
+			// Store the new Session
 			self.session = session;
 			self.sessionIsRenewing = NO;
 			
+			// Fire the callback
 			if (completion) {
 				dispatch_async(dispatch_get_main_queue(), ^{
-					[self _configureSpotifyButton];
 					completion();
 				});
 			}
-			NSData *sessionData = [NSKeyedArchiver archivedDataWithRootObject:self.session];
-			[UICKeyChainStore setData:sessionData forKey:NSStringFromClass([self class])];
+			
+			// We are authenticated, cleanup
+			[[NSNotificationCenter defaultCenter] removeObserver:self.observer];
+			self.observer = nil;
 		}
 		
 	};
@@ -522,8 +548,6 @@
 		[[SPTAuth defaultInstance] renewSession:self.session withServiceEndpointAtURL:[PASResources spotifyTokenRefresh] callback:authCallback];
 		
 	} else if (!self.sessionIsRenewing && completion) {
-		// update button status
-		[self _configureSpotifyButton];
 		completion();
 	}
 	// a session renewal is in progress: don't do anything
