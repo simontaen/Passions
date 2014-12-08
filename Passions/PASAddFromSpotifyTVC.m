@@ -338,25 +338,34 @@
 				weakSelf.fetchedAllPartialArtists = YES;
 			}
 			
-			for (SPTSavedTrack *track in [list items]) {
-				[weakSelf _cacheArtistsFromArray:track.artists completion:^(NSError *innerError) {
-					// this only gets called when all (overall!) artists have been processed
-					if (!weakSelf.isFetching) return; // fetching got cancelled
-					
-					if (!innerError) {
-						weakSelf.isFetching = NO;
-						if (completion) {
-							completion(nil);
+			NSArray *items = [list items];
+			if (items.count) {
+				// process items
+				for (SPTSavedTrack *track in items) {
+					[weakSelf _cacheArtistsFromArray:track.artists completion:^(NSError *innerError) {
+						// this only gets called when all (overall!) artists have been processed
+						if (!weakSelf.isFetching) return; // fetching got cancelled
+						
+						if (!innerError) {
+							weakSelf.isFetching = NO;
+							if (completion) {
+								completion(nil);
+							}
+							
+						} else if (completion) {
+							completion(innerError);
 						}
 						
-					} else if (completion) {
-						completion(innerError);
-					}
+					}];
 					
-				}];
+					// cache track for all artists
+					[weakSelf _cacheTrack:track forArtists:track.artists];
+				}
 				
-				// cache track for all artists
-				[weakSelf _cacheTrack:track forArtists:track.artists];
+			} else if (completion) {
+				// loading was successful but no artists are available
+				weakSelf.isFetching = YES;
+				completion(nil);
 			}
 			
 		} else if (completion) {
