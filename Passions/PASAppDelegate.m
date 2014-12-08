@@ -53,9 +53,8 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	[LastFmFetchr fetchrWithApiKey:kPASLastFmApiKey];
 	
 	[self _setupCrashlytics];
-	[self _setupParse];
+	[self _setupParse]; // also sets up CocoaLumberjack
 	[self _setupImageCache];
-	[self _setupCocoaLumberjack];
 	
 	if (application.applicationState != UIApplicationStateBackground) {
 		// Track an app open here if NOT from push,
@@ -83,6 +82,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 #pragma mark - CocoaLumberjack
 
+// run this AFTER Parse (because we use Parse as a logger which needs API and Client key)
 - (void)_setupCocoaLumberjack
 {
 	[DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:LOG_LEVEL_VERBOSE];
@@ -94,7 +94,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 #pragma mark - Parse
 
-// run this AFTER Crashlytics
+// run this AFTER Crashlytics since we'll set the Parse user id on it
 - (void)_setupParse
 {
 	// Setup GBVersionTracking
@@ -102,6 +102,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	
 	[Parse setApplicationId:kPASParseAppId
 				  clientKey:kPASParseClientKey];
+	[self _setupCocoaLumberjack];
 	
 	// does the error callback still get called?
 //	[Parse errorMessagesEnabled:YES];
