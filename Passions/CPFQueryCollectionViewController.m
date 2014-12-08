@@ -76,16 +76,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     // Perform the first query
 	[self _performQuery:NO];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	if (!self.isLoading && !self.objects) {
+		self.objects = [NSArray new];
+		[self _performQuery:NO];
+	}
 }
 
 - (void)didReceiveMemoryWarning
 {
 	[super didReceiveMemoryWarning];
 	// clear objects when we're not loading and not on screen
-	if (!self.isLoading && self.pageViewController.selectedViewController != self) self.objects = [NSArray new];
+	if (!self.isLoading && self.pageViewController.selectedViewController != self.parentViewController) {
+		// view is not on screen, viewWillAppear is definitely going to be called
+		self.objects = nil;
+	}
 }
 
 #pragma mark - Parse.com logic
@@ -126,7 +137,7 @@
 			} else {
 				if (self.paginationEnabled && refreshing) {
 					//add a new page of objects
-					self.objects = [self.objects arrayByAddingObjectsFromArray:objects];
+					self.objects = [objects arrayByAddingObjectsFromArray:self.objects];
 				} else {
 					self.objects = objects;
 				}
