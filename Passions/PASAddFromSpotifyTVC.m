@@ -323,6 +323,13 @@
 	self.artistsInPromotion = 0;
 	__weak typeof(self) weakSelf = self;
 	
+	void (^myCompletion)(NSError*) = ^void(NSError *error) {
+		weakSelf.isFetching = NO;
+		if (completion) {
+			completion(error);
+		}
+	};
+	
 	// the block to recursivly fetch all tracks
 	self.savedTracksForUserCallback = ^void(NSError *error, id object) {
 		if (!weakSelf.isFetching) return; // fetching got cancelled
@@ -340,36 +347,28 @@
 			
 			NSArray *items = [list items];
 			if (items.count) {
-				// process items
+				// process available items
 				for (SPTSavedTrack *track in items) {
 					[weakSelf _cacheArtistsFromArray:track.artists completion:^(NSError *innerError) {
 						// this only gets called when all (overall!) artists have been processed
 						if (!weakSelf.isFetching) return; // fetching got cancelled
 						
-						if (!innerError) {
-							weakSelf.isFetching = NO;
-							if (completion) {
-								completion(nil);
-							}
-							
-						} else if (completion) {
-							completion(innerError);
-						}
-						
+						// finish up
+						innerError ? myCompletion(innerError) : myCompletion (nil);
 					}];
 					
 					// cache track for all artists
 					[weakSelf _cacheTrack:track forArtists:track.artists];
 				}
 				
-			} else if (completion) {
-				// loading was successful but no artists are available
-				weakSelf.isFetching = YES;
-				completion(nil);
+			} else {
+				// Loading was successful but no artists are available
+				myCompletion(nil);
 			}
 			
-		} else if (completion) {
-			completion(error);
+		} else {
+			// Something went wrong
+			myCompletion(error);
 		}
 	};
 	
