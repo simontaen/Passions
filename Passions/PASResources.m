@@ -23,7 +23,7 @@ NSString * const kPASParseClientKey = @"jxhd6vVmIttc1EVfre4Lcza9uwlKzDrCzqZJGSI9
 NSString * const kPASParseMasterKey = @"Mx6FjfJ4FYW6fi9Ra1G23AEcQuDgtm2xBH1yRhS7";
 #endif
 
-NSString * const kPASLastFmApiKey = @"aed3367b0133ab707cb4e5b6b04da3e7";
+NSString * const kPASLastFmApiKey = @"c830eb62c631873914abae9f0bf22d40";
 CGFloat const kPASLastFmTimeoutInSec = 5.0;
 
 NSString * const kPASSpotifyClientId = @"e3e0a8c3a7c14f488c166528b08d095e";
