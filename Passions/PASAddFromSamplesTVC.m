@@ -481,13 +481,14 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	switch (error.code) {
 		case 141: // Parse timeout
 		case 142: // Parse Validation failed
-		case -999: // LastFMFetchr artist.getCorrection cancelled
-		case -1001: // Spotify Timeout
+		case -999: // LFM artist.getCorrection cancelled (logged from initial)
+		case -1001: // LFM operation couldn’t be completed (logged from initial)
 			msg = @"The operation timed out.";
 			break;
 		case -1009: // Spotify no Internet
 			msg = @"The Internet connection appears to be offline.";
 			break;
+		case 101: // Parse object not found for update, this is not recoverable
 		default:
 			DDLogError(@"Something went wrong: %@", [error description]);
 			msg = @"Something went wrong.";

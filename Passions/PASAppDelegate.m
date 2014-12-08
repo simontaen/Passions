@@ -287,7 +287,8 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 
 - (void)imageCache:(FICImageCache *)imageCache errorDidOccurWithMessage:(NSString *)errorMessage
 {
-	if ([errorMessage containsString:@"returned a nil source image URL"]) {
+	if ([errorMessage containsString:@"returned a nil source image URL"] ||
+		[errorMessage containsString:@"unable to evict entry from table"]) {
 		DDLogVerbose(@"%@", errorMessage);
 	} else {
 		DDLogError(@"%@", errorMessage);
