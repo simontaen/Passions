@@ -160,7 +160,7 @@
 - (void)clearCaches
 {
 	[super clearCaches];
-	if (!self.isFetching && self.pageViewController.selectedViewController != self) {
+	if (!self.isFetching && self.pageViewController.selectedViewController != self.parentViewController) {
 		self.artists = nil;
 		self.artistsTracks = nil;
 		self.fetchedAllPartialArtists = NO;

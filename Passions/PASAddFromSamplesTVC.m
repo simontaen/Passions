@@ -324,7 +324,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (void)clearCaches
 {
-	if (self.pageViewController.selectedViewController != self) {
+	if (self.pageViewController.selectedViewController != self.parentViewController) {
 		_cachedArtistsOrderedByName = nil;
 		_cachedAlphabeticalSectionIndex = nil;
 		_cachedAlphabeticalSections = nil;
