@@ -468,7 +468,7 @@
 		// this will set up for login
 		[self _validateSessionWithCallback:nil];
 		dispatch_async(dispatch_get_main_queue(), ^{
-			[self.tableView reloadData];
+			if (!self.isFetching) [self.tableView reloadData];
 		});
 		
 	} else {
