@@ -290,7 +290,9 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 - (void)didReceiveMemoryWarning
 {
 	[super didReceiveMemoryWarning];
-	[self clearCaches];
+	if (self.pageViewController.selectedViewController != self.parentViewController) {
+		[self clearCaches];
+	}
 }
 
 #pragma mark - Caching
@@ -324,17 +326,15 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (void)clearCaches
 {
-	if (self.pageViewController.selectedViewController != self.parentViewController) {
-		_cachedArtistsOrderedByName = nil;
-		_cachedAlphabeticalSectionIndex = nil;
-		_cachedAlphabeticalSections = nil;
-		
-		_cachedArtistsOrderedByPlaycount = nil;
-		_cachedPlaycountSectionIndex = nil;
-		_cachedPlaycountSections = nil;
-		
-		_sampleArtists = nil;
-	}
+	_cachedArtistsOrderedByName = nil;
+	_cachedAlphabeticalSectionIndex = nil;
+	_cachedAlphabeticalSections = nil;
+	
+	_cachedArtistsOrderedByPlaycount = nil;
+	_cachedPlaycountSectionIndex = nil;
+	_cachedPlaycountSections = nil;
+	
+	_sampleArtists = nil;
 }
 
 #pragma mark - UITableViewDataSource required
