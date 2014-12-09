@@ -256,13 +256,13 @@
 		[self passFavArtists:@[]];
 	}
 	
-	void (^favingBlock)(NSArray*) = ^void(NSArray *artistNames) {
+	void (^favingBlock)(NSArray*, BOOL) = ^void(NSArray *artistNames, BOOL needCorrection) {
 		int __block doneCounter = 0;
 		NSUInteger count = artistNames.count;
 		
 		for (NSString *artistName in artistNames) {
 			[self _favoriteArtistByCurrentUser:artistName
-							   needsCorrection:NO
+							   needsCorrection:needCorrection
 								  originalName:artistName
 									completion:^(NSError *error) {
 				doneCounter++;
@@ -290,7 +290,7 @@
 											 } else {
 												 DDLogError(@"%@", [error description]);
 											 }
-											 favingBlock(artistNames);
+											 favingBlock(artistNames, NO);
 										 }];
 		
 	} else {
@@ -305,7 +305,7 @@
 				break;
 			}
 		}
-		favingBlock(artistNames);
+		favingBlock(artistNames, YES);
 	}
 }
 
