@@ -46,7 +46,8 @@
 + (PFQuery *)favArtistsForCurrentUser
 {
 	PFQuery *query = [PASArtist query];
-	[query whereKey:@"objectId" containedIn:(NSArray *)[[PFUser currentUser] objectForKey:@"favArtists"]];
+	NSArray *favArtists = (NSArray *)[[PFUser currentUser] objectForKey:@"favArtists"] ?: @[];
+	[query whereKey:@"objectId" containedIn:favArtists];
 	[query orderByAscending:@"name"];
 	return query;
 }

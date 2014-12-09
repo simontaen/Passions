@@ -48,7 +48,8 @@
 + (PFQuery *)albumsOfCurrentUsersFavoriteArtists
 {
 	PFQuery *query = [PASAlbum query];
-	[query whereKey:@"artistId" containedIn:(NSArray *)[[PFUser currentUser] objectForKey:@"favArtists"]];
+	NSArray *favArtists = (NSArray *)[[PFUser currentUser] objectForKey:@"favArtists"] ?: @[];
+	[query whereKey:@"artistId" containedIn:favArtists];
 	[query orderByDescending:@"releaseDate"];
 	return query;
 }
