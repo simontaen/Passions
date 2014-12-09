@@ -271,9 +271,9 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	if (self.hudMsg) {
-		[self _showHudMessage:self.hudMsg];
-		self.hudMsg = nil;
+	if (self.loadingHudMsg) {
+		[self _showHudMessage:self.loadingHudMsg];
+		self.loadingHudMsg = nil;
 	}
 }
 
@@ -538,7 +538,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 			self.pageViewController.navigationItem.leftBarButtonItem.enabled = NO;
 		});
 	} else {
-		self.hudMsg = msg;
+		self.loadingHudMsg = msg;
 	}
 }
 
@@ -551,7 +551,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (void)hideProgressHud
 {
-	self.hudMsg = nil;
+	self.loadingHudMsg = nil;
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[MBProgressHUD hideHUDForView:self.extendedNavController.view animated:YES];
 		self.extendedNavController.segmentedControl.enabled = YES;

@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, PASAddArtistsSortOrder) {
 // Formatting Blocks
 @property (nonatomic, copy) NSString * (^detailTextBlock)(id<FICEntity> artist, NSString *name);
 // A message to be displayed in a HUD, if set the hud needs to be displayed
-@property (nonatomic, strong) NSString *hudMsg;
+@property (nonatomic, strong) NSString *loadingHudMsg;
 
 // Mapping an index, usually from a UISegmentedControl, to a sort order.
 - (PASAddArtistsSortOrder)sortOrderForIndex:(NSInteger)idx;
