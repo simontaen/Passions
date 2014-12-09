@@ -77,6 +77,7 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 # 1.1 (?)
 
 * Dynamic Row height for bigger devices (5 and up, 6 and up)
+* Custom font?
 * search for not in library artists to add (but consider all resources!) - **number one feature request**!
 * alert when trying to logout on spotify (accidentally triggering sucks)
 * Maybe hide the control after a few moments (it's in the way always)
