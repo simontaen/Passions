@@ -89,7 +89,8 @@
 
 + (void)favoriteArtistByCurrentUser:(NSString *)artistName
 					needsCorrection:(BOOL)needsCorrection
-						 completion:(void (^)(PASArtist *artist, NSError *error))completion;
+						   saveUser:(BOOL)saveUser
+						 completion:(void (^)(PASArtist *artist, NSError *error))completion
 {
 	NSParameterAssert(artistName);
 	NSDate *start = [NSDate date];
@@ -97,7 +98,7 @@
 	void (^favingBlock)(PASArtist*, NSError*) = ^void(PASArtist *favingArtist, NSError *error) {
 		if (favingArtist && !error) {
 			// create the relationsship with the user
-			[favingArtist _addCurrentUserAsFavoriteWithCompletion:^(PASArtist *blockArtist, NSError *error) {
+			[favingArtist _addCurrentUserAsFavoriteAndSave:saveUser completion:^(PASArtist *blockArtist, NSError *error) {
 				[PASArtist _logStats:start artistName:blockArtist.name success:(blockArtist && !error) add:YES];
 				blockArtist && !error ? completion(blockArtist, nil) : completion(nil, error);
 			}];
@@ -202,7 +203,7 @@
 	[NSURLConnection sendAsynchronousRequest:req queue:[NSOperationQueue mainQueue] completionHandler:nil];
 }
 
-- (void)_addCurrentUserAsFavoriteWithCompletion:(void (^)(PASArtist *artist, NSError *error))completion
+- (void)_addCurrentUserAsFavoriteAndSave:(BOOL)saveUser completion:(void (^)(PASArtist *artist, NSError *error))completion
 {
 	// add artist to the users favorites
 	PFUser *currentUser = [PFUser currentUser];
@@ -220,9 +221,13 @@
 		DDLogDebug(@"Faving \"%@\" for User \"%@\"", self.name,  currentUser.objectId);
 		
 		[currentUser addObject:self.objectId forKey:@"favArtists"];
-		[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-			succeeded && !error ? completion(self, nil) : completion(nil, error);
-		}];
+		if (saveUser) {
+			[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+				succeeded && !error ? completion(self, nil) : completion(nil, error);
+			}];
+		} else {
+			completion(self, nil);
+		}
 	}
 }
 

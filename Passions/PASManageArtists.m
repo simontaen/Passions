@@ -183,6 +183,7 @@
 		
 	} else {
 		[self _favoriteArtistByCurrentUser:resolvedName
+								  saveUser:YES
 						   needsCorrection:![self _correctedArtistName:artistName]
 							  originalName:artistName
 								completion:myCompletion];
@@ -190,12 +191,14 @@
 }
 
 - (void)_favoriteArtistByCurrentUser:(NSString *)resolvedName
+							saveUser:(BOOL)saveUser
 					 needsCorrection:(BOOL)needsCorrection
 						originalName:(NSString *)originalName
 						  completion:(void (^)(NSError *error))completion
 {
 	[PASArtist favoriteArtistByCurrentUser:resolvedName
 						   needsCorrection:needsCorrection
+								  saveUser:saveUser
 								completion:^(PASArtist *artist, NSError *error) {
 									if (artist && !error) {
 										// get the finalized name on parse
@@ -250,7 +253,6 @@
 
 - (void)addInitialFavArtists
 {
-	
 	// this is called from the app delegate, make sure you're properly set up
 	if (!self.originalFavArtists) {
 		[self passFavArtists:@[]];
@@ -262,16 +264,23 @@
 		
 		for (NSString *artistName in artistNames) {
 			[self _favoriteArtistByCurrentUser:artistName
+									  saveUser:NO
 							   needsCorrection:needCorrection
 								  originalName:artistName
 									completion:^(NSError *error) {
 				doneCounter++;
 				if (doneCounter == count) {
-					[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists
-																		object:nil];
+					// Save User now that all are done
+					[[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+						if (error) {
+							DDLogError(@"Initial Add: %@", [error description]);
+						}
+						[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists
+																			object:nil];
+					}];
 				}
 				if (error) {
-					DDLogError(@"%@", [error description]);
+					DDLogError(@"Initial Add: %@", [error description]);
 				}
 			}];
 		}
@@ -288,7 +297,7 @@
 													 [artistNames addObject:[artist name]];
 												 }
 											 } else {
-												 DDLogError(@"%@", [error description]);
+												 DDLogError(@"Initial Add: %@", [error description]);
 											 }
 											 favingBlock(artistNames, NO);
 										 }];
