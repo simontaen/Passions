@@ -105,11 +105,12 @@
 // Private method, called when a query should be performed
 - (void)_performQuery:(BOOL)refreshing
 {
-    PFQuery *query = self.queryForCollection;
+	// Enter the loading state
+	self.isLoading = YES;
+
+	PFQuery *query = self.queryForCollection;
 	
 	if (query) {
-		// Enter the loading state
-		self.isLoading = YES;		
 		[self objectsWillLoad];
 		
 		if (self.paginationEnabled) {
@@ -144,9 +145,12 @@
 				}
 			}
 			
-			self.isLoading = NO;
 			[self objectsDidLoad:error];
+			self.isLoading = NO;
 		}];
+		
+	} else {
+		self.isLoading = NO;
 	}
 }
 
