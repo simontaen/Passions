@@ -186,6 +186,7 @@
 								  saveUser:YES
 						   needsCorrection:![self _correctedArtistName:artistName]
 							  originalName:artistName
+						 timeoutMultiplier:1.0
 								completion:myCompletion];
 	}
 }
@@ -194,11 +195,13 @@
 							saveUser:(BOOL)saveUser
 					 needsCorrection:(BOOL)needsCorrection
 						originalName:(NSString *)originalName
+				   timeoutMultiplier:(float)timeoutMultiplier
 						  completion:(void (^)(NSError *error))completion
 {
 	[PASArtist favoriteArtistByCurrentUser:resolvedName
 						   needsCorrection:needsCorrection
 								  saveUser:saveUser
+						 timeoutMultiplier:timeoutMultiplier
 								completion:^(PASArtist *artist, NSError *error) {
 									if (artist && !error) {
 										// get the finalized name on parse
@@ -267,6 +270,7 @@
 									  saveUser:NO
 							   needsCorrection:needCorrection
 								  originalName:artistName
+							 timeoutMultiplier:1.13
 									completion:^(NSError *error) {
 				doneCounter++;
 				if (doneCounter == count) {

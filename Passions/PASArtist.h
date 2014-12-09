@@ -46,6 +46,7 @@
 + (void)favoriteArtistByCurrentUser:(NSString *)artistName
 					needsCorrection:(BOOL)needsCorrection
 						   saveUser:(BOOL)saveUser
+				  timeoutMultiplier:(float)multiplier
 						 completion:(void (^)(PASArtist *artist, NSError *error))completion;
 
 #pragma mark - removing / deleting
