@@ -10,7 +10,6 @@
 #import <Parse/PFObject+Subclass.h>
 #import "LastFmFetchr.h"
 #import "PASResources.h"
-#import "AFNetworkReachabilityManager.h"
 
 @implementation PASArtist
 
@@ -92,7 +91,6 @@
 + (void)favoriteArtistByCurrentUser:(NSString *)artistName
 					needsCorrection:(BOOL)needsCorrection
 						   saveUser:(BOOL)saveUser
-				  timeoutMultiplier:(float)multiplier
 						 completion:(void (^)(PASArtist *artist, NSError *error))completion
 {
 	NSParameterAssert(artistName);
@@ -111,22 +109,6 @@
 	};
 	
 	if (needsCorrection) {
-		float timeout = kPASLastFmTimeoutInSec;
-		AFNetworkReachabilityManager *mngr = [AFNetworkReachabilityManager sharedManager];
-		
-		if (mngr.reachable) {
-			if (mngr.reachableViaWiFi) {
-				// WiFi Bonus
-				timeout = timeout * 0.66;
-			}
-			// apply passed multiplier
-			timeout = timeout * multiplier;
-			
-		} else {
-			// immediatly cancel the request
-			timeout = timeout * 0.01;
-		}
-		
 		NSURLSessionTask *task = [[LastFmFetchr fetchr] getCorrectionForArtist:artistName
 																	completion:^(LFMArtist *data, NSError *error) {
 																		if (!error) {

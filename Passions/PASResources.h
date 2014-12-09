@@ -14,7 +14,7 @@ extern NSString * const kPASParseClientKey;
 extern NSString * const kPASParseMasterKey;
 
 extern NSString * const kPASLastFmApiKey;
-extern float const kPASLastFmTimeoutInSec;
+extern CGFloat const kPASLastFmTimeoutInSec;
 
 extern NSString * const kPASSpotifyClientId;
 
