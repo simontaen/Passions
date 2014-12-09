@@ -35,7 +35,7 @@ Passions shows you which Albums of your all time favorite Music Artists you are 
 
 # App Description
 
-Passions lets you track your favorite Aritsts and sends you Notifications when one of them releases a new Album. You can browse available Albums of your favorite Artists ordered by release date and tap on "iTunes" to get redirected to the iTunes Store if you want to listen to the Album, get more Information or buy the Album. You can add Artists from your Music Library or your Spotify Account.
+Passions lets you track your favorite Aritsts and sends you Notifications when one of them releases a new Album. You can browse available Albums of your favorite Artists ordered by release date and tap on "iTunes" to go to the iTunes Store if you want to listen to the Tracks, get more Information or buy the Album. You can add Artists from your Music Library or your Spotify Account.
 
 
 # NewStuff.todo
