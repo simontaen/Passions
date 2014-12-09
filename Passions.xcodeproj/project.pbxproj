@@ -275,11 +275,6 @@
 		F49618B519BC4CCB00B4F3FE /* Add Artists */ = {
 			isa = PBXGroup;
 			children = (
-				F4BB585C19E9F23600221912 /* PASAddingPVC.h */,
-				F4BB585D19E9F23600221912 /* PASAddingPVC.m */,
-				F461C8DE19EB006C0081B445 /* PASExtendedNavContainer.h */,
-				F461C8DF19EB006C0081B445 /* PASExtendedNavContainer.m */,
-				F4256EC319EB1AAB00B9D95B /* PASExtendedNavContainer.xib */,
 				F476F0EF19B8FFA700185544 /* PASAddFromSamplesTVC.h */,
 				F476F0F019B8FFA700185544 /* PASAddFromSamplesTVC.m */,
 				F40BBA6918538DAD00877D60 /* PASAddFromMusicTVC.h */,
@@ -407,6 +402,11 @@
 			children = (
 				F450FCE519F7044D00DF2D38 /* PASManageArtists.h */,
 				F450FCE619F7044D00DF2D38 /* PASManageArtists.m */,
+				F4BB585C19E9F23600221912 /* PASAddingPVC.h */,
+				F4BB585D19E9F23600221912 /* PASAddingPVC.m */,
+				F461C8DE19EB006C0081B445 /* PASExtendedNavContainer.h */,
+				F461C8DF19EB006C0081B445 /* PASExtendedNavContainer.m */,
+				F4256EC319EB1AAB00B9D95B /* PASExtendedNavContainer.xib */,
 				F434020E1A09883400A3D83C /* PASMediaQueryAccessor.h */,
 				F434020F1A09883400A3D83C /* PASMediaQueryAccessor.m */,
 				F4DEE4F219FBA808007EBB6A /* MPMediaItem+Passions.h */,
