@@ -285,6 +285,19 @@
 			name = "Add Artists";
 			sourceTree = "<group>";
 		};
+		F49A3DD21A3742C600625BC5 /* Music Library Access */ = {
+			isa = PBXGroup;
+			children = (
+				F434020E1A09883400A3D83C /* PASMediaQueryAccessor.h */,
+				F434020F1A09883400A3D83C /* PASMediaQueryAccessor.m */,
+				F4DEE4F219FBA808007EBB6A /* MPMediaItem+Passions.h */,
+				F4DEE4F319FBA808007EBB6A /* MPMediaItem+Passions.m */,
+				F43402111A09951200A3D83C /* MPMediaItemCollection+Passions.h */,
+				F43402121A09951200A3D83C /* MPMediaItemCollection+Passions.m */,
+			);
+			name = "Music Library Access";
+			sourceTree = "<group>";
+		};
 		F49B64A41A2E51E2002B5667 /* LEColorPicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -352,6 +365,7 @@
 				F49B64A41A2E51E2002B5667 /* LEColorPicker */,
 				F49618B519BC4CCB00B4F3FE /* Add Artists */,
 				F4F2336319FDD3B4004882B8 /* Add Artist Helpers */,
+				F49A3DD21A3742C600625BC5 /* Music Library Access */,
 				F4D9E94619C3612800B762A7 /* PageViewController */,
 				F4FEC99719E3038000935B1E /* Image Cache */,
 				F476F0E819B8D8C500185544 /* Parse Objects */,
@@ -407,12 +421,6 @@
 				F461C8DE19EB006C0081B445 /* PASExtendedNavContainer.h */,
 				F461C8DF19EB006C0081B445 /* PASExtendedNavContainer.m */,
 				F4256EC319EB1AAB00B9D95B /* PASExtendedNavContainer.xib */,
-				F434020E1A09883400A3D83C /* PASMediaQueryAccessor.h */,
-				F434020F1A09883400A3D83C /* PASMediaQueryAccessor.m */,
-				F4DEE4F219FBA808007EBB6A /* MPMediaItem+Passions.h */,
-				F4DEE4F319FBA808007EBB6A /* MPMediaItem+Passions.m */,
-				F43402111A09951200A3D83C /* MPMediaItemCollection+Passions.h */,
-				F43402121A09951200A3D83C /* MPMediaItemCollection+Passions.m */,
 			);
 			name = "Add Artist Helpers";
 			sourceTree = "<group>";
