@@ -18,6 +18,7 @@
 #import "MBProgressHUD.h"
 
 @interface PASAddFromSamplesTVC ()
+@property (nonatomic, strong) MBProgressHUD *loadingHud;
 
 #pragma mark - Sections
 // Current Sort order
@@ -545,18 +546,21 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 // only call on the main thred and when viewIsLoaded
 - (void)_showHudMessage:(NSString *)msg
 {
-	MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.extendedNavController.view animated:YES];
-	hud.labelText = msg;
+	self.loadingHud = [MBProgressHUD showHUDAddedTo:self.extendedNavController.view animated:YES];
+	self.loadingHud.labelText = msg;
 }
 
 - (void)hideProgressHud
 {
 	self.loadingHudMsg = nil;
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[MBProgressHUD hideHUDForView:self.extendedNavController.view animated:YES];
-		self.extendedNavController.segmentedControl.enabled = YES;
-		self.pageViewController.navigationItem.leftBarButtonItem.enabled = YES;
-	});
+	if (self.loadingHud) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self.loadingHud hide:YES];
+			self.extendedNavController.segmentedControl.enabled = YES;
+			self.pageViewController.navigationItem.leftBarButtonItem.enabled = YES;
+			self.loadingHud = nil;
+		});
+	}
 }
 
 #pragma mark - Private Methods
