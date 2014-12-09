@@ -112,7 +112,7 @@
 	
 	if (needsCorrection) {
 		float timeout = kPASLastFmTimeoutInSec;
-		AFNetworkReachabilityManager *mngr = [PASResources reachabilityManager];
+		AFNetworkReachabilityManager *mngr = [AFNetworkReachabilityManager sharedManager];
 		
 		if (mngr.reachable) {
 			if (mngr.reachableViaWiFi) {
@@ -124,7 +124,6 @@
 			
 		} else {
 			// immediatly cancel the request
-			DDLogWarn(@"LFM unreachable");
 			timeout = timeout * 0.01;
 		}
 		
@@ -144,7 +143,7 @@
 		
 		// Setup a Timeout
 		 void (^timer)(void) = ^{
-			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, timeout * NSEC_PER_SEC);
+			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kPASLastFmTimeoutInSec * NSEC_PER_SEC);
 			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 				if ([task state] == NSURLSessionTaskStateRunning) {
 					// Task is running too long, cancel it
