@@ -84,6 +84,7 @@
 {
 	[super viewWillAppear:animated];
 	if (!self.isLoading && !self.objects) {
+		// objects have been cleaned
 		self.objects = [NSArray new];
 		[self _performQuery:NO];
 	}

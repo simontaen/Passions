@@ -91,6 +91,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
+	if (!self.isLoading && self.objects.count == 0) {
+		[self refreshUI:YES];
+	}
 	[self helpViewWillAppear];
 }
 
