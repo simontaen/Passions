@@ -25,6 +25,7 @@
 @interface CPFQueryCollectionViewController()
 @property (nonatomic, assign) NSUInteger expectedObjects;
 @property (nonatomic, readwrite) BOOL isLoading;
+@property (nonatomic, strong) MBProgressHUD *loadingHud;
 @end
 
 @implementation CPFQueryCollectionViewController
@@ -100,6 +101,30 @@
 	}
 }
 
+#pragma mark - Accessors
+
+- (void)setIsFetching:(BOOL)isLoading
+{
+	if (_isLoading != isLoading) {
+		_isLoading = isLoading;
+		if (self.loadingViewEnabled) {
+			if (isLoading) {
+				dispatch_async(dispatch_get_main_queue(), ^{
+					// turn on, isLoading is only modified in _performQuery,
+					// which is only called when view is loaded
+					self.loadingHud = [MBProgressHUD showHUDAddedTo:self.parentViewController.view animated:YES];
+					self.loadingHud.labelText = @"Loading Albums";
+				});
+			} else if (self.loadingHud) {
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[self.loadingHud hide:YES];
+					self.loadingHud = nil;
+				});
+			}
+		}
+	}
+}
+
 #pragma mark - Parse.com logic
 
 // Private method, called when a query should be performed
@@ -166,19 +191,12 @@
 
 - (void)objectsWillLoad
 {
-	// Display the loading thingy
-	if (self.loadingViewEnabled) {
-		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-		hud.labelText = @"Loading Albums";
-	}
+	// NOP
 }
 
 - (void)objectsDidLoad:(NSError *)error
 {
     [self.collectionView reloadData];
-	if (self.loadingViewEnabled) {
-		[MBProgressHUD hideHUDForView:self.view animated:YES];
-	}
 }
 
 - (PFQuery *)queryForCollection
