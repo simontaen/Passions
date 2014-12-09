@@ -261,7 +261,10 @@
 		NSUInteger count = artistNames.count;
 		
 		for (NSString *artistName in artistNames) {
-			[self didSelectArtistWithName:artistName completion:^(NSError *error) {
+			[self _favoriteArtistByCurrentUser:artistName
+							   needsCorrection:NO
+								  originalName:artistName
+									completion:^(NSError *error) {
 				doneCounter++;
 				if (doneCounter == count) {
 					[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists
