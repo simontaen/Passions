@@ -114,6 +114,7 @@
 					 completion:(void (^)(NSError *error))completion;
 {
 	NSParameterAssert(artistName);
+	NSAssert(self.favArtists != nil, @"It looks like passFavArtists has not been");
 	
 #ifdef DEBUG
 	if ([artistName isEqualToString:@"Crash the App!"]) {

@@ -120,6 +120,7 @@
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
 		PASArtist *artist = [self _artistAtIndexPath:indexPath];
 		
+		[[PASManageArtists sharedMngr] passFavArtists:self.objects];
 		[[PASManageArtists sharedMngr] didSelectArtistWithName:artist.name completion:^(NSError *error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				cell.activityIndicator.hidden = YES;
