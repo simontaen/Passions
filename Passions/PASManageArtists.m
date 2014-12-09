@@ -181,33 +181,44 @@
 		
 		
 	} else {
-		[PASArtist favoriteArtistByCurrentUser:resolvedName
-							   needsCorrection:![self _correctedArtistName:artistName]
-									completion:^(PASArtist *artist, NSError *error) {
-										if (artist && !error) {
-											// get the finalized name on parse
-											NSString *parseArtistName = artist.name;
-											
-											dispatch_barrier_async(self.correctionsQ, ^{
-												// cache the mapping userDisplayed -> corrected
-												[self.artistNameCorrections setObject:parseArtistName forKey:artistName];
-											});
-											
-											dispatch_barrier_async(self.favoritesQ, ^{
-												[self.justFavArtistNames addObject:parseArtistName];
-												[self.justFavArtists addObject:artist];
-												
-												[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditArtistWithName
-																									object:self
-																								  userInfo:@{kPASDidEditArtistWithName : parseArtistName}];
-												myCompletion(nil);
-											});
-											
-										} else {
-											myCompletion(error);
-										}
-									}];
+		[self _favoriteArtistByCurrentUser:resolvedName
+						   needsCorrection:![self _correctedArtistName:artistName]
+							  originalName:artistName
+								completion:myCompletion];
 	}
+}
+
+- (void)_favoriteArtistByCurrentUser:(NSString *)resolvedName
+					 needsCorrection:(BOOL)needsCorrection
+						originalName:(NSString *)originalName
+						  completion:(void (^)(NSError *error))completion
+{
+	[PASArtist favoriteArtistByCurrentUser:resolvedName
+						   needsCorrection:needsCorrection
+								completion:^(PASArtist *artist, NSError *error) {
+									if (artist && !error) {
+										// get the finalized name on parse
+										NSString *parseArtistName = artist.name;
+										
+										dispatch_barrier_async(self.correctionsQ, ^{
+											// cache the mapping userDisplayed -> corrected
+											[self.artistNameCorrections setObject:parseArtistName forKey:originalName];
+										});
+										
+										dispatch_barrier_async(self.favoritesQ, ^{
+											[self.justFavArtistNames addObject:parseArtistName];
+											[self.justFavArtists addObject:artist];
+											
+											[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditArtistWithName
+																								object:self
+																							  userInfo:@{kPASDidEditArtistWithName : parseArtistName}];
+											completion(nil);
+										});
+										
+									} else {
+										completion(error);
+									}
+								}];
 }
 
 - (BOOL)isFavoriteArtist:(NSString *)artistName
