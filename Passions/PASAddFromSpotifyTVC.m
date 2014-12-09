@@ -184,6 +184,7 @@
 {
 	// Caches are updated when new data is received
 	[self _validateSessionWithCallback:^{
+		[self clearCaches];
 		[self _fetchSpotifyArtistsWithCompletion:^(NSError *error) {
 			error ? [self _handleError:error] : [super prepareCaches];
 		}];
