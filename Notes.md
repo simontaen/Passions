@@ -48,7 +48,6 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 
 ## General Functionality
 * Initial load stays stuck in spinning or shows empty black screen
-* Dynamic timeout for LFM based on network quality (http://cocoadocs.org/docsets/AFNetworking/2.5.0/Classes/AFNetworkReachabilityManager.html#//api/name/reachableViaWWAN)
 
 ## Spotify Integration
 
