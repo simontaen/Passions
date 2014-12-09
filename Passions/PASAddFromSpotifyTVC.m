@@ -11,8 +11,12 @@
 #import <Spotify/Spotify.h>
 #import "UICKeyChainStore.h"
 #import "PASPageViewController.h"
+#import "PASExtendedNavContainer.h"
+#import "MBProgressHUD.h"
 
 @interface PASAddFromSpotifyTVC ()
+@property (nonatomic, strong) MBProgressHUD *noArtistsHud;
+
 @property (nonatomic, strong) SPTSession *session;
 @property (nonatomic, assign) BOOL sessionIsRenewing;
 @property (nonatomic, strong) id observer; // the NSNotificationCenter observer token
@@ -118,6 +122,8 @@
 	if (_session != session) {
 		_session = session;
 		if (!_session) {
+			// hide info msg
+			[self _hideNoArtistsInfo];
 			// clear session and caches
 			[UICKeyChainStore removeItemForKey:NSStringFromClass([self class])];
 		} else {
@@ -338,6 +344,8 @@
 // if fetching is already running the completion will not get called
 - (void)_fetchSpotifyArtistsWithCompletion:(void (^)(NSError *error))completion
 {
+	[self _hideNoArtistsInfo];
+	
 	if (self.isFetching) {
 		// fetching already in process
 		return;
@@ -395,6 +403,7 @@
 				
 			} else {
 				// Loading was successful but no artists are available
+				[weakSelf _showNoArtistsInfo];
 				myCompletion(nil);
 			}
 			
@@ -405,6 +414,30 @@
 	};
 	
 	[SPTRequest savedTracksForUserInSession:self.session callback:self.savedTracksForUserCallback];
+}
+
+- (void)_showNoArtistsInfo
+{
+	// since we always try reloading when no Artists are cached
+	// this is always called once the view is loaded
+	
+	if (self.isViewLoaded) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			self.noArtistsHud = [MBProgressHUD showHUDAddedTo:self.extendedNavController.view animated:YES];
+			self.noArtistsHud.detailsLabelText = @"Your Spotify Libary doesn't contain any Albums or Tracks.";
+			self.noArtistsHud.mode = MBProgressHUDModeText;
+		});
+	}
+}
+
+- (void)_hideNoArtistsInfo
+{
+	if (self.noArtistsHud) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self.noArtistsHud hide:YES];
+			self.noArtistsHud = nil;
+		});
+	}
 }
 
 #pragma mark - Private Methods
