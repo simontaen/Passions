@@ -65,9 +65,9 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	self.detailTextBlock = ^NSString *(id<FICEntity> artist, NSString *name) {
 		NSUInteger charcount = [weakSelf playcountForArtist:artist withName:name];
 		if (charcount == 1) {
-			return [NSString stringWithFormat:@"%lu Character", (unsigned long)charcount];
+			return [NSString stringWithFormat:@"%lu character", (unsigned long)charcount];
 		} else {
-			return [NSString stringWithFormat:@"%lu Characters", (unsigned long)charcount];
+			return [NSString stringWithFormat:@"%lu characters", (unsigned long)charcount];
 		}
 	};
 	

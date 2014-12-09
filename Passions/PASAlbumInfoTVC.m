@@ -68,7 +68,7 @@ static NSInteger const kAddCells = 2;
 	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
 	// Configure navigationController
-	self.title = @"Album Details";
+	self.title = @"Album details";
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -160,9 +160,9 @@ static NSInteger const kAddCells = 2;
 	} else {
 		NSUInteger tracks = [tracksNumber integerValue];
 		if (tracks == 1) {
-			return [NSString stringWithFormat:@"%tu Track", tracks];
+			return [NSString stringWithFormat:@"%tu track", tracks];
 		} else {
-			return [NSString stringWithFormat:@"%tu Tracks", tracks];
+			return [NSString stringWithFormat:@"%tu tracks", tracks];
 		}
 	}
 }

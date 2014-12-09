@@ -30,9 +30,9 @@
 	self.detailTextBlock = ^NSString *(id<FICEntity> artist, NSString *name) {
 		NSUInteger playcount = [weakSelf playcountForArtist:artist withName:name];
 		if (playcount == 1) {
-			return [NSString stringWithFormat:@"%lu Play", (unsigned long)playcount];
+			return [NSString stringWithFormat:@"%lu play", (unsigned long)playcount];
 		} else {
-			return [NSString stringWithFormat:@"%lu Plays", (unsigned long)playcount];
+			return [NSString stringWithFormat:@"%lu plays", (unsigned long)playcount];
 		}
 	};
 

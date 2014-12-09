@@ -58,9 +58,9 @@
 	self.detailTextBlock = ^NSString *(id<FICEntity> artist, NSString *name) {
 		NSUInteger trackcount = [weakSelf _trackcountForArtist:artist withName:name];
 		if (trackcount == 1) {
-			return [NSString stringWithFormat:@"%lu Track", (unsigned long)trackcount];
+			return [NSString stringWithFormat:@"%lu track", (unsigned long)trackcount];
 		} else {
-			return [NSString stringWithFormat:@"%lu Tracks", (unsigned long)trackcount];
+			return [NSString stringWithFormat:@"%lu tracks", (unsigned long)trackcount];
 		}
 	};
 	
@@ -78,7 +78,7 @@
 {
 	if (_isFetching != isFetching) {
 		_isFetching = isFetching;
-		isFetching ? [self showProgressHudWithMessage:@"Loading Spotify Artists"] : [self hideProgressHud];
+		isFetching ? [self showProgressHudWithMessage:@"Loading Spotify artists"] : [self hideProgressHud];
 	}
 }
 
@@ -86,7 +86,7 @@
 {
 	if (_sessionIsRenewing != sessionIsRenewing) {
 		_sessionIsRenewing = sessionIsRenewing;
-		sessionIsRenewing ? [self showProgressHudWithMessage:@"Refreshing Session"] : [self hideProgressHud];
+		sessionIsRenewing ? [self showProgressHudWithMessage:@"Refreshing session"] : [self hideProgressHud];
 	}
 }
 
@@ -425,7 +425,7 @@
 	if (self.isViewLoaded) {
 		dispatch_async(dispatch_get_main_queue(), ^{
 			self.noArtistsHud = [MBProgressHUD showHUDAddedTo:self.extendedNavController.view animated:YES];
-			self.noArtistsHud.detailsLabelText = @"Your Spotify Libary doesn't contain any Albums or Tracks.";
+			self.noArtistsHud.detailsLabelText = @"Your Spotify libary doesn't contain any albums or tracks.";
 			self.noArtistsHud.mode = MBProgressHUDModeText;
 		});
 	}

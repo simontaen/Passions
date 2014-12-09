@@ -63,11 +63,11 @@
 - (NSString *)availableAlbums
 {
 	if (!self.totalAlbums) {
-		return @"Processing on Server...";
+		return @"Processing on server...";
 	} else if (self.totalAlbums.longValue == 1) {
-		return [NSString stringWithFormat:@"%lu Album available", self.totalAlbums.longValue];
+		return [NSString stringWithFormat:@"%lu album available", self.totalAlbums.longValue];
 	} else {
-		return [NSString stringWithFormat:@"%lu Albums available", self.totalAlbums.longValue];
+		return [NSString stringWithFormat:@"%lu albums available", self.totalAlbums.longValue];
 	}
 }
 

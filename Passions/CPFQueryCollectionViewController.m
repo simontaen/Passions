@@ -113,7 +113,7 @@
 					// turn on, isLoading is only modified in _performQuery,
 					// which is only called when view is loaded
 					self.loadingHud = [MBProgressHUD showHUDAddedTo:self.parentViewController.view animated:YES];
-					self.loadingHud.labelText = @"Loading Albums";
+					self.loadingHud.labelText = @"Loading albums";
 				});
 			} else if (self.loadingHud) {
 				dispatch_async(dispatch_get_main_queue(), ^{
