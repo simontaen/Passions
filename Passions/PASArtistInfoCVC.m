@@ -57,6 +57,7 @@ static NSInteger const kAddCells = 1;
 
 - (PFQuery *)queryForCollection
 {
+	NSAssert(self.artist && self.artist.objectId, @"A valid Artist must be passed before load");
 	PFQuery *query = [super queryForCollection];
 	[query whereKey:@"artistId" equalTo:self.artist.objectId];
 	return query;
