@@ -31,6 +31,7 @@
 
 // Sends kPASDidEditFavArtists Notifications to signal if favorite Artists have been processed
 @interface PASAppDelegate () <FICImageCacheDelegate>
+@property (nonatomic, strong) MBProgressHUD *loadingHud;
 @property (nonatomic, assign) BOOL didFavoriteInitialArtists;
 @end
 
@@ -139,9 +140,12 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 										object:nil queue:nil
 									usingBlock:^(NSNotification *note) {
 										self.didFavoriteInitialArtists = YES;
-										dispatch_async(dispatch_get_main_queue(), ^{
-											[MBProgressHUD hideHUDForView:self.window.rootViewController.view animated:YES];
-										});
+										if (self.loadingHud) {
+											dispatch_async(dispatch_get_main_queue(), ^{
+												[self.loadingHud hide:YES];
+												self.loadingHud = nil;
+											});
+										}
 										
 										PASRootVC *rootVc = (PASRootVC *)self.window.rootViewController;
 										UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
@@ -336,7 +340,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 					// either the user went through the onboarding very fast or initial faving takes very long
 					// show hud which will be hidden when kPASDidFavoriteInitialArtists fires
 					dispatch_async(dispatch_get_main_queue(), ^{
-						[MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
+						self.loadingHud = [MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
 					});
 				} else {
 					// NOT ANYMORE loading

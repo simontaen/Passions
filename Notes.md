@@ -47,7 +47,6 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 * Implement a mechanism to delete old and unused accounts
 
 ## General Functionality
-* Initial load stays stuck in spinning or shows empty black screen
 
 ## Spotify Integration
 
