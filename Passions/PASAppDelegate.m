@@ -134,26 +134,27 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 						[Crashlytics setUserIdentifier:[PFUser currentUser].objectId];
 						
 						self.didFavoriteInitialArtists = NO;
-						[[NSNotificationCenter defaultCenter] addObserverForName:kPASDidFavoriteInitialArtists
-																		  object:nil queue:nil
-																	  usingBlock:^(NSNotification *note) {
-																		  self.didFavoriteInitialArtists = YES;
-																		  dispatch_async(dispatch_get_main_queue(), ^{
-																			  [MBProgressHUD hideHUDForView:self.window.rootViewController.view animated:YES];
-																		  });
-																		  
-																		  PASRootVC *rootVc = (PASRootVC *)self.window.rootViewController;
-																		  UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
-																		  UIViewController *vc = nav.topViewController;
-																		  if ([vc isKindOfClass:[PASTimelineCVC class]]) {
-																			  [((PASTimelineCVC *)vc) refreshUI:YES];
-																		  }
-
-																		  // this is a one time only thing
-																		  [[NSNotificationCenter defaultCenter] removeObserver:nil
-																														  name:kPASDidFavoriteInitialArtists
-																														object:self];
-																	  }];
+						NSNotificationCenter *dc = [NSNotificationCenter defaultCenter];
+						[dc addObserverForName:kPASDidFavoriteInitialArtists
+										object:nil queue:nil
+									usingBlock:^(NSNotification *note) {
+										self.didFavoriteInitialArtists = YES;
+										dispatch_async(dispatch_get_main_queue(), ^{
+											[MBProgressHUD hideHUDForView:self.window.rootViewController.view animated:YES];
+										});
+										
+										PASRootVC *rootVc = (PASRootVC *)self.window.rootViewController;
+										UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
+										UIViewController *vc = nav.topViewController;
+										if ([vc isKindOfClass:[PASTimelineCVC class]]) {
+											[((PASTimelineCVC *)vc) refreshUI:YES];
+										}
+										
+										// this is a one time only thing
+										[[NSNotificationCenter defaultCenter] removeObserver:nil
+																						name:kPASDidFavoriteInitialArtists
+																					  object:self];
+									}];
 						[[PASManageArtists sharedMngr] addInitialFavArtists];
 					} else {
 						DDLogError(@"Could not initialize User: %@", [error localizedDescription]);
