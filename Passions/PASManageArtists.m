@@ -168,9 +168,10 @@
 						[self.justFavArtistNames removeObject:resolvedName];
 					}
 					
-					[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditArtistWithName
-																		object:self
-																	  userInfo:@{kPASDidEditArtistWithName : resolvedName}];
+					NSNotificationCenter *dc = [NSNotificationCenter defaultCenter];
+					[dc postNotificationName:kPASDidEditArtistWithName
+									  object:self
+									userInfo:@{kPASDidEditArtistWithName : resolvedName}];
 					myCompletion(nil);
 				});
 				
@@ -209,9 +210,10 @@
 											[self.justFavArtistNames addObject:parseArtistName];
 											[self.justFavArtists addObject:artist];
 											
-											[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidEditArtistWithName
-																								object:self
-																							  userInfo:@{kPASDidEditArtistWithName : parseArtistName}];
+											NSNotificationCenter *dc = [NSNotificationCenter defaultCenter];
+											[dc postNotificationName:kPASDidEditArtistWithName
+															  object:self
+															userInfo:@{kPASDidEditArtistWithName : parseArtistName}];
 											completion(nil);
 										});
 										
