@@ -44,10 +44,13 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 * Artist fetch could fail and the iTunes Id would be empty then (maybe a cleanup job?)
 * The store is always US (leads to iTunes link to items unavailable to the current User)
 	* Setup an artist and album (must run on all...) refresh job
+* Implement a mechanism to delete old and unused accounts
 
 ## General Functionality
+* Initial load stays stuck in spinning or shows empty black screen
 
-### Spotify Integration
+
+## Spotify Integration
 
 ## PageViewController Container
 
@@ -63,9 +66,25 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 
 ## App Icon
 
+
+# Marketing and Promotion
+
+* Social Network announcements
+* Friends announcements
+* update Lastfm and Spotify profile
+* create promotional website
+* Enable Git-Flow
+
+
 # 1.1 (?)
+
 * Dynamic Row height for bigger devices (5 and up, 6 and up)
 * search for not in library artists to add (but consider all resources!) - **number one feature request**!
+* alert when trying to logout on spotify (accidentally triggering sucks)
+* Maybe hide the control after a few moments (it's in the way always)
+* sometimes the pageControl indicator seems not to update properly
+* PASArtistTvCell must extend to end of cell when no star is available
+
 
 # 2.0
 
@@ -92,6 +111,7 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
 * flickering when the transition gets aborted (this is in the Container)
 
+
 # Data communication with Parse
 
 ## Fav an Artist
@@ -104,6 +124,7 @@ Passions lets you track your favorite Aritsts and sends you Notifications when o
 	* call spotify for the Artist
 		* try to find an exact match by comparing the name
 	* call background job "fetchFullAlbums"
+
 
 # Background Jobs on Parse
 
@@ -175,6 +196,7 @@ https://api.parse.com/1/jobs/fetchFullAlbums
 curl -X GET \
 -H "Accept: application/json" \
 "http://playground.bendodson.com/itunes-artwork-finder/?query=Back+In+Black&entity=album&country=us"
+
 
 # Regarding UITableViewCell's imageView
 
