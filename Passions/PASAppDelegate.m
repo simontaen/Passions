@@ -344,7 +344,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		if ([vc isKindOfClass:[PASTimelineCVC class]]) {
 			
 			PASTimelineCVC *tl = (PASTimelineCVC *)vc;
-			if (!tl.isLoading) { // this could mean
+			if (![tl isLoading]) { // this could mean
 				DDLogInfo(@"Timeline NOT loading");
 				if (!self.didFavoriteInitialArtists) {
 					DDLogInfo(@"kPASDidFavoriteInitialArtists NOT received yet, show spinner.");

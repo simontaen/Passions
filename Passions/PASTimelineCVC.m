@@ -55,7 +55,7 @@
 													  id obj = note.userInfo[kPASDidEditFavArtists];
 													  NSAssert([obj isKindOfClass:[NSNumber class]], @"kPASDidEditFavArtists must carry a NSNumber");
 													  BOOL didEditArtists = [((NSNumber *)obj) boolValue];
-													  if (didEditArtists && !self.isLoading) {
+													  if (didEditArtists && ![self isLoading]) {
 														  [self refreshUI:YES];
 													  }
 												  }];
@@ -91,7 +91,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	if (!self.isLoading && self.objects.count == 0) {
+	if (![self isLoading] && self.objects.count == 0) {
 		[self refreshUI:YES];
 	}
 	[self helpViewWillAppear];
