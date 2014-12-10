@@ -107,6 +107,10 @@
 		if (self.loadingViewEnabled) {
 			if (isLoading) {
 				dispatch_async(dispatch_get_main_queue(), ^{
+					if (self.loadingHud) {
+						[self.loadingHud hide:YES];
+						self.loadingHud = nil;
+					}
 					// turn on, isLoading is only modified in _performQuery,
 					// which is only called when view is loaded
 					self.loadingHud = [MBProgressHUD showHUDAddedTo:self.parentViewController.view animated:YES];
@@ -114,8 +118,10 @@
 				});
 			} else if (self.loadingHud) {
 				dispatch_async(dispatch_get_main_queue(), ^{
-					[self.loadingHud hide:YES];
-					self.loadingHud = nil;
+					if (self.loadingHud) {
+						[self.loadingHud hide:YES];
+						self.loadingHud = nil;
+					}
 				});
 			}
 		}
