@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 FreedomCard. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
+@import UIKit;
 #import <Parse/Parse.h>
+#import "MBProgressHUD.h"
 
 @interface CPFQueryCollectionViewController : UICollectionViewController <UICollectionViewDataSource>
 
@@ -37,6 +37,11 @@
  * Returns the fetched array of objects, or an empty array if nothing has been fetched.
  */
 @property NSArray *objects;
+
+/**
+ * The progress hud
+ */
+@property (nonatomic, strong, readonly) MBProgressHUD *loadingHud;
 
 /**
  * Is the query currently loading (being fetched)?

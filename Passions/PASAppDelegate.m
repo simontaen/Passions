@@ -335,7 +335,8 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		PASTimelineCVC *tl = [self _timelineVc];
 		
 		if (![tl isLoading]) { // this could mean
-			DDLogInfo(@"Timeline NOT loading");
+			DDLogInfo(@"Timeline NOT loading. HUD seems to be %d", !!tl.loadingHud);
+			
 			if (!self.didFavoriteInitialArtists) {
 				DDLogInfo(@"Initial Artists: Add NOT YET completed, show spinner.");
 				// NOT YET loading (kPASDidFavoriteInitialArtists not yet fired, still faving initial artists)

@@ -9,7 +9,6 @@
 #import "CPFQueryCollectionViewController.h"
 #import <Parse/Parse.h>
 #import "GBVersiontracking.h"
-#import "MBProgressHUD.h"
 #import "PASPageViewController.h"
 
 // Define our own version of DDLogInfo(...) which will only send its input to the
@@ -25,7 +24,7 @@
 @interface CPFQueryCollectionViewController()
 @property (nonatomic, assign) NSUInteger expectedObjects;
 @property (nonatomic, readwrite) BOOL isLoading;
-@property (nonatomic, strong) MBProgressHUD *loadingHud;
+@property (nonatomic, strong, readwrite) MBProgressHUD *loadingHud;
 @end
 
 @implementation CPFQueryCollectionViewController
