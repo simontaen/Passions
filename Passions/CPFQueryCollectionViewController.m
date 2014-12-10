@@ -29,9 +29,6 @@
 @end
 
 @implementation CPFQueryCollectionViewController
-{
-    UIActivityIndicatorView *_loadingIndicator;
-}
 
 // Private method called from all initializers
 - (void)_initDefaults
