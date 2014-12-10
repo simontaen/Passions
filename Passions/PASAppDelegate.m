@@ -87,13 +87,15 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 // run this AFTER Parse (because we use Parse as a logger which needs API and Client key)
 - (void)_setupCocoaLumberjack
 {
+#ifdef DEBUG
+	[DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:LOG_LEVEL_VERBOSE];
+	[[DDTTYLogger sharedInstance] setColorsEnabled:YES];
+#else
 	DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
 	fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
 	fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
 	[DDLog addLogger:fileLogger];
-	
-	[DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:LOG_LEVEL_VERBOSE];
-	[[DDTTYLogger sharedInstance] setColorsEnabled:YES];
+#endif
 
 	[DDLog addLogger:[FRParseLogger sharedInstance] withLogLevel:LOG_LEVEL_INFO];
 	[DDLog addLogger:[CrashlyticsLogger sharedInstance] withLogLevel:LOG_LEVEL_INFO];
