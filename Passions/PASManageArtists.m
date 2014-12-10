@@ -259,30 +259,39 @@
 	}
 	
 	void (^favingBlock)(NSArray*, BOOL) = ^void(NSArray *artistNames, BOOL needCorrection) {
-		int __block doneCounter = 0;
+		NSUInteger __block doneCounter = 0;
 		NSUInteger count = artistNames.count;
 		
 		for (NSString *artistName in artistNames) {
+			DDLogInfo(@"Initial Add: faving %@", artistName);
 			[self _favoriteArtistByCurrentUser:artistName
 									  saveUser:NO
 							   needsCorrection:needCorrection
 								  originalName:artistName
 									completion:^(NSError *error) {
-				doneCounter++;
-				if (doneCounter == count) {
-					// Save User now that all are done
-					[[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-						if (error) {
-							DDLogError(@"Initial Add: %@", [error description]);
-						}
-						[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists
-																			object:nil];
-					}];
-				}
-				if (error) {
-					DDLogError(@"Initial Add: %@", [error description]);
-				}
-			}];
+										doneCounter++;
+										if (error) {
+											DDLogError(@"Initial Add: faving %@ %@", artistName, [error description]);
+										} else {
+											DDLogInfo(@"Initial Add: faving complete %@", artistName);
+										}
+										
+										if (doneCounter == count) {
+											DDLogInfo(@"Initial Add: all artists complete, save user");
+											// Save User now that all are done
+											[[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+												if (error) {
+													DDLogError(@"Initial Add: save user %@", [error description]);
+												} else {
+													DDLogInfo(@"Initial Add: user saved");
+												}
+												
+												DDLogInfo(@"Posting kPASDidFavoriteInitialArtists");
+												[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists
+																									object:nil];
+											}];
+										}
+									}];
 		}
 	};
 	
@@ -296,12 +305,12 @@
 												 for (LFMArtistChart *artist in [data artists]) {
 													 [artistNames addObject:[artist name]];
 												 }
+												 DDLogInfo(@"Initial Add: received Artists '%@'", artistNames);
 											 } else {
-												 DDLogError(@"Initial Add: %@", [error description]);
+												 DDLogError(@"Initial Add: charts %@", [error description]);
 											 }
 											 favingBlock(artistNames, NO);
 										 }];
-		
 	} else {
 		NSArray *topArtists = [PASMediaQueryAccessor sharedMngr].artistCollectionsOrderedByPlaycount;
 		NSMutableArray *artistNames = [NSMutableArray arrayWithCapacity:3];

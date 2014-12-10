@@ -124,24 +124,28 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	
 	if ([GBVersionTracking isFirstLaunchEver] || ![PFUser currentUser].objectId) {
 		// setup installation on first launch
+		DDLogInfo(@"First launch");
 		[self _updateDeviceInfos:currentInstallation];
 		[currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 			if (succeeded && !error) {
-				DDLogDebug(@"Current Installation initialized: %@", currentInstallation.objectId);
+				DDLogInfo(@"Current Installation initialized: %@", currentInstallation.objectId);
 				[self _initialUserSetup:currentUser withInstallation:currentInstallation];
 				[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 					if (succeeded && !error) {
-						DDLogDebug(@"Current User initialized: %@", currentUser.objectId);
+						DDLogInfo(@"Current User initialized: %@", currentUser.objectId);
 						[Crashlytics setUserIdentifier:[PFUser currentUser].objectId];
 						
 						self.didFavoriteInitialArtists = NO;
+						DDLogInfo(@"Subscribing to kPASDidFavoriteInitialArtists");
 						NSNotificationCenter *dc = [NSNotificationCenter defaultCenter];
 						[dc addObserverForName:kPASDidFavoriteInitialArtists
 										object:nil queue:nil
 									usingBlock:^(NSNotification *note) {
 										self.didFavoriteInitialArtists = YES;
+										DDLogInfo(@"Received kPASDidFavoriteInitialArtists");
 										if (self.loadingHud) {
 											dispatch_async(dispatch_get_main_queue(), ^{
+												DDLogInfo(@"Hiding initial Hud");
 												[self.loadingHud hide:YES];
 												self.loadingHud = nil;
 											});
@@ -151,14 +155,17 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 										UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
 										UIViewController *vc = nav.topViewController;
 										if ([vc isKindOfClass:[PASTimelineCVC class]]) {
+											DDLogInfo(@"Refresh Timeline after kPASDidFavoriteInitialArtists received");
 											[((PASTimelineCVC *)vc) refreshUI:YES];
 										}
 										
 										// this is a one time only thing
+										DDLogInfo(@"Unsubscribing from kPASDidFavoriteInitialArtists");
 										[[NSNotificationCenter defaultCenter] removeObserver:nil
 																						name:kPASDidFavoriteInitialArtists
 																					  object:self];
 									}];
+						DDLogInfo(@"Starting to add initial Artists");
 						[[PASManageArtists sharedMngr] addInitialFavArtists];
 					} else {
 						DDLogError(@"Could not initialize User: %@", [error localizedDescription]);
@@ -329,13 +336,18 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 - (void)_processDidRegisterForRemoteNotifications
 {
 	if ([GBVersionTracking isFirstLaunchEver]) {
+		DDLogInfo(@"First launch after DidRegisterForRemoteNotifications");
+
 		PASRootVC *rootVc = (PASRootVC *)self.window.rootViewController;
 		UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
 		UIViewController *vc = nav.topViewController;
 		if ([vc isKindOfClass:[PASTimelineCVC class]]) {
+			
 			PASTimelineCVC *tl = (PASTimelineCVC *)vc;
 			if (!tl.isLoading) { // this could mean
+				DDLogInfo(@"Timeline NOT loading");
 				if (!self.didFavoriteInitialArtists) {
+					DDLogInfo(@"kPASDidFavoriteInitialArtists NOT received yet, show spinner.");
 					// NOT YET loading (kPASDidFavoriteInitialArtists not yet fired, still faving initial artists)
 					// either the user went through the onboarding very fast or initial faving takes very long
 					// show hud which will be hidden when kPASDidFavoriteInitialArtists fires
@@ -343,13 +355,17 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 						self.loadingHud = [MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
 					});
 				} else {
+					DDLogInfo(@"kPASDidFavoriteInitialArtists already received, refresh Timeline");
 					// NOT ANYMORE loading
 					// either the user took long with the onboarding or the initial faving was very fast
 					// sometimes (when a user faved an Artists that had to be created), the refreshUI triggered by
 					// kPASDidFavoriteInitialArtists did not bring back all Albums (since they need to be fetched)
 					[tl refreshUI:YES];
 				}
+			} else {
+				DDLogInfo(@"Timeline IS loading");
 			}
+			
 		}
 	}
 }
