@@ -103,7 +103,7 @@
 
 #pragma mark - Accessors
 
-- (void)setIsFetching:(BOOL)isLoading
+- (void)setIsLoading:(BOOL)isLoading
 {
 	if (_isLoading != isLoading) {
 		_isLoading = isLoading;
