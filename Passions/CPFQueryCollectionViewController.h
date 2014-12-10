@@ -13,11 +13,6 @@
 @interface CPFQueryCollectionViewController : UICollectionViewController <UICollectionViewDataSource>
 
 /**
- * Is the query currently loading (being fetched)?
- */
-@property (nonatomic, readonly) BOOL isLoading;
-
-/**
  * Should the collection view show an activity indicator while a query is in progress?
  */
 @property (nonatomic) BOOL loadingViewEnabled;
@@ -42,6 +37,11 @@
  * Returns the fetched array of objects, or an empty array if nothing has been fetched.
  */
 @property NSArray *objects;
+
+/**
+ * Is the query currently loading (being fetched)?
+ */
+-(BOOL)isLoading;
 
 /**
  * Loads first page of objects.
