@@ -97,7 +97,7 @@ static FRParseLogger *sharedLogger;
 		
 		[obj setObject:logLevel	forKey:@"logLevel"];
 		
-		[obj saveEventually];
+		[obj saveInBackground];
 	}
 }
 
