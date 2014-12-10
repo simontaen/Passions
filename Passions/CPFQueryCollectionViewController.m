@@ -116,7 +116,7 @@
 					self.loadingHud = [MBProgressHUD showHUDAddedTo:self.parentViewController.view animated:YES];
 					self.loadingHud.labelText = @"Loading albums";
 				});
-			} else if (self.loadingHud) {
+			} else {
 				dispatch_async(dispatch_get_main_queue(), ^{
 					if (self.loadingHud) {
 						[self.loadingHud hide:YES];
