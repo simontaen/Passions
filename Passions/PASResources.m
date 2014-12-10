@@ -33,8 +33,6 @@ NSString * const kPASDidEditArtistWithName = @"kPASDidEditArtistWithName";
 
 NSString * const kPASShowAlbumDetails = @"kPASShowAlbumDetails";
 
-NSString * const kPASDidFavoriteInitialArtists = @"kPASDidFavoriteInitialArtists";
-
 NSString * const kITunesAffiliation = @"at=10lMuD";
 
 CGFloat const kPASSizeArtistThumbnailSmall = 50;

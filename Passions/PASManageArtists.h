@@ -24,7 +24,7 @@
 - (BOOL)isArtistInProgress:(NSString *)artistName;
 - (BOOL)favingInProcess;
 
-- (void)addInitialFavArtists;
+- (void)addInitialFavArtistsWithCompletion:(void (^)())completion;
 
 - (void)writeToDisk;
 

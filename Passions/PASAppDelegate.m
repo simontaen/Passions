@@ -138,36 +138,30 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 				[self _initialUserSetup:currentUser withInstallation:currentInstallation];
 				[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 					if (succeeded && !error) {
+						
+						// ---------
 						DDLogInfo(@"Current User initialized: %@", currentUser.objectId);
 						[Crashlytics setUserIdentifier:[PFUser currentUser].objectId];
 						
 						self.didFavoriteInitialArtists = NO;
-						DDLogInfo(@"Subscribing to kPASDidFavoriteInitialArtists");
-						NSNotificationCenter *dc = [NSNotificationCenter defaultCenter];
-						[dc addObserverForName:kPASDidFavoriteInitialArtists
-										object:nil queue:nil
-									usingBlock:^(NSNotification *note) {
-										self.didFavoriteInitialArtists = YES;
-										DDLogInfo(@"Received kPASDidFavoriteInitialArtists");
-										if (self.loadingHud) {
-											dispatch_async(dispatch_get_main_queue(), ^{
-												DDLogInfo(@"Hiding initial Hud");
-												[self.loadingHud hide:YES];
-												self.loadingHud = nil;
-											});
-										}
-										
-										DDLogInfo(@"Refresh Timeline after kPASDidFavoriteInitialArtists received");
-										[[self _timelineVc] refreshUI:YES];
-										
-										// this is a one time only thing
-										DDLogInfo(@"Unsubscribing from kPASDidFavoriteInitialArtists");
-										[[NSNotificationCenter defaultCenter] removeObserver:nil
-																						name:kPASDidFavoriteInitialArtists
-																					  object:self];
-									}];
-						DDLogInfo(@"Starting to add initial Artists");
-						[[PASManageArtists sharedMngr] addInitialFavArtists];
+						DDLogInfo(@"Initial Artists: Starting");
+						[[PASManageArtists sharedMngr] addInitialFavArtistsWithCompletion:^{
+							
+							self.didFavoriteInitialArtists = YES;
+							DDLogInfo(@"Initial Artists: Finished");
+							if (self.loadingHud) {
+								dispatch_async(dispatch_get_main_queue(), ^{
+									DDLogInfo(@"Hiding initial Hud");
+									[self.loadingHud hide:YES];
+									self.loadingHud = nil;
+								});
+							}
+							
+							DDLogInfo(@"Refresh Timeline after initial Artists finished");
+							[[self _timelineVc] refreshUI:YES];
+						}];
+						// ---------
+						
 					} else {
 						DDLogError(@"Could not initialize User: %@", [error localizedDescription]);
 					}
@@ -343,7 +337,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		if (![tl isLoading]) { // this could mean
 			DDLogInfo(@"Timeline NOT loading");
 			if (!self.didFavoriteInitialArtists) {
-				DDLogInfo(@"Initial Artists: Add NOT YET, show spinner.");
+				DDLogInfo(@"Initial Artists: Add NOT YET completed, show spinner.");
 				// NOT YET loading (kPASDidFavoriteInitialArtists not yet fired, still faving initial artists)
 				// either the user went through the onboarding very fast or initial faving takes very long
 				// show hud which will be hidden when kPASDidFavoriteInitialArtists fires

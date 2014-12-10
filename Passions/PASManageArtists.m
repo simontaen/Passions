@@ -251,7 +251,7 @@
 	return result;
 }
 
-- (void)addInitialFavArtists
+- (void)addInitialFavArtistsWithCompletion:(void (^)())completion
 {
 	// this is called from the app delegate, make sure you're properly set up
 	if (!self.originalFavArtists) {
@@ -285,10 +285,7 @@
 												} else {
 													DDLogInfo(@"Initial Add: user saved");
 												}
-												
-												DDLogInfo(@"Posting kPASDidFavoriteInitialArtists");
-												[[NSNotificationCenter defaultCenter] postNotificationName:kPASDidFavoriteInitialArtists
-																									object:nil];
+												completion();
 											}];
 										}
 									}];
@@ -323,6 +320,7 @@
 				break;
 			}
 		}
+		DDLogInfo(@"Initial Add: Music Artists '%@'", artistNames);
 		favingBlock(artistNames, YES);
 	}
 }

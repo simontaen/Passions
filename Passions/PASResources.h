@@ -26,9 +26,6 @@ extern NSString * const kPASDidEditArtistWithName;
 // Notification received when album details should be shown for the passed Album
 extern NSString * const kPASShowAlbumDetails;
 
-// Notification sent when the initial Artists have been favorited.
-extern NSString * const kPASDidFavoriteInitialArtists;
-
 // iTunes Affiliate Token
 extern NSString * const kITunesAffiliation;
 
