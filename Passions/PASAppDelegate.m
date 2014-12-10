@@ -22,6 +22,7 @@
 #import <Fabric/Fabric.h>
 #import "PASAssertionHandler.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "DDFileLogger.h"
 #import "DDTTYLogger.h"
 #import "FRParseLogger.h"
 #import <CrashlyticsLumberjack/CrashlyticsLogger.h>
@@ -86,6 +87,11 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 // run this AFTER Parse (because we use Parse as a logger which needs API and Client key)
 - (void)_setupCocoaLumberjack
 {
+	DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
+	fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+	fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+	[DDLog addLogger:fileLogger];
+	
 	[DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:LOG_LEVEL_VERBOSE];
 	[[DDTTYLogger sharedInstance] setColorsEnabled:YES];
 
