@@ -157,13 +157,8 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 											});
 										}
 										
-										PASRootVC *rootVc = (PASRootVC *)self.window.rootViewController;
-										UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
-										UIViewController *vc = nav.topViewController;
-										if ([vc isKindOfClass:[PASTimelineCVC class]]) {
-											DDLogInfo(@"Refresh Timeline after kPASDidFavoriteInitialArtists received");
-											[((PASTimelineCVC *)vc) refreshUI:YES];
-										}
+										DDLogInfo(@"Refresh Timeline after kPASDidFavoriteInitialArtists received");
+										[[self _timelineVc] refreshUI:YES];
 										
 										// this is a one time only thing
 										DDLogInfo(@"Unsubscribing from kPASDidFavoriteInitialArtists");
@@ -343,13 +338,8 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 {
 	if ([GBVersionTracking isFirstLaunchEver]) {
 		DDLogInfo(@"First launch after DidRegisterForRemoteNotifications");
-
-		PASRootVC *rootVc = (PASRootVC *)self.window.rootViewController;
-		UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
-		UIViewController *vc = nav.topViewController;
-		if ([vc isKindOfClass:[PASTimelineCVC class]]) {
-			
-			PASTimelineCVC *tl = (PASTimelineCVC *)vc;
+		
+			PASTimelineCVC *tl = [self _timelineVc];
 			if (![tl isLoading]) { // this could mean
 				DDLogInfo(@"Timeline NOT loading");
 				if (!self.didFavoriteInitialArtists) {
@@ -372,7 +362,6 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 				DDLogInfo(@"Timeline IS loading");
 			}
 			
-		}
 	}
 }
 
@@ -486,6 +475,21 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 - (void)applicationWillTerminate:(UIApplication *)application
 {
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - Helpers
+
+- (PASTimelineCVC *)_timelineVc
+{
+	PASRootVC *rootVc = (PASRootVC *)self.window.rootViewController;
+	UINavigationController *nav = (UINavigationController *)rootVc.selectedViewController;
+	UIViewController *vc = nav.topViewController;
+	if ([vc isKindOfClass:[PASTimelineCVC class]]) {
+		return (PASTimelineCVC *)vc;
+	} else {
+		DDLogError(@"The View Hierarchy is not properly set up");
+		return nil;
+	}
 }
 
 @end
