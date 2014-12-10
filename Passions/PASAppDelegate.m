@@ -338,30 +338,30 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 {
 	if ([GBVersionTracking isFirstLaunchEver]) {
 		DDLogInfo(@"First launch after DidRegisterForRemoteNotifications");
+		PASTimelineCVC *tl = [self _timelineVc];
 		
-			PASTimelineCVC *tl = [self _timelineVc];
-			if (![tl isLoading]) { // this could mean
-				DDLogInfo(@"Timeline NOT loading");
-				if (!self.didFavoriteInitialArtists) {
-					DDLogInfo(@"kPASDidFavoriteInitialArtists NOT received yet, show spinner.");
-					// NOT YET loading (kPASDidFavoriteInitialArtists not yet fired, still faving initial artists)
-					// either the user went through the onboarding very fast or initial faving takes very long
-					// show hud which will be hidden when kPASDidFavoriteInitialArtists fires
-					dispatch_async(dispatch_get_main_queue(), ^{
-						self.loadingHud = [MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
-					});
-				} else {
-					DDLogInfo(@"kPASDidFavoriteInitialArtists already received, refresh Timeline");
-					// NOT ANYMORE loading
-					// either the user took long with the onboarding or the initial faving was very fast
-					// sometimes (when a user faved an Artists that had to be created), the refreshUI triggered by
-					// kPASDidFavoriteInitialArtists did not bring back all Albums (since they need to be fetched)
-					[tl refreshUI:YES];
-				}
+		if (![tl isLoading]) { // this could mean
+			DDLogInfo(@"Timeline NOT loading");
+			if (!self.didFavoriteInitialArtists) {
+				DDLogInfo(@"Initial Artists: Add NOT YET, show spinner.");
+				// NOT YET loading (kPASDidFavoriteInitialArtists not yet fired, still faving initial artists)
+				// either the user went through the onboarding very fast or initial faving takes very long
+				// show hud which will be hidden when kPASDidFavoriteInitialArtists fires
+				dispatch_async(dispatch_get_main_queue(), ^{
+					self.loadingHud = [MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
+				});
 			} else {
-				DDLogInfo(@"Timeline IS loading");
+				DDLogInfo(@"Initial Artists: did finish, refresh Timeline");
+				// NOT ANYMORE loading
+				// either the user took long with the onboarding or the initial faving was very fast
+				// sometimes (when a user faved an Artists that had to be created), the refreshUI triggered by
+				// kPASDidFavoriteInitialArtists did not bring back all Albums (since they need to be fetched)
+				[tl refreshUI:YES];
 			}
 			
+		} else {
+			DDLogInfo(@"Timeline IS loading");
+		}
 	}
 }
 
