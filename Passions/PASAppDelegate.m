@@ -90,7 +90,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	[[DDTTYLogger sharedInstance] setColorsEnabled:YES];
 
 	[DDLog addLogger:[FRParseLogger sharedInstance] withLogLevel:LOG_LEVEL_INFO];
-	[DDLog addLogger:[CrashlyticsLogger sharedInstance] withLogLevel:LOG_LEVEL_WARN];
+	[DDLog addLogger:[CrashlyticsLogger sharedInstance] withLogLevel:LOG_LEVEL_INFO];
 }
 
 #pragma mark - Parse
