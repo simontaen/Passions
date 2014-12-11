@@ -34,6 +34,8 @@
 @property (nonatomic, strong) NSMutableDictionary* artistNameCorrections; // NSString (display) -> NSString (internal on Favorite Artists TVC, LFM corrected)
 @property (nonatomic, strong) dispatch_queue_t correctionsQ;
 
+@property (nonatomic, strong) NSURLSessionTask *task;
+
 @end
 
 @implementation PASManageArtists
@@ -259,6 +261,7 @@
 	}
 	
 	void (^favingBlock)(NSArray*, BOOL) = ^void(NSArray *artistNames, BOOL needCorrection) {
+		self.task = nil;
 		NSUInteger __block doneCounter = 0;
 		NSUInteger count = artistNames.count;
 		
@@ -295,19 +298,22 @@
 	if (![PASMediaQueryAccessor sharedMngr].usesMusicApp) {
 		DDLogInfo(@"User \"%@\" doesn't seem to use the Music App", [PFUser currentUser].objectId);
 		
-		[[LastFmFetchr fetchr] getChartsTopArtists:nil
-										 withLimit:3 completion:^(LFMChartTopArtists *data, NSError *error) {
-											 NSMutableArray *artistNames = [NSMutableArray arrayWithCapacity:3];
-											 if (data && !error) {
-												 for (LFMArtistChart *artist in [data artists]) {
-													 [artistNames addObject:[artist name]];
-												 }
-												 DDLogInfo(@"Initial Add: received Artists '%@'", artistNames);
-											 } else {
-												 DDLogError(@"Initial Add: charts %@", [error description]);
-											 }
-											 favingBlock(artistNames, NO);
-										 }];
+		self.task = [[LastFmFetchr fetchr] getChartsTopArtists:nil
+													 withLimit:3 completion:^(LFMChartTopArtists *data, NSError *error) {
+														 NSMutableArray *artistNames = [NSMutableArray arrayWithCapacity:3];
+														 if (data && !error) {
+															 for (LFMArtistChart *artist in [data artists]) {
+																 [artistNames addObject:[artist name]];
+															 }
+															 DDLogInfo(@"Initial Add: received Artists '%@'", artistNames);
+														 } else {
+															 DDLogError(@"Initial Add: charts %@", [error description]);
+														 }
+														 DDLogInfo(@"Initial Add: calling favingBlock");
+														 favingBlock(artistNames, NO);
+													 }];
+		DDLogInfo(@"Task state %d", (int)[self.task state]);
+		
 	} else {
 		NSArray *topArtists = [PASMediaQueryAccessor sharedMngr].artistCollectionsOrderedByPlaycount;
 		NSMutableArray *artistNames = [NSMutableArray arrayWithCapacity:3];
