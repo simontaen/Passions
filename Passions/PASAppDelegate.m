@@ -47,16 +47,15 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 	NSAssertionHandler* customAssertionHandler = [[PASAssertionHandler alloc] init];
 	[[[NSThread currentThread] threadDictionary] setValue:customAssertionHandler
 												   forKey:NSAssertionHandlerKey];
+	// Setup LastFmFetchr
+	[LastFmFetchr fetchrWithApiKey:kPASLastFmApiKey];
 	
 	// Setup AFNetworking
 	[[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
 	
-	// Setup LastFmFetchr
-	[LastFmFetchr fetchrWithApiKey:kPASLastFmApiKey];
-	
+	[self _setupImageCache];
 	[self _setupCrashlytics];
 	[self _setupParse]; // also sets up CocoaLumberjack
-	[self _setupImageCache];
 	
 	if (application.applicationState != UIApplicationStateBackground) {
 		// Track an app open here if NOT from push,
