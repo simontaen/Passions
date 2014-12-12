@@ -262,33 +262,38 @@
 		NSUInteger __block doneCounter = 0;
 		NSUInteger count = artistNames.count;
 		
-		for (NSString *artistName in artistNames) {
-			DDLogInfo(@"Initial Add: faving %@", artistName);
-			[self _favoriteArtistByCurrentUser:artistName
-									  saveUser:NO
-							   needsCorrection:needCorrection
-								  originalName:artistName
-									completion:^(NSError *error) {
-										doneCounter++;
-										if (error) {
-											DDLogError(@"Initial Add: faving %@ %@", artistName, [error description]);
-										} else {
-											DDLogInfo(@"Initial Add: faving complete %@", artistName);
-										}
-										
-										if (doneCounter == count) {
-											DDLogInfo(@"Initial Add: all artists complete, save user");
-											// Save User now that all are done
-											[[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-												if (error) {
-													DDLogError(@"Initial Add: save user %@", [error description]);
-												} else {
-													DDLogInfo(@"Initial Add: user saved");
-												}
-												completion();
-											}];
-										}
-									}];
+		if (count > 0) {
+			for (NSString *artistName in artistNames) {
+				DDLogInfo(@"Initial Add: favingBlock faving %@", artistName);
+				[self _favoriteArtistByCurrentUser:artistName
+										  saveUser:NO
+								   needsCorrection:needCorrection
+									  originalName:artistName
+										completion:^(NSError *error) {
+											doneCounter++;
+											if (error) {
+												DDLogError(@"Initial Add: favingBlock faving %@ %@", artistName, [error description]);
+											} else {
+												DDLogInfo(@"Initial Add: favingBlock faving complete %@", artistName);
+											}
+											
+											if (doneCounter == count) {
+												DDLogInfo(@"Initial Add: favingBlock all artists complete, save user");
+												// Save User now that all are done
+												[[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+													if (error) {
+														DDLogError(@"Initial Add: favingBlock save user %@", [error description]);
+													} else {
+														DDLogInfo(@"Initial Add: favingBlock user saved");
+													}
+													completion();
+												}];
+											}
+										}];
+			}
+		} else {
+			DDLogInfo(@"Initial Add: favingBlock No Artists to favorite");
+			completion();
 		}
 	};
 	
