@@ -326,7 +326,7 @@
 				break;
 			}
 		}
-		DDLogInfo(@"Initial Add: Music Artists '%@'", artistNames);
+		DDLogInfo(@"Initial Add: Music Artists '%@', calling favingBlock", artistNames);
 		favingBlock(artistNames, YES);
 	}
 }
