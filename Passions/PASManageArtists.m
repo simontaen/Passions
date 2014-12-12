@@ -34,8 +34,6 @@
 @property (nonatomic, strong) NSMutableDictionary* artistNameCorrections; // NSString (display) -> NSString (internal on Favorite Artists TVC, LFM corrected)
 @property (nonatomic, strong) dispatch_queue_t correctionsQ;
 
-@property (nonatomic, strong) NSURLSessionTask *task;
-
 @end
 
 @implementation PASManageArtists
@@ -261,7 +259,6 @@
 	}
 	
 	void (^favingBlock)(NSArray*, BOOL) = ^void(NSArray *artistNames, BOOL needCorrection) {
-		self.task = nil;
 		NSUInteger __block doneCounter = 0;
 		NSUInteger count = artistNames.count;
 		
@@ -298,21 +295,34 @@
 	if (![PASMediaQueryAccessor sharedMngr].usesMusicApp) {
 		DDLogInfo(@"User \"%@\" doesn't seem to use the Music App", [PFUser currentUser].objectId);
 		
-		self.task = [[LastFmFetchr fetchr] getChartsTopArtists:nil
-													 withLimit:3 completion:^(LFMChartTopArtists *data, NSError *error) {
-														 NSMutableArray *artistNames = [NSMutableArray arrayWithCapacity:3];
-														 if (data && !error) {
-															 for (LFMArtistChart *artist in [data artists]) {
-																 [artistNames addObject:[artist name]];
-															 }
-															 DDLogInfo(@"Initial Add: received Artists '%@'", artistNames);
-														 } else {
-															 DDLogError(@"Initial Add: charts %@", [error description]);
-														 }
-														 DDLogInfo(@"Initial Add: calling favingBlock");
-														 favingBlock(artistNames, NO);
-													 }];
-		DDLogInfo(@"Task state %d", (int)[self.task state]);
+		NSURLSessionTask *task = [[LastFmFetchr fetchr] getChartsTopArtists:nil
+																  withLimit:3 completion:^(LFMChartTopArtists *data, NSError *error) {
+																	  NSMutableArray *artistNames = [NSMutableArray arrayWithCapacity:3];
+																	  if (data && !error) {
+																		  for (LFMArtistChart *artist in [data artists]) {
+																			  [artistNames addObject:[artist name]];
+																		  }
+																		  DDLogInfo(@"Initial Add: received Artists '%@'", artistNames);
+																	  } else {
+																		  DDLogError(@"Initial Add: charts %@", [error description]);
+																	  }
+																	  DDLogInfo(@"Initial Add: calling favingBlock");
+																	  favingBlock(artistNames, NO);
+																  }];
+		
+		// Setup a Timeout
+		void (^timer)(void) = ^{
+			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kPASLastFmTimeoutInSec * 0.6 * NSEC_PER_SEC);
+			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+				if ([task state] == NSURLSessionTaskStateRunning) {
+					// Task is running too long, cancel it
+					DDLogInfo(@"Cancelling getChartsTopArtists Request");
+					[task cancel];
+				}
+			});
+		};
+		// Start the timer
+		timer();
 		
 	} else {
 		NSArray *topArtists = [PASMediaQueryAccessor sharedMngr].artistCollectionsOrderedByPlaycount;
