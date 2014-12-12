@@ -150,13 +150,13 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 							
 							self.didFavoriteInitialArtists = YES;
 							DDLogInfo(@"Initial Artists: Finished");
-							if (self.loadingHud) {
-								dispatch_async(dispatch_get_main_queue(), ^{
+							dispatch_async(dispatch_get_main_queue(), ^{
+								if (self.loadingHud) {
 									DDLogInfo(@"Hiding initial Hud");
 									[self.loadingHud hide:YES];
 									self.loadingHud = nil;
-								});
-							}
+								}
+							});
 							
 							DDLogInfo(@"Refresh Timeline after initial Artists finished");
 							[[self _timelineVc] refreshUI:YES];
