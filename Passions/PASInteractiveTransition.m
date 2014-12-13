@@ -56,7 +56,7 @@
 {
 	if (recognizer.state == UIGestureRecognizerStateBegan) {
 		self.leftToRight = [recognizer velocityInView:recognizer.view].x > 0;
-		int selectedVcIdx = self.pageViewController.selectedViewControllerIndex;
+		NSUInteger selectedVcIdx = self.pageViewController.selectedViewControllerIndex;
 		
 		if (!self.leftToRight && selectedVcIdx != self.pageViewController.viewControllers.count - 1) {
 			// transition right
