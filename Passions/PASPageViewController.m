@@ -42,12 +42,12 @@
 #pragma mark - PASPageViewController
 
 @interface PASPageViewController ()
-@property (nonatomic, assign, readwrite) int selectedViewControllerIndex;
+@property (nonatomic, assign, readwrite) NSUInteger selectedViewControllerIndex;
 @property (nonatomic, weak, readwrite) UIViewController *selectedViewController;
 @property (nonatomic, assign) BOOL interactive;
 
 // to get a sense of direction
-@property (nonatomic, assign) int previousViewControllerIndex;
+@property (nonatomic, assign) NSUInteger previousViewControllerIndex;
 
 @property (strong, nonatomic) IBOutlet UIVisualEffectView *blurView;
 @property (nonatomic, weak) IBOutlet UIPageControl *pageControlView;
@@ -79,7 +79,7 @@
 	[self.pageControlView addTarget:self action:@selector(didChangeCurrentPage:) forControlEvents:UIControlEventTouchUpInside];
 	
 	// update the page control
-	self.pageControlView.numberOfPages = self.viewControllers.count;
+	self.pageControlView.numberOfPages = (NSInteger)self.viewControllers.count;
 	self.pageControlView.backgroundColor = [UIColor clearColor];
 	self.pageControlView.currentPageIndicatorTintColor = [UIColor whiteColor];
 	self.pageControlView.pageIndicatorTintColor = [UIColor lightGrayColor];
@@ -97,7 +97,7 @@
 															 toItem:nil
 														  attribute:NSLayoutAttributeNotAnAttribute
 														 multiplier:1
-														   constant:([self.pageControlView sizeForNumberOfPages:self.viewControllers.count].width + 16)];
+														   constant:([self.pageControlView sizeForNumberOfPages:(NSInteger)self.viewControllers.count].width + 16)];
 	[self.blurView addConstraint:cn];
 	
 	
@@ -136,7 +136,7 @@
 	NSUInteger nrOfVcs = viewControllers.count;
 	
 	if (delegateConforms && nrOfVcs > 1) {
-		for (int i = 0; i < nrOfVcs; i++) {
+		for (NSUInteger i = 0; i < nrOfVcs; i++) {
 			UIViewController *thisVc = viewControllers[i];
 			UIViewController *nextVc;
 			UIViewController *previousVc;
@@ -164,16 +164,15 @@
 	}
 }
 
-- (int)selectedViewControllerIndex
+- (NSUInteger)selectedViewControllerIndex
 {
-	return (int)[self.viewControllers indexOfObject:self.selectedViewController];
+	return [self.viewControllers indexOfObject:self.selectedViewController];
 }
 
-- (void)setSelectedViewControllerIndex:(int)selectedViewControllerIndex
+- (void)setSelectedViewControllerIndex:(NSUInteger)selectedViewControllerIndex
 {
 	// this is the main method for user initiated view controller switching
-	if(selectedViewControllerIndex < 0
-	   || selectedViewControllerIndex >= self.viewControllers.count
+	if(selectedViewControllerIndex >= self.viewControllers.count
 	   || selectedViewControllerIndex == self.selectedViewControllerIndex)
 		return;
 	
@@ -213,7 +212,7 @@
 					self.pageControlView.currentPageIndicatorTintColor = [(id<PASPageViewControllerChildDelegate>)newVc PAS_currentPageIndicatorTintColor];
 				}
 			}
-			self.pageControlView.currentPage = self.selectedViewControllerIndex;
+			self.pageControlView.currentPage = (NSInteger)self.selectedViewControllerIndex;
 		}
 	}];
 }
@@ -239,7 +238,7 @@
 
 #pragma mark - Public Methods
 
-- (void)transitionToViewControllerAtIndex:(int)index interactive:(BOOL)interactive
+- (void)transitionToViewControllerAtIndex:(NSUInteger)index interactive:(BOOL)interactive
 {
 	self.interactive = interactive;
 	self.selectedViewControllerIndex = index;
@@ -250,22 +249,22 @@
 - (IBAction)didChangeCurrentPage:(UIPageControl *)sender
 {
 	// reset to the current to it doesn't do an unintended switch
-	self.pageControlView.currentPage = self.selectedViewControllerIndex;
+	self.pageControlView.currentPage = (NSInteger)self.selectedViewControllerIndex;
 	
 	if (self.selectedViewControllerIndex == 0) {
 		// go right if first is displayed
 		[self transitionToViewControllerAtIndex:1 interactive:NO];
 	} else if (self.selectedViewControllerIndex == self.viewControllers.count-1) {
 		// go left if last is displayed
-		[self transitionToViewControllerAtIndex:(int)self.viewControllers.count-2 interactive:NO];
+		[self transitionToViewControllerAtIndex:self.viewControllers.count-2 interactive:NO];
 	} else {
-		int delta = self.selectedViewControllerIndex - self.previousViewControllerIndex;
-		int target = self.selectedViewControllerIndex + delta;
+		NSInteger delta = (NSInteger)self.selectedViewControllerIndex - (NSInteger)self.previousViewControllerIndex;
+		NSInteger target = (NSInteger)self.selectedViewControllerIndex + delta;
 
 		
 		if (delta < 0 && target >= 0) {
 			// the delta indicates left and we can go left
-			[self transitionToViewControllerAtIndex:target interactive:NO];
+			[self transitionToViewControllerAtIndex:(NSUInteger)target interactive:NO];
 		} else {
 			// go right
 			[self transitionToViewControllerAtIndex:self.selectedViewControllerIndex+1 interactive:NO];

@@ -18,7 +18,7 @@
 @property (nonatomic, weak) id<PASPageViewControllerDelegate>delegate;
 
 /// the index of the currently displaying view controller
-@property (nonatomic, assign, readonly) int selectedViewControllerIndex;
+@property (nonatomic, assign, readonly) NSUInteger selectedViewControllerIndex;
 /// the currently displaying view controller
 @property (nonatomic, weak, readonly) UIViewController *selectedViewController;
 /// all the view controllers this container displays
@@ -28,7 +28,7 @@
 @property (nonatomic, assign, getter=ispageControlHidden) BOOL pageControlHidden;
 
 /// Transition to the view controller at the specified index
-- (void)transitionToViewControllerAtIndex:(int)index interactive:(BOOL)interactive;
+- (void)transitionToViewControllerAtIndex:(NSUInteger)index interactive:(BOOL)interactive;
 
 /// let the delegate assign gesture recogizers for an interactive transition
 - (void)addGestureRecognizerToContainerView:(UIGestureRecognizer *)recognizer;
