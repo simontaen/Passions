@@ -14,8 +14,6 @@ pod 'UIDevice-Hardware' # Hardware properties for analytics
 pod 'GBVersionTracking' # Version and launch tracking
 # https://github.com/kishikawakatsumi/UICKeyChainStore
 pod 'UICKeyChainStore' # Easy Keychain Access
-# https://github.com/andysmart/AJS-iTunes-API
-pod 'AJSITunesAPI', :path => '/Users/simon/Documents/code/iOS/Github/AJS-iTunes-API' # iTunes API
 # https://github.com/jdg/MBProgressHUD
 pod 'MBProgressHUD' # show a loading HUD
 # https://github.com/CocoaLumberjack/CocoaLumberjack
@@ -28,6 +26,8 @@ pod 'UIColor+Hex' # Support NSCopying on UIColor
 # Development Pods
 pod 'LastFmFetchr', :path => '/Users/simon/Documents/code/iOS/LastFmFetchr'
 pod 'SpotifySDK', :path => '/Users/simon/Documents/code/iOS/Github/ios-sdk'
+# https://github.com/andysmart/AJS-iTunes-API
+#pod 'AJSITunesAPI', :path => '/Users/simon/Documents/code/iOS/Github/AJS-iTunes-API' # iTunes API
 
 # Non-pods, but still external Code
 # https://github.com/stablekernel/STKTableViewCell

@@ -9,7 +9,6 @@
 #import "PASAlbumInfoTVC.h"
 #import "PASArtworkTVCell.h"
 #import "PASAlbumInfoTVCell.h"
-#import "AJSITunesAPI.h"
 #import "PASPageViewController.h"
 
 @interface PASAlbumInfoTVC ()
@@ -123,9 +122,8 @@ static NSInteger const kAddCells = 2;
 		NSIndexPath *newIdxPath = [self _newIdxPath:indexPath];
 		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:newIdxPath];
 		
-		AJSITunesResult *track = self.tracks[newIdxPath.row];
-		
-		cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@", track.trackNumber, track.title];
+//		AJSITunesResult *track = self.tracks[newIdxPath.row];
+//		cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@", track.trackNumber, track.title];
 		
 		return cell;
 	}
