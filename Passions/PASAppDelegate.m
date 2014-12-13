@@ -177,7 +177,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 		[self _updateUserInfos:currentUser];
 		[self _updateDeviceInfos:currentInstallation];
 		
-		NSUInteger runCount = [[currentUser objectForKey:@"runCount"] longLongValue];
+		NSUInteger runCount = [[currentUser objectForKey:@"runCount"] unsignedIntegerValue];
 		
 		if ([GBVersionTracking isFirstLaunchForBuild]) {
 			// on first build launch, make sure it really gets saved
