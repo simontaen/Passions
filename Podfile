@@ -24,7 +24,9 @@ pod 'CrashlyticsLumberjack' # Enhancing Crashlytics Crashreports https://dev.twi
 pod 'UIColor+Hex' # Support NSCopying on UIColor
 
 # Development Pods
+# https://github.com/simontaen/LastFmFetchr
 pod 'LastFmFetchr', :path => '/Users/simon/Documents/code/iOS/LastFmFetchr'
+# https://github.com/spotify/ios-sdk
 pod 'SpotifySDK', :path => '/Users/simon/Documents/code/iOS/Github/ios-sdk'
 # https://github.com/andysmart/AJS-iTunes-API
 #pod 'AJSITunesAPI', :path => '/Users/simon/Documents/code/iOS/Github/AJS-iTunes-API' # iTunes API
