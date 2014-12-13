@@ -111,17 +111,17 @@
 	[self.activityIndicator startAnimating];
 	[cache asynchronouslyRetrieveImageForEntity:entity
 								 withFormatName:formatName
-								completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+								completionBlock:^(id<FICEntity> innerEntity, NSString *innerFormatName, UIImage *image) {
 									[self.activityIndicator stopAnimating];
 									// check if this image view hasn't been reused for a different entity
-									if (image && entity == self.entity) {
+									if (image && innerEntity == self.entity) {
 										self.artworkImage.image = image;
 										
 										PASColorPickerCache *pc = [PASColorPickerCache sharedMngr];
 										[pc pickColorsFromImage:image
-														withKey:[entity UUID]
+														withKey:[innerEntity UUID]
 													 completion:^(LEColorScheme *colorScheme) {
-														 if (entity == self.entity && self.artworkImage.image == image) {
+														 if (innerEntity == self.entity && self.artworkImage.image == image) {
 															 dispatch_async(dispatch_get_main_queue(), ^{
 																 self.releaseDateLabel.backgroundColor = colorScheme.backgroundColor;
 																 self.releaseDateLabel.textColor = colorScheme.preferredColorOverBackground;
