@@ -15,7 +15,7 @@
 	static UIColor *defaultNavBarTintColor;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		defaultNavBarTintColor = [UIColor colorWithRed:(247/255.0) green:(247/255.0) blue:(247/255.0) alpha:1];
+		defaultNavBarTintColor = [UIColor colorWithRed:(247/255.0f) green:(247/255.0f) blue:(247/255.0f) alpha:1];
 	});
 	return defaultNavBarTintColor;
 }
@@ -25,7 +25,7 @@
 	static UIColor *musicTintColor;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		musicTintColor = [UIColor colorWithRed:249/255.0 green:86/255.0 blue:72/255.0 alpha:1];
+		musicTintColor = [UIColor colorWithRed:249/255.0f green:86/255.0f blue:72/255.0f alpha:1];
 	});
 	return musicTintColor;
 }
@@ -36,7 +36,7 @@
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		// #659213
-		spotifyTintColor = [UIColor colorWithRed:101/255.0 green:146/255.0 blue:19/255.0 alpha:1];
+		spotifyTintColor = [UIColor colorWithRed:101/255.0f green:146/255.0f blue:19/255.0f alpha:1];
 	});
 	return spotifyTintColor;
 }
@@ -46,7 +46,7 @@
 	static UIColor *starTintColor;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		starTintColor = [UIColor colorWithRed:237/255.0 green:240/255.0 blue:43/255.0 alpha:1];
+		starTintColor = [UIColor colorWithRed:237/255.0f green:240/255.0f blue:43/255.0f alpha:1];
 	});
 	return starTintColor;
 }
@@ -67,7 +67,7 @@
 	static UIColor* tableViewSeparatorColor;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		tableViewSeparatorColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.4];
+		tableViewSeparatorColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.4f];
 	});
 	return tableViewSeparatorColor;
 }

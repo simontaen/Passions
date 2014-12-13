@@ -96,9 +96,9 @@
 		
 		// Center the crop rect either vertically or horizontally, depending on which dimension is smaller
 		if (imageSize.width <= imageSize.height) {
-			cropRect.origin = CGPointMake(0, rint((imageSize.height - smallerDimension) / 2.0));
+			cropRect.origin = CGPointMake(0, rintf((float)((imageSize.height - smallerDimension) / 2.0f)));
 		} else {
-			cropRect.origin = CGPointMake(rint((imageSize.width - smallerDimension) / 2.0), 0);
+			cropRect.origin = CGPointMake(rintf((float)((imageSize.width - smallerDimension) / 2.0f)), 0);
 		}
 		
 		CGImageRef croppedImageRef = CGImageCreateWithImageInRect([image CGImage], cropRect);

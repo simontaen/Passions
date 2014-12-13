@@ -81,7 +81,7 @@
 	[super viewDidLoad];
 	
 	// layout and look
-	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9 alpha:1.0];
+	self.refreshControl.backgroundColor= [[UIColor alloc] initWithWhite:0.9f alpha:1.0f];
 	self.navigationController.navigationBar.barTintColor = [UIColor defaultNavBarTintColor];
 	
 	// TableView Properties

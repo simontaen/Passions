@@ -143,7 +143,7 @@
 			CGFloat imgWidth = img.size.width;
 			CGFloat imgHeight = img.size.height;
 			
-			CGRect myFrame = CGRectMake(self.view.frame.size.width / 2 - imgWidth / 1.75, self.view.frame.size.height / 2 - imgHeight / 2, imgWidth, imgHeight);
+			CGRect myFrame = CGRectMake(self.view.frame.size.width / 2.0f - imgWidth / 1.75f, self.view.frame.size.height / 2.0f - imgHeight / 2.0f, imgWidth, imgHeight);
 			UIButton *btn = [[UIButton alloc] initWithFrame:myFrame];
 			self.swipeLeftHint = btn;
 			
