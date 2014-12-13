@@ -124,6 +124,7 @@
 		F476F0ED19B8D9A100185544 /* PASResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASResources.m; sourceTree = "<group>"; };
 		F476F0EF19B8FFA700185544 /* PASAddFromSamplesTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASAddFromSamplesTVC.h; sourceTree = "<group>"; };
 		F476F0F019B8FFA700185544 /* PASAddFromSamplesTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASAddFromSamplesTVC.m; sourceTree = "<group>"; };
+		F485B35C1A3C572000729B22 /* XcodeWarnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = XcodeWarnings.xcconfig; sourceTree = "<group>"; };
 		F49137F019B7137900E4FC0D /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		F49137F219B7142300E4FC0D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		F49137F419B714A200E4FC0D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -378,6 +379,7 @@
 		F4A7797E1793113E00C770B9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F485B35C1A3C572000729B22 /* XcodeWarnings.xcconfig */,
 				F4EC62BF19E66ADF009C5EF5 /* Images.xcassets */,
 				F4A7797F1793113E00C770B9 /* Passions-Info.plist */,
 				F4A779801793113E00C770B9 /* InfoPlist.strings */,
@@ -696,6 +698,7 @@
 /* Begin XCBuildConfiguration section */
 		F4A779951793113E00C770B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F485B35C1A3C572000729B22 /* XcodeWarnings.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -729,6 +732,7 @@
 		};
 		F4A779961793113E00C770B9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F485B35C1A3C572000729B22 /* XcodeWarnings.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
