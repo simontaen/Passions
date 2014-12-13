@@ -237,7 +237,7 @@
 			NSMutableArray *obj1Tracks = self.artistsTracks[obj1];
 			NSMutableArray *obj2Tracks = self.artistsTracks[obj2];
 			
-			NSInteger result = obj1Tracks.count - obj2Tracks.count;
+			NSInteger result = (NSInteger)obj1Tracks.count - (NSInteger)obj2Tracks.count;
 			
 			if (result > 0) {
 				return NSOrderedAscending;
