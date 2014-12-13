@@ -92,7 +92,7 @@
 			
 		} else {
 			// dummy
-			LEColorScheme *colors = [LEColorScheme new];
+			colors = [LEColorScheme new];
 			colors.backgroundColor = [UIColor whiteColor];
 			colors.primaryTextColor = [UIColor lightTextColor];
 			colors.secondaryTextColor = [UIColor darkTextColor];
