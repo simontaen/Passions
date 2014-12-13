@@ -24,7 +24,7 @@ NSString * const kPASParseMasterKey = @"Mx6FjfJ4FYW6fi9Ra1G23AEcQuDgtm2xBH1yRhS7
 #endif
 
 NSString * const kPASLastFmApiKey = @"c830eb62c631873914abae9f0bf22d40";
-float const kPASLastFmTimeoutInSec = 10.0;
+NSUInteger const kPASLastFmTimeoutInSec = 10;
 
 NSString * const kPASSpotifyClientId = @"e3e0a8c3a7c14f488c166528b08d095e";
 
