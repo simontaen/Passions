@@ -120,7 +120,7 @@
 			artistPlaycounts[obj2Name] = [PASMediaQueryAccessor _playcountOfArtistCollection:obj2];
 		}
 		
-		NSInteger result = [(NSNumber *)artistPlaycounts[obj1Name] unsignedIntegerValue] - [(NSNumber *)artistPlaycounts[obj2Name] unsignedIntegerValue];
+		NSInteger result = [(NSNumber *)artistPlaycounts[obj1Name] integerValue] - [(NSNumber *)artistPlaycounts[obj2Name] integerValue];
 		
 		if (result > 0) {
 			return NSOrderedAscending;
@@ -145,7 +145,7 @@
 	for (MPMediaItem *item in [collection items]) {
 		playcount += [item PAS_playcount];
 	}
-	return [NSNumber numberWithInteger:playcount];
+	return [NSNumber numberWithUnsignedInteger:playcount];
 }
 
 #pragma mark - dealloc
