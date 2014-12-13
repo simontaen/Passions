@@ -193,14 +193,14 @@
 //			for (UIGestureRecognizer *gr in _selectedViewController.view.gestureRecognizers) {
 //				[self removeGestureRecognizerFromContainerView:gr];
 //			}
-			if (_selectedViewController) {
-				self.previousViewControllerIndex = [self.viewControllers indexOfObject:_selectedViewController];
+			if (self->_selectedViewController) {
+				self.previousViewControllerIndex = [self.viewControllers indexOfObject:self->_selectedViewController];
 			} else {
 				// first time
 				self.previousViewControllerIndex = 0;
 			}
 			
-			_selectedViewController = newVc;
+			self->_selectedViewController = newVc;
 			
 			self.title = newVc.title;
 			[self setNeedsStatusBarAppearanceUpdate];
