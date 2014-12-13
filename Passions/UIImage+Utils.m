@@ -25,8 +25,8 @@
 
 - (UIImage*)PASscaleToAspectFitSize:(CGSize)size
 {
-    float widthRatio = size.width/self.size.width;
-    float heightRatio = size.height/self.size.height;
+    CGFloat widthRatio = size.width/self.size.width;
+    CGFloat heightRatio = size.height/self.size.height;
 	
 	UIGraphicsBeginImageContext(size);
 	CGRect imageRect;
@@ -49,8 +49,8 @@
 
 - (UIImage*)PASscaleToAspectFillSize:(CGSize)size
 {
-    float widthRatio = size.width/self.size.width;
-    float heightRatio = size.height/self.size.height;
+    CGFloat widthRatio = size.width/self.size.width;
+    CGFloat heightRatio = size.height/self.size.height;
 	
     UIGraphicsBeginImageContext(size);
 	CGRect imageRect;
@@ -96,9 +96,9 @@
 		
 		// Center the crop rect either vertically or horizontally, depending on which dimension is smaller
 		if (imageSize.width <= imageSize.height) {
-			cropRect.origin = CGPointMake(0, rintf((imageSize.height - smallerDimension) / 2.0));
+			cropRect.origin = CGPointMake(0, rint((imageSize.height - smallerDimension) / 2.0));
 		} else {
-			cropRect.origin = CGPointMake(rintf((imageSize.width - smallerDimension) / 2.0), 0);
+			cropRect.origin = CGPointMake(rint((imageSize.width - smallerDimension) / 2.0), 0);
 		}
 		
 		CGImageRef croppedImageRef = CGImageCreateWithImageInRect([image CGImage], cropRect);
