@@ -42,7 +42,7 @@
 	
 	// Setting up costly properties on PASFavArtistsTVC for performance reasons when transitioning
 	void (^timer)(void) = ^{
-		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC);
+		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (NSUInteger)(0.5 * NSEC_PER_SEC));
 		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 			PASFavArtistsTVC *vc = (PASFavArtistsTVC *)favNav.topViewController;
 			// instantiate the adding container so it can prepare caches
