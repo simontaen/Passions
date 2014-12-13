@@ -15,33 +15,33 @@
 /**
  * Should the collection view show an activity indicator while a query is in progress?
  */
-@property (nonatomic) BOOL loadingViewEnabled;
+@property (nonatomic, assign) BOOL loadingViewEnabled;
 
 /**
  * Should the collection use pagination?
  */
-@property (nonatomic) BOOL paginationEnabled;
+@property (nonatomic, assign) BOOL paginationEnabled;
 
 /**
  * The number of objects to show per page
  */
-@property (nonatomic) NSInteger objectsPerPage;
-
-/**
- * The query to use to fetch the objects.
- * You can configure caching behavior etc. as you see fit
- */
-@property (nonatomic, readonly) PFQuery *queryForCollection;
+@property (nonatomic, assign) NSInteger objectsPerPage;
 
 /**
  * Returns the fetched array of objects, or an empty array if nothing has been fetched.
  */
-@property NSArray *objects;
+@property (nonatomic, strong) NSArray *objects;
 
 /**
  * The progress hud
  */
 @property (nonatomic, strong, readonly) MBProgressHUD *loadingHud;
+
+/**
+ * The query to use to fetch the objects.
+ * You can configure caching behavior etc. as you see fit
+ */
+-(PFQuery *)queryForCollection;
 
 /**
  * Is the query currently loading (being fetched)?
