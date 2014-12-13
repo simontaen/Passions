@@ -28,9 +28,9 @@
 @property (nonatomic, strong) UIAlertController *alertController;
 
 // Accessors that know which sort order is used and cache the results
-@property (nonatomic, strong, readonly) NSArray *_artistsShorthand; // of the appropriate object
-@property (nonatomic, strong, readonly) NSArray *_sectionIndexShorthand; // NSString
-@property (nonatomic, strong, readonly) NSDictionary *_sectionsShorthand; // NSString -> NSMutableArray ( "C" -> @["Artist1", "Artist2"] )
+@property (nonatomic, strong, readonly) NSArray *shorthandArtists; // of the appropriate object
+@property (nonatomic, strong, readonly) NSArray *shorthandSectionIndex; // NSString
+@property (nonatomic, strong, readonly) NSDictionary *shorthandSections; // NSString -> NSMutableArray ( "C" -> @["Artist1", "Artist2"] )
 
 @property (nonatomic, strong) NSArray *cachedArtistsOrderedByName;
 @property (nonatomic, strong) NSArray *cachedAlphabeticalSectionIndex;
@@ -99,7 +99,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	return _sampleArtists;
 }
 
-- (NSArray *)_artistsShorthand
+- (NSArray *)shorthandArtists
 {
 	switch (self.selectedSortOrder) {
 		case PASAddArtistsSortOrderAlphabetical:
@@ -138,7 +138,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	}];
 }
 
-- (NSArray *)_sectionIndexShorthand
+- (NSArray *)shorthandSectionIndex
 {
 	switch (self.selectedSortOrder) {
 		case PASAddArtistsSortOrderAlphabetical:
@@ -156,7 +156,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (NSArray *)_alphabeticalSectionIndex
 {
-	NSMutableArray *array = [[self._sectionsShorthand allKeys] mutableCopy];
+	NSMutableArray *array = [[self.shorthandSections allKeys] mutableCopy];
 	BOOL containsNonAlphabetic = [array containsObject:@"#"];
 	if (containsNonAlphabetic) {
 		[array removeObject:@"#"];
@@ -173,7 +173,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	return @[kPASPlaycountSectionIndex];
 }
 
-- (NSDictionary *)_sectionsShorthand
+- (NSDictionary *)shorthandSections
 {
 	switch (self.selectedSortOrder) {
 		case PASAddArtistsSortOrderAlphabetical:
@@ -195,7 +195,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 					   @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", @"#"];
 	NSMutableDictionary *mutableSections = [NSMutableDictionary dictionaryWithCapacity:index.count];
 	
-	for (id artist in self._artistsShorthand) {
+	for (id artist in self.shorthandArtists) {
 		NSString *name = [self nameForArtist:artist];
 		NSString *firstChar = [[name substringToIndex:1] uppercaseString];
 		
@@ -217,8 +217,8 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (NSDictionary *)_playcountSections
 {
-	NSAssert(self._artistsShorthand, @"Can't have nil artists");
-	return @{ kPASPlaycountSectionIndex : self._artistsShorthand };
+	NSAssert(self.shorthandArtists, @"Can't have nil artists");
+	return @{ kPASPlaycountSectionIndex : self.shorthandArtists };
 }
 
 #pragma mark - Subclassing
@@ -307,8 +307,8 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 		
 		for (int i = 0; i < PASAddArtistsSortOrderSize; i++) {
 			self.selectedSortOrder = [self sortOrderForIndex:i];
-			[self _sectionsShorthand];
-			[self _sectionIndexShorthand];
+			[self shorthandSections];
+			[self shorthandSectionIndex];
 		}
 		self.selectedSortOrder = origSortOrder;
 		
@@ -343,7 +343,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return (NSInteger)[self._sectionsShorthand[self._sectionIndexShorthand[(NSUInteger)section]] count];
+    return (NSInteger)[self.shorthandSections[self.shorthandSectionIndex[(NSUInteger)section]] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -361,14 +361,14 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return (NSInteger)self._sectionIndexShorthand.count;
+	return (NSInteger)self.shorthandSectionIndex.count;
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
 	switch (self.selectedSortOrder) {
 		case PASAddArtistsSortOrderAlphabetical:
-			return self._sectionIndexShorthand;
+			return self.shorthandSectionIndex;
 		default:
 			return nil;
 	}
@@ -397,7 +397,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	view.backgroundColor = [UIColor whiteColor];
  
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width, kPASSectionHeaderHeight)];
-	label.text = self._sectionIndexShorthand[(NSUInteger)section];
+	label.text = self.shorthandSectionIndex[(NSUInteger)section];
 	label.textColor = [UIColor darkTextColor];
 	[view addSubview:label];
  
@@ -567,7 +567,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (id)_artistForIndexPath:(NSIndexPath *)indexPath
 {
-	return self._sectionsShorthand[self._sectionIndexShorthand[(NSUInteger)indexPath.section]][(NSUInteger)indexPath.row];
+	return self.shorthandSections[self.shorthandSectionIndex[(NSUInteger)indexPath.section]][(NSUInteger)indexPath.row];
 }
 
 - (void)_refreshUI
