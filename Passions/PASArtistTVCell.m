@@ -38,10 +38,12 @@
 		
 		if ([artist isKindOfClass:[PASArtist class]]) {
 			self.detailText.text = [(PASArtist *)artist availableAlbums];
+			self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			
 		} else {
 			self.starButton.hidden = NO;
 			self.detailText.text = block ? block(artist, name) : @"";
+			self.accessoryType = UITableViewCellAccessoryNone;
 		}
 	}
 	
