@@ -73,6 +73,9 @@
 	[super viewDidLoad];
 	self.effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
 	
+	// configure NavigationController
+	self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Albums" style:UIBarButtonItemStylePlain target:nil action:nil];
+	
 	// register the custom cell
 	[self.collectionView registerNib:[UINib nibWithNibName:[PASArtworkCVCell reuseIdentifier] bundle:nil]
 		  forCellWithReuseIdentifier:[PASArtworkCVCell reuseIdentifier]];

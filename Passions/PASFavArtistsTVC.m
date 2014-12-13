@@ -38,6 +38,11 @@
 	self.clearsSelectionOnViewWillAppear = YES;
 
 	// Setup navigationBar
+	// configure NavigationController
+	self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Artists"
+																			 style:UIBarButtonItemStylePlain
+																			target:nil action:nil];
+	
 	UIBarButtonItem *rbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
 																		  target:self
 																		  action:@selector(addButtonTapped:)];
