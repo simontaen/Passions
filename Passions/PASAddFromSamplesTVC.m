@@ -125,7 +125,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 - (NSArray *)artistsOrderedByPlaycount
 {
 	return [self.sampleArtists sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-		NSInteger result = [self playcountForArtist:obj1 withName:obj1] - [self playcountForArtist:obj2 withName:obj2];
+		NSInteger result = (NSInteger)[self playcountForArtist:obj1 withName:obj1] - (NSInteger)[self playcountForArtist:obj2 withName:obj2];
 		
 		if (result > 0) {
 			// The left operand is greater than the right operand.
@@ -343,7 +343,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self._sectionsShorthand[self._sectionIndexShorthand[section]] count];
+    return (NSInteger)[self._sectionsShorthand[self._sectionIndexShorthand[(NSUInteger)section]] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -361,7 +361,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return self._sectionIndexShorthand.count;
+	return (NSInteger)self._sectionIndexShorthand.count;
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
@@ -397,7 +397,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 	view.backgroundColor = [UIColor whiteColor];
  
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width, kPASSectionHeaderHeight)];
-	label.text = self._sectionIndexShorthand[section];
+	label.text = self._sectionIndexShorthand[(NSUInteger)section];
 	label.textColor = [UIColor darkTextColor];
 	[view addSubview:label];
  
@@ -567,7 +567,7 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (id)_artistForIndexPath:(NSIndexPath *)indexPath
 {
-	return self._sectionsShorthand[self._sectionIndexShorthand[indexPath.section]][indexPath.row];
+	return self._sectionsShorthand[self._sectionIndexShorthand[(NSUInteger)indexPath.section]][(NSUInteger)indexPath.row];
 }
 
 - (void)_refreshUI
