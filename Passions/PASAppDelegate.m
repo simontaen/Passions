@@ -137,8 +137,8 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 			if (succeeded && !error) {
 				DDLogInfo(@"Current Installation initialized: %@", currentInstallation.objectId);
 				[self _initialUserSetup:currentUser withInstallation:currentInstallation];
-				[currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-					if (succeeded && !error) {
+				[currentUser saveInBackgroundWithBlock:^(BOOL userSucceeded, NSError *userError) {
+					if (userSucceeded && !userError) {
 						
 						// ---------
 						DDLogInfo(@"Current User initialized: %@", currentUser.objectId);
@@ -164,7 +164,7 @@ static NSString * const kFavArtistsRefreshPushKey = @"far";
 						// ---------
 						
 					} else {
-						DDLogError(@"Could not initialize User: %@", [error localizedDescription]);
+						DDLogError(@"Could not initialize User: %@", [userError localizedDescription]);
 					}
 				}];
 			} else {
