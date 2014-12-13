@@ -280,9 +280,9 @@
 											if (doneCounter == count) {
 												DDLogInfo(@"Initial Add: favingBlock all artists complete, save user");
 												// Save User now that all are done
-												[[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-													if (error) {
-														DDLogError(@"Initial Add: favingBlock save user %@", [error description]);
+												[[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *userError) {
+													if (userError) {
+														DDLogError(@"Initial Add: favingBlock save user %@", [userError description]);
 													} else {
 														DDLogInfo(@"Initial Add: favingBlock user saved");
 													}
