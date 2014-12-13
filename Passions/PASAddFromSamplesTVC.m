@@ -344,7 +344,8 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return (NSInteger)[self.shorthandSections[self.shorthandSectionIndex[(NSUInteger)section]] count];
+	NSDictionary *rowsInSection = self.shorthandSections[self.shorthandSectionIndex[(NSUInteger)section]];
+    return (NSInteger)[rowsInSection count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

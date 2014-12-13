@@ -447,7 +447,8 @@
 {
 	NSAssert([artist isKindOfClass:[SPTArtist class]], @"%@ cannot get name for artists of class %@",
 			 NSStringFromClass([PASAddFromSpotifyTVC class]), NSStringFromClass([artist class]));
-	return [self.artistsTracks[name] count];
+	NSArray *tracks = self.artistsTracks[name];
+	return [tracks count];
 }
 
 #pragma mark - Error Handling
