@@ -146,14 +146,14 @@
 			if (countingQuery) {
 				// using a new query just in case
 				[countingQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
-					self.expectedObjects = number;
+					self.expectedObjects = (NSUInteger)number;
 				}];
 			}
 			
 			[query setLimit:self.objectsPerPage];
 			//fetching the next page of objects
 			if (refreshing) {
-				[query setSkip:self.objects.count];
+				[query setSkip:(NSInteger)self.objects.count];
 			}
 		}
 		
@@ -214,7 +214,7 @@
         return nil;
     }
     
-    return [self.objects objectAtIndex:indexPath.row];
+    return [self.objects objectAtIndex:(NSUInteger)indexPath.row];
 }
 
 #pragma mark - Collection View Data Source
@@ -231,7 +231,7 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     NSAssert(section == 0, @"QueryCollectionView should only contain one section, overload this method in a subclass.");
-    return self.objects.count;
+    return (NSInteger)self.objects.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
@@ -251,7 +251,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     //if the scrollView has reached the bottom fetch the next page of objects
-    float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
+    CGFloat bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
     if (bottomEdge >= scrollView.contentSize.height && [self hasMoreObjects]) {
 		[self _refreshObjects];
     }
