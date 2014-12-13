@@ -18,7 +18,7 @@
 @implementation PASAlbumInfoTVC
 
 static NSString * const kCellIdentifier = @"TrackCell";
-static NSInteger const kAddCells = 2;
+static NSUInteger const kAddCells = 2;
 
 #pragma mark - Accessors
 
@@ -97,7 +97,7 @@ static NSInteger const kAddCells = 2;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return self.tracks.count + kAddCells;
+	return (NSInteger)(self.tracks.count + kAddCells);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -156,7 +156,7 @@ static NSInteger const kAddCells = 2;
 	if (!tracksNumber) {
 		return @"(Tracks unavailable)";
 	} else {
-		NSUInteger tracks = [tracksNumber integerValue];
+		NSUInteger tracks = [tracksNumber unsignedIntegerValue];
 		if (tracks == 1) {
 			return [NSString stringWithFormat:@"%tu track", tracks];
 		} else {
@@ -167,7 +167,7 @@ static NSInteger const kAddCells = 2;
 
 - (NSIndexPath *)_newIdxPath:(NSIndexPath *)idxPath
 {
-	return [NSIndexPath indexPathForRow:idxPath.row - kAddCells inSection:idxPath.section];
+	return [NSIndexPath indexPathForRow:idxPath.row - (NSInteger)kAddCells inSection:idxPath.section];
 }
 
 @end
