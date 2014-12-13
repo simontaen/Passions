@@ -41,10 +41,10 @@
 	[self.activityIndicator startAnimating];
 	[cache asynchronouslyRetrieveImageForEntity:entity
 								 withFormatName:formatName
-								completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+								completionBlock:^(id<FICEntity> innerEntity, NSString *innerFormatName, UIImage *image) {
 									[self.activityIndicator stopAnimating];
 									// check if this image view hasn't been reused for a different entity
-									if (image && entity == self.entity) {
+									if (image && innerEntity == self.entity) {
 										self.artworkImage.image = image;
 									}
 								}];
