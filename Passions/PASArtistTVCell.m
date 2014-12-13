@@ -120,9 +120,9 @@
 	
 	[cache asynchronouslyRetrieveImageForEntity:entity
 								 withFormatName:ImageFormatNameArtistThumbnailSmall
-								completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+								completionBlock:^(id<FICEntity> innerEntity, NSString *innerFormatName, UIImage *image) {
 									// check if this image view hasn't been reused for a different entity
-									if (image && entity == self.entity) {
+									if (image && innerEntity == self.entity) {
 										self.artistImage.image = image;
 									}
 								}];
