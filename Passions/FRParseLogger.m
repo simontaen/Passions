@@ -76,6 +76,11 @@ static FRParseLogger *sharedLogger;
 					forKey:@"installation"];
 		}
 		
+		if ([PFUser currentUser].objectId) {
+			[obj setObject:[PFUser currentUser].objectId
+					forKey:@"user"];
+		}
+		
 		[obj setObject:[[NSString stringWithUTF8String: logMessage->file] lastPathComponent]
 				forKey:@"file"];
 		
