@@ -92,8 +92,9 @@ static CGFloat const kPASSectionHeaderHeight = 28;
 						   @"Bomfunk MC's", @"C-Mon & Kypski", @"The Cardigans", @"Carly Commando",
 						   @"Caro Emerald", @"Coldplay", @"Coolio", @"Cypress Hill", @"AC/DC", @"Metallica",
 						   @"David Bowie", @"Dukes of Stratosphear", @"[dunkelbunt]", @"Cause Assertion Error!",
-						   @"Eminem", @"Enigma", @"Deadmouse", @"ACDC", @"Crash the App!",
-						   @"Royal Philharmonic Orchestra", @"James Dempsey and the Breakpoints"
+						   @"Eminem", @"Enigma", @"Deadmouse", @"ACDC", @"Crash the App!", @"Bruce Springsteen",
+						   @"Royal Philharmonic Orchestra", @"James Dempsey and the Breakpoints", @"Sloan",
+						   @"Aerosmith", @"Foo Fighters", @"Norah Jones", @"Slash", @"The Long Winters"
 						   ];
 	}
 	return _sampleArtists;
