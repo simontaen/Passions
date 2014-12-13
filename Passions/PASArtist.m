@@ -99,9 +99,9 @@
 	void (^favingBlock)(PASArtist*, NSError*) = ^void(PASArtist *favingArtist, NSError *error) {
 		if (favingArtist && !error) {
 			// create the relationsship with the user
-			[favingArtist _addCurrentUserAsFavoriteAndSave:saveUser completion:^(PASArtist *blockArtist, NSError *error) {
-				[PASArtist _logStats:start artistName:blockArtist.name success:(blockArtist && !error) add:YES];
-				blockArtist && !error ? completion(blockArtist, nil) : completion(nil, error);
+			[favingArtist _addCurrentUserAsFavoriteAndSave:saveUser completion:^(PASArtist *innerArtist, NSError *innerError) {
+				[PASArtist _logStats:start artistName:innerArtist.name success:(innerArtist && !innerError) add:YES];
+				innerArtist && !innerError ? completion(innerArtist, nil) : completion(nil, innerError);
 			}];
 		} else {
 			completion(nil, error);
