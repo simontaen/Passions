@@ -65,7 +65,9 @@
 													  object:nil queue:nil
 												  usingBlock:^(NSNotification *note) {
 													  [self writeToDisk];
-													  self.artistNameCorrections = nil;
+													  if (![self favingInProcess]) {
+														  self.artistNameCorrections = nil;
+													  }
 												  }];
 	return self;
 }
