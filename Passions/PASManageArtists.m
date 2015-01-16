@@ -362,7 +362,7 @@
 	// get corrected name
 	// this might get a problem when artistNameCorrections is really big and loading from disk
 	// takes a long time -> could result in artistNameCorrections being nil here!
-	NSString __block *result;
+	NSString __block *result = nil;
 	dispatch_barrier_sync(self.favoritesQ, ^{
 		result = [self.artistNameCorrections objectForKey:name];
 	});
