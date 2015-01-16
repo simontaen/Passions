@@ -155,7 +155,7 @@
 		}
 	};
 	
-	if ([self isFavoriteArtist:artistName]) {
+	if ([self isFavoriteArtist:resolvedName isResolved:YES]) {
 		PASArtist *artist = [self _artistForResolvedName:resolvedName];
 		// The artist is favorited, a correctedName MUST exists. BUT a NSAssert might be too much.
 		
@@ -228,9 +228,9 @@
 								}];
 }
 
-- (BOOL)isFavoriteArtist:(NSString *)artistName
+- (BOOL)isFavoriteArtist:(NSString *)artistName isResolved:(BOOL)isResolved
 {
-	NSString *resolvedName = [self _resolveArtistName:artistName];
+	NSString *resolvedName = isResolved ? artistName : [self _resolveArtistName:artistName];
 	
 	return [self.favArtistNames containsObject:resolvedName] || [self.justFavArtistNames containsObject:resolvedName];
 }

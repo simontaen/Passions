@@ -20,7 +20,7 @@
 - (void)didSelectArtistWithName:(NSString *)artistName
 					 completion:(void (^)(NSError *error))completion;
 
-- (BOOL)isFavoriteArtist:(NSString *)artistName;
+- (BOOL)isFavoriteArtist:(NSString *)artistName isResolved:(BOOL)isResolved;
 - (BOOL)isArtistInProgress:(NSString *)artistName;
 - (BOOL)favingInProcess;
 

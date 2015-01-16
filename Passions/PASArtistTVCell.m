@@ -104,7 +104,7 @@
 
 - (void)_updateStarButton
 {
-	BOOL isFav = [[PASManageArtists sharedMngr] isFavoriteArtist:self.artistName.text];
+	BOOL isFav = [[PASManageArtists sharedMngr] isFavoriteArtist:self.artistName.text isResolved:NO];
 	UIImage *img = isFav ? [PASResources favoritedStar] : [PASResources outlinedStar];
 	[self.starButton setImage:img forState:UIControlStateNormal];
 	[self.starButton setImage:img forState:UIControlStateHighlighted];
