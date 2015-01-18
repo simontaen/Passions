@@ -24,6 +24,7 @@
 * Why does the nav bar switch so late on adding screens
 
 ## Fav Artists
+* Color matching row for each artist
 
 ## Timeline
 
@@ -82,6 +83,7 @@
 	* http://www.songkick.com/developer/
 	* http://www.bandsintown.com/api/overview
 	* http://api.setlist.fm/docs/index.html
+	* http://developer.rdio.com
 * Add LastFm as a Source
 * Get Suggestions based on my Favorite Artists (Maybe LastFm or even iTunes). But the app is NOT a discovery Service.
 * Local Notification on release day of an album?
@@ -134,3 +136,16 @@ https://developer.apple.com/library/ios/documentation/WindowsViews/Conceptual/Vi
 http://stackoverflow.com/questions/3182649/ios-sdk-uiviewcontentmodescaleaspectfit-vs-uiviewcontentmodescaleaspectfill
 imageView of UITableViewCell automatically resizes to image, mostly ignoring contentMode, this means
 http://nshipster.com/image-resizing/ does not work
+
+
+# Albums feed (Passions) - Initial thoughts and notes
+
+"Passions keeps tells you about Albums and Events of your favorite bands."
+
+Remember the time when you were you and always exactly knew when your favorite Bands next Album will be release? And remember how life happened and your favorite Band doesn't get the same attention as before? Ever find yourself asked the question "Have you heard the new Song from that Band you like?" and you go "They have a new Album???"
+
+This Service has one purpose: tell you when new albums will be released. You enter your artists and the Service will reach out to you (Twitter, Facebook, Email, RSS) when a new Album will be released (once before release and once one the release date -> with option to pre-order/buy). You can import your Artists from iTunes or connect your Account to Last-FM, maybe a plaintext file too (this will show the user a list, where he can select Artists from).
+
+* Amazon wish list integration
+* Passbook integration (for tickets?)
+* Buying stuff (iTunes, ...)
