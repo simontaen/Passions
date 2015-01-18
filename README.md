@@ -71,3 +71,11 @@ App Icon made by Nina Meier from <a href="http://www.ninji.ch" title="Nina Meier
 ## Album and Artist Placeholder
 
 <div>Icons made by Freepik from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+
+## Star Icon
+
+[Star Icon](http://iconfindr.com/1AwNDKX) by [Visual Pharm](http://icons8.com/).
+
+## Swipe Left Hand Icon
+
+[Swipe Left Hand Icon](http://iconfindr.com/17Xv0sI) by [Yannick Lung](http://www.yanlu.de).
