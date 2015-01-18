@@ -45,8 +45,14 @@ Passions lets you track your favorite Artists and sends you Notifications when o
 * The store is always US (leads to iTunes link to items unavailable to the current User)
 	* Setup an artist and album (must run on all...) refresh job
 * Implement a mechanism to delete old and unused accounts
+* Duplicate Artists on Parse: How to clean up?
+* A Job that cleans up Artists with missing iTunesId (Problems with escaping Names?)
+* Jet and Joss Stone: Why do they have the same Artist Artwork
+* Encoding Issues with Artist Name: Beyoncé was Beyonc
+* How do you recover from artists that stay in processing? (like Die Toten Hosen)
 
 ## General Functionality
+* Colors are not properly used when album infos are shown after a push
 
 ## Spotify Integration
 
@@ -55,6 +61,7 @@ Passions lets you track your favorite Artists and sends you Notifications when o
 ## Cells
 
 ## Adding
+* Why does the nav bar switch so late on adding screens
 
 ## Fav Artists
 
@@ -72,10 +79,14 @@ Passions lets you track your favorite Artists and sends you Notifications when o
 * update Lastfm and Spotify profile
 * create promotional website
 * Enable Git-Flow
+	* http://yakiloo.com/getting-started-git-flow/
+* Migrate iTunes Connect Test Users
+* setup a redirect link like: http://zonesapp.net/download
 
 
 # 1.1 (?)
 
+* Link to iTunes like Overcast with an inapp modal (web?-)view
 * Dynamic Row height for bigger devices (5 and up, 6 and up)
 * Custom font?
 * search for not in library artists to add (but consider all resources!) - **number one feature request**!
@@ -83,6 +94,11 @@ Passions lets you track your favorite Artists and sends you Notifications when o
 * Maybe hide the control after a few moments (it's in the way always)
 * sometimes the pageControl indicator seems not to update properly
 * PASArtistTvCell must extend to end of cell when no star is available
+* For albums bought, go to music app instead of store
+	* This seems to be technically hard to do
+* Turn album cover for tracklist
+* Play Track preview
+* Maybe another Source: http://www.musik-sammler.de/
 
 
 # 2.0
@@ -103,12 +119,18 @@ Passions lets you track your favorite Artists and sends you Notifications when o
 * Albums "duplicate" check, more like "find different editions", when adding on Parse. This might work with a Stemmer (fix at the root problem) or hashing the image (fix the symptom).
 	* Also this requires a data model change since you need to make a relation between Albums
 * Get Concerts and Events from your Fav. Artists
+	* http://www.songkick.com/developer/
+	* http://www.bandsintown.com/api/overview
+	* http://api.setlist.fm/docs/index.html
 * Add LastFm as a Source
 * Get Suggestions based on my Favorite Artists (Maybe LastFm or even iTunes). But the app is NOT a discovery Service.
 * Local Notification on release day of an album?
 * Use https://github.com/CanvasPod/Canvas
 * Try to highlight Deluxe/Special Editions (as the usually have the same Album Art)
 * flickering when the transition gets aborted (this is in the Container)
+* Whishlist and/or don't forget (remember me) list
+* Remove stuff you don't want to see
+
 
 
 # Data communication with Parse
