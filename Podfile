@@ -40,3 +40,4 @@ pod 'SpotifySDK', :path => '/Users/simon/Documents/code/iOS/Github/ios-sdk'
 #FRParseLogger # Logging to Parse
 # https://github.com/luisespinoza/LEColorPicker
 #LEColorPicker # iTunes 11 like colors
+# https://github.com/jonreid/XcodeWarnings
