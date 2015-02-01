@@ -67,6 +67,7 @@ This is my first App and the development of it served as a learing experience. I
 * [Heroku is great!](https://github.com/simontaen/SpotifyTokenSwap)
 * Don't rely on assumption, go and dig deeper ([LEColorPicker](https://github.com/luisespinoza/LEColorPicker) vs. [UIVisualEffectView](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIVisualEffectView/index.html))
 * Focus on what matters
+* I love object-oriented programming.
 * Never assume your code is correct (even if its a [library you wrote](https://github.com/simontaen/LastFmFetchr) :))
 
 
